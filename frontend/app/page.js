@@ -175,12 +175,12 @@ export default function Home() {
           <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-7xl max-w-7xl">
             {shuffledContent.headline[0]}
           </div>
-          <div className="p-8 px-12 mt-8 border-2 border-white/50 bg-white/20 backdrop-blur-sm rounded-2xl">
+          <div className="mt-8">
             <div className="flex flex-col items-center">
               <label className="text-2xl font-bold tracking-tight text-center lowercase">
                 {shuffledContent.label[0]}
               </label>
-              <div className="flex flex-col items-center justify-center pt-8 pb-4 space-y-4">
+              <div className="flex flex-col items-center justify-center pt-8 pb-8 space-y-4">
                 <div
                   ref={fieldsRef}
                   className="flex flex-wrap items-center justify-center gap-2"
