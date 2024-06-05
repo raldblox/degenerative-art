@@ -21,6 +21,7 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [preview, setPreview] = useState(null);
 
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -54,6 +55,31 @@ export default function Home() {
   const maxFields = 9;
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
+
+  const [htmlContent, setHtmlContent] = useState("");
+  const iframeRef = useRef(null);
+
+  useEffect(() => {
+    const fetchHtml = async () => {
+      try {
+        const response = await fetch("./render.html");
+        const data = await response.text();
+        setHtmlContent(data);
+      } catch (error) {
+        console.error("Error fetching HTML:", error);
+      }
+    };
+    fetchHtml();
+  }, []); // Empty dependency array ensures this runs once on mount
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      const iframeDocument = iframeRef.current.contentWindow.document;
+      iframeDocument.open();
+      iframeDocument.write(htmlContent);
+      iframeDocument.close();
+    }
+  }, [htmlContent]);
 
   useEffect(() => {
     const elements = fieldsRef.current.children;
@@ -113,7 +139,7 @@ export default function Home() {
           data-index={i}
           placeholder={shuffledContent.placeholders[i]}
           ref={(el) => (inputRef.current[i] = el)}
-          className={`w-16 h-16 placeholder:saturate-0 text-2xl text-center border rounded-lg outline-none focus:border-indigo-600 ${
+          className={`w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => handleChange(e, i)}
@@ -125,8 +151,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen">
-      <Navbar>
+    <main className="w-full h-screen overflow-hidden">
+      <Navbar position="sticky" className="z-50">
         <NavbarBrand>
           <p className="text-2xl font-bold">
             degen<span className="opacity-50">eratives</span>
@@ -134,38 +160,48 @@ export default function Home() {
         </NavbarBrand>
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
           <NavbarItem>
-            <Button color="foreground" variant="flat">
-              CONNECT
+            <Button color="foreground" variant="flat" className="font-bold">
+              konek welet
             </Button>
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <section
-        className={`${
-          mounted ? "flex" : "hidden"
-        }  flex-col p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
-      >
-        <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase text-balance md:text-7xl max-w-7xl">
-          {shuffledContent.headline[0]}
-        </div>
-        <div className="mt-16">
-          <div className="flex flex-col items-center space-y-8 md:space-y-12">
-            <label className="text-xl font-bold tracking-tight text-center lowercase">
-              {shuffledContent.label[0]}
-            </label>
-            <div className="flex flex-col items-center justify-center space-y-4">
-              <div
-                ref={fieldsRef}
-                className="flex flex-wrap items-center justify-center gap-2"
-              >
-                {renderInputFields()}
-              </div>
-            </div>
-            <Button size="lg" className="dark">
-              let&apos;s mint this 🪄
-            </Button>
+      <section className="grid">
+        <section
+          className={`${
+            mounted ? "flex" : "hidden"
+          } absolute z-20 flex-col p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
+        >
+          <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-7xl max-w-7xl">
+            {shuffledContent.headline[0]}
           </div>
-        </div>
+          <div className="p-8 px-12 mt-8 border-2 border-white/50 bg-white/20 backdrop-blur-sm rounded-2xl">
+            <div className="flex flex-col items-center">
+              <label className="text-2xl font-bold tracking-tight text-center lowercase">
+                {shuffledContent.label[0]}
+              </label>
+              <div className="flex flex-col items-center justify-center pt-8 pb-4 space-y-4">
+                <div
+                  ref={fieldsRef}
+                  className="flex flex-wrap items-center justify-center gap-2"
+                >
+                  {renderInputFields()}
+                </div>
+              </div>
+              <Button size="lg" className="dark">
+                let&apos;s mint this 🪄
+              </Button>
+            </div>
+          </div>
+        </section>
+        <section className="fixed top-0 w-screen h-screen !overflow-hidden">
+          <iframe
+            ref={iframeRef}
+            title="Rendered Document"
+            width="100%"
+            className="h-screen overflow-hidden"
+          />
+        </section>
       </section>
     </main>
   );
