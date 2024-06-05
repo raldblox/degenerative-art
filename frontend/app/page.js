@@ -150,7 +150,7 @@ export default function Home() {
         </div>
         <div className="mt-16">
           <div className="flex flex-col items-center space-y-8 md:space-y-12">
-            <label className="text-lg font-bold text-center lowercase">
+            <label className="text-xl font-bold tracking-tight text-center lowercase">
               {shuffledContent.label[0]}
             </label>
             <div className="flex flex-col items-center justify-center space-y-4">
