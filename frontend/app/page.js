@@ -1,6 +1,14 @@
 "use client";
 
-import { Button, Input } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Link,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 
 function shuffleArray(array) {
@@ -117,32 +125,48 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`${
-        mounted ? "flex" : "hidden"
-      }  flex-col p-4 items-center justify-center min-h-screen md:p-24 space-y-16"`}
-    >
-      <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase text-balance md:text-7xl max-w-7xl">
-        {shuffledContent.headline[0]}
-      </div>
-      <div className="mt-12">
-        <div className="flex flex-col items-center space-y-8">
-          <label className="text-lg font-bold text-center lowercase">
-            {shuffledContent.label[0]}
-          </label>
-          <div className="flex flex-col items-center justify-center space-y-4">
-            <div
-              ref={fieldsRef}
-              className="flex flex-wrap items-center justify-center gap-x-2"
-            >
-              {renderInputFields()}
-            </div>
-          </div>
-          <Button size="lg" className="dark">
-            let&apos;s mint this 🪄
-          </Button>
+    <main className="min-h-screen">
+      <Navbar>
+        <NavbarBrand>
+          <p className="text-2xl font-bold">
+            degen<span className="opacity-50">arative</span>
+          </p>
+        </NavbarBrand>
+        <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+          <NavbarItem>
+            <Button color="foreground" variant="flat">
+              CONNECT
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
+      <section
+        className={`${
+          mounted ? "flex" : "hidden"
+        }  flex-col p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
+      >
+        <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase text-balance md:text-7xl max-w-7xl">
+          {shuffledContent.headline[0]}
         </div>
-      </div>
+        <div className="mt-16">
+          <div className="flex flex-col items-center space-y-8 md:space-y-12">
+            <label className="text-lg font-bold text-center lowercase">
+              {shuffledContent.label[0]}
+            </label>
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <div
+                ref={fieldsRef}
+                className="flex flex-wrap items-center justify-center gap-x-2"
+              >
+                {renderInputFields()}
+              </div>
+            </div>
+            <Button size="lg" className="dark">
+              let&apos;s mint this 🪄
+            </Button>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
