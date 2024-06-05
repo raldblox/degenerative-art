@@ -176,11 +176,11 @@ export default function Home() {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <section className="grid">
+      <section className="grid w-full">
         <section
           className={`${
             mounted ? "flex" : "hidden"
-          } absolute z-20 flex-col p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
+          } absolute z-20 flex-col w-full p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
         >
           <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-7xl max-w-7xl">
             {shuffledContent.headline[0]}
