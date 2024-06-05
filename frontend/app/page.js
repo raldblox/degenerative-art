@@ -156,7 +156,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center space-y-4">
               <div
                 ref={fieldsRef}
-                className="flex flex-wrap items-center justify-center gap-x-2"
+                className="flex flex-wrap items-center justify-center gap-2"
               >
                 {renderInputFields()}
               </div>
