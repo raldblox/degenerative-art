@@ -24,11 +24,11 @@ export default function Home() {
 
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
-      "mint your mood before it's gone🤕",
+      "mint your mood before it's gone 🤕",
       "Your Feels, Immortalized (But Only for a Limited Time)",
       "Don't Let Your Mood Go to Waste 🗑️",
       "Mint Your Mood Before It's More Volatile Than Bitcoin 📉",
-      "Your Emotional State, Tokenized (It's Art, We Swear)",
+      "Your Emotional State, Tokenized (It's Art, i Swear)",
     ],
     label: [
       "One-Time Mood Check. 3-9 Emojis Only",
@@ -129,7 +129,7 @@ export default function Home() {
       <Navbar>
         <NavbarBrand>
           <p className="text-2xl font-bold">
-            degen<span className="opacity-50">arative</span>
+            degen<span className="opacity-50">eratives</span>
           </p>
         </NavbarBrand>
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
