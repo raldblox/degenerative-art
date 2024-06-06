@@ -159,8 +159,13 @@ export default function Home() {
   };
 
   return (
-    <main className="relative bg-[#fafafa] w-full min-h-screen overflow-hidden">
-      <Navbar position="sticky" maxWidth="full" className="z-50 h-[70px]">
+    <main className="bg-[#fafafa] w-full min-h-screen overflow-hidden">
+      <Navbar
+        isBlurred
+        position="sticky"
+        maxWidth="full"
+        className="z-50 h-[70px]"
+      >
         <NavbarBrand>
           <div>
             <svg
@@ -201,61 +206,81 @@ export default function Home() {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <section className="grid w-full">
+      <section className="relative grid w-full">
         <div
           className={`${
             mounted ? "flex" : "hidden"
-          } absolute z-20 flex-col w-full p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
+          } z-20 flex-col w-full p-2 items-center justify-start md:p-16 space-y-16"`}
         >
-          <div className="max-w-6xl text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
+          <div className="max-w-6xl mt-8 text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
             {shuffledContent.headline[0]}
           </div>
-          <div className="max-w-3xl p-4 mt-12 border-2 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-md">
-            <div className="flex flex-col items-center">
-              <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
-                Enter the one-time emoji mood that the universe gave you today.
-              </label>
-              <p className="mt-4 text-sm text-center lowercase">
-                Don&apos;t worry if your cosmic vibes change tomorrow... your
-                NFT is so dedicated and prepared to evolve alongside you!
-                We&apos;ll provide you free 100 $EMOJI after mint to fuel your
-                daily mood swings for the next 60 days! Your ever-changing
-                feelings have finally found a match.
-              </p>
-              <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
-                <div
-                  ref={fieldsRef}
-                  className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/50"
-                >
-                  {renderInputFields()}
+          <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
+            <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-md">
+              <div className="flex flex-col items-center">
+                <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
+                  Enter the one-time emoji mood that the universe gave you
+                  today.
+                </label>
+                <p className="mt-4 text-sm text-center lowercase">
+                  Don&apos;t worry if your cosmic vibes change tomorrow... your
+                  NFT is so dedicated and prepared to evolve alongside you!
+                  We&apos;ll provide you free 100 $EMOJI after mint to fuel your
+                  daily mood swings for the next 60 days! Your ever-changing
+                  feelings have finally found a match.
+                </p>
+                <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
+                  <div
+                    ref={fieldsRef}
+                    className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
+                  >
+                    {renderInputFields()}
+                  </div>
+                  <label className="text-sm">(enter 3-9 emojis only)</label>
                 </div>
-                <label className="text-sm">(enter 3-9 emojis only)</label>
+                <Button size="lg" className="dark">
+                  mint to generate magic 🪄
+                </Button>
               </div>
-              <Button size="lg" className="dark">
-                mint to generate magic 🪄
-              </Button>
-              <p></p>
             </div>
-          </div>
-          <div className="mt-8">
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+              <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
+              <p className="text-lg font-bold">-</p>
+            </div>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+              <h5 className="text-xs text-bold">TOTAL SUPPLY</h5>
+              <p className="text-lg font-bold">-</p>
+            </div>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+              <h5 className="text-xs text-bold">LIQUIDITY POOL</h5>
+              <p className="text-lg font-bold">-</p>
+            </div>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+              <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
+              <p className="text-lg font-bold">-</p>
+            </div>
+          </section>
+          {/* <div className="mt-8">
             <Link href="#info">see how it work</Link>
-          </div>
+          </div> */}
+          {/* <div
+            id="info"
+            className="absolute bottom-0 w-screen p-6 py-12 bg-white/80 backdrop-blur-sm"
+          >
+            <h1 className="mx-auto text-lg text-center lowercase max-w-7xl">
+              <span className="font-bold">How does it work? </span>{" "}
+              {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go now.`}
+            </h1>
+          </div> */}
         </div>
-        <div className="w-screen !overflow-hidden">
+
+        <div className="fixed top-0">
           <iframe
             ref={iframeRef}
             title="Rendered Document"
             width="100%"
-            className="h-screen overflow-hidden"
+            className="min-h-[150vh] w-screen overflow-hidden"
           />
-        </div>
-      </section>
-      <section className="px-6 py-32" id="info">
-        <div className="mx-auto text-center max-w-7xl">
-          <h1 className="text-lg lowercase">
-            <span className="font-bold">How does it work? </span>{" "}
-            {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go now.`}
-          </h1>
         </div>
       </section>
     </main>
