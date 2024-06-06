@@ -208,7 +208,6 @@ export default function Home() {
           <iframe
             ref={iframeRef}
             title="Rendered Document"
-            src="https://degeneratives.ocvlabs.com/render.html"
             width="100%"
             className="h-screen overflow-hidden"
           />
