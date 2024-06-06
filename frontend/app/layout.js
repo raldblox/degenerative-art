@@ -1,6 +1,6 @@
-import { Montserrat } from "next/font/google";
-import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
+import { Montserrat } from "next/font/google";
+import { EthereumProvider } from "./(providers)/EthereumProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <NextUIProvider>{children}</NextUIProvider>
+        <EthereumProvider>{children}</EthereumProvider>
       </body>
     </html>
   );

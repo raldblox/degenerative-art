@@ -9,7 +9,7 @@
         padding: 0;
       }
       body {
-        background: #fff;
+        background: #fafafa;
         width: 100vw;
         height: 100vh;
         overflow: hidden;
@@ -19,53 +19,55 @@
   <body>
     <canvas></canvas>
 
-    <script type="x-shader/vertex-shader" id="vertex-shader-emojis">#version 300 es
-            uniform float u_time;
-            uniform float u_spacing;
+    <script type="x-shader/vertex-shader" id="vertex-shader-emojis">
+      #version 300 es
+                  uniform float u_time;
+                  uniform float u_spacing;
 
-            in vec2 a_position;
-            in vec2 a_targetPosition;
-            in float a_uvOffsetX;
-            in float a_time;
+                  in vec2 a_position;
+                  in vec2 a_targetPosition;
+                  in float a_uvOffsetX;
+                  in float a_time;
 
-            out float v_uvOffsetX;
+                  out float v_uvOffsetX;
 
-            void main () {
-                float currentTime = mod(u_time + a_time, 2.0);
-                float rate = clamp(currentTime / 2.0, 0.0, 1.0);
+                  void main () {
+                      float currentTime = mod(u_time + a_time, 2.0);
+                      float rate = clamp(currentTime / 2.0, 0.0, 1.0);
 
-                vec2 position = mix(a_position, a_targetPosition, rate);
+                      vec2 position = mix(a_position, a_targetPosition, rate);
 
-                float dist = distance(position, vec2(0.0));
+                      float dist = distance(position, vec2(0.0));
 
-                position.x /= sin(dist + rate) * u_spacing;
-                position.y /= cos(dist + rate) * u_spacing;
+                      position.x /= sin(dist + rate) * u_spacing;
+                      position.y /= cos(dist + rate) * u_spacing;
 
-                position += vec2(sin(u_time), cos(u_time)) * 0.2;
+                      position += vec2(sin(u_time), cos(u_time)) * 0.2;
 
-                gl_Position = vec4(position, 0.0, 1.0);
-                gl_PointSize = rate * 100.0;
+                      gl_Position = vec4(position, 0.0, 1.0);
+                      gl_PointSize = rate * 100.0;
 
-                v_uvOffsetX = a_uvOffsetX;
-            }
+                      v_uvOffsetX = a_uvOffsetX;
+                  }
     </script>
 
-    <script type="x-shader/fragment-shader" id="fragment-shader-emojis">#version 300 es
-            precision highp float;
+    <script type="x-shader/fragment-shader" id="fragment-shader-emojis">
+      #version 300 es
+                  precision highp float;
 
-            uniform sampler2D u_emojiTex;
-            uniform float u_emojiCount;
+                  uniform sampler2D u_emojiTex;
+                  uniform float u_emojiCount;
 
-            in float v_uvOffsetX;
+                  in float v_uvOffsetX;
 
-            out vec4 finalColor;
+                  out vec4 finalColor;
 
-            void main () {
-                vec2 uv = gl_PointCoord;
-                vec4 tex = texture(u_emojiTex, uv * vec2(1.0 / u_emojiCount, 1.0) + vec2(v_uvOffsetX, 0.0));
-                if (tex.a < 0.5) discard;
-                finalColor = tex;
-            }
+                  void main () {
+                      vec2 uv = gl_PointCoord;
+                      vec4 tex = texture(u_emojiTex, uv * vec2(1.0 / u_emojiCount, 1.0) + vec2(v_uvOffsetX, 0.0));
+                      if (tex.a < 0.5) discard;
+                      finalColor = tex;
+                  }
     </script>
     <script type="module">
       const utils = {
@@ -511,7 +513,7 @@
         const dt = now - elapsedTime;
         elapsedTime = now;
         gl.viewport(0, 0, wdpr, hdpr);
-        gl.clear(gl.COLOR_BUFFER_BIT)
+        gl.clear(gl.COLOR_BUFFER_BIT);
 
         particles.renderFrame(elapsedTime, dt);
       }

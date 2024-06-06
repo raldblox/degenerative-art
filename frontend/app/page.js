@@ -28,12 +28,10 @@ export default function Home() {
       "Mint Your Mood Before It's Gone, Ser 🫡",
       "Yo, Immortalize Your Feels 🤝",
       "Don't Let Your Mood Go to Waste fam 🗑️",
-      "Mint Your Mood Before It's More Volatile Than Bitcoin 📉",
       "Your Emotional State, Tokenized (It's Art, I Swear on Vitalik 🙏)",
       "Feeling Froggy? 🐸 Mint Your Mood into generative art",
       "This is the Way to Express Your Vibes ✨",
       "Turn Your Feels into NFTs, You Absolute Chad 😎",
-      "Don't Rug This Up, Mint Your Mood Before It's NGMI 💀",
       "Diamond Hands or Paper Hands? 🤔 Let Your Emojis Decide! 😜",
     ],
     label: [
@@ -45,7 +43,7 @@ export default function Home() {
       "GM/GN? Doesn't Matter. Drop Your Emojis Here 🫡",
       "Wen Mint? Now! Drop 3-9 Emojis and Let's Go 🚀",
       "No Fud, Just Vibes. 3-9 Emojis Only 😎",
-      "This Ain't No Shitcoin, This is Art 🎨 (3-9 Emojis)",
+      "This Ain't No Shitcoin, This is Art 🎨 (3-9 Emojis pls)",
       "Your Mood, Our Algorithm. Let's Make Some Magic ✨",
     ],
     placeholders: ["🤒", "🤪", "🤕", "😠", "😭", "😂", "😎", "🚀", "🔥"],
@@ -147,9 +145,9 @@ export default function Home() {
           size="lg"
           type="text"
           data-index={i}
-          placeholder={shuffledContent.placeholders[i]}
+          // placeholder={shuffledContent.placeholders[i]}
           ref={(el) => (inputRef.current[i] = el)}
-          className={`w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+          className={`w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => handleChange(e, i)}
@@ -161,7 +159,7 @@ export default function Home() {
   };
 
   return (
-    <main className="w-full h-screen overflow-hidden">
+    <main className="relative bg-[#fafafa] w-full min-h-screen overflow-hidden">
       <Navbar position="sticky" maxWidth="full" className="z-50 h-[70px]">
         <NavbarBrand>
           <div>
@@ -204,41 +202,61 @@ export default function Home() {
         </NavbarContent>
       </Navbar>
       <section className="grid w-full">
-        <section
+        <div
           className={`${
             mounted ? "flex" : "hidden"
           } absolute z-20 flex-col w-full p-4 items-center h-[90vh] justify-center md:p-24 space-y-16"`}
         >
-          <div className="text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-7xl max-w-7xl">
+          <div className="max-w-6xl text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
             {shuffledContent.headline[0]}
           </div>
-          <div className="mt-8">
+          <div className="max-w-3xl p-4 mt-12 border-2 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-md">
             <div className="flex flex-col items-center">
-              <label className="text-2xl font-bold tracking-tight text-center lowercase">
-                {shuffledContent.label[0]}
+              <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
+                Enter the one-time emoji mood that the universe gave you today.
               </label>
-              <div className="flex flex-col items-center justify-center pt-8 pb-8 space-y-4">
+              <p className="mt-4 text-sm text-center lowercase">
+                Don&apos;t worry if your cosmic vibes change tomorrow... your
+                NFT is so dedicated and prepared to evolve alongside you!
+                We&apos;ll provide you free 100 $EMOJI after mint to fuel your
+                daily mood swings for the next 60 days! Your ever-changing
+                feelings have finally found a match.
+              </p>
+              <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
                 <div
                   ref={fieldsRef}
-                  className="flex flex-wrap items-center justify-center gap-2"
+                  className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/50"
                 >
                   {renderInputFields()}
                 </div>
+                <label className="text-sm">(enter 3-9 emojis only)</label>
               </div>
-              <Button size="lg" className="dark">
-                let&apos;s mint this 🪄
+              <Button fullWidth size="lg" className="dark">
+                mint to generate magic 🪄
               </Button>
+              <p></p>
             </div>
           </div>
-        </section>
-        <section className="fixed top-0 w-screen h-screen !overflow-hidden">
+          <div className="mt-8">
+            <Link href="#info">see how it work</Link>
+          </div>
+        </div>
+        <div className="w-screen !overflow-hidden">
           <iframe
             ref={iframeRef}
             title="Rendered Document"
             width="100%"
             className="h-screen overflow-hidden"
           />
-        </section>
+        </div>
+      </section>
+      <section className="px-6 py-32" id="info">
+        <div className="mx-auto text-center max-w-7xl">
+          <h1 className="text-lg lowercase">
+            <span className="font-bold">How does it work? </span>{" "}
+            {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go now.`}
+          </h1>
+        </div>
       </section>
     </main>
   );

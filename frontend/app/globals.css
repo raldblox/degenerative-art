@@ -7,6 +7,10 @@
   --background: #fff;
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground-rgb);
   background: var(--background-end-rgb);
