@@ -19,8 +19,7 @@
   <body>
     <canvas></canvas>
 
-    <script type="x-shader/vertex-shader" id="vertex-shader-emojis">
-      #version 300 es
+    <script type="x-shader/vertex-shader" id="vertex-shader-emojis">#version 300 es
                   uniform float u_time;
                   uniform float u_spacing;
 
@@ -51,8 +50,7 @@
                   }
     </script>
 
-    <script type="x-shader/fragment-shader" id="fragment-shader-emojis">
-      #version 300 es
+    <script type="x-shader/fragment-shader" id="fragment-shader-emojis">#version 300 es
                   precision highp float;
 
                   uniform sampler2D u_emojiTex;
