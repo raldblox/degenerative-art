@@ -231,7 +231,7 @@ export default function Home() {
                 </div>
                 <label className="text-sm">(enter 3-9 emojis only)</label>
               </div>
-              <Button fullWidth size="lg" className="dark">
+              <Button size="lg" className="dark">
                 mint to generate magic 🪄
               </Button>
               <p></p>
