@@ -224,10 +224,10 @@ export default function Home() {
                 </label>
                 <p className="mt-4 text-sm text-center lowercase">
                   Don&apos;t worry if your cosmic vibes change tomorrow... your
-                  NFT is so dedicated and prepared to evolve alongside you!
-                  We&apos;ll provide you free 100 $EMOJI after mint to fuel your
-                  daily mood swings for the next 60 days! Your ever-changing
-                  feelings have finally found a match.
+                  NFT always listening and so well-prepared to evolve alongside
+                  you! We&apos;ll provide you $MOOD token after nft mint to fuel
+                  your daily mood swings for the next hundred years! Your
+                  ever-changing feelings have finally found a match.
                 </p>
                 <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
                   <div
@@ -238,7 +238,23 @@ export default function Home() {
                   </div>
                   <label className="text-sm">(enter 3-9 emojis only)</label>
                 </div>
-                <Button size="lg" className="dark">
+                <Button
+                  startContent={
+                    <svg
+                      className="h-5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
+                      />
+                    </svg>
+                  }
+                  size="lg"
+                  className="dark"
+                  // isDisabled
+                >
                   mint to generate magic 🪄
                 </Button>
               </div>
