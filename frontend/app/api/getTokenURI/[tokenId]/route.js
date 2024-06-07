@@ -9,7 +9,7 @@ export const runtime = "edge";
 
 async function fetchTokenURI(tokenId) {
   try {
-    const node = process.env.ALCHEMY_WSS_AMOY;
+    const node = process.env.ALCHEMY_WSS_AMOY; // api
     const provider = new ethers.WebSocketProvider(node);
     let contract = new ethers.Contract(CONTRACT_ADDRESS, degenArtAbi, provider);
     let tokenURI = await contract.tokenURI(tokenId);
