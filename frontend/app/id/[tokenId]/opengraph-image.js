@@ -14,9 +14,12 @@ export const contentType = "image/png";
 
 // Image generation
 export default async function Image({ params }) {
-  const metadata = await fetch(
-    `http://localhost:3000/api/getTokenURI/${params.tokenId}`
-  ).then((res) => res.json());
+  const protocol =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://www.generatives.art";
+  const url = `${protocol}/api/getTokenURI/${params.tokenId}`;
+  const metadata = await fetch(url).then((res) => res.json());
   console.log(metadata);
 
   const emoji1 = decodeURIComponent(
@@ -43,16 +46,6 @@ export default async function Image({ params }) {
           justifyContent: "center", // Distribute rows evenly
         }}
       >
-        {/* <div style={{ display: "flex", gap: "16px", fontSize: 128 }}>
-          {emojis.slice(0, 3).map((emoji, index) => (
-            <span key={index}>{emoji}</span>
-          ))}
-        </div>
-        <div style={{ display: "flex", gap: "10px", fontSize: 50 }}>
-          {emojis.map((emoji, index) => (
-            <span key={index}>{emoji}</span>
-          ))}
-        </div>*/}
         <div style={{ display: "flex", gap: "70px", fontSize: 300 }}>
           <span>{emoji1}</span>
           <span>{emoji2}</span>
