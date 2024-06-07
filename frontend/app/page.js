@@ -224,7 +224,7 @@ export default function Home() {
                 </label>
                 <p className="mt-4 text-sm text-center lowercase">
                   Don&apos;t worry if your cosmic vibes change tomorrow... your
-                  NFT always listening and so well-prepared to evolve alongside
+                  NFT is always listening and so well-prepared to evolve alongside
                   you! We&apos;ll provide you $MOOD token after nft mint to fuel
                   your daily mood swings for the next hundred years! Your
                   ever-changing feelings have finally found a match.
