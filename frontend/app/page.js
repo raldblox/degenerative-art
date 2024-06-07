@@ -219,7 +219,7 @@ export default function Home() {
             <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-md">
               <div className="flex flex-col items-center">
                 <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
-                  Enter the one-time emoji mood that the universe gave you
+                  Enter the one-time emoji mood that universe gave you
                   today.
                 </label>
                 <p className="mt-4 text-sm text-center lowercase">
