@@ -17,7 +17,7 @@ export default async function Image({ params }) {
   const protocol =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://www.generatives.art";
+      : "https://www.degeneratives.art";
   const url = `${protocol}/api/getTokenURI/${params.tokenId}`;
   const metadata = await fetch(url).then((res) => res.json());
   console.log(metadata);
