@@ -24,8 +24,8 @@ async function fetchTokenURI(tokenId) {
 export async function GET(request, { params }) {
   try {
     const tokenURI = await fetchTokenURI(params.tokenId);
-    const image = tokenURI.image;
-    return NextResponse.json({ image });
+    const data = tokenURI.image;
+    return NextResponse.json({ data });
   } catch (error) {
     console.error("Error in API route:", error);
     return new NextResponse("Internal Server Error", { status: 500 });

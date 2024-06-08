@@ -9,12 +9,13 @@ export const runtime = "edge";
 
 async function fetchTokenURI(tokenId) {
   try {
-    const node = process.env.ALCHEMY_WSS_AMOY; // api
+    const node = process.env.ALCHEMY_WSS_AMOY;
     const provider = new ethers.WebSocketProvider(node);
     let contract = new ethers.Contract(CONTRACT_ADDRESS, degenArtAbi, provider);
     let tokenURI = await contract.tokenURI(tokenId);
+    let owner = await contract.ownerOf(tokenId);
     const metadata = JSON.parse(atob(tokenURI?.split(",")[1]));
-    return metadata;
+    return [owner, metadata];
   } catch (error) {
     console.error("Error fetching tokenURI:", error);
     throw new Error("Failed to fetch tokenURI");
@@ -23,8 +24,8 @@ async function fetchTokenURI(tokenId) {
 
 export async function GET(request, { params }) {
   try {
-    const tokenURI = await fetchTokenURI(params.tokenId);
-    return NextResponse.json({ tokenId: params.tokenId, tokenURI });
+    const [owner, tokenURI] = await fetchTokenURI(params.tokenId);
+    return NextResponse.json({ tokenId: params.tokenId, owner, tokenURI });
   } catch (error) {
     console.error("Error in API route:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
