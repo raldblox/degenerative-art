@@ -207,6 +207,14 @@ export default function Home() {
         </NavbarContent>
       </Navbar>
       <section className="relative grid w-full">
+        <div className="absolute top-0">
+          <iframe
+            ref={iframeRef}
+            title="Rendered Document"
+            width="100%"
+            className="w-screen min-h-[60vh] overflow-hidden"
+          />
+        </div>
         <div
           className={`${
             mounted ? "flex" : "hidden"
@@ -216,7 +224,7 @@ export default function Home() {
             {shuffledContent.headline[0]}
           </div>
           <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
-            <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-md">
+            <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
               <div className="flex flex-col items-center">
                 <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
                   Enter the one-time emoji mood that universe gave you today.
@@ -258,44 +266,55 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+            <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-white/50 rounded-3xl drop-shadow-sm">
+              <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
+              <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 md:justify-between drop-shadow-md">
+                {shuffledContent?.placeholders.map((emoji, i) => (
+                  <div
+                    className="p-2 shadow-sm cursor-pointer cell group"
+                    key={i}
+                  >
+                    <span className="absolute text-[4rem] transition-all group-hover:scale-150 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-40">
+                      {emoji}
+                    </span>
+                    <span className="text-5xl duration-200 hover:scale-90 drop-shadow-md group-hover:drop-shadow-none">
+                      {emoji}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
               <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
               <p className="text-lg font-bold">-</p>
             </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
-              <h5 className="text-xs text-bold">TOTAL SUPPLY</h5>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
+              <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
               <p className="text-lg font-bold">-</p>
             </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
-              <h5 className="text-xs text-bold">LIQUIDITY POOL</h5>
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
+              <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
               <p className="text-lg font-bold">-</p>
             </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square">
+            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
               <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
               <p className="text-lg font-bold">-</p>
             </div>
-          </section>
-          {/* <div className="mt-8">
-            <Link href="#info">see how it work</Link>
-          </div> */}
-          {/* <div
-            id="info"
-            className="absolute bottom-0 w-screen p-6 py-12 bg-white/80 backdrop-blur-sm"
-          >
-            <h1 className="mx-auto text-lg text-center lowercase max-w-7xl">
-              <span className="font-bold">How does it work? </span>{" "}
-              {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go now.`}
-            </h1>
-          </div> */}
-        </div>
+            <div
+              id="info"
+              className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-white/80 backdrop-blur-sm drop-shadow-sm"
+            >
+              <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
+                <span className="font-bold">How does it work? </span>{" "}
+                {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
+              </h1>
+            </div>
+            {/* <div className="grid grid-cols-2 col-span-2 md:col-span-4 bg-white/80">
+              <div className="col-span-2 p-6">here are the yowtilitizz?</div>
 
-        <div className="fixed top-0">
-          <iframe
-            ref={iframeRef}
-            title="Rendered Document"
-            width="100%"
-            className="min-h-[150vh] w-screen overflow-hidden"
-          />
+              <div className="p-6 "></div>
+            </div> */}
+          </section>
         </div>
       </section>
     </main>

@@ -92,5 +92,9 @@ contract DegenerativesArt is ERC721, Ownable(msg.sender) {
         }
     }
 
+    function getEmojis(uint256 tokenId) public view returns (string[] memory) {
+        return emojis[tokenId];
+    }
+
     receive() external payable {}
 }

@@ -4,10 +4,8 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract EMOJI is ERC20, Ownable(msg.sender) {
-    address degeneratives;
-
-    constructor() ERC20("EMOJI Token", "EMOJI") {
+contract MoodToken is ERC20, Ownable(msg.sender) {
+    constructor() ERC20("Mood Token", "Mood") {
         _mint(msg.sender, 1e12 * 10e16);
     }
 
