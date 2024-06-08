@@ -1,7 +1,7 @@
 "use client";
 
 import { Context } from "@/app/(providers)/EthereumProvider";
-import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
+import { Button, Card, CardFooter, CardHeader, Image, Link } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
 
 export default function Token({ params }) {
@@ -71,6 +71,8 @@ export default function Token({ params }) {
               color="primary"
               radius="full"
               size="sm"
+              as={Link}
+              href={`https://testnets.opensea.io/assets/amoy/0x79f3557b73f89df0e54a6d5b71d63fd098ed6af4/${params.tokenId}`}
               isIconOnly
             >
               <svg
