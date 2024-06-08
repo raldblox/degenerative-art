@@ -306,7 +306,7 @@ export default function Home() {
             >
               <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
                 <span className="font-bold">How does it work? </span>{" "}
-                {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... "blockchain scientists" behind this onchain stuff. 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
+                {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... blockchain scientists? 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
               </h1>
             </div>
             {/* <div className="grid grid-cols-2 col-span-2 md:col-span-4 bg-white/80">
