@@ -6,7 +6,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Degenerative Art",
-  description: "emoji-to-generative-art",
+  description: "Mint generative art based on your $MOOD",
 };
 
 export default function RootLayout({ children }) {
