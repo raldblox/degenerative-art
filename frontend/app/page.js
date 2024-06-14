@@ -158,8 +158,8 @@ export default function Home() {
     return inputFields;
   };
 
-  return (
-    <main className="bg-[#fafafa] w-full min-h-screen overflow-hidden">
+  const NavBar = () => {
+    return (
       <Navbar
         isBlurred
         position="sticky"
@@ -206,117 +206,135 @@ export default function Home() {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <section className="relative grid w-full">
-        <div className="absolute top-0">
-          <iframe
-            ref={iframeRef}
-            title="Rendered Document"
-            width="100%"
-            className="w-screen min-h-[60vh] overflow-hidden"
-          />
-        </div>
-        <div
-          className={`${
-            mounted ? "flex" : "hidden"
-          } z-20 flex-col w-full p-2 items-center justify-start md:p-16 space-y-16"`}
-        >
-          <div className="max-w-6xl mt-8 text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
-            {shuffledContent.headline[0]}
-          </div>
-          <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
-            <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
-              <div className="flex flex-col items-center">
-                <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
-                  Enter the one-time emoji mood that universe gave you today.
-                </label>
-                <p className="mt-4 text-sm text-center lowercase">
-                  Don&apos;t worry if your cosmic vibes change tomorrow... your
-                  NFT is always listening and so well-prepared to evolve
-                  alongside you! We&apos;ll provide you $MOOD token after nft
-                  mint to fuel your daily mood swings for the next hundred
-                  years! Your ever-changing feelings have finally found a match.
-                </p>
-                <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
-                  <div
-                    ref={fieldsRef}
-                    className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
-                  >
-                    {renderInputFields()}
-                  </div>
-                  <label className="text-sm">(enter 3-9 emojis only)</label>
-                </div>
-                <Button
-                  startContent={
-                    <svg
-                      className="h-5"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
-                      />
-                    </svg>
-                  }
-                  size="lg"
-                  className="dark"
-                  // isDisabled
-                >
-                  mint to generate magic 🪄
-                </Button>
-              </div>
-            </div>
-            <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-white/50 rounded-3xl drop-shadow-sm">
-              <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 md:justify-between drop-shadow-md">
-                {shuffledContent?.placeholders.map((emoji, i) => (
-                  <div
-                    className="p-2 shadow-sm cursor-pointer cell group"
-                    key={i}
-                  >
-                    <span className="absolute text-[4rem] transition-all group-hover:scale-150 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-40">
-                      {emoji}
-                    </span>
-                    <span className="text-5xl duration-200 hover:scale-90 drop-shadow-md group-hover:drop-shadow-none">
-                      {emoji}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
-              <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
-              <p className="text-lg font-bold">-</p>
-            </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
-              <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
-              <p className="text-lg font-bold">-</p>
-            </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
-              <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
-              <p className="text-lg font-bold">-</p>
-            </div>
-            <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-md rounded-3xl aspect-square drop-shadow-sm">
-              <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
-              <p className="text-lg font-bold">-</p>
-            </div>
-            <div
-              id="info"
-              className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-white/80 backdrop-blur-sm drop-shadow-sm"
-            >
-              <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
-                <span className="font-bold">How does it work? </span>{" "}
-                {`uhmm... Well, as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... blockchain scientists? 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
-              </h1>
-            </div>
-            {/* <div className="grid grid-cols-2 col-span-2 md:col-span-4 bg-white/80">
-              <div className="col-span-2 p-6">here are the yowtilitizz?</div>
+    );
+  };
 
-              <div className="p-6 "></div>
-            </div> */}
-          </section>
-        </div>
-      </section>
-    </main>
+  return (
+    <>
+      <NavBar />
+      <main className="w-full min-h-screen px-6">
+        <section className="relative grid w-full pb-16 bg-default-50 rounded-3xl">
+          <div className="absolute top-0 w-full">
+            <iframe
+              ref={iframeRef}
+              title="Rendered Document"
+              width="100%"
+              className="w-full h-[65vh] overflow-hidden"
+            />
+          </div>
+          <div
+            className={`${
+              mounted ? "flex" : "hidden"
+            } z-20 flex-col w-full p-2 items-center justify-start md:p-16 space-y-16"`}
+          >
+            <div className="max-w-6xl mt-8 text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
+              {shuffledContent.headline[0]}
+            </div>
+            <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
+              <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+                <div className="flex flex-col items-center">
+                  <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
+                    Enter the one-time emoji mood that universe gave you today.
+                  </label>
+                  <p className="mt-4 text-sm text-center lowercase">
+                    Don&apos;t worry if your cosmic vibes change tomorrow...
+                    your NFT is always listening and so well-prepared to evolve
+                    alongside you! We&apos;ll provide you $MOOD token after nft
+                    mint to fuel your daily mood swings for the next hundred
+                    years! Your ever-changing feelings have finally found a
+                    match.
+                  </p>
+                  <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
+                    <div
+                      ref={fieldsRef}
+                      className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
+                    >
+                      {renderInputFields()}
+                    </div>
+                    <label className="text-sm">(enter 3-9 emojis only)</label>
+                  </div>
+                  <Button
+                    startContent={
+                      <svg
+                        className="h-5"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
+                        />
+                      </svg>
+                    }
+                    size="lg"
+                    className="dark"
+                    // isDisabled
+                  >
+                    mint to generate magic 🪄
+                  </Button>
+                </div>
+              </div>
+              <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-white/50 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+                <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 md:justify-between drop-shadow-md ">
+                  {shuffledContent?.placeholders.map((emoji, i) => (
+                    <div
+                      className="p-2 shadow-sm cursor-pointer cell group"
+                      key={i}
+                    >
+                      <span className="absolute text-[5rem] transition-all group-hover:scale-125 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-50">
+                        {emoji}
+                      </span>
+                      <span className="text-5xl duration-200 hover:scale-90">
+                        {emoji}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+                <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
+                <p className="text-lg font-bold">-</p>
+              </div>
+              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+                <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
+                <p className="text-lg font-bold">-</p>
+              </div>
+              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+                <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
+                <p className="text-lg font-bold">-</p>
+              </div>
+              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+                <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
+                <p className="text-lg font-bold">-</p>
+              </div>
+              <div
+                id="info"
+                className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-white/40 backdrop-blur-xl drop-shadow-sm"
+              >
+                <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
+                  <span className="font-bold">How does it even work? </span>{" "}
+                  {`uhmm... as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... blockchain scientists? 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
+                </h1>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+      <footer className="w-full p-6 text-sm text-center">
+        Powered by OnChainVision
+      </footer>
+    </>
   );
+}
+
+{
+  /* <div className="absolute top-0">
+  <iframe
+    ref={iframeRef}
+    title="Rendered Document"
+    width="100%"
+    className="w-screen min-h-[60vh] overflow-hidden"
+  />
+</div>; */
 }

@@ -5,12 +5,6 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.24",
   networks: {
-    // hardhat: {
-    //   accounts: {
-    //     mnemonic: process.env.LOCAL_PRIVATE_KEY,
-    //   },
-    //   chainId: 31337,
-    // },
     polygon: {
       name: "Polygon Mainnet",
       url: process.env.POLYGON_RPC,

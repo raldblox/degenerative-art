@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -9,8 +9,10 @@ contract MoodToken is ERC20, Ownable(msg.sender) {
         _mint(msg.sender, 1e12 * 10e16);
     }
 
-    // Burn function destroy tokens
+    // Burn function to destroy tokens
     function burn(uint256 amount) public {
         _burn(msg.sender, amount);
     }
+
+    receive() external payable {}
 }

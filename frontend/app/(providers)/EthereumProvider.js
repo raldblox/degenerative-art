@@ -27,7 +27,7 @@ export const EthereumProvider = (props) => {
       setProvider(prov);
       console.log("block:", await prov.getBlockNumber());
       const contract = new ethers.Contract(
-        "0x79f3557b73f89df0e54a6d5b71d63fd098ed6af4",
+        "0xDD9B9311Df9bea81a8640C650981393544311F23",
         degenArtAbi,
         prov
       );

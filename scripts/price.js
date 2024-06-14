@@ -17,12 +17,12 @@ async function main() {
 
   await theme.setup(token.target);
 
-  for (let i = 0; i <= 100; i++) {
+  for (let i = 0; i <= 110; i++) {
     // Correct loop condition to simulate 10,000 mints
-    const currentPrice = await token.price(i * 100); // Access the "price" function to calculate the current price
+    const currentPrice = await token.price(i * 1); // Access the "price" function to calculate the current price
     console.log(
       "Price for ",
-      i * 100,
+      i * 1,
       ":",
       ethers.formatEther(currentPrice),
       "ETH"

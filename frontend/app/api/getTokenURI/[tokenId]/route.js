@@ -3,7 +3,7 @@ const { ethers } = require("ethers");
 import { Network, Alchemy } from "alchemy-sdk";
 import degenArtAbi from "@/app/(libraries)/DegenerativesArt.json";
 
-const CONTRACT_ADDRESS = "0x79f3557b73f89df0e54a6d5b71d63fd098ed6af4"; // Your actual contract address
+const CONTRACT_ADDRESS = "0xDD9B9311Df9bea81a8640C650981393544311F23"; // Your actual contract address
 
 export const runtime = "edge";
 

@@ -8,11 +8,11 @@ async function main() {
   await theme.waitForDeployment();
   console.log("Degeneratives Visual Engine:", theme.target);
 
-  const token = await hre.ethers.deployContract("Degeneratives", [
+  const token = await hre.ethers.deployContract("DegenerativesArt", [
     theme.target,
   ]);
   await token.waitForDeployment();
-  console.log("Degeneratives:", token.target);
+  console.log("DegenerativesArt:", token.target);
 
   await theme.setup(token.target);
 
@@ -30,16 +30,16 @@ async function main() {
     ["💀", "☠️", "☢️", "☣️", "😈", "🔪", "🩸", "💀", "☠️"],
   ];
   for (let i = 0; i < mintEmojis.length; i++) {
-    const currentPrice = await token.price();
-    await token.mint(mintEmojis[i], {
+    const currentPrice = await token.price(i);
+    await token.mint(deployer.address, mintEmojis[i], {
       value: currentPrice,
     });
   }
 
-  console.log("tokenURI:", await token.tokenURI(7));
-  await theme.evolve(1);
-  console.log("----------------------------");
-  console.log("tokenURI:", await token.tokenURI(1));
+  // console.log("tokenURI:", await token.tokenURI(7));
+  await theme.evolve(5);
+  // console.log("----------------------------");
+  // console.log("tokenURI:", await token.tokenURI(5));
 }
 
 main().catch((error) => {

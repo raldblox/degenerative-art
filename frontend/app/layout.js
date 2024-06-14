@@ -5,6 +5,7 @@ import { EthereumProvider } from "./(providers)/EthereumProvider";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL("https://degeneratives.art"),
   title: "Degenerative Art",
   description: "Mint generative art based on your $MOOD",
 };

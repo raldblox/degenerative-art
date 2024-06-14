@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT License
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.24;
 
 struct Asset {
     string assetType;

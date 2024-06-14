@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // OnChainVision Contracts
 
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.24;
 
 import {SmartCodec} from "../utils/SmartCodec.sol";
 import {IVisualEngine} from "../interfaces/IVisualEngine.sol";
@@ -19,7 +19,7 @@ contract DegenerativesVisualEngine is IVisualEngine, Ownable(msg.sender) {
         collection = IERC721(_collection);
     }
 
-    function evolve(uint256 tokenId) external {
+    function evolve(uint256 tokenId) external payable {
         address owner = collection.ownerOf(tokenId);
         require(msg.sender == owner, "Unauthorized. Not owner");
         enabledGraffiti[tokenId] = true;
@@ -102,27 +102,36 @@ contract DegenerativesVisualEngine is IVisualEngine, Ownable(msg.sender) {
     function generateMetadata(
         uint256 tokenId,
         address owner,
-        string[] memory emojis
+        string[] memory emojis,
+        uint256 moodSwing
     ) public view returns (string memory) {
         // generate image
         string memory image = generateImage(tokenId, owner, emojis);
         // generate animation
         string memory animation = generateVisual(tokenId, emojis);
+        // get mode
+        string memory mode = enabledGraffiti[tokenId] ? "graffiti" : "minimal";
 
         string memory metadata = string(
             abi.encodePacked(
-                '{"name":"DEGENART #',
+                '{"name":"degeneratives.art #',
                 Strings.toString(tokenId),
-                unicode'", "description":"A collection of unpredictable human expressions on-chain. Each DEGENerative Art NFT is a unique, ever-changing reflection of its owner`s mood, visualized by a complex on-chain algorithm. Witness the spectrum of human emotions, from 💎🙌 diamond hands to pure FUD.", "image": "',
+                unicode'", "description":"[degenerative.art](https://degeneratives.art/id/',
+                Strings.toString(tokenId),
+                '?network=EtherlinkTestnet) is a collection of unpredictable human expressions. each token is a reflection of its owner`s mood, visualized by onchain algorithms.", "image": "',
                 image,
                 '", "animation_url": "',
                 animation,
                 '", "attributes": [{"trait_type": "Impression", "value": "',
                 emojis[0],
-                '"}, {"trait_type": "Vibe", "value": "',
+                '"},{"trait_type": "Vibe", "value": "',
                 emojis[1],
                 '"},{"trait_type": "Aura", "value": "',
                 emojis[2],
+                '"},{"trait_type": "Mood Swing Counter", "value": "',
+                Strings.toString(moodSwing),
+                '"},{"trait_type": "Art Mode", "value": "',
+                mode,
                 '"}]}'
             )
         );
