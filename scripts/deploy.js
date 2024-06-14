@@ -2,9 +2,18 @@ const hre = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
-  console.log("Deployer Account: ", deployer.address);
+  const network = await ethers.provider.getNetwork();
+  const networkName = network.name;
+  console.log(
+    "Deployer Account: ",
+    deployer.address,
+    "| networkName: ",
+    networkName
+  );
 
-  const theme = await hre.ethers.deployContract("DegenerativesVisualEngine");
+  const theme = await hre.ethers.deployContract("DegenerativesVisualEngine", [
+    networkName,
+  ]);
   await theme.waitForDeployment();
   console.log("Degeneratives Visual Engine:", theme.target);
 
@@ -29,15 +38,19 @@ async function main() {
     ["🔞", "🍑", "🍆", "💦", "😏", "😈", "👅", "🔞", "🍑"],
     ["💀", "☠️", "☢️", "☣️", "😈", "🔪", "🩸", "💀", "☠️"],
   ];
-  for (let i = 0; i < mintEmojis.length; i++) {
-    const currentPrice = await token.price(i);
-    await token.mint(deployer.address, mintEmojis[i], {
-      value: currentPrice,
-    });
-  }
+  const currentPrice = await token.price(0);
+  await token.mint(deployer.address, mintEmojis[0], { value: currentPrice });
 
-  // console.log("tokenURI:", await token.tokenURI(7));
-  await theme.evolve(5);
+  // for (let i = 0; i < mintEmojis.length; i++) {
+  //   const currentPrice = await token.price(i);
+  //   console.log("minting", i);
+  //   await token.mint(deployer.address, mintEmojis[i], { value: currentPrice });
+
+  //   await new Promise((resolve) => setTimeout(resolve, 5000)); // Add 5-second delay
+  // }
+
+  // console.log("tokenURI:", await token.tokenURI(0));
+  // await theme.evolve(5);
   // console.log("----------------------------");
   // console.log("tokenURI:", await token.tokenURI(5));
 }

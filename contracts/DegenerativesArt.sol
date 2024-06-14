@@ -13,19 +13,22 @@ import "./interfaces/IERC20.sol";
  * @author raldblox.eth | github.com/raldblox
  * @notice This contract manages the DegenerativesArt NFT collection, where each NFT represents a unique expression of emotions through emojis.
  * @dev The contract utilizes a dynamic pricing curve model for `mint`, emojihash combination check, and
- * allows for token updates with various ERC20 tokens (can be managed on pricer contract).
+ * allows for token updates with various ERC20 tokens (managed on pricer contract).
  * Note: Mood pattern data is recorded by user address and not deletable by design.
  */
 
 contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
-    // Custom Errors
+    // Errors
     error InsufficientFunds();
     error NotTokenOwner();
     error ZeroAddressProvided();
     error EmojiCombinationAlreadyExists();
     error InvalidPricer();
     error TransferFailed();
-    error UpdateCooldownNotOver();
+    error CooldownNotOver();
+
+    // Constants
+    uint256 public constant UPDATE_COOLDOWN = 4 hours; // @note for mint/update coolfdown
 
     // State Variables
     uint public tokenIds;
@@ -34,11 +37,11 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     address payable public treasury; // @note can set to owner or liquidity pool contract
 
     // Mappings
-    mapping(uint256 => string[]) public emojis;
-    mapping(uint256 => uint256) public moodSwings;
-    mapping(bytes32 => bool) public emojiCombinations;
-    mapping(uint256 => uint256) public lastUpdateTimestamp;
-    mapping(address => MoodData[]) public moodPatterns;
+    mapping(uint256 => string[]) private emojis;
+    mapping(uint256 => uint256) private moodSwings;
+    mapping(bytes32 => bool) public emojisTaken;
+    mapping(address => uint256) private lastUpdateTimestamp;
+    mapping(address => MoodData[]) private moodPatterns;
     mapping(address => bool) public validPricers;
 
     // Events
@@ -71,21 +74,22 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         if (to == address(0)) revert ZeroAddressProvided();
         if (msg.value < price(totalSupply)) revert InsufficientFunds();
 
+        // Check if 4 hours have passed since the last mint/update (for `to` address)
+        if (lastUpdateTimestamp[to] + UPDATE_COOLDOWN > block.timestamp) {
+            revert CooldownNotOver();
+        }
+
         bytes32 emojiHash_ = emojiHash(_emojis);
-        if (emojiCombinations[emojiHash_])
-            revert EmojiCombinationAlreadyExists();
+        if (emojisTaken[emojiHash_]) revert EmojiCombinationAlreadyExists();
 
         if (treasury == address(0)) revert ZeroAddressProvided();
         (bool sent, ) = payable(treasury).call{value: msg.value}("");
         if (!sent) revert TransferFailed();
 
+        _updateEmojis(to, totalSupply, _emojis);
         _safeMint(to, totalSupply);
-        emojis[totalSupply] = _emojis;
-        emojiCombinations[emojiHash_] = true;
-        moodPatterns[to].push(MoodData(totalSupply, block.timestamp, _emojis));
-        emit TokenMinted(totalSupply, to, _emojis);
-        moodSwings[totalSupply]++;
 
+        emit TokenMinted(totalSupply, to, _emojis);
         totalSupply++;
         tokenIds++;
     }
@@ -99,7 +103,7 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
 
         string[] memory emojis_ = getEmojis(tokenId);
         bytes32 emojiHash_ = emojiHash(emojis_);
-        emojiCombinations[emojiHash_] = false; // Mark the emoji combination as available again
+        emojisTaken[emojiHash_] = false; // Mark the emoji combination as available again
         delete emojis[tokenId]; // Clear emojis
 
         _burn(tokenId);
@@ -125,9 +129,11 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         if (!validPricers[pricerAddress]) revert InvalidPricer();
 
         // Check if 4 hours have passed since the last update
-        uint256 lastUpdate = lastUpdateTimestamp[tokenId];
-        if (block.timestamp < lastUpdate + 4 hours) {
-            revert UpdateCooldownNotOver(); // New custom error for clarity
+        if (
+            lastUpdateTimestamp[ownerOf(tokenId)] + UPDATE_COOLDOWN >
+            block.timestamp
+        ) {
+            revert CooldownNotOver();
         }
 
         // Fetch price from the Pricer contract and also get the status if token is allowed
@@ -145,26 +151,43 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
             if (!paid) revert TransferFailed();
         }
 
+        // Update and log emojis
+        _updateEmojis(ownerOf(tokenId), tokenId, newEmojis);
+    }
+
+    //***** INTERNAL FUNCTION *****//
+
+    function _updateEmojis(
+        address owner,
+        uint256 tokenId,
+        string[] memory _emojis
+    ) internal returns (bool) {
         // Update emoji mappings
         bytes32 oldEmojiHash = emojiHash(getEmojis(tokenId));
-        bytes32 newEmojiHash = emojiHash(newEmojis);
-        emojis[tokenId] = newEmojis;
-
-        // Update mood swing counter; add mood patterns
-        moodSwings[tokenId]++; // Increase the counter for mood swings
-        moodPatterns[ownerOf(tokenId)].push(
-            MoodData(totalSupply, block.timestamp, newEmojis)
-        );
+        bytes32 newEmojiHash = emojiHash(_emojis);
 
         // If the new emoji combination is different from the old one, make the old one available again
         if (oldEmojiHash != newEmojiHash) {
-            emojiCombinations[oldEmojiHash] = false;
+            if (_ownerOf(tokenId) != address(0)) {
+                emojisTaken[oldEmojiHash] = false;
+            }
         }
 
-        //Mark the current emoji combination as used
-        emojiCombinations[newEmojiHash] = true;
+        emojis[tokenId] = _emojis;
 
-        emit TokenUpdated(tokenId, newEmojis);
+        // Update mood swing counter; record mood patterns
+        moodSwings[tokenId]++; // Increase the counter for mood swings
+        moodPatterns[owner].push(
+            MoodData(totalSupply, block.timestamp, _emojis)
+        );
+
+        //Mark the current emoji combination as used
+        emojisTaken[newEmojiHash] = true;
+        lastUpdateTimestamp[owner] = block.timestamp;
+
+        emit TokenUpdated(tokenId, _emojis);
+
+        return true;
     }
 
     //***** HELPER FUNCTIONS *****//
@@ -221,6 +244,10 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         address owner
     ) public view returns (MoodData[] memory) {
         return moodPatterns[owner];
+    }
+
+    function getLastMoodUpdate(address owner) public view returns (uint256) {
+        return lastUpdateTimestamp[owner];
     }
 
     //***** ADMIN FUNCTION *****//

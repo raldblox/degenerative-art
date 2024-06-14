@@ -11,9 +11,12 @@ import {IERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract DegenerativesVisualEngine is IVisualEngine, Ownable(msg.sender) {
     mapping(uint256 => bool) public enabledGraffiti;
+    string public network;
     IERC721 public collection;
 
-    constructor() {}
+    constructor(string memory networkName) {
+        network = networkName;
+    }
 
     function setup(address _collection) external onlyOwner {
         collection = IERC721(_collection);
@@ -111,18 +114,28 @@ contract DegenerativesVisualEngine is IVisualEngine, Ownable(msg.sender) {
         string memory animation = generateVisual(tokenId, emojis);
         // get mode
         string memory mode = enabledGraffiti[tokenId] ? "graffiti" : "minimal";
+        string memory externalUrl = string(
+            abi.encodePacked(
+                "https://degeneratives.art/id/",
+                Strings.toString(tokenId),
+                "?network=",
+                network
+            )
+        );
 
         string memory metadata = string(
             abi.encodePacked(
                 '{"name":"degeneratives.art #',
                 Strings.toString(tokenId),
-                unicode'", "description":"[degenerative.art](https://degeneratives.art/id/',
-                Strings.toString(tokenId),
-                '?network=EtherlinkTestnet) is a collection of unpredictable human expressions. each token is a reflection of its owner`s mood, visualized by onchain algorithms.", "image": "',
+                unicode'","description":"[degenerative.art](',
+                externalUrl,
+                ') is a collection of unpredictable human expressions. each token is a reflection of its owner`s mood, visualized by onchain algorithms.", "image": "',
                 image,
-                '", "animation_url": "',
+                '","animation_url": "',
                 animation,
-                '", "attributes": [{"trait_type": "Impression", "value": "',
+                '","external_url": "',
+                externalUrl,
+                '","attributes": [{"trait_type": "Impression", "value": "',
                 emojis[0],
                 '"},{"trait_type": "Vibe", "value": "',
                 emojis[1],

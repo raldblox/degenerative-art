@@ -1,30 +1,30 @@
 export const contractDeployments = {
   PolygonAmoy: {
     DegenerativesArt: {
-      address: "0xDD9B9311Df9bea81a8640C650981393544311F23",
+      address: "0xeA28cDF3462cC34FCE508533fe76d8E9F60D58b9",
       explorer:
-        "https://www.oklink.com/amoy/address/0xDD9B9311Df9bea81a8640C650981393544311F23#code",
+        "https://www.oklink.com/amoy/address/0xeA28cDF3462cC34FCE508533fe76d8E9F60D58b9#code",
     },
     DegenerativesVisualEngine: {
-      address: "0xDfEe90aF8Ab298E0B221B1E288Fd2AB6321Bab92",
+      address: "0xeA28cDF3462cC34FCE508533fe76d8E9F60D58b9",
     },
   },
   EtherlinkTestnet: {
     DegenerativesArt: {
-      address: "0xbba7dDc9502C196f6e2284183E408Bf895044Ca1",
+      address: "0xEEda165292503a5b27380D36a796040B0D204264",
     },
     DegenerativesVisualEngine: {
-      address: "0xd4A045892ACD59423dFD16928e5EBbA7a3f37Ae6",
+      address: "0xE486dC83A8C1d2a330C11f612D82f8a271d25619",
     },
   },
-  CoreChainTestnet: {
+  CoreTestnet: {
     DegenerativesArt: {
-      address: "0xcfE6f5a212A8B38Ffb443b8f00df6D9bA369fa8d",
+      address: "0x8A65c9DbcDb0203c55e1920D1f096aC8B8bFc235",
       explorer:
-        "https://scan.test.btcs.network/address/0xcfE6f5a212A8B38Ffb443b8f00df6D9bA369fa8d#code",
+        "https://scan.test.btcs.network/address/0x8A65c9DbcDb0203c55e1920D1f096aC8B8bFc235#code",
     },
     DegenerativesVisualEngine: {
-      address: "0x98c737921BedB17e7FB89F94d6a4a089ae776CD5",
+      address: "0x938b770092685894a4Facfb8F8A726499EcD1879",
     },
   },
 };
