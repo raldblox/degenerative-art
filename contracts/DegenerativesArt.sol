@@ -18,6 +18,8 @@ import "./interfaces/IERC20.sol";
  */
 
 contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
+    IVisualEngine public engine;
+
     // Errors
     error InsufficientFunds();
     error NotTokenOwner();
@@ -33,8 +35,8 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     // State Variables
     uint public tokenIds;
     uint public totalSupply;
-    IVisualEngine public engine;
-    address payable public treasury; // @note can set to owner or liquidity pool contract
+    uint public totalMoodSwing;
+    address payable public treasury; // @note can set to wallet or liquidity pool contract
 
     // Mappings
     mapping(uint256 => string[]) private emojis;
@@ -70,12 +72,13 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     /// @notice Mints a new Degenerative Art NFT based on a combination of emojis
     /// @dev Requires sufficient ETH payment and a unique emoji combination
     /// @param _emojis An array of emoji strings representing the mood
-    function mint(address to, string[] memory _emojis) external payable {
-        if (to == address(0)) revert ZeroAddressProvided();
+    function mint(string[] memory _emojis) external payable {
         if (msg.value < price(totalSupply)) revert InsufficientFunds();
 
-        // Check if 4 hours have passed since the last mint/update (for `to` address)
-        if (lastUpdateTimestamp[to] + UPDATE_COOLDOWN > block.timestamp) {
+        // Check if 4 hours have passed since the last mint/update
+        if (
+            lastUpdateTimestamp[msg.sender] + UPDATE_COOLDOWN > block.timestamp
+        ) {
             revert CooldownNotOver();
         }
 
@@ -86,10 +89,10 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         (bool sent, ) = payable(treasury).call{value: msg.value}("");
         if (!sent) revert TransferFailed();
 
-        _updateEmojis(to, totalSupply, _emojis);
-        _safeMint(to, totalSupply);
+        _updateEmojis(msg.sender, totalSupply, _emojis);
+        _safeMint(msg.sender, totalSupply);
 
-        emit TokenMinted(totalSupply, to, _emojis);
+        emit TokenMinted(totalSupply, msg.sender, _emojis);
         totalSupply++;
         tokenIds++;
     }
@@ -177,6 +180,7 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
 
         // Update mood swing counter; record mood patterns
         moodSwings[tokenId]++; // Increase the counter for mood swings
+        totalMoodSwing++;
         moodPatterns[owner].push(
             MoodData(totalSupply, block.timestamp, _emojis)
         );
@@ -188,6 +192,14 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         emit TokenUpdated(tokenId, _emojis);
 
         return true;
+    }
+
+    function _concatEmojis(
+        string[] memory emojis_
+    ) public pure returns (string memory emojiString) {
+        for (uint256 i = 0; i < emojis_.length; i++) {
+            emojiString = string.concat(emojiString, emojis_[i]);
+        }
     }
 
     //***** HELPER FUNCTIONS *****//
@@ -202,16 +214,8 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     /// @notice Hashes a combination of emojis for uniqueness check
     /// @param emojis_ An array of emoji strings to be hashed
     function emojiHash(string[] memory emojis_) public pure returns (bytes32) {
-        string memory emojiString = concatEmojis(emojis_);
+        string memory emojiString = _concatEmojis(emojis_);
         return keccak256(abi.encodePacked(emojiString));
-    }
-
-    function concatEmojis(
-        string[] memory emojis_
-    ) public pure returns (string memory emojiString) {
-        for (uint256 i = 0; i < emojis_.length; i++) {
-            emojiString = string.concat(emojiString, emojis_[i]);
-        }
     }
 
     /// @notice Returns the metadata URI for a given token ID
@@ -266,6 +270,13 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     function updatePricer(address pricer, bool isValid) external onlyOwner {
         validPricers[pricer] = isValid;
         emit PricerUpdated(pricer, isValid);
+    }
+
+    /// @notice Allows the owner to update the treasury address
+    /// @param newTreasury The address of the treasury
+    function updateTreasury(address newTreasury) external onlyOwner {
+        if (newTreasury == address(0)) revert ZeroAddressProvided();
+        treasury = payable(newTreasury);
     }
 
     /// @notice Allows the owner to recover accidentally sent ERC20 tokens or ETH from the contract

@@ -400,6 +400,25 @@
   {
     "inputs": [
       {
+        "internalType": "string[]",
+        "name": "emojis_",
+        "type": "string[]"
+      }
+    ],
+    "name": "_concatEmojis",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "emojiString",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -445,25 +464,6 @@
     "name": "burn",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string[]",
-        "name": "emojis_",
-        "type": "string[]"
-      }
-    ],
-    "name": "concatEmojis",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "emojiString",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -655,11 +655,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
       {
         "internalType": "string[]",
         "name": "_emojis",
@@ -900,6 +895,19 @@
   },
   {
     "inputs": [],
+    "name": "totalMoodSwing",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "totalSupply",
     "outputs": [
       {
@@ -1015,6 +1023,19 @@
       }
     ],
     "name": "updatePricer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newTreasury",
+        "type": "address"
+      }
+    ],
+    "name": "updateTreasury",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

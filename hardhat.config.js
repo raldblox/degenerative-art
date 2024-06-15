@@ -23,8 +23,8 @@ module.exports = {
       accounts: [process.env.OCVLABS_PRIVATE_KEY],
       chainId: 1115,
     },
-    coreMainnet: {
-      name: "Core Blockchain Mainnet",
+    core: {
+      name: "Core",
       url: "https://rpc.coredao.org",
       accounts: [process.env.OCVLABS_PRIVATE_KEY],
       chainId: 1116,
@@ -34,8 +34,8 @@ module.exports = {
       url: "https://node.ghostnet.etherlink.com",
       accounts: [process.env.OCVLABS_PRIVATE_KEY],
     },
-    etherlinkMainnet: {
-      name: "Etherlink Mainnet",
+    etherlink: {
+      name: "Etherlink",
       url: "https://node.mainnet.etherlink.com",
       accounts: [process.env.OCVLABS_PRIVATE_KEY],
     },
@@ -73,7 +73,7 @@ module.exports = {
         urls: {
           apiURL:
             "https://www.oklink.com/api/explorer/v1/contract/verify/async/api/polygonAmoy",
-          browserURL: "https://www.oklink.com/polygonAmoy",
+          browserURL: "https://www.oklink.com/amoy",
         },
       },
     ],

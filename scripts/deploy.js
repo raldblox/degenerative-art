@@ -39,7 +39,7 @@ async function main() {
     ["💀", "☠️", "☢️", "☣️", "😈", "🔪", "🩸", "💀", "☠️"],
   ];
   const currentPrice = await token.price(0);
-  await token.mint(deployer.address, mintEmojis[0], { value: currentPrice });
+  await token.mint(mintEmojis[0], { value: currentPrice });
 
   // for (let i = 0; i < mintEmojis.length; i++) {
   //   const currentPrice = await token.price(i);
