@@ -10,6 +10,7 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
+import LivePriceChart from "./(components)/PriceCharts";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -231,7 +232,7 @@ export default function Home() {
               {shuffledContent.headline[0]}
             </div>
             <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
-              <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+              <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-default-100/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
                 <div className="flex flex-col items-center">
                   <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
                     Enter the one-time emoji mood that universe gave you today.
@@ -274,43 +275,58 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-white/50 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+              <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-default-100/50 rounded-3xl drop-shadow-sm backdrop-blur-xl">
                 <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 md:justify-between drop-shadow-md ">
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 drop-shadow-md ">
                   {shuffledContent?.placeholders.map((emoji, i) => (
                     <div
-                      className="p-2 shadow-sm cursor-pointer cell group"
+                      className="p-2 border-2 shadow-inner cursor-pointer cell group border-white/80"
                       key={i}
                     >
                       <span className="absolute text-[5rem] transition-all group-hover:scale-125 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-50">
                         {emoji}
                       </span>
-                      <span className="text-5xl duration-200 hover:scale-90">
+                      <span className="text-5xl duration-200 hover:drop-shadow-md">
                         {emoji}
                       </span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="flex-col items-center hidden p-4 space-y-4 border-2 border-white justify-cente lg:flex md:col-span-4 bg-default-100/50 backdrop-blur-xl rounded-3xl drop-shadow-sm">
+                <h5 className="text-sm text-center text-bold">
+                  PRICE CURVE & SUPPLY DYNAMICS
+                </h5>
+                <div className="pr-12">
+                  <LivePriceChart />
+                </div>
+                <p className="p-4 text-xs text-center text-balance">
+                  Our pricing model is designed to create a fair and sustainable
+                  ecosystem for DegenerativesArt. There&apos;s no cap on the
+                  number of NFTs that can be minted, but the exponential price
+                  curve acts as a natural limiting factor. The more NFTs that
+                  exist, the higher the price becomes for the next one.
+                </p>
+              </div>
+              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
                 <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
                 <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
                 <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-white/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
                 <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
               <div
                 id="info"
-                className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-white/40 backdrop-blur-xl drop-shadow-sm"
+                className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-default-100/40 backdrop-blur-xl drop-shadow-sm"
               >
                 <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
                   <span className="font-bold">How does it even work? </span>{" "}
@@ -321,6 +337,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       <footer className="w-full p-6 text-sm text-center">
         Powered by OnChainVision
       </footer>
