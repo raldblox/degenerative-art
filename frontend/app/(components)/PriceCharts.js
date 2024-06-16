@@ -15,7 +15,7 @@ import { ethers } from "ethers";
 const LivePriceChart = () => {
   const [data, setData] = useState([]);
   const [totalSupply, setTotalSupply] = useState(0);
-  const [maxSupply, setMaxSupply] = useState(1000);
+  const [maxSupply, setMaxSupply] = useState(50);
   const CONTRACT_ADDRESS = "YOUR_CONTRACT_ADDRESS";
 
   // Off-chain price calculation function
@@ -54,20 +54,28 @@ const LivePriceChart = () => {
   return (
     <LineChart width={780} height={300} data={data}>
       <CartesianGrid strokeDasharray="2 2" />
-      <XAxis dataKey="supply" fontSize={12} />
-      <YAxis fontSize={12} />
-      <Tooltip />
-      <Line type="natural" dataKey="price" stroke="#666" dot={1} />
-
-      {/* Add ReferenceDot for current position */}
-      <ReferenceDot
+      <XAxis dataKey="supply" fontSize={10} />
+      <YAxis fontSize={10} />
+      <Tooltip
+        label={{
+          value: `Current Supply: ${totalSupply} | Mint Price: ${calculateMintPrice(
+            totalSupply
+          )} ether`,
+          position: "insideTopLeft",
+          fill: "blue",
+          fontSize: "10",
+        }}
+      />
+      <Line type="linear" dataKey="price" stroke="blue" fill="none" />
+      {/* <ReferenceDot
         x={totalSupply.toString()}
         y={calculateMintPrice(totalSupply)}
         r={8}
         fill="blue"
-        stroke="none"
-      />
-      <ReferenceLine
+        stroke="blue"
+        strokeDasharray="3 3"
+      /> */}
+      {/* <ReferenceLine
         x={totalSupply.toString()}
         stroke="blue"
         strokeDasharray="3 3"
@@ -79,7 +87,7 @@ const LivePriceChart = () => {
           fill: "blue",
           fontSize: "12",
         }}
-      />
+      /> */}
     </LineChart>
   );
 };

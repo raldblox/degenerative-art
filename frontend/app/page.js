@@ -2,12 +2,21 @@
 
 import {
   Button,
+  ButtonGroup,
   Input,
   Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tabs,
 } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import LivePriceChart from "./(components)/PriceCharts";
@@ -22,7 +31,7 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [preview, setPreview] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("home");
 
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -168,38 +177,76 @@ export default function Home() {
         className="z-50 h-[70px]"
       >
         <NavbarBrand>
-          <div>
+          <div className="px-3">
             <svg
-              width="224"
-              height="36"
-              viewBox="0 0 224 36"
+              className="h-8"
+              viewBox="0 0 760 800"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M30.1959 6.21804L20.7425 0.895891C19.7425 0.318403 18.413 0 16.9994 0C15.5861 0 14.2566 0.31802 13.2585 0.893978L3.92684 6.22187C1.76155 7.47099 0 10.36 0 12.6611V23.3131C0 25.6058 1.77341 28.494 3.95976 29.7554L13.4135 35.0775C14.4139 35.655 15.7433 35.9734 17.157 35.9734C18.5703 35.9734 19.8998 35.6554 20.8975 35.0794L30.2303 29.7516C32.3952 28.5021 34.1568 25.6138 34.1568 23.3131V12.6611C34.1564 10.3684 32.3826 7.47979 30.1959 6.21804ZM32.7029 23.3131C32.7029 25.0892 31.2081 27.5093 29.5066 28.4906L20.1738 33.8188C19.4019 34.2643 18.3021 34.5199 17.157 34.5199C16.0112 34.5199 14.9118 34.2643 14.1333 33.8146L4.67961 28.4925C2.9613 27.5009 1.45348 25.0804 1.45348 23.3131V12.6611C1.45348 10.885 2.94867 8.46409 4.65052 7.48286L13.9822 2.15458C14.7545 1.70912 15.8539 1.45348 16.9994 1.45348C18.1448 1.45348 19.2443 1.70912 20.0223 2.15879L29.476 7.48094C31.1951 8.47289 32.7029 10.8934 32.7029 12.6611V23.3131Z"
-                fill="#111111"
+                d="M671.515 138.281L461.285 19.9234C439.047 7.08085 409.481 0 378.043 0C346.613 0 317.047 7.07234 294.851 19.8809L87.3277 138.366C39.1745 166.145 0 230.392 0 281.566V518.451C0 569.438 39.4383 633.668 88.0596 661.719L298.298 780.077C320.545 792.919 350.111 800 381.549 800C412.979 800 442.545 792.928 464.732 780.119L672.281 661.634C720.425 633.847 759.6 569.617 759.6 518.451V281.566C759.591 230.579 720.145 166.34 671.515 138.281ZM727.268 518.451C727.268 557.949 694.025 611.77 656.187 633.591L448.638 752.085C431.472 761.992 407.013 767.677 381.549 767.677C356.068 767.677 331.617 761.992 314.306 751.992L104.068 633.634C65.8553 611.583 32.3234 557.753 32.3234 518.451V281.566C32.3234 242.068 65.5745 188.23 103.421 166.409L310.945 47.9149C328.119 38.0085 352.57 32.3234 378.043 32.3234C403.515 32.3234 427.966 38.0085 445.268 48.0085L655.506 166.366C693.736 188.426 727.268 242.255 727.268 281.566V518.451Z"
+                fill="black"
               />
               <path
-                d="M16.9719 22.9528C16.1609 22.6975 15.3003 22.7741 14.5475 23.1679C12.9949 23.9788 12.3906 25.9026 13.2004 27.4568L14.0056 27.0373C13.4273 25.9271 13.8586 24.5521 14.9681 23.9731C16.0779 23.3929 17.4533 23.8254 18.0339 24.9359L18.8387 24.515C18.4449 23.7618 17.7824 23.2073 16.9719 22.9528Z"
-                fill="#111111"
+                d="M727.268 518.451C727.268 557.949 694.025 611.77 656.187 633.591L448.638 752.085C431.472 761.992 407.013 767.677 381.549 767.677C356.068 767.677 331.617 761.992 314.306 751.992L104.068 633.634C65.8553 611.583 32.3234 557.753 32.3234 518.451V281.566C32.3234 242.068 65.5745 188.23 103.421 166.409L310.945 47.9149C328.119 38.0085 352.57 32.3234 378.043 32.3234C403.515 32.3234 427.966 38.0085 445.268 48.0085L655.506 166.366C693.736 188.426 727.268 242.255 727.268 281.566V518.451Z"
+                fill="white"
               />
               <path
-                d="M8.56216 18.8958C9.56568 18.8958 10.3792 18.0823 10.3792 17.0788C10.3792 16.0752 9.56568 15.2617 8.56216 15.2617C7.55863 15.2617 6.74512 16.0752 6.74512 17.0788C6.74512 18.0823 7.55863 18.8958 8.56216 18.8958Z"
-                fill="#111111"
+                d="M656.437 634.025L656.435 634.026L448.888 752.518C448.888 752.518 448.887 752.519 448.887 752.519C431.626 762.48 407.075 768.177 381.549 768.177C356.007 768.177 331.466 762.48 314.061 752.427L314.056 752.424M656.437 634.025L314.056 752.424M656.437 634.025C675.446 623.062 693.271 604.083 706.342 582.913C719.412 561.746 727.768 538.324 727.768 518.451V281.566C727.768 261.785 719.338 238.407 706.148 217.232C692.955 196.053 674.96 177.014 655.756 165.933L655.752 165.93M656.437 634.025L655.752 165.93M314.056 752.424L103.823 634.07L103.818 634.067C84.6234 622.991 66.6326 603.953 53.4416 582.776C40.2532 561.603 31.8234 538.228 31.8234 518.451V281.566C31.8234 261.693 40.1819 238.267 53.2544 217.096C66.3291 195.921 84.1584 176.938 103.172 165.975L103.173 165.974L310.695 47.4818M314.056 752.424L310.695 47.4818M310.695 47.4818C310.695 47.4814 310.696 47.481 310.697 47.4807M310.695 47.4818L310.697 47.4807M448.388 751.652L448.39 751.651L655.937 633.158L448.388 751.652ZM448.388 751.652C431.317 761.504 406.949 767.177 381.549 767.177C356.132 767.177 331.773 761.504 314.556 751.559L314.552 751.556M448.388 751.652L314.552 751.556M314.552 751.556L104.318 633.201M314.552 751.556L104.318 633.201M311.194 48.348L311.193 48.3491L103.671 166.842C84.8373 177.701 67.1177 196.547 54.1052 217.621C41.0905 238.699 32.8234 261.942 32.8234 281.566V518.451C32.8234 537.976 41.1596 561.167 54.2904 582.247C67.4174 603.322 85.2972 622.224 104.313 633.198L104.318 633.201M311.194 48.348L104.318 633.201M311.194 48.348C328.274 38.4962 352.634 32.8234 378.043 32.8234C403.451 32.8234 427.81 38.4961 445.018 48.4414L445.023 48.4442M311.194 48.348L445.023 48.4442M445.023 48.4442L655.256 166.799C655.258 166.8 655.259 166.8 655.26 166.801C674.285 177.78 692.17 196.684 705.299 217.761C718.432 238.844 726.768 262.037 726.768 281.566V518.451C726.768 538.076 718.503 561.314 705.492 582.387M445.023 48.4442L705.492 582.387M655.752 165.93L445.518 47.5756C445.518 47.5752 445.517 47.5747 445.516 47.5743C428.119 37.5205 403.577 31.8234 378.043 31.8234C352.508 31.8234 327.966 37.5204 310.697 47.4807M655.752 165.93L310.697 47.4807M705.492 582.387C692.483 603.456 674.768 622.298 655.939 633.157L705.492 582.387ZM461.035 20.3564L461.04 20.3591L671.265 138.714C671.266 138.715 671.267 138.715 671.268 138.716C695.496 152.696 717.458 175.704 733.364 201.587C749.273 227.475 759.096 256.191 759.1 281.566V518.451C759.1 543.917 749.347 572.676 733.568 598.549C717.79 624.42 696.016 647.358 672.031 661.201L464.484 779.685L464.482 779.686C442.386 792.442 412.911 799.5 381.549 799.5C350.179 799.5 320.703 792.433 298.548 779.644L298.543 779.641L88.3094 661.286C88.3083 661.285 88.3072 661.285 88.306 661.284C64.0827 647.308 42.125 624.305 26.2228 598.424C10.3182 572.54 0.5 543.826 0.5 518.451V281.566C0.5 256.096 10.253 227.33 26.0333 201.453C41.8121 175.578 63.588 152.638 87.5775 138.799L295.099 20.3151L295.101 20.3139C317.205 7.55812 346.681 0.5 378.043 0.5C409.413 0.5 438.888 7.56655 461.035 20.3564Z"
+                stroke="#222222"
               />
               <path
-                d="M21.452 13.8322C19.772 15.5195 18.6288 16.5038 16.3973 15.5229L15.666 17.1857C16.5458 17.573 17.3296 17.7349 18.0372 17.7349C18.5707 17.7349 19.0594 17.6419 19.5125 17.4846C19.6966 18.2921 20.4157 18.8956 21.2798 18.8956C22.284 18.8956 23.0964 18.0828 23.0964 17.0786C23.0964 16.4471 22.7742 15.8918 22.2859 15.5665C22.4409 15.415 22.592 15.2635 22.7398 15.115C24.465 13.3821 25.6042 12.2367 28.3639 14.1869L29.4121 12.7028C25.4003 9.86858 23.2109 12.0664 21.452 13.8322Z"
-                fill="#111111"
+                d="M377.374 510.633L377.374 510.633C395.291 516.258 409.944 528.492 418.688 545.11L401.129 554.294C388.119 529.628 357.499 520.048 332.781 532.97C308.072 545.866 298.432 576.45 311.208 601.203L293.641 610.354C275.813 575.915 289.228 533.358 323.605 515.403L323.605 515.403C340.301 506.669 359.389 504.971 377.374 510.633Z"
+                fill="black"
+                stroke="#222222"
+                stroke-width="0.382696"
               />
               <path
-                d="M56.4259 17.7543C56.4259 15.6935 55.4092 14.5669 53.3209 14.5669C52.7439 14.5669 52.2493 14.6493 51.8371 14.8142C51.0677 15.1714 50.5457 15.6935 50.2984 16.5178C50.161 16.9025 50.106 17.3147 50.106 17.7543C50.106 18.194 50.161 18.6061 50.2984 18.9908C50.5182 19.7877 51.0952 20.3647 51.8371 20.6669C52.2493 20.8593 52.7439 20.9417 53.3209 20.9417C55.4092 20.9417 56.4259 19.8151 56.4259 17.7543ZM56.4259 12.2588V5.3894H60.5475V17.7543C60.5475 22.1233 57.4425 24.7611 53.2934 24.7611C49.0619 24.7611 45.9844 22.0133 45.9844 17.8093C45.9844 13.9349 48.842 10.7475 52.7439 10.7475C54.2002 10.7475 55.4641 11.1597 56.4259 12.2588ZM67.0047 16.1057C67.4169 16.243 67.884 16.353 68.3786 16.4079C68.8732 16.4903 69.3403 16.5178 69.78 16.5178C70.3295 16.5178 71.7309 16.4079 71.7309 15.6111C71.7309 14.7593 70.5219 14.7318 69.9174 14.7318C68.7083 14.7318 67.6642 15.0066 67.0047 16.1057ZM74.7809 20.3372V24.1841C73.2422 24.5413 71.7034 24.7886 70.1097 24.7886C65.7408 24.7886 62.4984 22.2332 62.4984 17.8093C62.4984 13.4403 65.6309 10.7475 69.78 10.7475C72.6102 10.7475 75.88 12.0939 75.88 15.3088C75.88 18.4962 72.4178 19.6777 69.7525 19.6777C68.7358 19.6777 67.7192 19.403 66.7849 19.0183C67.3345 20.557 68.9831 20.8043 70.412 20.8043C71.1539 20.8043 71.8957 20.7769 72.6376 20.6669C73.3246 20.612 74.1214 20.5296 74.7809 20.3372ZM86.7337 16.3804C86.7337 14.9241 85.3323 14.5669 84.1233 14.5669C82.9143 14.5669 81.5129 14.9241 81.5129 16.3804C81.5129 17.8367 82.9143 18.194 84.1233 18.194C85.3323 18.194 86.7337 17.8367 86.7337 16.3804ZM85.6346 27.2341C85.6346 26.2998 84.9751 25.9426 84.1233 25.9426C83.2715 25.9426 82.612 26.2998 82.612 27.2341C82.612 28.1683 83.2715 28.5255 84.1233 28.5255C84.9751 28.5255 85.6346 28.1683 85.6346 27.2341ZM89.344 27.2341C89.344 30.1467 86.6237 31.3557 84.1233 31.3557C81.5953 31.3557 78.9025 30.0368 78.9025 27.2341C78.9025 25.1733 80.4138 23.7719 82.3372 23.3323V21.8485C81.5404 21.7111 80.8534 21.4638 80.2489 21.1066C78.4629 20.1723 77.3913 18.3863 77.3913 16.3804C77.3913 12.5885 80.771 10.7475 84.1233 10.7475C85.6071 10.7475 86.871 11.0223 87.9152 11.5993C88.9868 11.0773 90.031 10.8849 91.2125 10.8849H92.2841V14.2097H91.6796H91.0751C90.8828 14.2372 90.663 14.2647 90.4431 14.3196C90.7179 14.9516 90.8553 15.6385 90.8553 16.3804C90.8553 19.3205 88.7395 21.244 86.0467 21.821V23.3597C87.8877 23.8818 89.344 25.2282 89.344 27.2341ZM97.1477 16.1057C97.5598 16.243 98.0269 16.353 98.5215 16.4079C99.0161 16.4903 99.4833 16.5178 99.9229 16.5178C100.472 16.5178 101.874 16.4079 101.874 15.6111C101.874 14.7593 100.665 14.7318 100.06 14.7318C98.8513 14.7318 97.8071 15.0066 97.1477 16.1057ZM104.924 20.3372V24.1841C103.385 24.5413 101.846 24.7886 100.253 24.7886C95.8837 24.7886 92.6413 22.2332 92.6413 17.8093C92.6413 13.4403 95.7738 10.7475 99.9229 10.7475C102.753 10.7475 106.023 12.0939 106.023 15.3088C106.023 18.4962 102.561 19.6777 99.8954 19.6777C98.8788 19.6777 97.8621 19.403 96.9278 19.0183C97.4774 20.557 99.1261 20.8043 100.555 20.8043C101.297 20.8043 102.039 20.7769 102.781 20.6669C103.468 20.612 104.264 20.5296 104.924 20.3372ZM122.07 17.7543V24.6237H117.948V17.7543C117.948 15.8584 117.069 14.5669 115.063 14.5669C113.085 14.5669 112.178 15.8858 112.178 17.7543V24.6237H108.056V17.7543C108.056 13.5228 110.969 10.7475 115.063 10.7475C119.322 10.7475 122.07 13.6602 122.07 17.7543ZM128.307 16.1057C128.719 16.243 129.187 16.353 129.681 16.4079C130.176 16.4903 130.643 16.5178 131.082 16.5178C131.632 16.5178 133.033 16.4079 133.033 15.6111C133.033 14.7593 131.824 14.7318 131.22 14.7318C130.011 14.7318 128.967 15.0066 128.307 16.1057ZM136.083 20.3372V24.1841C134.545 24.5413 133.006 24.7886 131.412 24.7886C127.043 24.7886 123.801 22.2332 123.801 17.8093C123.801 13.4403 126.933 10.7475 131.082 10.7475C133.913 10.7475 137.183 12.0939 137.183 15.3088C137.183 18.4962 133.72 19.6777 131.055 19.6777C130.038 19.6777 129.022 19.403 128.087 19.0183C128.637 20.557 130.286 20.8043 131.714 20.8043C132.456 20.8043 133.198 20.7769 133.94 20.6669C134.627 20.612 135.424 20.5296 136.083 20.3372ZM143.338 17.7543V24.6237H139.216V17.7818C139.216 13.2205 142.568 10.7475 146.8 10.7475C146.937 10.7475 147.129 10.7475 147.322 10.775C147.514 10.8025 147.734 10.8574 147.926 10.8849V14.8692C147.789 14.8417 147.624 14.8142 147.432 14.7867C147.239 14.7593 147.074 14.7318 146.937 14.7318C146.25 14.7318 145.701 14.8142 145.233 14.9516C144.464 15.2264 143.777 15.7485 143.53 16.5728C143.392 16.93 143.338 17.3422 143.338 17.7543ZM159.357 17.7543C159.247 15.7485 158.34 14.5669 156.252 14.5669C155.675 14.5669 155.18 14.6493 154.768 14.8142C153.504 15.3912 153.037 16.4629 153.037 17.7818C153.037 18.2214 153.092 18.6336 153.229 18.9908C153.642 20.4196 154.878 20.9417 156.252 20.9417C158.34 20.9417 159.357 19.8151 159.357 17.7543ZM164.578 24.6237H160.456C160.181 23.9368 159.934 23.2498 159.769 22.5354C158.835 24.0742 157.406 24.7611 155.647 24.7611C151.718 24.7611 148.915 21.4638 148.915 17.6994C148.915 13.3579 152.158 10.7475 156.252 10.7475C160.621 10.7475 163.369 13.5502 163.479 17.7543C163.506 18.1115 163.506 18.5237 163.506 19.0183C163.506 20.9417 163.808 22.8651 164.578 24.6237ZM173.645 11.352V15.1714H169.798V17.7543C169.798 19.8701 171.2 20.9417 173.233 20.9417C173.48 20.9417 173.7 20.9142 173.893 20.8868C174.085 20.8593 174.25 20.8318 174.442 20.8043V24.6237C174.195 24.6512 174.003 24.7061 173.865 24.7336C173.7 24.7611 173.425 24.7611 173.068 24.7611C168.919 24.7611 165.677 21.9309 165.677 17.7543V7.5876H169.798V11.352H173.645ZM175.926 10.8849H180.048V24.6237H175.926V10.8849ZM177.987 9.59347C176.585 9.59347 175.596 8.60428 175.596 7.20292C175.596 5.77408 176.585 4.83984 177.987 4.83984C179.416 4.83984 180.35 5.77408 180.35 7.20292C180.35 8.65923 179.443 9.59347 177.987 9.59347ZM196.809 10.8849L191.176 24.6237H187.054L181.421 10.8849H185.516C186.12 12.4511 186.725 13.9899 187.329 15.5561C187.906 17.1223 188.511 18.6611 189.115 20.2273C189.72 18.6611 190.324 17.1223 190.929 15.5561C191.506 13.9899 192.11 12.4511 192.715 10.8849H196.809ZM201.123 16.1057C201.535 16.243 202.002 16.353 202.497 16.4079C202.991 16.4903 203.458 16.5178 203.898 16.5178C204.448 16.5178 205.849 16.4079 205.849 15.6111C205.849 14.7593 204.64 14.7318 204.036 14.7318C202.827 14.7318 201.782 15.0066 201.123 16.1057ZM208.899 20.3372V24.1841C207.36 24.5413 205.822 24.7886 204.228 24.7886C199.859 24.7886 196.617 22.2332 196.617 17.8093C196.617 13.4403 199.749 10.7475 203.898 10.7475C206.728 10.7475 209.998 12.0939 209.998 15.3088C209.998 18.4962 206.536 19.6777 203.871 19.6777C202.854 19.6777 201.837 19.403 200.903 19.0183C201.453 20.557 203.101 20.8043 204.53 20.8043C205.272 20.8043 206.014 20.7769 206.756 20.6669C207.443 20.612 208.24 20.5296 208.899 20.3372ZM211.4 24.1841V20.3372C213.213 20.8868 215.494 20.9967 217.362 20.9967C218.104 20.9967 218.681 20.9692 219.093 20.8868C219.478 20.8318 219.67 20.6944 219.67 20.5021C219.67 20.4196 219.643 20.3647 219.588 20.2823C219.313 20.0075 218.709 19.8701 218.351 19.7877C217.994 19.7052 217.527 19.5953 216.95 19.4854C216.483 19.403 215.933 19.2931 215.301 19.1557C213.158 18.6886 211.509 17.4795 211.509 15.1714C211.509 11.7642 214.834 10.7475 217.637 10.7475C219.396 10.7475 221.154 10.9948 222.885 11.352V15.2264C221.154 14.7043 219.203 14.5669 217.39 14.5669C216.675 14.5669 216.181 14.5944 215.878 14.6768C215.576 14.7593 215.411 14.8966 215.411 15.0615C215.411 15.3088 215.659 15.4737 216.126 15.5561C216.593 15.666 217.252 15.8034 218.049 15.9408C218.764 16.0782 219.45 16.2156 220.11 16.3804C222.143 16.9025 223.6 18.0016 223.6 20.1998C223.6 23.8818 219.89 24.7886 216.923 24.7886C215.054 24.7886 213.213 24.5413 211.4 24.1841Z"
-                fill="#111111"
+                d="M230.626 379.784C230.626 401.995 212.62 420.001 190.409 420.001C168.197 420.001 150.191 401.995 150.191 379.784C150.191 357.572 168.197 339.566 190.409 339.566C212.62 339.566 230.626 357.572 230.626 379.784Z"
+                fill="black"
+                stroke="#222222"
+                stroke-width="0.382696"
+              />
+              <path
+                d="M546.845 256.895C574.954 247.68 609.321 251.176 653.818 282.563L630.728 315.255C600.103 293.65 578.405 289.164 559.555 294.943C550.121 297.835 541.418 303.293 532.678 310.431C523.949 317.56 515.174 326.374 505.597 335.994L505.566 336.025L505.701 336.16L505.566 336.025C502.281 339.327 498.92 342.697 495.474 346.066L495.305 346.231L495.502 346.362C506.31 353.562 513.442 365.852 513.442 379.828C513.442 402.054 495.459 420.045 473.233 420.045C454.108 420.045 438.192 406.688 434.118 388.815L434.07 388.607L433.868 388.677C423.81 392.169 412.963 394.233 401.123 394.233C385.463 394.233 368.117 390.661 348.643 382.113L364.753 345.484C389.517 356.331 408.287 356.303 425.533 348.859C442.802 341.406 458.522 326.524 477.199 307.767C496.762 288.127 518.682 266.127 546.845 256.895Z"
+                fill="black"
+                stroke="#222222"
+                stroke-width="0.382696"
               />
             </svg>
           </div>
         </NavbarBrand>
-        <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+        <NavbarContent
+          className="hidden gap-1 border sm:flex h-[50px] p-2 rounded-full"
+          justify="center"
+        >
+          <NavbarItem>
+            <Tabs
+              variant="light"
+              radius="full"
+              color="default"
+              aria-label="Tabs"
+              selectedKey={selectedTab}
+              onSelectionChange={setSelectedTab}
+            >
+              <Tab key="home" title="Home" />
+              <Tab key="analytics" title="Analytics" />
+              <Tab key="staking" title="NFT Staking" />
+            </Tabs>
+          </NavbarItem>
+          <NavbarItem>
+            <Button
+              color="foreground"
+              variant="flat"
+              radius="full"
+              className="font-bold"
+            >
+              All Arts
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+        <NavbarContent className="hidden gap-4 sm:flex" justify="end">
           <NavbarItem>
             <Button color="foreground" variant="flat" className="font-bold">
               konek welet
@@ -213,7 +260,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <main className="w-full min-h-screen px-6">
+      <main className="w-full min-h-screen p-3 md:px-6">
         <section className="relative grid w-full pb-16 bg-default-50 rounded-3xl">
           <div className="absolute top-0 w-full">
             <iframe
@@ -232,7 +279,7 @@ export default function Home() {
               {shuffledContent.headline[0]}
             </div>
             <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
-              <div className="max-w-4xl col-span-2 p-4 mt-12 border-2 md:col-span-4 md:p-8 bg-default-100/50 border-white/80 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+              <div className="max-w-4xl col-span-2 p-4 mt-12 duration-200 border-2 shadow-sm md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl hover:shadow-md backdrop-blur-xl">
                 <div className="flex flex-col items-center">
                   <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
                     Enter the one-time emoji mood that universe gave you today.
@@ -271,62 +318,134 @@ export default function Home() {
                     className="dark"
                     // isDisabled
                   >
-                    mint to generate magic 🪄
+                    mint to generate 🪄
                   </Button>
                 </div>
               </div>
-              <div className="col-span-2 p-6 border-2 md:col-span-4 border-white/80 bg-default-100/50 rounded-3xl drop-shadow-sm backdrop-blur-xl">
+              <div className="col-span-2 p-3 duration-200 border-2 shadow-sm md:p-6 md:col-span-4 border-white/80 bg-white/50 rounded-3xl hover:shadow-md backdrop-blur-xl">
                 <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-4 md:gap-4 drop-shadow-md ">
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-3 md:gap-4 drop-shadow-md ">
                   {shuffledContent?.placeholders.map((emoji, i) => (
                     <div
-                      className="p-2 border-2 shadow-inner cursor-pointer cell group border-white/80"
+                      className="p-2 border-2 shadow-md cursor-pointer cell group border-white/40"
                       key={i}
                     >
-                      <span className="absolute text-[5rem] transition-all group-hover:scale-125 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-50">
+                      <span className="absolute text-[5rem] transition-all group-hover:scale-125 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-30">
                         {emoji}
                       </span>
-                      <span className="text-5xl duration-200 hover:drop-shadow-md">
-                        {emoji}
-                      </span>
+                      <span className="text-5xl">{emoji}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="flex-col items-center hidden p-4 space-y-4 border-2 border-white justify-cente lg:flex md:col-span-4 bg-default-100/50 backdrop-blur-xl rounded-3xl drop-shadow-sm">
+              <div className="flex-col items-center hidden p-6 space-y-6 duration-200 border-2 border-white shadow-sm justify-cente lg:flex md:col-span-4 bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
                 <h5 className="text-sm text-center text-bold">
                   PRICE CURVE & SUPPLY DYNAMICS
                 </h5>
                 <div className="pr-12">
                   <LivePriceChart />
                 </div>
-                <p className="p-4 text-xs text-center text-balance">
-                  Our pricing model is designed to create a fair and sustainable
-                  ecosystem for DegenerativesArt. There&apos;s no cap on the
-                  number of NFTs that can be minted, but the exponential price
-                  curve acts as a natural limiting factor. The more NFTs that
-                  exist, the higher the price becomes for the next one.
+                <p className="pb-4 text-xs text-center text-balance">
+                  This pricing model is designed to create a fair and
+                  sustainable ecosystem for degeneratives.art. There&apos;s no
+                  cap on the number of NFTs that can be minted, but the
+                  exponential price curve acts as a natural limiting factor. The
+                  more NFTs that exist, the higher the price becomes for the
+                  next one.
                 </p>
               </div>
-              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="col-span-2 p-6 overflow-x-scroll duration-200 border-2 border-white shadow-sm md:overflow-auto md:col-span-4 justify-cente lg:flex bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
+                <Table
+                  removeWrapper
+                  className="bg-transparent"
+                  color="primary"
+                  selectionMode="single"
+                  aria-label=""
+                >
+                  <TableHeader>
+                    <TableColumn>BLOCKCHAIN NETWORK</TableColumn>
+                    <TableColumn>CURRENT SUPPLY</TableColumn>
+                    <TableColumn>NFT MINT PRICE</TableColumn>
+                    <TableColumn>ACTIONS</TableColumn>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow key="1">
+                      <TableCell>Polygon</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>0 MATIC</TableCell>
+                      <TableCell>
+                        <ButtonGroup>
+                          <Button size="sm" radius="full" variant="flat">
+                            Switch
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Stake
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Explore
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow key="2">
+                      <TableCell>Core Chain</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>0 CORE</TableCell>
+                      <TableCell>
+                        <ButtonGroup>
+                          <Button size="sm" radius="full" variant="flat">
+                            Switch
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Stake
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Explore
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow key="3">
+                      <TableCell>Etherlink</TableCell>
+                      <TableCell>1</TableCell>
+                      <TableCell>0 XTZ</TableCell>
+                      <TableCell>
+                        <ButtonGroup>
+                          <Button size="sm" radius="full" variant="flat">
+                            Switch
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Stake
+                          </Button>
+                          <Button size="sm" radius="full" variant="flat">
+                            Explore
+                          </Button>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
                 <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+
+              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
                 <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
                 <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
-              <div className="p-4 border-2 border-white bg-default-100/50 backdrop-blur-xl rounded-3xl aspect-square drop-shadow-sm">
+              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
                 <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
                 <p className="text-lg font-bold">-</p>
               </div>
               <div
                 id="info"
-                className="col-span-2 p-6 py-12 border-2 md:col-span-4 border-white/80 rounded-3xl bg-default-100/40 backdrop-blur-xl drop-shadow-sm"
+                className="col-span-2 p-6 py-12 duration-200 border-2 shadow-sm md:col-span-4 border-white/80 rounded-3xl bg-white/40 backdrop-blur-xl hover:shadow-md"
               >
                 <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
                   <span className="font-bold">How does it even work? </span>{" "}
@@ -337,7 +456,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
       <footer className="w-full p-6 text-sm text-center">
         Powered by OnChainVision
       </footer>
