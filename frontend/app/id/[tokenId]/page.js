@@ -5,6 +5,7 @@ import {
   Card,
   CardFooter,
   CardHeader,
+  Chip,
   Image,
   Spinner,
 } from "@nextui-org/react";
@@ -60,29 +61,37 @@ export default function Token({ params }) {
             {metadata?.tokenURI?.image && (
               <Card
                 isFooterBlurred
-                className="w-full opacity-50 hover:opacity-100 transition-opacity !duration-1000 h-full max-w-[320px] md:h-[200px] col-span-12 sm:col-span-5 backdrop-blur-sm bg-transparent hover:bg-white/30"
+                className="w-full group opacity-50 hover:opacity-100 transition-opacity !duration-1000 h-full max-w-[320px] md:h-[200px] col-span-12 sm:col-span-5 backdrop-blur-sm bg-transparent hover:bg-white/30"
               >
-                <CardHeader className="absolute z-10 flex-col items-start top-1">
-                  <p className="text-xs font-bold uppercase text-white/60">
+                <CardHeader className="absolute top-0 z-10 flex-col items-start">
+                  {/* <p className="text-xs font-bold uppercase text-white/60">
                     TOKEN#{params.tokenId}
-                  </p>
-                  {/* <h4 className="font-medium text-white text-LG">POLYGON</h4> */}
+                  </p> */}
+                  <Chip
+                    size="sm"
+                    variant="dot"
+                    className="text-white border-none backdrop-blur-sm"
+                  >
+                    {network}
+                  </Chip>
                 </CardHeader>
                 <Image
                   removeWrapper
                   alt="NFT Image"
-                  className="z-0 object-cover w-full h-full p-4 aspect-square"
+                  className="z-0 object-cover w-full h-full aspect-square"
                   src={metadata?.tokenURI?.image}
                 />
-                <CardFooter className="absolute bottom-0 z-10 justify-between bg-white/30 border-t-1 border-zinc-100/40">
+                <CardFooter className="absolute bottom-0 z-10 justify-between duration-200 bg-white/10 group-hover:bg-white/50 border-t-1 border-zinc-100/10 group-hover:border-zinc-100/40">
                   <div>
-                    <p className="text-black text-tiny">degeneratives.art</p>
+                    <p className="text-sm font-semibold text-black">
+                      <Link href="/">degeneratives.art</Link> #{params.tokenId}
+                    </p>
                     <p className="text-black text-tiny">
                       by {metadata?.owner?.slice(0, 6)}...{" "}
                       {metadata?.owner?.slice(-4)}
                     </p>
                   </div>
-                  <Button
+                  {/* <Button
                     className="text-tiny"
                     color="primary"
                     radius="full"
@@ -122,7 +131,7 @@ export default function Token({ params }) {
                         </clipPath>
                       </defs>
                     </svg>
-                  </Button>
+                  </Button> */}
                 </CardFooter>
               </Card>
             )}

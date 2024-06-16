@@ -12,6 +12,12 @@ import {
 } from "recharts";
 import { ethers } from "ethers";
 
+export const calculateMintPrice = (totalSupply) => {
+  const priceInWei = BigInt(10e12) * BigInt(totalSupply) ** BigInt(2);
+  const priceInEth = ethers.formatEther(priceInWei);
+  return parseFloat(priceInEth).toFixed(5);
+};
+
 const LivePriceChart = () => {
   const [data, setData] = useState([]);
   const [totalSupply, setTotalSupply] = useState(0);
@@ -19,11 +25,6 @@ const LivePriceChart = () => {
   const CONTRACT_ADDRESS = "YOUR_CONTRACT_ADDRESS";
 
   // Off-chain price calculation function
-  const calculateMintPrice = (totalSupply) => {
-    const priceInWei = BigInt(10e12) * BigInt(totalSupply) ** BigInt(2);
-    const priceInEth = ethers.formatEther(priceInWei);
-    return parseFloat(priceInEth).toFixed(5);
-  };
 
   useEffect(() => {
     const fetchData = async () => {

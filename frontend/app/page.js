@@ -3,12 +3,14 @@
 import {
   Button,
   ButtonGroup,
+  Chip,
   Input,
   Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Spinner,
   Tab,
   Table,
   TableBody,
@@ -19,7 +21,8 @@ import {
   Tabs,
 } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
-import LivePriceChart from "./(components)/PriceCharts";
+import LivePriceChart, { calculateMintPrice } from "./(components)/PriceCharts";
+import EmojisContainer from "./(components)/EmojisContainer";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -31,7 +34,10 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [supplies, setSupplies] = useState(null);
+  const [allEmojis, setAllEmojies] = useState(null);
   const [selectedTab, setSelectedTab] = useState("home");
+  const [fetching, setFetching] = useState(false);
 
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -79,16 +85,49 @@ export default function Home() {
 
   useEffect(() => {
     const fetchHtml = async () => {
+      if (fetching) {
+        return;
+      }
+      setFetching(true);
       try {
         const response = await fetch("./render.html");
         const data = await response.text();
         setHtmlContent(data);
+        const protocol =
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000"
+            : "https://www.degeneratives.art";
+        const url = `${protocol}/api/getInfo`;
+        const supplies = await fetch(url).then((res) => res.json());
+        setSupplies(supplies.results);
+        console.log("supplies", supplies.results);
+
+        // Loop through each network and supply
+        const allEmojis = {};
+        for (const item of supplies.results) {
+          const network = item.network;
+          const supply = item.supply;
+
+          for (let index = 0; index < supply; index++) {
+            const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
+            const emoji = await fetch(emojiUrl).then((res) => res.json());
+            allEmojis[network] = {
+              supply,
+              emojis: emoji,
+            };
+          }
+        }
+
+        setAllEmojies(allEmojis);
+        console.log("allEmojis:", allEmojis);
+        setFetching(false);
       } catch (error) {
         console.error("Error fetching HTML:", error);
+        setFetching(false);
       }
     };
     fetchHtml();
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, []);
 
   useEffect(() => {
     if (iframeRef.current) {
@@ -100,6 +139,9 @@ export default function Home() {
   }, [htmlContent]);
 
   useEffect(() => {
+    if (fieldsRef) {
+      return;
+    }
     const elements = fieldsRef.current.children;
     for (let i = 0; i < elements.length; i++) {
       elements[i].style.display = i < activeFields ? "block" : "none";
@@ -171,13 +213,12 @@ export default function Home() {
   const NavBar = () => {
     return (
       <Navbar
-        isBlurred
         position="sticky"
-        maxWidth="full"
-        className="z-50 h-[70px]"
+        maxWidth="2xl"
+        className="z-50 h-[70px] bg-transparent backdrop-blur-none"
       >
         <NavbarBrand>
-          <div className="px-3">
+          <Link href="/" className="px-3">
             <svg
               className="h-8"
               viewBox="0 0 760 800"
@@ -215,15 +256,18 @@ export default function Home() {
                 stroke-width="0.382696"
               />
             </svg>
-          </div>
+          </Link>
         </NavbarBrand>
-        <NavbarContent
-          className="hidden gap-1 border sm:flex h-[50px] p-2 rounded-full"
-          justify="center"
-        >
+        <NavbarContent className="flex h-[50px]" justify="center">
           <NavbarItem>
             <Tabs
-              variant="light"
+              size="sm"
+              className=""
+              classNames={{
+                tabList:
+                  "border-small gap-1 backdrop-blur-md bg-default-100/80",
+              }}
+              variant="bordered"
               radius="full"
               color="default"
               aria-label="Tabs"
@@ -232,24 +276,45 @@ export default function Home() {
             >
               <Tab key="home" title="Home" />
               <Tab key="analytics" title="Analytics" />
-              <Tab key="staking" title="NFT Staking" />
+              <Tab key="feels" className="text-bold" title="All Feels" />
             </Tabs>
           </NavbarItem>
+        </NavbarContent>
+        <NavbarContent
+          className="items-center hidden gap-2 sm:flex"
+          justify="end"
+        >
           <NavbarItem>
             <Button
+              size="sm"
               color="foreground"
-              variant="flat"
+              variant="bordered"
               radius="full"
-              className="font-bold"
+              className="font-bold border-small"
             >
-              All Arts
+              mint
             </Button>
           </NavbarItem>
-        </NavbarContent>
-        <NavbarContent className="hidden gap-4 sm:flex" justify="end">
-          <NavbarItem>
-            <Button color="foreground" variant="flat" className="font-bold">
-              konek welet
+          <NavbarItem className="">
+            <Button
+              size="sm"
+              color="foreground"
+              variant="bordered"
+              radius="full"
+              className="font-bold border-small"
+            >
+              stake
+            </Button>
+          </NavbarItem>
+          <NavbarItem className="pr-2">
+            <Button
+              size="sm"
+              color="foreground"
+              variant="bordered"
+              radius="full"
+              className="font-bold border-small"
+            >
+              connect
             </Button>
           </NavbarItem>
         </NavbarContent>
@@ -259,90 +324,93 @@ export default function Home() {
 
   return (
     <>
-      <NavBar />
-      <main className="w-full min-h-screen p-3 md:px-6">
-        <section className="relative grid w-full pb-16 bg-default-50 rounded-3xl">
-          <div className="absolute top-0 w-full">
-            <iframe
-              ref={iframeRef}
-              title="Rendered Document"
-              width="100%"
-              className="w-full h-[65vh] overflow-hidden"
-            />
-          </div>
-          <div
-            className={`${
-              mounted ? "flex" : "hidden"
-            } z-20 flex-col w-full p-2 items-center justify-start md:p-16 space-y-16"`}
-          >
-            <div className="max-w-6xl mt-8 text-4xl font-bold leading-tight tracking-tight text-center lowercase drop-shadow-md text-balance md:text-6xl">
-              {shuffledContent.headline[0]}
-            </div>
-            <section className="grid max-w-4xl grid-cols-2 gap-2 p-2 mt-2 md:grid-cols-4">
-              <div className="max-w-4xl col-span-2 p-4 mt-12 duration-200 border-2 shadow-sm md:col-span-4 md:p-8 bg-white/50 border-white/80 rounded-3xl hover:shadow-md backdrop-blur-xl">
-                <div className="flex flex-col items-center">
-                  <label className="text-lg font-bold tracking-tight text-center lowercase text-balance md:text-xl">
-                    Enter the one-time emoji mood that universe gave you today.
-                  </label>
-                  <p className="mt-4 text-sm text-center lowercase">
-                    Don&apos;t worry if your cosmic vibes change tomorrow...
-                    your NFT is always listening and so well-prepared to evolve
-                    alongside you! We&apos;ll provide you $MOOD token after nft
-                    mint to fuel your daily mood swings for the next hundred
-                    years! Your ever-changing feelings have finally found a
-                    match.
-                  </p>
-                  <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
-                    <div
-                      ref={fieldsRef}
-                      className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
-                    >
-                      {renderInputFields()}
-                    </div>
-                    <label className="text-sm">(enter 3-9 emojis only)</label>
-                  </div>
+      <main className="relative w-full min-h-screen">
+        <NavBar />
+        {selectedTab == "home" && (
+          <>
+            <section className="relative min-h-screen my-6 md:mx-12">
+              <div className="flex relative flex-col space-y-8 items-center min-h-[75vh] justify-center w-full h-full p-12 bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
+                <span className="p-1 px-2 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
+                  Where Emotions 😑 Become Art 🎨 and Currency 🪙
+                </span>
+                <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase md:text-5xl text-pretty animate-appearance-in">
+                  {shuffledContent.headline[0]}
+                </h1>
+                <p className="max-w-2xl text-[10px] md:text-xs text-center text-pretty">
+                  {" "}
+                  Don&apos;t worry if your cosmic vibes change tomorrow... your
+                  NFT is always listening and so well-prepared to evolve
+                  alongside you! We&apos;ll provide you $MOOD token after nft
+                  mint to fuel your daily mood swings for the next 90 days! Your
+                  ever-changing feelings have finally found a match.
+                </p>
+                <div className="flex gap-2 ">
                   <Button
-                    startContent={
-                      <svg
-                        className="h-5"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
-                        />
-                      </svg>
-                    }
-                    size="lg"
-                    className="dark"
-                    // isDisabled
+                    fullWidth
+                    as={Link}
+                    href="#mint"
+                    size="sm"
+                    radius="full"
+                    variant="solid"
+                    color="primary"
                   >
-                    mint to generate 🪄
+                    Mint your Feels
+                  </Button>
+                  <Button
+                    fullWidth
+                    size="sm"
+                    radius="full"
+                    variant="flat"
+                    className="text-white bg-black"
+                    onClick={() => setSelectedTab("feels")}
+                  >
+                    Discover Feels
                   </Button>
                 </div>
-              </div>
-              <div className="col-span-2 p-3 duration-200 border-2 shadow-sm md:p-6 md:col-span-4 border-white/80 bg-white/50 rounded-3xl hover:shadow-md backdrop-blur-xl">
-                <h5 className="text-sm text-center">RECENTLY MINTED GENART</h5>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-3 md:gap-4 drop-shadow-md ">
-                  {shuffledContent?.placeholders.map((emoji, i) => (
-                    <div
-                      className="p-2 border-2 shadow-md cursor-pointer cell group border-white/40"
-                      key={i}
+                <div className="flex flex-wrap items-center justify-center">
+                  <div className="md:absolute animate-appearance-in top-[15%] left-[10%]">
+                    <Chip
+                      className="border-none"
+                      variant="dot"
+                      color="secondary"
                     >
-                      <span className="absolute text-[5rem] transition-all group-hover:scale-125 duration-300 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 blur-md opacity-30">
-                        {emoji}
-                      </span>
-                      <span className="text-5xl">{emoji}</span>
-                    </div>
-                  ))}
+                      Polygon
+                    </Chip>
+                  </div>
+                  <div className="md:absolute animate-appearance-in top-[15%] right-[10%]">
+                    <Chip className="border-none" variant="dot" color="primary">
+                      Base
+                    </Chip>
+                  </div>
+                  <div className="md:absolute animate-appearance-in top-[70%] right-[7%]">
+                    <Chip className="border-none" variant="dot" color="warning">
+                      Core Chain
+                    </Chip>
+                  </div>
+                  <div className="md:absolute animate-appearance-in top-[70%] left-[7%]">
+                    <Chip className="border-none" variant="dot" color="success">
+                      Etherlink
+                    </Chip>
+                  </div>
                 </div>
               </div>
-              <div className="flex-col items-center hidden p-6 space-y-6 duration-200 border-2 border-white shadow-sm justify-cente lg:flex md:col-span-4 bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
+              <div
+                id="mint"
+                className="flex flex-col items-center justify-center w-full h-full min-h-[50vh] p-12 bg-gradient-to-tr from-default-100/50 via-transparent to-default-100/80 rounded-3xl"
+              >
+                <h1 className="text-5xl text-center">minting soon</h1>
+              </div>
+            </section>
+          </>
+        )}
+        {selectedTab == "analytics" && (
+          <>
+            <section className="sticky top-0 z-0 w-full min-h-screen p-12">
+              <div className="flex-col items-center hidden p-12 space-y-6 duration-200 border-2 border-white shadow-sm justify-cente lg:flex bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
                 <h5 className="text-sm text-center text-bold">
                   PRICE CURVE & SUPPLY DYNAMICS
                 </h5>
-                <div className="pr-12">
+                <div className="pr-12 animate-appearance-in">
                   <LivePriceChart />
                 </div>
                 <p className="pb-4 text-xs text-center text-balance">
@@ -353,112 +421,114 @@ export default function Home() {
                   more NFTs that exist, the higher the price becomes for the
                   next one.
                 </p>
-              </div>
-              <div className="col-span-2 p-6 overflow-x-scroll duration-200 border-2 border-white shadow-sm md:overflow-auto md:col-span-4 justify-cente lg:flex bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
-                <Table
-                  removeWrapper
-                  className="bg-transparent"
-                  color="primary"
-                  selectionMode="single"
-                  aria-label=""
-                >
-                  <TableHeader>
-                    <TableColumn>BLOCKCHAIN NETWORK</TableColumn>
-                    <TableColumn>CURRENT SUPPLY</TableColumn>
-                    <TableColumn>NFT MINT PRICE</TableColumn>
-                    <TableColumn>ACTIONS</TableColumn>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow key="1">
-                      <TableCell>Polygon</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>0 MATIC</TableCell>
-                      <TableCell>
-                        <ButtonGroup>
-                          <Button size="sm" radius="full" variant="flat">
-                            Switch
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Stake
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Explore
-                          </Button>
-                        </ButtonGroup>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="2">
-                      <TableCell>Core Chain</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>0 CORE</TableCell>
-                      <TableCell>
-                        <ButtonGroup>
-                          <Button size="sm" radius="full" variant="flat">
-                            Switch
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Stake
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Explore
-                          </Button>
-                        </ButtonGroup>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key="3">
-                      <TableCell>Etherlink</TableCell>
-                      <TableCell>1</TableCell>
-                      <TableCell>0 XTZ</TableCell>
-                      <TableCell>
-                        <ButtonGroup>
-                          <Button size="sm" radius="full" variant="flat">
-                            Switch
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Stake
-                          </Button>
-                          <Button size="sm" radius="full" variant="flat">
-                            Explore
-                          </Button>
-                        </ButtonGroup>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
-                <h5 className="text-xs text-bold">BLOCKCHAINS</h5>
-                <p className="text-lg font-bold">-</p>
-              </div>
-
-              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
-                <h5 className="text-xs text-bold">TOTAL SUPPLIES</h5>
-                <p className="text-lg font-bold">-</p>
-              </div>
-              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
-                <h5 className="text-xs text-bold">LIQUIDITY POOLS</h5>
-                <p className="text-lg font-bold">-</p>
-              </div>
-              <div className="p-4 duration-200 border-2 border-white shadow-sm bg-white/50 backdrop-blur-xl rounded-3xl aspect-square hover:shadow-md">
-                <h5 className="text-xs text-bold">$MOOD DISTRIBUTED</h5>
-                <p className="text-lg font-bold">-</p>
-              </div>
-              <div
-                id="info"
-                className="col-span-2 p-6 py-12 duration-200 border-2 shadow-sm md:col-span-4 border-white/80 rounded-3xl bg-white/40 backdrop-blur-xl hover:shadow-md"
-              >
-                <h1 className="text-sm text-center lowercase md:text-base max-w-7xl text-balance">
-                  <span className="font-bold">How does it even work? </span>{" "}
-                  {`uhmm... as the intern, my main job is fetching coffee for the devs... but I did overhear them talking about "onchain graphics algorithms" and "interactive assets" ✨ don't ask me for details.. I'm just here for the free mints and good vibes, tbh 😉 But hey, you can check out OnChainVision if you want to learn more from the... uh... blockchain scientists? 🧪 They seem to be like dissecting static NFTs, injecting them with alien code, and... honestly, it's kinda creepy. Gotta go 😳`}
-                </h1>
+                <div className="justify-center w-full max-w-4xl p-6 mx-auto overflow-x-scroll duration-200 border-2 border-white md:overflow-auto lg:flex bg-white/50 rounded-3xl">
+                  {supplies && (
+                    <Table
+                      removeWrapper
+                      className="bg-transparent"
+                      color="primary"
+                      selectionMode="single"
+                      aria-label=""
+                    >
+                      <TableHeader>
+                        <TableColumn>BLOCKCHAIN NETWORK</TableColumn>
+                        <TableColumn>CURRENT SUPPLY</TableColumn>
+                        <TableColumn>NFT MINT PRICE</TableColumn>
+                        {/* <TableColumn>ACTIONS</TableColumn> */}
+                      </TableHeader>
+                      <TableBody>
+                        {Object.keys(supplies).map((network) => (
+                          <TableRow key={network}>
+                            <TableCell>{supplies[network].network}</TableCell>
+                            <TableCell>{supplies[network].supply}</TableCell>
+                            <TableCell>
+                              {calculateMintPrice(supplies[network].supply)}
+                            </TableCell>
+                            {/* <TableCell>
+                              <ButtonGroup>
+                                <Button size="sm" radius="full" variant="flat">
+                                  Switch
+                                </Button>
+                                <Button size="sm" radius="full" variant="flat">
+                                  Stake
+                                </Button>
+                                <Button size="sm" radius="full" variant="flat">
+                                  Explore
+                                </Button>
+                              </ButtonGroup>
+                            </TableCell> */}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </div>
               </div>
             </section>
-          </div>
-        </section>
+            {/* <section className="sticky top-0 z-10 w-full p-16 bg-default-100 rounded-t-3xl backdrop-blur-sm"></section> */}
+          </>
+        )}
+        {selectedTab == "feels" && (
+          <>
+            <section className="min-h-screen">
+              <div className="flex flex-col items-center justify-center w-full p-3 md:p-16">
+                <h1 className="max-w-3xl text-4xl text-center lowercase text-pretty">
+                  Discover what other homies are feeling today
+                </h1>
+                <div className="flex items-center justify-center mt-16">
+                  {allEmojis ? (
+                    <ul className="grid gap-6 md:grid-cols-3">
+                      <>
+                        {Object.keys(allEmojis).map((network) => (
+                          <Link
+                            href={`/id/${allEmojis[network]?.emojis.tokenId}?network=${network}`}
+                            key={network}
+                            className="flex flex-col items-center justify-center p-2 duration-200 border-white shadow bg-default-100 hover:shadow-md border-small rounded-3xl"
+                          >
+                            <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+                              <EmojisContainer
+                                emojis={allEmojis[network]?.emojis}
+                              />
+                            </div>
+                            <div className="flex items-center justify-between w-full pt-2 pb-1 pl-4 pr-2 text-xs">
+                              <h5 className="">
+                                {allEmojis[network]?.emojis.owner.slice(0, 5)}
+                                ...{allEmojis[network]?.emojis.owner.slice(-4)}
+                              </h5>
+                              <div>
+                                <Chip
+                                  className="border-none"
+                                  variant="dot"
+                                  size="sm"
+                                >
+                                  {network}
+                                </Chip>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </>
+                    </ul>
+                  ) : (
+                    <div className="">
+                      <Spinner />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+        {selectedTab == "explore" && (
+          <>
+            <section className="min-h-screen"></section>
+          </>
+        )}
+
+        {/* <footer className="sticky bottom-0 z-0 w-full p-6 text-sm text-center bg-default-100">
+          Powered by OnChainVision
+        </footer> */}
       </main>
-      <footer className="w-full p-6 text-sm text-center">
-        Powered by OnChainVision
-      </footer>
     </>
   );
 }
