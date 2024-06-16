@@ -18,7 +18,8 @@ async function fetchTokenURI(tokenId, network) {
     let tokenURI = await contract.tokenURI(tokenId);
     let owner = await contract.ownerOf(tokenId);
     const metadata = JSON.parse(atob(tokenURI?.split(",")[1]));
-    return [owner, metadata];
+    const emojis = await contract.getEmojis(tokenId);
+    return [owner, metadata, emojis];
   } catch (error) {
     console.error("Error fetching tokenURI:", error);
     throw new Error("Failed to fetch tokenURI");
@@ -28,11 +29,16 @@ async function fetchTokenURI(tokenId, network) {
 export async function GET(request, { params }) {
   try {
     console.log("checks", params.tokenId, params.network);
-    const [owner, tokenURI] = await fetchTokenURI(
+    const [owner, tokenURI, emojis] = await fetchTokenURI(
       params.tokenId,
       params.network
     );
-    return NextResponse.json({ tokenId: params.tokenId, owner, tokenURI });
+    return NextResponse.json({
+      tokenId: params.tokenId,
+      owner,
+      emojis,
+      tokenURI,
+    });
   } catch (error) {
     console.error("Error in API route:", error);
     return new NextResponse("Internal Server Error", { status: 500 });

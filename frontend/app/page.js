@@ -218,7 +218,7 @@ export default function Home() {
         className="z-50 h-[70px] bg-transparent backdrop-blur-none"
       >
         <NavbarBrand>
-          <Link href="/" className="px-3">
+          <Link href="/" className="md:px-3">
             <svg
               className="h-8"
               viewBox="0 0 760 800"
@@ -259,17 +259,16 @@ export default function Home() {
           </Link>
         </NavbarBrand>
         <NavbarContent className="flex h-[50px]" justify="center">
-          <NavbarItem>
+          <NavbarItem className="backdrop-blur-sm">
             <Tabs
               size="sm"
               className=""
               classNames={{
-                tabList:
-                  "border-small gap-1 backdrop-blur-md bg-default-100/80",
+                tabList: "border-small gap-1 bg-default-100",
               }}
               variant="bordered"
               radius="full"
-              color="default"
+              color="primary"
               aria-label="Tabs"
               selectedKey={selectedTab}
               onSelectionChange={setSelectedTab}
@@ -328,9 +327,9 @@ export default function Home() {
         <NavBar />
         {selectedTab == "home" && (
           <>
-            <section className="relative min-h-screen my-6 md:mx-12">
+            <section className="relative min-h-screen md:mx-12">
               <div className="flex relative flex-col space-y-8 items-center min-h-[75vh] justify-center w-full h-full p-12 bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
-                <span className="p-1 px-2 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
+                <span className="p-1 px-4 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
                   Where Emotions 😑 Become Art 🎨 and Currency 🪙
                 </span>
                 <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase md:text-5xl text-pretty animate-appearance-in">
@@ -352,7 +351,7 @@ export default function Home() {
                     size="sm"
                     radius="full"
                     variant="solid"
-                    color="primary"
+                    color="default"
                   >
                     Mint your Feels
                   </Button>
@@ -368,7 +367,7 @@ export default function Home() {
                   </Button>
                 </div>
                 <div className="flex flex-wrap items-center justify-center">
-                  <div className="md:absolute animate-appearance-in top-[15%] left-[10%]">
+                  <div className="md:absolute grid animate-appearance-in top-[15%] left-[10%]">
                     <Chip
                       className="border-none"
                       variant="dot"
@@ -376,21 +375,33 @@ export default function Home() {
                     >
                       Polygon
                     </Chip>
+                    <span className="text-[10px] pl-6 text-default-500">
+                      01234
+                    </span>
                   </div>
-                  <div className="md:absolute animate-appearance-in top-[15%] right-[10%]">
+                  <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
                     <Chip className="border-none" variant="dot" color="primary">
                       Base
                     </Chip>
+                    <span className="text-[10px] pl-6 text-default-500">
+                      01234
+                    </span>
                   </div>
-                  <div className="md:absolute animate-appearance-in top-[70%] right-[7%]">
+                  <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
                     <Chip className="border-none" variant="dot" color="warning">
                       Core Chain
                     </Chip>
+                    <span className="text-[10px] pl-6 text-default-500">
+                      01234
+                    </span>
                   </div>
-                  <div className="md:absolute animate-appearance-in top-[70%] left-[7%]">
+                  <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
                     <Chip className="border-none" variant="dot" color="success">
                       Etherlink
                     </Chip>
+                    <span className="text-[10px] pl-6 text-default-500">
+                      01234
+                    </span>
                   </div>
                 </div>
               </div>
@@ -405,8 +416,8 @@ export default function Home() {
         )}
         {selectedTab == "analytics" && (
           <>
-            <section className="sticky top-0 z-0 w-full min-h-screen p-12">
-              <div className="flex-col items-center hidden p-12 space-y-6 duration-200 border-2 border-white shadow-sm justify-cente lg:flex bg-white/50 backdrop-blur-xl rounded-3xl hover:shadow-md">
+            <section className="z-0 w-full px-12">
+              <div className="flex-col items-center justify-center hidden min-h-screen p-12 space-y-6 duration-200 lg:flex bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
                 <h5 className="text-sm text-center text-bold">
                   PRICE CURVE & SUPPLY DYNAMICS
                 </h5>
@@ -483,26 +494,27 @@ export default function Home() {
                           <Link
                             href={`/id/${allEmojis[network]?.emojis.tokenId}?network=${network}`}
                             key={network}
-                            className="flex flex-col items-center justify-center p-2 duration-200 border-white shadow bg-default-100 hover:shadow-md border-small rounded-3xl"
+                            className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
                           >
                             <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
                               <EmojisContainer
                                 emojis={allEmojis[network]?.emojis}
                               />
                             </div>
-                            <div className="flex items-center justify-between w-full pt-2 pb-1 pl-4 pr-2 text-xs">
-                              <h5 className="">
-                                {allEmojis[network]?.emojis.owner.slice(0, 5)}
-                                ...{allEmojis[network]?.emojis.owner.slice(-4)}
-                              </h5>
-                              <div>
-                                <Chip
-                                  className="border-none"
-                                  variant="dot"
-                                  size="sm"
-                                >
-                                  {network}
-                                </Chip>
+                            <div className="flex flex-col items-start justify-between w-full pt-3 pb-1 pl-2 text-xs text-black">
+                              <div className="flex items-center justify-between w-full font-semibold">
+                                <p>
+                                  degeneratives.art #
+                                  {allEmojis[network]?.emojis.tokenId}
+                                </p>
+                                <p>{network}</p>
+                              </div>
+                              <div className="">
+                                <p>
+                                  {allEmojis[network]?.emojis.owner.slice(0, 5)}
+                                  ...
+                                  {allEmojis[network]?.emojis.owner.slice(-4)}
+                                </p>
                               </div>
                             </div>
                           </Link>
@@ -524,10 +536,11 @@ export default function Home() {
             <section className="min-h-screen"></section>
           </>
         )}
-
-        {/* <footer className="sticky bottom-0 z-0 w-full p-6 text-sm text-center bg-default-100">
-          Powered by OnChainVision
-        </footer> */}
+        <div className="mb-6 md:mx-12">
+          <footer className="z-0 w-full p-6 py-16 text-sm text-center md:px-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+            Powered by OnChainVision
+          </footer>
+        </div>
       </main>
     </>
   );
