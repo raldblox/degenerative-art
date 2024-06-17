@@ -366,7 +366,7 @@ export default function Home() {
                     Discover Feels
                   </Button>
                 </div>
-                <div className="flex flex-wrap items-center justify-center">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="md:absolute grid animate-appearance-in top-[15%] left-[10%]">
                     <Chip
                       className="border-none"
@@ -376,7 +376,7 @@ export default function Home() {
                       Polygon
                     </Chip>
                     <span className="text-[10px] pl-6 text-default-500">
-                      01234
+                      0x89
                     </span>
                   </div>
                   <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
@@ -384,15 +384,15 @@ export default function Home() {
                       Base
                     </Chip>
                     <span className="text-[10px] pl-6 text-default-500">
-                      01234
+                      0x2105
                     </span>
                   </div>
                   <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
                     <Chip className="border-none" variant="dot" color="warning">
-                      Core Chain
+                      Core
                     </Chip>
                     <span className="text-[10px] pl-6 text-default-500">
-                      01234
+                      0x45c
                     </span>
                   </div>
                   <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
@@ -400,7 +400,7 @@ export default function Home() {
                       Etherlink
                     </Chip>
                     <span className="text-[10px] pl-6 text-default-500">
-                      01234
+                      0xa729
                     </span>
                   </div>
                 </div>
