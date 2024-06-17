@@ -487,7 +487,7 @@ export default function Home() {
                                 emojis={allEmojis[network]?.emojis}
                               />
                             </div>
-                            <div className="flex flex-col items-start justify-between w-full pt-3 pb-1 pl-2 text-xs text-black">
+                            <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
                               <div className="flex items-center justify-between w-full font-semibold">
                                 <p>
                                   degeneratives.art #
