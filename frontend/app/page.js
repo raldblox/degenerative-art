@@ -321,13 +321,12 @@ export default function Home() {
                 <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase md:text-5xl text-pretty animate-appearance-in">
                   {shuffledContent.headline[0]}
                 </h1>
-                <p className="max-w-2xl text-[10px] md:text-xs text-center text-pretty">
+                <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
                   {" "}
-                  Don&apos;t worry if your cosmic vibes change tomorrow... your
-                  NFT is always listening and so well-prepared to evolve
-                  alongside you! We&apos;ll provide you $MOOD token after nft
-                  mint to fuel your daily mood swings for the next 90 days! Your
-                  ever-changing feelings have finally found a match.
+                  Your feelings change — your art should too. With
+                  degeneratives.art, your emotions aren&apos;t static. They
+                  evolve, transform, and create value. Your mood swing finally
+                  found a match.
                 </p>
                 <div className="flex gap-2 ">
                   <Button
