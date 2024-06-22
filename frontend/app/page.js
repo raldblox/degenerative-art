@@ -433,7 +433,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="grid gap-6 p-3 md:p-16 md:grid-cols-3 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl">
+                <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-3 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl">
                   <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
                     <div className="flex w-16 h-16 rounded-full aspect-square group">
                       <EmojiGlass emoji="🍬" />
@@ -462,8 +462,7 @@ export default function Home() {
                       <div className="h-full space-y-3">
                         <h1 className="px-3 text-2xl font-medium">stake</h1>
                         <p className="px-3 text-xs">
-                          just relax and stake your degenart to earn some $MOOD
-                          tokens
+                          stake your degenart to earn some $MOOD tokens
                         </p>
                       </div>
                       <div className="flex w-full p-3">
@@ -481,8 +480,7 @@ export default function Home() {
                       <div className="h-full space-y-3">
                         <h1 className="px-3 text-2xl font-medium">evolve</h1>
                         <p className="px-3 text-xs">
-                          update your feels every 4hours to evolve your staking
-                          power
+                          update your feels to evolve your staking power
                         </p>
                       </div>
                       <div className="flex w-full p-3">
