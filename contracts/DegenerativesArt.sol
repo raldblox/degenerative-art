@@ -196,7 +196,7 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
 
     function _concatEmojis(
         string[] memory emojis_
-    ) public pure returns (string memory emojiString) {
+    ) internal pure returns (string memory emojiString) {
         for (uint256 i = 0; i < emojis_.length; i++) {
             emojiString = string.concat(emojiString, emojis_[i]);
         }

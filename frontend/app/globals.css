@@ -23,10 +23,8 @@ body {
 }
 
 .cell {
+  @apply rounded-full;
   position: relative;
-  width: 70px;
-  height: 70px;
-  border-radius: 12px;
   overflow: hidden;
   display: inline-flex;
   align-items: center;

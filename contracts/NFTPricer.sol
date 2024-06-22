@@ -12,9 +12,10 @@ contract NFTPricer is IPricer {
     }
 
     function price(
-        uint256 tokenId,
-        address
+        uint256,
+        address token
     ) public view override returns (bool, uint256) {
-        //
+        require(token != address(0), "Zero");
+        return (true, 1 ether);
     }
 }

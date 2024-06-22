@@ -21,7 +21,7 @@ export const calculateMintPrice = (totalSupply) => {
 const LivePriceChart = () => {
   const [data, setData] = useState([]);
   const [totalSupply, setTotalSupply] = useState(0);
-  const [maxSupply, setMaxSupply] = useState(50);
+  const [maxSupply, setMaxSupply] = useState(100);
   const CONTRACT_ADDRESS = "YOUR_CONTRACT_ADDRESS";
 
   // Off-chain price calculation function
