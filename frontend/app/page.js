@@ -138,7 +138,7 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              <label className="text-xl font-bold tracking-tight text-center lowercase text-balance md:text-3xl">
+              <label className="text-xl font-semibold tracking-tight text-center lowercase text-balance md:text-3xl">
                 Enter the one-time emoji mood that universe gave you today.
               </label>
             </ModalHeader>
@@ -328,7 +328,7 @@ export default function Home() {
                   <span className="p-1 px-4 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
                     Where Emotions Become Art 🎨 and Currency 🪙
                   </span>
-                  <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase md:text-5xl text-pretty animate-appearance-in">
+                  <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase text-balance md:text-5xl animate-appearance-in">
                     {shuffledContent.headline[0]}
                   </h1>
                   <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
@@ -416,10 +416,10 @@ export default function Home() {
                 </div>
                 <div
                   id="mint"
-                  className="grid w-full h-full p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+                  className="grid w-full h-full p-12 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
                 >
-                  <div className="mx-auto text-3xl font-normal text-balance">
-                    let&apos;s put your emotions at{" "}
+                  <div className="mx-auto text-3xl font-normal tracking-tighter text-pretty">
+                    let&apos;s put your emotions <br className="md:hidden" /> at{" "}
                     <FlipWords
                       words={[
                         "play",
@@ -449,7 +449,7 @@ export default function Home() {
                       </div>
                       <div className="flex w-full p-3">
                         <Button variant="flat" radius="full" size="sm">
-                          mint
+                          minting soon
                         </Button>
                       </div>
                     </div>
@@ -467,7 +467,7 @@ export default function Home() {
                       </div>
                       <div className="flex w-full p-3">
                         <Button variant="flat" radius="full" size="sm">
-                          stake
+                          staking soon
                         </Button>
                       </div>
                     </div>
@@ -485,7 +485,7 @@ export default function Home() {
                       </div>
                       <div className="flex w-full p-3">
                         <Button variant="flat" radius="full" size="sm">
-                          update
+                          evolving soon
                         </Button>
                       </div>
                     </div>
