@@ -18,7 +18,7 @@ export const Navigation = ({ mint, tabs }) => {
 
   return (
     <Navbar
-      position="sticky"
+      shouldHideOnScroll
       maxWidth="2xl"
       className="z-50 h-[70px] bg-transparent backdrop-blur-none"
     >
