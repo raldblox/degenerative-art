@@ -14,6 +14,7 @@ async function main() {
   const theme = await hre.ethers.deployContract("DegenerativesVisualEngine", [
     networkName,
   ]);
+
   await theme.waitForDeployment();
   console.log("Degeneratives Visual Engine:", theme.target);
 
