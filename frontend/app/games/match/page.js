@@ -114,9 +114,6 @@ const EmojiMatchingGame = () => {
     <div className="flex flex-col items-center justify-center h-screen ">
       {shuffledEmojis.length > 0 ? (
         <>
-          <h1 className="mb-4 text-xl font-bold md:text-3xl">
-            Emoji Matching Game
-          </h1>
           <div className="flex items-center justify-center w-full p-6">
             <div className="grid grid-cols-4 gap-4 mb-4">
               {shuffledEmojis.map((emoji, index) => (
