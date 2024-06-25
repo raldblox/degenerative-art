@@ -14,7 +14,7 @@ import {
 } from "@nextui-org/react";
 import EmojisContainer from "../(components)/EmojisContainer";
 import { Navigation } from "../(components)/Navigation";
-import { AssetLoader } from "../(components)/loader/assetLoader";
+import { AssetLoader } from "../(components)/loader/AssetLoader";
 
 export default function Account() {
   const {
