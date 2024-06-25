@@ -36,6 +36,7 @@ import { EmojiGlass } from "./(components)/EmojiGlass";
 import { FlipWords } from "./(components)/FlipWords";
 import tokenAbi from "@/app/(libraries)/DegenerativesArt.json";
 import { ethers } from "ethers";
+import { AssetLoader } from "./(components)/loader/AssetLoader";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -234,13 +235,11 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { signer, setNetwork, allAssets } = useContext(Context);
+  const { signer, setNetwork, allAssets, fetching } = useContext(Context);
 
   const [mounted, setMounted] = useState(false);
   const [supplies, setSupplies] = useState(null);
-  const [allEmojis, setAllEmojies] = useState(null);
   const [selectedTab, setSelectedTab] = useState("home");
-  const [fetching, setFetching] = useState(false);
 
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -284,7 +283,6 @@ export default function Home() {
       if (fetching) {
         return;
       }
-      setFetching(true);
 
       try {
         const response = await fetch("./render.html");
@@ -314,13 +312,8 @@ export default function Home() {
         //     };
         //   }
         // }
-
-        setAllEmojies(allEmojis);
-        console.log("allEmojis:", allEmojis);
-        setFetching(false);
       } catch (error) {
         console.error("Error fetching HTML:", error);
-        setFetching(false);
       }
     };
 
@@ -756,30 +749,40 @@ export default function Home() {
                   </h1>
                   <div className="flex items-center justify-center mt-16">
                     <ul className="grid gap-6 md:grid-cols-3">
-                      {allAssets?.map((token) => (
-                        <Link
-                          href={`/id/${token.tokenId}?network=${token.network}`}
-                          key={token.tokenId}
-                          className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
-                        >
-                          <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
-                            <EmojisContainer token={token} />
-                          </div>
-                          <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
-                            <div className="flex items-center justify-between w-full font-semibold">
-                              <p>degeneratives.art #{token.tokenId}</p>
-                              <p>{token?.network}</p>
-                            </div>
-                            <div className="">
-                              <p>
-                                {token.owner.slice(0, 5)}
-                                ...
-                                {token.owner.slice(-4)}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
+                      {fetching ? (
+                        <>
+                          <AssetLoader />
+                          <AssetLoader />
+                          <AssetLoader />
+                        </>
+                      ) : (
+                        <>
+                          {allAssets?.map((token) => (
+                            <Link
+                              href={`/id/${token.tokenId}?network=${token.network}`}
+                              key={token.tokenId}
+                              className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+                            >
+                              <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+                                <EmojisContainer token={token} />
+                              </div>
+                              <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
+                                <div className="flex items-center justify-between w-full font-semibold">
+                                  <p>degeneratives.art #{token.tokenId}</p>
+                                  <p>{token?.network}</p>
+                                </div>
+                                <div className="">
+                                  <p>
+                                    {token.owner.slice(0, 5)}
+                                    ...
+                                    {token.owner.slice(-4)}
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          ))}
+                        </>
+                      )}
                     </ul>
                   </div>
                 </div>

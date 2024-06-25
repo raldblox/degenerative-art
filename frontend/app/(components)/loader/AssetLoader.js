@@ -12,48 +12,48 @@ export const AssetLoader = () => {
             owner: "--",
             emojis: [
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
               <>
-                <Skeleton className="h-20 rounded-full">
-                  <div className="w-20 h-20 rounded-full bg-default-200"></div>
+                <Skeleton className="h-16 rounded-full">
+                  <div className="w-16 h-16 rounded-full bg-default-200"></div>
                 </Skeleton>
               </>,
             ],
@@ -70,14 +70,14 @@ export const AssetLoader = () => {
           <p>...</p>
         </div>
       </div>
-      <div className="flex items-center justify-start w-full gap-1 mt-2">
+      {/* <div className="flex items-center justify-start w-full gap-1 mt-2">
         <Button radius="full" size="sm">
           update
         </Button>
         <Button radius="full" size="sm">
           stake
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -104,7 +104,10 @@ export default function Account() {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <div className="flex items-center justify-center p-16">
+      <div className="flex flex-col items-center justify-center space-y-6 md:p-16">
+        <h1 className="text-4xl text-center lowercase text-pretty">
+          my tokens
+        </h1>
         <ul className="grid gap-6 p-6 mx-auto md:grid-cols-3">
           {fetching && userAddress ? (
             // Display loaders while fetching
@@ -152,7 +155,7 @@ export default function Account() {
               ) : (
                 <div className="md:col-span-3">
                   <p className="text-lg text-center whitespace-nowrap">
-                    there&apos;s nothing to see here
+                    nothing to see here
                   </p>
                 </div>
               )}
