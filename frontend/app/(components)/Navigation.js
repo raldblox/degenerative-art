@@ -14,7 +14,7 @@ import { useContext } from "react";
 import { Context } from "../(providers)/EthereumProvider";
 
 export const Navigation = ({ mint, tabs }) => {
-  const { connect, userAddress, network } = useContext(Context);
+  const { connectEthereumProvider, userAddress, network } = useContext(Context);
 
   return (
     <Navbar
@@ -77,7 +77,7 @@ export const Navigation = ({ mint, tabs }) => {
             variant="bordered"
             radius="full"
             className="font-bold border-small bg-default-100"
-            onClick={connect}
+            onClick={connectEthereumProvider}
           >
             {userAddress ? "account" : "connect"}
           </Button>
