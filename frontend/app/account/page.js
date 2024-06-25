@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../(providers)/EthereumProvider";
 import {
   Button,
@@ -18,11 +18,10 @@ import { AssetLoader } from "../(components)/loader/AssetLoader";
 
 export default function Account() {
   const {
-    collection,
     userTokens,
     updateEmoji,
     countdown,
-    connect,
+    connectEthereumProvider,
     userAddress,
     fetching,
   } = useContext(Context);
@@ -40,6 +39,10 @@ export default function Account() {
       "🤬",
     ]);
   };
+
+  useEffect(() => {
+    connectEthereumProvider();
+  }, [connectEthereumProvider]);
 
   return (
     <div>
@@ -94,7 +97,7 @@ export default function Account() {
               variant="bordered"
               radius="full"
               className="font-bold border-small bg-default-100"
-              onClick={connect}
+              onClick={connectEthereumProvider}
             >
               {userAddress ? userAddress.slice(0, 6) : "connect"}
             </Button>
