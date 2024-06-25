@@ -142,7 +142,7 @@ export const EthereumProvider = (props) => {
 
       await switchNetwork();
       if (!network) {
-        // setNetwork("polygonAmoy");
+        setNetwork("polygonAmoy");
         return;
       }
 
