@@ -131,11 +131,6 @@ export const EthereumProvider = (props) => {
   const connectEthereumProvider = useCallback(async () => {
     console.log("Connecting to Ethereum Provider...");
     try {
-      if (!network) {
-        // setNetwork("polygonAmoy");
-        return;
-      }
-      await switchNetwork();
       const { provider_, signer_ } = await initializeProvider();
       setProvider(provider_);
       if (signer_ !== null) {
@@ -143,6 +138,12 @@ export const EthereumProvider = (props) => {
         const userAddr = await signer_.getAddress();
         console.log("User address: ", userAddr);
         setUserAddress(userAddr);
+      }
+
+      await switchNetwork();
+      if (!network) {
+        // setNetwork("polygonAmoy");
+        return;
       }
 
       const degenerativesArtInstance = await initializeContract(
