@@ -14,11 +14,10 @@ import { useContext } from "react";
 import { Context } from "../(providers)/EthereumProvider";
 
 export const Navigation = ({ mint, tabs }) => {
-  const { connect, userAddress } = useContext(Context);
+  const { connect, userAddress, network } = useContext(Context);
 
   return (
     <Navbar
-      shouldHideOnScroll
       maxWidth="2xl"
       className="z-50 h-[70px] bg-transparent backdrop-blur-none"
     >
@@ -48,6 +47,7 @@ export const Navigation = ({ mint, tabs }) => {
             />
           </svg>
         </Link>
+        {network}
       </NavbarBrand>
       <NavbarContent className="flex h-[50px]" justify="center">
         <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
@@ -57,7 +57,7 @@ export const Navigation = ({ mint, tabs }) => {
         justify="end"
       >
         <NavbarItem>{mint}</NavbarItem>
-        <NavbarItem className="">
+        {/* <NavbarItem className="">
           <Button
             size="sm"
             color="foreground"
@@ -67,9 +67,11 @@ export const Navigation = ({ mint, tabs }) => {
           >
             stake
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem className="pr-2">
           <Button
+            as={Link}
+            href="/account"
             size="sm"
             color="foreground"
             variant="bordered"
@@ -77,7 +79,7 @@ export const Navigation = ({ mint, tabs }) => {
             className="font-bold border-small bg-default-100"
             onClick={connect}
           >
-            {userAddress ? userAddress.slice(0, 6) : "connect"}
+            {userAddress ? "account" : "connect"}
           </Button>
         </NavbarItem>
       </NavbarContent>

@@ -400,25 +400,6 @@
   {
     "inputs": [
       {
-        "internalType": "string[]",
-        "name": "emojis_",
-        "type": "string[]"
-      }
-    ],
-    "name": "_concatEmojis",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "emojiString",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "to",
         "type": "address"

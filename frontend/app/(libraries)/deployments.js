@@ -12,12 +12,18 @@ export const contractDeployments = {
       blockExplorerUrls: ["https://amoy.polygonscan.com"],
     },
     DegenerativesArt: {
-      address: "0x8D76Ac17DCD79A54bCFD06c57B093E9cb746603C",
+      address: "0x8c737d95d463607d781292F2A261C8528a05E341",
       explorer:
-        "https://www.oklink.com/amoy/address/0x8D76Ac17DCD79A54bCFD06c57B093E9cb746603C#code",
+        "https://www.oklink.com/amoy/address/0x8c737d95d463607d781292F2A261C8528a05E341#code",
     },
     DegenerativesVisualEngine: {
-      address: "0x4dF1Ef6ccE1fC1066CdccfeEC437f8630263d671",
+      address: "0x21CEe2A99BB3b3a4C639cf9aD4BBd0a932a787Ef",
+    },
+    MoodToken: {
+      address: "0x3374fFc7Ab671894985961448c79844754057bB8",
+    },
+    NFTPricer: {
+      address: "0x0ae1824C4e3e9806A36F1eb7E29b7d7Ae798bFbF",
     },
   },
   polygon: {

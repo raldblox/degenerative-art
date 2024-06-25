@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
   Tabs,
+  Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -33,6 +34,8 @@ import { Context } from "./(providers)/EthereumProvider";
 import { Navigation } from "./(components)/Navigation";
 import { EmojiGlass } from "./(components)/EmojiGlass";
 import { FlipWords } from "./(components)/FlipWords";
+import tokenAbi from "@/app/(libraries)/DegenerativesArt.json";
+import { ethers } from "ethers";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -43,14 +46,31 @@ function shuffleArray(array) {
 }
 
 export function MintModal({ isOpen, onOpen, onOpenChange }) {
+  const {
+    connectEthereumProvider,
+    userAddress,
+    countdown,
+    timeUpdated,
+    instances,
+    mint,
+    minting,
+  } = useContext(Context);
   const fieldsRef = useRef(null);
   const maxFields = 9;
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
   const [activeFields, setActiveFields] = useState(3);
 
+  const handleMint = async () => {
+    if (inputValues.length >= 3) {
+      await mint(inputValues);
+    }
+  };
+
   const handleChange = (event, index) => {
-    const value = event.target.value.slice(-1); // Get the last entered character
+    const value = event.target.value; // Get the last entered character
+    // Log the actual value and its Unicode code point
+    console.log(`New value: ${value}`);
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
@@ -90,19 +110,22 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
     for (let i = 0; i < maxFields; i++) {
       inputFields.push(
         <input
+          data-emoji-input="unicode"
           key={i}
           size="lg"
           type="text"
           data-index={i}
-          // placeholder={shuffledContent.placeholders[i]}
           ref={(el) => (inputRef.current[i] = el)}
           className={`w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => {
             const value = e.target.value;
-            if (value.length > 1 && e.keyCode !== 8) {
-              e.target.value = value.slice(0, 1);
+            const emoji = value.match(/[\p{Emoji}]/u);
+            if (emoji) {
+              e.target.value = emoji[0];
+            } else {
+              e.target.value = "";
             }
             handleChange(e, i);
           }}
@@ -131,26 +154,30 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size="2xl"
-      className="p-6"
+      size="xl"
+      className="pt-6 pb-3 md:p-16"
     >
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              <label className="text-xl font-semibold tracking-tight text-center lowercase text-balance md:text-3xl">
-                Enter the one-time emoji mood that universe gave you today.
+              <label className="text-xl font-semibold tracking-tight text-center lowercase text-balance md:text-2xl">
+                Enter the one-time emoji mood that universe gave you today
               </label>
             </ModalHeader>
             <ModalBody>
-              <p className="mt-4 text-sm text-center lowercase">
+              {/* <p className="mt-4 text-xs text-center lowercase md:text-sm">
                 Don&apos;t worry if your cosmic vibes change tomorrow... your
                 NFT is always listening and so well-prepared to evolve alongside
                 you! We&apos;ll provide you $MOOD token after nft mint to fuel
                 your daily mood swings for the next hundred years! Your
                 ever-changing feelings have finally found a match.
-              </p>
-              <div className="flex flex-col items-center justify-center pt-6 pb-6 space-y-4">
+              </p> */}
+              {countdown !== "00:00:00" && (
+                <p className="mx-auto text-lg font-semibold">{countdown}</p>
+              )}
+
+              <div className="flex flex-col items-center justify-center pb-6 space-y-4">
                 <div
                   ref={fieldsRef}
                   className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
@@ -160,27 +187,43 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
                 <label className="text-sm">(enter 3-9 emojis only)</label>
               </div>
             </ModalBody>
-            <ModalFooter className="w-full">
-              <Button
-                fullWidth
-                startContent={
-                  <svg
-                    className="h-5"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
-                    />
-                  </svg>
-                }
-                size="lg"
-                className="dark"
-                // isDisabled
-              >
-                mint to generate dynamic art 🪄
-              </Button>
+            <ModalFooter className="flex justify-center w-full gap-2">
+              {userAddress ? (
+                <Button
+                  startContent={
+                    <svg
+                      className="h-5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
+                      />
+                    </svg>
+                  }
+                  size="lg"
+                  radius="full"
+                  variant="flat"
+                  className="text-white bg-black"
+                  onClick={handleMint}
+                  isLoading={minting}
+                  isDisabled
+                >
+                  minting soon 🪄
+                </Button>
+              ) : (
+                <Button
+                  color="primary"
+                  radius="full"
+                  variant="solid"
+                  fullWidth
+                  size="lg"
+                  onClick={connectEthereumProvider}
+                >
+                  connect wallet
+                </Button>
+              )}
             </ModalFooter>
           </>
         )}
@@ -191,7 +234,7 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { signer, connect, userAddress, userBalance } = useContext(Context);
+  const { signer, setNetwork, allAssets } = useContext(Context);
 
   const [mounted, setMounted] = useState(false);
   const [supplies, setSupplies] = useState(null);
@@ -257,20 +300,20 @@ export default function Home() {
         console.log("supplies", supplies.results);
 
         // Loop through each network and supply
-        const allEmojis = {};
-        for (const item of supplies.results) {
-          const network = item.network;
-          const supply = item.supply;
+        // const allEmojis = {};
+        // for (const item of supplies.results) {
+        //   const network = item.network;
+        //   const supply = item.supply;
 
-          for (let index = 0; index < supply; index++) {
-            const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
-            const emoji = await fetch(emojiUrl).then((res) => res.json());
-            allEmojis[network] = {
-              supply,
-              emojis: emoji,
-            };
-          }
-        }
+        //   for (let index = 0; index < supply; index++) {
+        //     const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
+        //     const emoji = await fetch(emojiUrl).then((res) => res.json());
+        //     allEmojis[network] = {
+        //       supply,
+        //       emojis: emoji,
+        //     };
+        //   }
+        // }
 
         setAllEmojies(allEmojis);
         console.log("allEmojis:", allEmojis);
@@ -287,7 +330,7 @@ export default function Home() {
   return (
     <>
       {mounted && (
-        <main className="relative w-full min-h-screen">
+        <main className="w-full min-h-screen">
           <Navigation
             tabs={
               <Tabs
@@ -364,54 +407,142 @@ export default function Home() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="md:absolute grid animate-appearance-in top-[15%] left-[10%]">
-                      <Chip
-                        className="border-none"
-                        variant="dot"
-                        color="secondary"
-                      >
-                        Polygon
-                      </Chip>
-                      <span className="text-[10px] pl-6 text-default-500">
-                        0x89
-                      </span>
-                    </div>
-                    <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
-                      <Chip
-                        className="border-none"
-                        variant="dot"
-                        color="primary"
-                      >
-                        Base
-                      </Chip>
-                      <span className="text-[10px] pl-6 text-default-500">
-                        0x2105
-                      </span>
-                    </div>
-                    <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
-                      <Chip
-                        className="border-none"
-                        variant="dot"
-                        color="warning"
-                      >
-                        Core
-                      </Chip>
-                      <span className="text-[10px] pl-6 text-default-500">
-                        0x45c
-                      </span>
-                    </div>
-                    <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
-                      <Chip
-                        className="border-none"
-                        variant="dot"
-                        color="success"
-                      >
-                        Etherlink
-                      </Chip>
-                      <span className="text-[10px] pl-6 text-default-500">
-                        0xa729
-                      </span>
-                    </div>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="secondary"
+                      placement="right"
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="font-bold text-small">
+                            polygon.technology
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              className="text-tiny"
+                              onClick={(e) => setNetwork("polygon")}
+                            >
+                              switch to this network
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[15%] left-[10%]">
+                        <Chip
+                          className="border-none"
+                          variant="dot"
+                          color="secondary"
+                        >
+                          Polygon
+                        </Chip>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          0x89
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="primary"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="font-bold text-small">
+                            Custom Content
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              className="text-tiny"
+                              onClick={(e) => setNetwork("base")}
+                            >
+                              switch to this network
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
+                        <Chip
+                          className="border-none"
+                          variant="dot"
+                          color="primary"
+                        >
+                          Base
+                        </Chip>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          0x2105
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="warning"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="font-bold text-small">
+                            Custom Content
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              className="text-tiny"
+                              onClick={(e) => setNetwork("core")}
+                            >
+                              switch to this network
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
+                        <Chip
+                          className="border-none"
+                          variant="dot"
+                          color="warning"
+                        >
+                          Core
+                        </Chip>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          0x45c
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="success"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2">
+                          <div className="font-bold text-small">
+                            Custom Content
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              className="text-tiny"
+                              onClick={(e) => setNetwork("etherlink")}
+                            >
+                              switch to this network
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
+                        <Chip
+                          className="border-none"
+                          variant="dot"
+                          color="success"
+                        >
+                          Etherlink
+                        </Chip>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          0xa729
+                        </span>
+                      </div>
+                    </Tooltip>
                   </div>
                 </div>
                 <div
@@ -622,48 +753,32 @@ export default function Home() {
                     Discover what other homies are feeling today
                   </h1>
                   <div className="flex items-center justify-center mt-16">
-                    {allEmojis ? (
-                      <ul className="grid gap-6 md:grid-cols-3">
-                        <>
-                          {Object.keys(allEmojis).map((network) => (
-                            <Link
-                              href={`/id/${allEmojis[network]?.emojis.tokenId}?network=${network}`}
-                              key={network}
-                              className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
-                            >
-                              <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
-                                <EmojisContainer
-                                  emojis={allEmojis[network]?.emojis}
-                                />
-                              </div>
-                              <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
-                                <div className="flex items-center justify-between w-full font-semibold">
-                                  <p>
-                                    degeneratives.art #
-                                    {allEmojis[network]?.emojis.tokenId}
-                                  </p>
-                                  <p>{network}</p>
-                                </div>
-                                <div className="">
-                                  <p>
-                                    {allEmojis[network]?.emojis.owner.slice(
-                                      0,
-                                      5
-                                    )}
-                                    ...
-                                    {allEmojis[network]?.emojis.owner.slice(-4)}
-                                  </p>
-                                </div>
-                              </div>
-                            </Link>
-                          ))}
-                        </>
-                      </ul>
-                    ) : (
-                      <div className="">
-                        <Spinner />
-                      </div>
-                    )}
+                    <ul className="grid gap-6 md:grid-cols-3">
+                      {allAssets?.map((token) => (
+                        <Link
+                          href={`/id/${token.tokenId}?network=${token.network}`}
+                          key={token.tokenId}
+                          className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+                        >
+                          <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+                            <EmojisContainer token={token} />
+                          </div>
+                          <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
+                            <div className="flex items-center justify-between w-full font-semibold">
+                              <p>degeneratives.art #{token.tokenId}</p>
+                              <p>{token?.network}</p>
+                            </div>
+                            <div className="">
+                              <p>
+                                {token.owner.slice(0, 5)}
+                                ...
+                                {token.owner.slice(-4)}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </section>

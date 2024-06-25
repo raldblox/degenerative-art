@@ -34,9 +34,9 @@ export async function GET(request, { params }) {
       "polygon",
       "core",
       "etherlink",
-      // "polygonAmoy",
-      // "coreTestnet",
-      // "etherlinkTestnet",
+      "polygonAmoy",
+      "coreTestnet",
+      "etherlinkTestnet",
     ];
     const promises = networks.map((network) => fetchSupplyByNetwork(network));
     const results = await Promise.all(promises);

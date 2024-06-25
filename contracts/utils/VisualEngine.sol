@@ -113,7 +113,9 @@ contract DegenerativesVisualEngine is IVisualEngine, Ownable(msg.sender) {
         // generate animation
         string memory animation = generateVisual(tokenId, emojis);
         // get mode
-        string memory mode = enabledGraffiti[tokenId] ? "graffiti" : "minimal";
+        string memory mode = enabledGraffiti[tokenId]
+            ? "graffiti"
+            : "minimalist";
         string memory externalUrl = string(
             abi.encodePacked(
                 "https://degeneratives.art/id/",

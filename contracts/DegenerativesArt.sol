@@ -30,7 +30,7 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     error CooldownNotOver();
 
     // Constants
-    uint256 public constant UPDATE_COOLDOWN = 4 hours; // @note for mint/update coolfdown
+    uint256 public constant UPDATE_COOLDOWN = 0 hours; // @note for mint/update cooldown
 
     // State Variables
     uint public tokenIds;
