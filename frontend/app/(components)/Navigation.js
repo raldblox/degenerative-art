@@ -70,7 +70,7 @@ export const Navigation = ({ mint, tabs }) => {
         </NavbarItem> */}
         <NavbarItem className="pr-2">
           <Button
-            as={Link}
+            as={userAddress && Link}
             href="/account"
             size="sm"
             color="foreground"
