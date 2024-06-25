@@ -47,7 +47,6 @@ export const Navigation = ({ mint, tabs }) => {
             />
           </svg>
         </Link>
-        {network}
       </NavbarBrand>
       <NavbarContent className="flex h-[50px]" justify="center">
         <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
