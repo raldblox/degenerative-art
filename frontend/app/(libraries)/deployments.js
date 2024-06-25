@@ -127,4 +127,25 @@ export const contractDeployments = {
       address: "0xd447F6f5a180b927d7a36EF3e81912A4420a0F49",
     },
   },
+  base: {
+    network: {
+      chainId: 8453,
+      chainName: "Base Mainnet",
+      rpcUrls: ["https://mainnet.base.org"],
+      nativeCurrency: {
+        name: "ETH",
+        symbol: "ETH",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://base.blockscout.com/"],
+    },
+    DegenerativesArt: {
+      address: "",
+      explorer:
+        "https://scan.test.btcs.network/address/0xBB467000b19e99d0E266866c0F05516ef1724792#code",
+    },
+    DegenerativesVisualEngine: {
+      address: "",
+    },
+  },
 };

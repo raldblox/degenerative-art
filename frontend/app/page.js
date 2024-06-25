@@ -413,12 +413,13 @@ export default function Home() {
                       color="secondary"
                       placement="right"
                       content={
-                        <div className="px-1 py-2">
+                        <div className="px-1 py-2 space-y-2 text-center">
                           <div className="font-bold text-small">
                             polygon.technology
                           </div>
                           <div className="text-tiny">
                             <Button
+                              size="sm"
                               className="text-tiny"
                               onClick={(e) => setNetwork("polygon")}
                             >
@@ -447,12 +448,11 @@ export default function Home() {
                       color="primary"
                       placement="left"
                       content={
-                        <div className="px-1 py-2">
-                          <div className="font-bold text-small">
-                            Custom Content
-                          </div>
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">base.org</div>
                           <div className="text-tiny">
                             <Button
+                              size="sm"
                               className="text-tiny"
                               onClick={(e) => setNetwork("base")}
                             >
@@ -481,12 +481,13 @@ export default function Home() {
                       color="warning"
                       placement="left"
                       content={
-                        <div className="px-1 py-2">
+                        <div className="px-1 py-2 space-y-2 text-center">
                           <div className="font-bold text-small">
-                            Custom Content
+                            coredao.org
                           </div>
                           <div className="text-tiny">
                             <Button
+                              size="sm"
                               className="text-tiny"
                               onClick={(e) => setNetwork("core")}
                             >
@@ -515,12 +516,13 @@ export default function Home() {
                       color="success"
                       placement="left"
                       content={
-                        <div className="px-1 py-2">
+                        <div className="px-1 py-2 space-y-2 text-center">
                           <div className="font-bold text-small">
-                            Custom Content
+                            etherlink.com
                           </div>
                           <div className="text-tiny">
                             <Button
+                              size="sm"
                               className="text-tiny"
                               onClick={(e) => setNetwork("etherlink")}
                             >
