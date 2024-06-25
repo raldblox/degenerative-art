@@ -87,7 +87,7 @@ export default function Account() {
         >
           <NavbarItem className="pr-2">
             <Button
-              as={Link}
+              as={userAddress && Link}
               href="/account"
               size="sm"
               color="foreground"
