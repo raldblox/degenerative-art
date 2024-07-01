@@ -676,12 +676,12 @@ export default function Home() {
           )}
           {selectedTab == "analytics" && (
             <>
-              <section className="z-0 w-full px-12">
-                <div className="flex-col items-center justify-center hidden min-h-screen p-12 space-y-6 duration-200 lg:flex bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
+              <section className="z-0 w-full md:px-12">
+                <div className="flex flex-col items-center justify-center min-h-screen p-3 space-y-6 duration-200 md:p-12 bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
                   <h5 className="text-sm text-center text-bold">
                     PRICE CURVE & SUPPLY DYNAMICS
                   </h5>
-                  <div className="pr-12 animate-appearance-in">
+                  <div className="pr-8 md:pr-12 animate-appearance-in">
                     <LivePriceChart />
                   </div>
                   <p className="pb-4 text-xs text-center text-balance">

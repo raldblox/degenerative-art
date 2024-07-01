@@ -9,6 +9,7 @@ import {
   Legend,
   ReferenceDot,
   ReferenceLine,
+  ResponsiveContainer,
 } from "recharts";
 import { ethers } from "ethers";
 
@@ -39,6 +40,7 @@ const LivePriceChart = () => {
 
       // Calculate mint prices for all supplies up to the max
       const priceData = Array.from({ length: maxSupply }, (_, i) => ({
+        name: `TOKEN ID#${i.toString()}`,
         supply: i.toString(),
         price: calculateMintPrice(i),
       }));
@@ -53,43 +55,44 @@ const LivePriceChart = () => {
   }, []);
 
   return (
-    <LineChart width={780} height={300} data={data}>
-      <CartesianGrid strokeDasharray="2 2" />
-      <XAxis dataKey="supply" fontSize={10} />
-      <YAxis fontSize={10} />
-      <Tooltip
-        label={{
-          value: `Current Supply: ${totalSupply} | Mint Price: ${calculateMintPrice(
-            totalSupply
-          )} ether`,
-          position: "insideTopLeft",
-          fill: "blue",
-          fontSize: "10",
-        }}
-      />
-      <Line type="linear" dataKey="price" stroke="blue" fill="none" />
-      {/* <ReferenceDot
-        x={totalSupply.toString()}
-        y={calculateMintPrice(totalSupply)}
-        r={8}
-        fill="blue"
-        stroke="blue"
-        strokeDasharray="3 3"
-      /> */}
-      {/* <ReferenceLine
-        x={totalSupply.toString()}
-        stroke="blue"
-        strokeDasharray="3 3"
-        label={{
-          value: `Current Supply: ${totalSupply} | Mint Price: ${calculateMintPrice(
-            totalSupply
-          )} ether`,
-          position: "insideTopLeft",
-          fill: "blue",
-          fontSize: "12",
-        }}
-      /> */}
-    </LineChart>
+    <div className="w-[95vw] md:w-[80vw] h-[60vh]">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        className="max-w-3xl mx-auto"
+      >
+        <LineChart width="100%" height="100%" data={data}>
+          <CartesianGrid strokeDasharray="1 5" />
+          <XAxis dataKey="supply" fontSize={10} />
+          <YAxis dataKey="price" fontSize={10} />
+          <Tooltip
+            content="hello"
+            label={{
+              name: "hello",
+              position: "insideTopLeft",
+              fill: "blue",
+              fontSize: "8",
+            }}
+          />
+          <Line
+            type="monotone"
+            name="pricee"
+            dataKey="price"
+            stroke="blue"
+            fill="white"
+          />
+          {/* <ReferenceDot
+            x={totalSupply.toString()}
+            y={calculateMintPrice(totalSupply)}
+            r={3}
+            fill="blue"
+            stroke="blue"
+            strokeDasharray="3 3"
+          /> */}
+          {/* <Legend verticalAlign="middle" /> */}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
