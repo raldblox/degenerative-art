@@ -681,7 +681,7 @@ export default function Home() {
                   <h5 className="text-sm text-center text-bold">
                     PRICE CURVE & SUPPLY DYNAMICS
                   </h5>
-                  <div className="pr-8 md:pr-12 animate-appearance-in">
+                  <div className="animate-appearance-in">
                     <LivePriceChart />
                   </div>
                   <p className="pb-4 text-xs text-center text-balance">

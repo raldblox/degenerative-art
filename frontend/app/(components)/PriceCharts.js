@@ -54,8 +54,21 @@ const LivePriceChart = () => {
     return () => clearInterval(interval); // Clean up interval on unmount
   }, []);
 
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="p-4 border border-black bg-white/90 rounded-xl">
+          <p className="text-sm">{`CURRENT SUPPLY: ${label}`}</p>
+          <p className="text-sm intro">{`MINT PRICE: ${payload[0].value} ether`}</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <div className="w-[95vw] md:w-[80vw] h-[60vh]">
+    <div className="w-[95vw] md:w-[80vw] h-[60vh] pr-8 md:pr-12 ">
       <ResponsiveContainer
         width="100%"
         height="100%"
@@ -66,13 +79,15 @@ const LivePriceChart = () => {
           <XAxis dataKey="supply" fontSize={10} />
           <YAxis dataKey="price" fontSize={10} />
           <Tooltip
-            content="hello"
-            label={{
-              name: "hello",
-              position: "insideTopLeft",
-              fill: "blue",
-              fontSize: "8",
-            }}
+            // content="hello"
+            // label={{
+            //   name: "hello",
+            //   position: "insideTopLeft",
+            //   fill: "blue",
+            //   fontSize: "8",
+            // }}
+            cursor={{ stroke: "black", strokeWidth: 1 }}
+            content={<CustomTooltip />}
           />
           <Line
             type="monotone"
