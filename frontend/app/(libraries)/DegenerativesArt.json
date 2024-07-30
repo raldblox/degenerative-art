@@ -1,12 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_engine",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -226,19 +220,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "newEngine",
-        "type": "address"
-      }
-    ],
-    "name": "EngineUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "token",
         "type": "address"
       },
@@ -282,18 +263,18 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "pricer",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "isValid",
-        "type": "bool"
+        "internalType": "address",
+        "name": "themeAddress",
+        "type": "address"
       }
     ],
-    "name": "PricerUpdated",
+    "name": "ThemeUpdated",
     "type": "event"
   },
   {
@@ -386,12 +367,12 @@
   },
   {
     "inputs": [],
-    "name": "UPDATE_COOLDOWN",
+    "name": "MOOD",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract IERC20",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -448,6 +429,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "cooldown",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "defaultTheme",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string[]",
@@ -480,19 +487,6 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "engine",
-    "outputs": [
-      {
-        "internalType": "contract IVisualEngine",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -558,6 +552,30 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "themeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getMetadata",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"
@@ -613,6 +631,25 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTheme",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"
@@ -640,6 +677,11 @@
         "internalType": "string[]",
         "name": "_emojis",
         "type": "string[]"
+      },
+      {
+        "internalType": "address",
+        "name": "themeAddress",
+        "type": "address"
       }
     ],
     "name": "mint",
@@ -960,16 +1002,6 @@
         "internalType": "string[]",
         "name": "newEmojis",
         "type": "string[]"
-      },
-      {
-        "internalType": "address",
-        "name": "pricerAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
       }
     ],
     "name": "update",
@@ -980,12 +1012,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "newEngine",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_cooldown",
+        "type": "uint256"
       }
     ],
-    "name": "updateEngine",
+    "name": "updateCooldown",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -994,16 +1026,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "pricer",
+        "name": "themeAddress",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isValid",
-        "type": "bool"
       }
     ],
-    "name": "updatePricer",
+    "name": "updateDefaultTheme",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1019,6 +1046,24 @@
     "name": "updateTreasury",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "themeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "upgrade",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {

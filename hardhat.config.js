@@ -37,7 +37,7 @@ module.exports = {
     etherlink: {
       name: "Etherlink",
       url: "https://node.mainnet.etherlink.com",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [process.env.OCVLABS_PRIVATE_KEY, process.env.WALLET_0x01],
     },
   },
   sourcify: {

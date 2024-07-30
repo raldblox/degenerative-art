@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MoodToken is ERC20, Ownable(msg.sender) {
     constructor() ERC20("Mood Token", "Mood") {
-        _mint(msg.sender, 1e12 * 10e16);
+        _mint(msg.sender, 100000000000000000000000000);
     }
 
     // Burn function to destroy tokens

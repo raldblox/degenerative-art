@@ -17,38 +17,122 @@ import { contractDeployments } from "../(libraries)/deployments";
 export const Context = createContext();
 
 export const EthereumProvider = (props) => {
+  const [walletProvider, setWalletProvider] = useState(null);
+  const [walletSigner, setWalletSigner] = useState(null);
+
   const [userAddress, setUserAddress] = useState(null);
   const [userBalance, setUserBalance] = useState("");
-  const [instances, setInstances] = useState(null);
-  const [provider, setProvider] = useState(null);
-  const [signer, setSigner] = useState(null);
   const [network, setNetwork] = useState("");
+
   const [userTokens, setUserTokens] = useState([]);
   const [allAssets, setAllAssets] = useState([]);
   const [timeUpdated, setTimeUpdated] = useState(0);
   const [countdown, setCountdown] = useState("00:00:00");
+
   const [collection, setCollection] = useState({ totalSupply: 0 });
 
   const [minting, setMinting] = useState(false);
   const [fetching, setFetching] = useState(true);
 
+  const [nodeProvider, setNodeProvider] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [instances, setInstances] = useState({});
+  const [tokenSupplies, setTokenSupplies] = useState({});
+
   const supportedNetworks = ["polygonAmoy", "polygon", "etherlink"];
 
-  const initializeProvider = async () => {
-    let provider_;
-    let signer_ = null;
-    if (window.ethereum == null) {
-      console.log("MetaMask not installed");
-      const node = contractDeployments[supportedNetworks[0]].network.rpcUrls[0];
-      provider_ = new ethers.JsonRpcProvider(node);
-      console.log("Connected to: ", node);
-      return { provider_, signer_ };
-    } else {
-      provider_ = new ethers.BrowserProvider(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      signer_ = await provider_.getSigner();
-      console.log("Connected to Browser's Wallet...");
-      return { provider_, signer_ };
+  const initializeNodeProvider = async () => {
+    let contractInstances = {};
+    for (const networkName of supportedNetworks) {
+      // Use for...of loop for cleaner iteration
+      const nodeUrl = contractDeployments[networkName].network.rpcUrls[0];
+
+      try {
+        const nodeProvider = new ethers.JsonRpcProvider(nodeUrl);
+        const block = await nodeProvider.getBlockNumber();
+        console.log("Connected to", networkName, "| Block", block);
+
+        setNodeProvider((prev) => ({
+          ...prev,
+          [networkName]: nodeProvider,
+        }));
+
+        if (nodeProvider) {
+          const degenerativesArtInstance = new ethers.Contract(
+            contractDeployments[networkName].DegenerativesArt.address,
+            degenArtAbi,
+            nodeProvider
+          );
+
+          setInstances((prev) => ({
+            ...prev,
+            [networkName]: { DegenerativesArt: degenerativesArtInstance },
+          }));
+
+          console.log(networkName, "contract instance is set.");
+
+          const totalSupply = await degenerativesArtInstance.totalSupply();
+          console.log("totalSupply on", networkName, totalSupply);
+          setTokenSupplies((prev) => ({
+            ...prev,
+            [networkName]: { totalSupply: totalSupply },
+          }));
+        } else {
+          console.error("Wallet not connected. Cannot set contract instance.");
+        }
+      } catch (error) {
+        console.error(`Error connecting to ${networkName}:`, error);
+      }
+    }
+  };
+
+  const fetchAllFeels = async () => {
+    for (const networkName of supportedNetworks) {
+      const contract = instances[networkName]?.DegenerativesArt;
+      if (contract) {
+        const totalSupply = await contract.totalSupply();
+        console.log(networkName, "totalSupply:", totalSupply);
+        setTokenSupplies((prev) => ({
+          ...prev,
+          [networkName]: { totalSupply },
+        }));
+      } else {
+        console.warn(`Contract instance not found for ${networkName}`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      if (window.ethereum) {
+        setIsLoading(true);
+        await initializeNodeProvider();
+        setIsLoading(false);
+      } else {
+        console.error("MetaMask not detected. Please install and connect.");
+      }
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && Object.keys(instances).length > 0) {
+      const fetchInterval = setInterval(fetchAllFeels, 15000);
+      return () => clearInterval(fetchInterval);
+    }
+  }, [instances, nodeProvider, isLoading]);
+
+  const initializeWalletProvider = async () => {
+    if (window.ethereum) {
+      try {
+        const walletProvider_ = new ethers.BrowserProvider(window.ethereum);
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const walletSigner_ = await walletProvider_.getSigner();
+        console.log("Connected to Browser's Wallet...");
+        setWalletSigner(walletSigner_);
+      } catch (error) {
+        console.error(`Error connecting to wallet`, error);
+      }
     }
   };
 
@@ -96,25 +180,21 @@ export const EthereumProvider = (props) => {
     }
   };
 
-  const initializeContract = async (provider_, signer_) => {
-    if (!network) {
+  const initializeContract = async () => {
+    if (network) {
+      await switchNetwork();
+      const currentNetwork = contractDeployments[network];
+      const degenerativesArtInstance = new ethers.Contract(
+        currentNetwork.DegenerativesArt.address,
+        degenArtAbi,
+        walletProvider
+      );
+
+      setInstances({ DegenerativesArt: degenerativesArtInstance });
+      return degenerativesArtInstance;
+    } else {
       console.error("No network");
-      return;
     }
-    const currentNetwork = contractDeployments[network];
-
-    let signerOrProvider = provider_;
-    if (window.ethereum) {
-      signerOrProvider = signer_;
-    }
-
-    const degenerativesArtInstance = new ethers.Contract(
-      currentNetwork.DegenerativesArt.address,
-      degenArtAbi,
-      signerOrProvider
-    );
-    setInstances({ DegenerativesArt: degenerativesArtInstance });
-    return degenerativesArtInstance;
   };
 
   const fetchCollectionData = async (contract) => {
@@ -131,25 +211,15 @@ export const EthereumProvider = (props) => {
   const connectEthereumProvider = useCallback(async () => {
     console.log("Connecting to Ethereum Provider...");
     try {
-      const { provider_, signer_ } = await initializeProvider();
-      setProvider(provider_);
-      if (signer_ !== null) {
-        setSigner(signer_);
-        const userAddr = await signer_.getAddress();
+      if (window.ethereum) {
+        await initializeWalletProvider();
+        const userAddr = await walletSigner.getAddress();
         console.log("User address: ", userAddr);
         setUserAddress(userAddr);
       }
 
-      await switchNetwork();
-      if (!network) {
-        setNetwork("polygonAmoy");
-        return;
-      }
+      const degenerativesArtInstance = await initializeContract();
 
-      const degenerativesArtInstance = await initializeContract(
-        provider_,
-        signer_
-      );
       if (degenerativesArtInstance) {
         await fetchCollectionData(degenerativesArtInstance);
       }
@@ -276,13 +346,13 @@ export const EthereumProvider = (props) => {
         const moodTokenInstance = new ethers.Contract(
           moodTokenAddress,
           erc20Abi,
-          signer
+          walletSigner
         );
 
         const pricerInstance = new ethers.Contract(
           pricerAddress,
           pricerAbi,
-          signer
+          walletSigner
         );
 
         const [, requiredAllowance] = await pricerInstance.price(
@@ -319,7 +389,7 @@ export const EthereumProvider = (props) => {
         console.error("Failed to update emoji:", error);
       }
     },
-    [instances?.DegenerativesArt, userAddress, signer, network]
+    [instances?.DegenerativesArt, userAddress, walletSigner, network]
   );
 
   const mint = async (inputValues) => {
@@ -401,8 +471,9 @@ export const EthereumProvider = (props) => {
   }, [timeUpdated, countdown]);
 
   const value = {
-    signer,
-    provider,
+    walletSigner,
+    nodeProvider,
+    walletProvider,
     userAddress,
     userBalance,
     connectEthereumProvider,
@@ -417,6 +488,7 @@ export const EthereumProvider = (props) => {
     mint,
     minting,
     fetching,
+    tokenSupplies,
   };
 
   return (

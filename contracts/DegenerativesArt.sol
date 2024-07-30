@@ -2,11 +2,10 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IDegenerativesArt.sol";
 import "./interfaces/IVisualEngine.sol";
-import "./interfaces/IPricer.sol";
-import "./interfaces/IERC20.sol";
 
 /**
  * @title degeneratives.art NFT contract
@@ -18,8 +17,6 @@ import "./interfaces/IERC20.sol";
  */
 
 contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
-    IVisualEngine public engine;
-
     // Errors
     error InsufficientFunds();
     error NotTokenOwner();
@@ -30,13 +27,14 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     error CooldownNotOver();
 
     // Constants
-    uint256 public constant UPDATE_COOLDOWN = 0 hours; // @note for mint/update cooldown
+    uint256 public cooldown = 0 hours; // @note for mint/update cooldown
 
     // State Variables
     uint public tokenIds;
     uint public totalSupply;
     uint public totalMoodSwing;
-    address payable public treasury; // @note can set to wallet or liquidity pool contract
+    address payable public treasury; // @note can be set to wallet or liquidity pool contract
+    address public defaultTheme; // @note default theming engine
 
     // Mappings
     mapping(uint256 => string[]) private emojis;
@@ -45,6 +43,7 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     mapping(address => uint256) private lastUpdateTimestamp;
     mapping(address => MoodData[]) private moodPatterns;
     mapping(address => bool) public validPricers;
+    mapping(uint256 => address) private themes;
 
     // Events
     event TokenMinted(
@@ -53,18 +52,20 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         string[] emojis
     );
     event TokenUpdated(uint256 indexed tokenId, string[] newEmojis);
-    event EngineUpdated(address indexed newEngine);
+    event ThemeUpdated(uint256 indexed tokenId, address themeAddress);
     event TokenBurnt(uint256 indexed tokenId, address owner);
     event FundsRecovered(
         address indexed token,
         address indexed to,
         uint256 amount
     );
-    event PricerUpdated(address indexed pricer, bool isValid);
 
-    constructor(address _engine) ERC721("degeneratives.art", "DEGENART") {
-        engine = IVisualEngine(_engine);
+    IERC20 public MOOD;
+
+    constructor() ERC721("degeneratives.art", "DEGENART") {
         treasury = payable(msg.sender);
+        MOOD = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9); // mood token
+        defaultTheme = 0x8dc9c31AC117b29396399C2C8031b99B1af59457; // minimalist
     }
 
     //***** PUBLIC FUNCTION *****//
@@ -72,24 +73,32 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     /// @notice Mints a new Degenerative Art NFT based on a combination of emojis
     /// @dev Requires sufficient ETH payment and a unique emoji combination
     /// @param _emojis An array of emoji strings representing the mood
-    function mint(string[] memory _emojis) external payable {
+    function mint(
+        string[] memory _emojis,
+        address themeAddress
+    ) external payable {
         if (msg.value < price(totalSupply)) revert InsufficientFunds();
 
         // Check if 4 hours have passed since the last mint/update
-        if (
-            lastUpdateTimestamp[msg.sender] + UPDATE_COOLDOWN > block.timestamp
-        ) {
+        if (lastUpdateTimestamp[msg.sender] + cooldown > block.timestamp) {
             revert CooldownNotOver();
         }
 
         bytes32 emojiHash_ = emojiHash(_emojis);
         if (emojisTaken[emojiHash_]) revert EmojiCombinationAlreadyExists();
 
+        // Check if the contract has enough MOOD to reward the minter
+        uint256 moodReward = 1000 * 10 ** 18; // 1000 MOOD tokens
+        if (MOOD.balanceOf(address(this)) > moodReward) {
+            MOOD.transfer(msg.sender, moodReward);
+        }
+
         if (treasury == address(0)) revert ZeroAddressProvided();
         (bool sent, ) = payable(treasury).call{value: msg.value}("");
         if (!sent) revert TransferFailed();
 
         _updateEmojis(msg.sender, totalSupply, _emojis);
+        _updateTheme(totalSupply, themeAddress);
         _safeMint(msg.sender, totalSupply);
 
         emit TokenMinted(totalSupply, msg.sender, _emojis);
@@ -118,44 +127,153 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     /// @dev Requires token ownership and payment in the specified ERC20 token
     /// @param tokenId The ID of the token to update
     /// @param newEmojis The new array of emoji strings
-    /// @param pricerAddress The address of the Pricer contract for dynamic pricing
-    /// @param tokenAddress The address of the ERC20 token to be used for payment
     function update(
         uint256 tokenId,
-        string[] memory newEmojis,
-        address pricerAddress,
-        address tokenAddress
+        string[] memory newEmojis
     ) external payable {
-        if (pricerAddress == address(0)) revert ZeroAddressProvided();
-        if (tokenAddress == address(0)) revert ZeroAddressProvided();
+        require(newEmojis.length >= 3, "emojis must be at least three");
         if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
-        if (!validPricers[pricerAddress]) revert InvalidPricer();
 
-        // Check if 4 hours have passed since the last update
+        // Check if cooldown have passed since the last update
         if (
-            lastUpdateTimestamp[ownerOf(tokenId)] + UPDATE_COOLDOWN >
-            block.timestamp
+            lastUpdateTimestamp[ownerOf(tokenId)] + cooldown > block.timestamp
         ) {
             revert CooldownNotOver();
         }
 
-        // Fetch price from the Pricer contract and also get the status if token is allowed
-        (bool tokenAllowed, uint256 tokenValue) = IPricer(pricerAddress).price(
-            tokenId,
-            tokenAddress
-        );
-
-        if (tokenAllowed && tokenValue > 0) {
-            bool paid = IERC20(tokenAddress).transferFrom(
+        uint256 moodPayment = newEmojis.length * 10 ** 18;
+        if (MOOD.balanceOf(address(this)) < moodPayment) {
+            bool paid = MOOD.transferFrom(
                 msg.sender,
                 address(this),
-                tokenValue
+                moodPayment
             );
             if (!paid) revert TransferFailed();
         }
 
         // Update and log emojis
         _updateEmojis(ownerOf(tokenId), tokenId, newEmojis);
+    }
+
+    function upgrade(uint256 tokenId, address themeAddress) external payable {
+        uint256 moodPayment = 500 * 10 ** 18;
+        if (MOOD.balanceOf(address(this)) < moodPayment) {
+            bool paid = MOOD.transferFrom(
+                msg.sender,
+                address(this),
+                moodPayment
+            );
+            if (!paid) revert TransferFailed();
+        }
+        if (themeAddress == address(0)) revert ZeroAddressProvided();
+        if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
+        _updateTheme(totalSupply, themeAddress);
+    }
+
+    //***** HELPER FUNCTIONS *****//
+
+    /// @notice Calculates the mint price based on current supply
+    /// @dev Uses a quadratic curve to increase price as supply increases
+    /// @param supply The current total supply of minted tokens
+    function price(uint256 supply) public pure returns (uint256) {
+        return 10e12 * (supply ** 2); // @note with tokenSupply 10000, price = 1000 ether
+    }
+
+    /// @notice Hashes a combination of emojis for uniqueness check
+    /// @param emojis_ An array of emoji strings to be hashed
+    function emojiHash(string[] memory emojis_) public pure returns (bytes32) {
+        string memory emojiString = _concatEmojis(emojis_);
+        return keccak256(abi.encodePacked(emojiString));
+    }
+
+    /// @notice Returns the metadata URI for a given token ID
+    /// @dev Generates metadata dynamically using the Visual Engine
+    /// @param tokenId The ID of the token to fetch metadata for
+    function tokenURI(
+        uint256 tokenId
+    ) public view override returns (string memory) {
+        _requireOwned(tokenId);
+        string memory metadata = getMetadata(tokenId, getTheme(tokenId));
+        return metadata;
+    }
+
+    //**** GETTER/INTERFACE FUNCTION *****/
+
+    function getMoodSwing(uint256 tokenId) public view returns (uint256) {
+        return moodSwings[tokenId];
+    }
+
+    function getEmojis(uint256 tokenId) public view returns (string[] memory) {
+        return emojis[tokenId];
+    }
+
+    function getMetadata(
+        uint256 tokenId,
+        address themeAddress
+    ) public view returns (string memory) {
+        IVisualEngine engine = IVisualEngine(themeAddress);
+        string memory metadata = engine.generateMetadata(
+            tokenId,
+            ownerOf(tokenId),
+            getEmojis(tokenId),
+            getMoodSwing(tokenId)
+        );
+        return metadata;
+    }
+
+    function getTheme(uint256 tokenId) public view returns (address) {
+        return themes[tokenId];
+    }
+
+    function getMoodPattern(
+        address owner
+    ) public view returns (MoodData[] memory) {
+        return moodPatterns[owner];
+    }
+
+    function getLastMoodUpdate(address owner) public view returns (uint256) {
+        return lastUpdateTimestamp[owner];
+    }
+
+    //***** ADMIN FUNCTION *****//
+
+    /// @notice Updates the Visual Engine contract address
+    /// @dev Only callable by the contract owner
+    /// @param themeAddress The address of the new Visual Engine contract
+    function updateDefaultTheme(address themeAddress) external onlyOwner {
+        defaultTheme = themeAddress;
+    }
+
+    /// @notice Allows the owner to update the treasury address
+    /// @param newTreasury The address of the treasury
+    function updateTreasury(address newTreasury) external onlyOwner {
+        if (newTreasury == address(0)) revert ZeroAddressProvided();
+        treasury = payable(newTreasury);
+    }
+
+    /// @notice Allows the owner to update the cooldown
+    /// @param _cooldown The cooldown in seconds
+    function updateCooldown(uint256 _cooldown) external onlyOwner {
+        cooldown = _cooldown;
+    }
+
+    /// @notice Allows the owner to recover accidentally sent ERC20 tokens or ETH from the contract
+    /// @param token The address of the ERC20 token (use address(0) for ETH)
+    /// @param to The address to send the recovered funds to
+    /// @param amount The amount of tokens to recover
+    function recover(
+        address token,
+        address to,
+        uint256 amount
+    ) external onlyOwner {
+        if (token == address(0)) {
+            (bool sent, ) = payable(to).call{value: amount}("");
+            if (!sent) revert TransferFailed();
+        } else {
+            bool sent = IERC20(token).transfer(to, amount);
+            if (!sent) revert TransferFailed();
+        }
+        emit FundsRecovered(token, to, amount);
     }
 
     //***** INTERNAL FUNCTION *****//
@@ -194,107 +312,16 @@ contract DegenerativesArt is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         return true;
     }
 
+    function _updateTheme(uint256 tokenId, address theme) internal {
+        themes[tokenId] = theme;
+        emit ThemeUpdated(tokenId, theme);
+    }
+
     function _concatEmojis(
         string[] memory emojis_
     ) internal pure returns (string memory emojiString) {
         for (uint256 i = 0; i < emojis_.length; i++) {
             emojiString = string.concat(emojiString, emojis_[i]);
         }
-    }
-
-    //***** HELPER FUNCTIONS *****//
-
-    /// @notice Calculates the mint price based on current supply
-    /// @dev Uses a quadratic curve to increase price as supply increases
-    /// @param supply The current total supply of minted tokens
-    function price(uint256 supply) public pure returns (uint256) {
-        return 10e12 * (supply ** 2); // @note with tokenSupply 10000, price = 1000 ether
-    }
-
-    /// @notice Hashes a combination of emojis for uniqueness check
-    /// @param emojis_ An array of emoji strings to be hashed
-    function emojiHash(string[] memory emojis_) public pure returns (bytes32) {
-        string memory emojiString = _concatEmojis(emojis_);
-        return keccak256(abi.encodePacked(emojiString));
-    }
-
-    /// @notice Returns the metadata URI for a given token ID
-    /// @dev Generates metadata dynamically using the Visual Engine
-    /// @param tokenId The ID of the token to fetch metadata for
-    function tokenURI(
-        uint256 tokenId
-    ) public view override returns (string memory) {
-        _requireOwned(tokenId);
-        return
-            engine.generateMetadata(
-                tokenId,
-                ownerOf(tokenId),
-                getEmojis(tokenId),
-                getMoodSwing(tokenId)
-            );
-    }
-
-    //**** GETTER/INTERFACE FUNCTION *****/
-
-    function getMoodSwing(uint256 tokenId) public view returns (uint256) {
-        return moodSwings[tokenId];
-    }
-
-    function getEmojis(uint256 tokenId) public view returns (string[] memory) {
-        return emojis[tokenId];
-    }
-
-    function getMoodPattern(
-        address owner
-    ) public view returns (MoodData[] memory) {
-        return moodPatterns[owner];
-    }
-
-    function getLastMoodUpdate(address owner) public view returns (uint256) {
-        return lastUpdateTimestamp[owner];
-    }
-
-    //***** ADMIN FUNCTION *****//
-
-    /// @notice Updates the Visual Engine contract address
-    /// @dev Only callable by the contract owner
-    /// @param newEngine The address of the new Visual Engine contract
-    function updateEngine(address newEngine) external onlyOwner {
-        engine = IVisualEngine(newEngine);
-        emit EngineUpdated(newEngine);
-    }
-
-    /// @notice Allows the owner to update the validity of a pricer contract
-    /// @param pricer The address of the pricer contract
-    /// @param isValid Whether the pricer is valid or not
-    function updatePricer(address pricer, bool isValid) external onlyOwner {
-        validPricers[pricer] = isValid;
-        emit PricerUpdated(pricer, isValid);
-    }
-
-    /// @notice Allows the owner to update the treasury address
-    /// @param newTreasury The address of the treasury
-    function updateTreasury(address newTreasury) external onlyOwner {
-        if (newTreasury == address(0)) revert ZeroAddressProvided();
-        treasury = payable(newTreasury);
-    }
-
-    /// @notice Allows the owner to recover accidentally sent ERC20 tokens or ETH from the contract
-    /// @param token The address of the ERC20 token (use address(0) for ETH)
-    /// @param to The address to send the recovered funds to
-    /// @param amount The amount of tokens to recover
-    function recover(
-        address token,
-        address to,
-        uint256 amount
-    ) external onlyOwner {
-        if (token == address(0)) {
-            (bool sent, ) = payable(to).call{value: amount}("");
-            if (!sent) revert TransferFailed();
-        } else {
-            bool sent = IERC20(token).transfer(to, amount);
-            if (!sent) revert TransferFailed();
-        }
-        emit FundsRecovered(token, to, amount);
     }
 }
