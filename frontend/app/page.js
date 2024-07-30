@@ -111,6 +111,7 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
     for (let i = 0; i < maxFields; i++) {
       inputFields.push(
         <input
+          className="animate-appearance-in"
           data-emoji-input="unicode"
           key={i}
           size="lg"
@@ -181,7 +182,7 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
               <div className="flex flex-col items-center justify-center pb-6 space-y-4">
                 <div
                   ref={fieldsRef}
-                  className="flex flex-wrap items-center justify-center gap-2 p-4 rounded-lg bg-white/80"
+                  className="grid grid-cols-3 gap-2 p-4 rounded-lg bg-white/80"
                 >
                   {renderInputFields()}
                 </div>
@@ -189,42 +190,29 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
               </div>
             </ModalBody>
             <ModalFooter className="flex justify-center w-full gap-2">
-              {userAddress ? (
-                <Button
-                  startContent={
-                    <svg
-                      className="h-5"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
-                      />
-                    </svg>
-                  }
-                  size="lg"
-                  radius="full"
-                  variant="flat"
-                  className="text-white bg-black"
-                  onClick={handleMint}
-                  isLoading={minting}
-                  isDisabled
-                >
-                  minting soon 🪄
-                </Button>
-              ) : (
-                <Button
-                  color="primary"
-                  radius="full"
-                  variant="solid"
-                  fullWidth
-                  size="lg"
-                  onClick={connectEthereumProvider}
-                >
-                  connect wallet
-                </Button>
-              )}
+              <Button
+                startContent={
+                  <svg
+                    className="h-5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
+                    />
+                  </svg>
+                }
+                size="lg"
+                radius="full"
+                variant="flat"
+                className="text-white bg-black"
+                onClick={handleMint}
+                isLoading={minting}
+                isDisabled
+              >
+                minting soon 🪄
+              </Button>
             </ModalFooter>
           </>
         )}
@@ -235,7 +223,15 @@ export function MintModal({ isOpen, onOpen, onOpenChange }) {
 
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { signer, setNetwork, allAssets, fetching } = useContext(Context);
+  const {
+    signer,
+    setNetwork,
+    allAssets,
+    fetching,
+    connectEthereumProvider,
+    connectWallet,
+    tokenSupplies,
+  } = useContext(Context);
 
   const [mounted, setMounted] = useState(false);
   const [supplies, setSupplies] = useState(null);
@@ -278,52 +274,52 @@ export default function Home() {
 
   const [htmlContent, setHtmlContent] = useState("");
 
-  useEffect(() => {
-    const fetchHtml = async () => {
-      if (fetching) {
-        return;
-      }
+  // useEffect(() => {
+  //   const fetchHtml = async () => {
+  //     if (fetching) {
+  //       return;
+  //     }
 
-      try {
-        const response = await fetch("./render.html");
-        const data = await response.text();
-        setHtmlContent(data);
-        const protocol =
-          process.env.NODE_ENV === "development"
-            ? "http://localhost:3000"
-            : "https://www.degeneratives.art";
-        const url = `${protocol}/api/getInfo`;
-        const supplies = await fetch(url).then((res) => res.json());
-        setSupplies(supplies.results);
-        console.log("supplies", supplies.results);
+  //     try {
+  //       const response = await fetch("./render.html");
+  //       const data = await response.text();
+  //       setHtmlContent(data);
+  //       const protocol =
+  //         process.env.NODE_ENV === "development"
+  //           ? "http://localhost:3000"
+  //           : "https://www.degeneratives.art";
+  //       const url = `${protocol}/api/getInfo`;
+  //       const supplies = await fetch(url).then((res) => res.json());
+  //       setSupplies(supplies.results);
+  //       console.log("supplies", supplies.results);
 
-        // Loop through each network and supply
-        // const allEmojis = {};
-        // for (const item of supplies.results) {
-        //   const network = item.network;
-        //   const supply = item.supply;
+  //       // Loop through each network and supply
+  //       // const allEmojis = {};
+  //       // for (const item of supplies.results) {
+  //       //   const network = item.network;
+  //       //   const supply = item.supply;
 
-        //   for (let index = 0; index < supply; index++) {
-        //     const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
-        //     const emoji = await fetch(emojiUrl).then((res) => res.json());
-        //     allEmojis[network] = {
-        //       supply,
-        //       emojis: emoji,
-        //     };
-        //   }
-        // }
-      } catch (error) {
-        console.error("Error fetching HTML:", error);
-      }
-    };
+  //       //   for (let index = 0; index < supply; index++) {
+  //       //     const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
+  //       //     const emoji = await fetch(emojiUrl).then((res) => res.json());
+  //       //     allEmojis[network] = {
+  //       //       supply,
+  //       //       emojis: emoji,
+  //       //     };
+  //       //   }
+  //       // }
+  //     } catch (error) {
+  //       console.error("Error fetching HTML:", error);
+  //     }
+  //   };
 
-    fetchHtml();
-  }, [selectedTab]);
+  //   fetchHtml();
+  // }, [selectedTab]);
 
   return (
     <>
       {mounted && (
-        <main className="w-full min-h-screen">
+        <main className="w-full min-h-screen ">
           <Navigation
             tabs={
               <Tabs
@@ -403,6 +399,43 @@ export default function Home() {
                     <Tooltip
                       shouldFlip
                       showArrow
+                      color="warning"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            coredao.org
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              onClick={() => {
+                                connectEthereumProvider(), setNetwork("core");
+                              }}
+                            >
+                              switch to this network
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
+                        <Chip
+                          className="border-none"
+                          variant="dot"
+                          color="warning"
+                        >
+                          Core
+                        </Chip>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          0x45c
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
                       color="secondary"
                       placement="right"
                       content={
@@ -414,7 +447,10 @@ export default function Home() {
                             <Button
                               size="sm"
                               className="text-tiny"
-                              onClick={(e) => setNetwork("polygon")}
+                              onClick={() => {
+                                connectEthereumProvider(),
+                                  setNetwork("polygon");
+                              }}
                             >
                               switch to this network
                             </Button>
@@ -447,7 +483,9 @@ export default function Home() {
                             <Button
                               size="sm"
                               className="text-tiny"
-                              onClick={(e) => setNetwork("base")}
+                              onClick={() => {
+                                connectEthereumProvider(), setNetwork("base");
+                              }}
                             >
                               switch to this network
                             </Button>
@@ -468,41 +506,7 @@ export default function Home() {
                         </span>
                       </div>
                     </Tooltip>
-                    <Tooltip
-                      shouldFlip
-                      showArrow
-                      color="warning"
-                      placement="left"
-                      content={
-                        <div className="px-1 py-2 space-y-2 text-center">
-                          <div className="font-bold text-small">
-                            coredao.org
-                          </div>
-                          <div className="text-tiny">
-                            <Button
-                              size="sm"
-                              className="text-tiny"
-                              onClick={(e) => setNetwork("core")}
-                            >
-                              switch to this network
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
-                        <Chip
-                          className="border-none"
-                          variant="dot"
-                          color="warning"
-                        >
-                          Core
-                        </Chip>
-                        <span className="text-[10px] pl-6 text-default-500">
-                          0x45c
-                        </span>
-                      </div>
-                    </Tooltip>
+
                     <Tooltip
                       shouldFlip
                       showArrow
@@ -517,7 +521,10 @@ export default function Home() {
                             <Button
                               size="sm"
                               className="text-tiny"
-                              onClick={(e) => setNetwork("etherlink")}
+                              onClick={() => {
+                                connectEthereumProvider(),
+                                  setNetwork("etherlink");
+                              }}
                             >
                               switch to this network
                             </Button>
@@ -693,7 +700,7 @@ export default function Home() {
                     the next one.
                   </p>
                   <div className="justify-center w-full max-w-4xl p-6 mx-auto overflow-x-scroll duration-200 border-2 border-white md:overflow-auto lg:flex bg-white/50 rounded-3xl">
-                    {supplies && (
+                    {tokenSupplies && (
                       <Table
                         removeWrapper
                         className="bg-transparent"
@@ -705,30 +712,23 @@ export default function Home() {
                           <TableColumn>BLOCKCHAIN NETWORK</TableColumn>
                           <TableColumn>CURRENT SUPPLY</TableColumn>
                           <TableColumn>NFT MINT PRICE</TableColumn>
-                          {/* <TableColumn>ACTIONS</TableColumn> */}
                         </TableHeader>
                         <TableBody>
-                          {Object.keys(supplies).map((network) => (
-                            <TableRow key={network}>
-                              <TableCell>{supplies[network].network}</TableCell>
-                              <TableCell>{supplies[network].supply}</TableCell>
-                              <TableCell>
-                                {supplies[network].supply &&
-                                  calculateMintPrice(supplies[network].supply)}
+                          {Object.keys(tokenSupplies).map((networkName) => (
+                            <TableRow key={networkName}>
+                              <TableCell>{networkName}</TableCell>
+                              <TableCell align="right">
+                                {tokenSupplies[
+                                  networkName
+                                ]?.totalSupply?.toString()}
                               </TableCell>
-                              {/* <TableCell>
-                              <ButtonGroup>
-                                <Button size="sm" radius="full" variant="flat">
-                                  Switch
-                                </Button>
-                                <Button size="sm" radius="full" variant="flat">
-                                  Stake
-                                </Button>
-                                <Button size="sm" radius="full" variant="flat">
-                                  Explore
-                                </Button>
-                              </ButtonGroup>
-                            </TableCell> */}
+                              <TableCell align="right">
+                                {calculateMintPrice(
+                                  Number(
+                                    tokenSupplies[networkName]?.totalSupply
+                                  )
+                                )}
+                              </TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -794,8 +794,8 @@ export default function Home() {
               <section className="min-h-screen"></section>
             </>
           )}
-          <div className="mb-6 md:mx-12">
-            <footer className="z-0 w-full p-6 py-16 text-sm text-center md:px-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+          <div className="md:mb-6 md:mx-12">
+            <footer className="z-0 w-full p-6 text-sm text-center md:py-16 md:px-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
               Powered by{" "}
               <Link href="https://ocvlabs.com" color="foreground" size="sm">
                 OnChainVision

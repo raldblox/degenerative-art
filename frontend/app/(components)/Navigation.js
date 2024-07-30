@@ -67,7 +67,7 @@ export const Navigation = ({ mint, tabs }) => {
             stake
           </Button>
         </NavbarItem> */}
-        <NavbarItem className="pr-2">
+        {/* <NavbarItem className="pr-2">
           <Button
             as={userAddress && Link}
             href="/account"
@@ -80,7 +80,7 @@ export const Navigation = ({ mint, tabs }) => {
           >
             {userAddress ? "account" : "connect"}
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
     </Navbar>
   );
