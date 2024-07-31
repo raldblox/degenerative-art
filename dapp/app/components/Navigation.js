@@ -58,7 +58,6 @@ export const Navigation = ({ tabs }) => {
             variant="bordered"
             radius="full"
             className="font-bold border-small bg-default-100"
-            onClick={connectEthereumProvider}
           >
             account
           </Button>

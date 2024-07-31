@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navigation } from "./components/navigation";
 import { Button, Image, Link, Tab, Tabs, Tooltip } from "@nextui-org/react";
 import { FlipWords } from "./components/FlipWords";
 import { EmojiGlass } from "./components/EmojiGlass";
+import { Navigation } from "./components/Navigation";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
