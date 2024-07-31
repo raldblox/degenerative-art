@@ -1,10 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Navigation } from "./(components)/Navigation";
-import { Button, Image, Link, Tab, Tabs, Tooltip } from "@nextui-org/react";
-import { FlipWords } from "./(components)/FlipWords";
-import { EmojiGlass } from "./(components)/EmojiGlass";
+import {
+  Button,
+  ButtonGroup,
+  Chip,
+  Image,
+  Input,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Spinner,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tabs,
+  Tooltip,
+  useDisclosure,
+} from "@nextui-org/react";
+import { useContext, useEffect, useRef, useState } from "react";
+import EmojisContainer from "../(components)/EmojisContainer";
+import { Context } from "../(providers)/EthereumProvider";
+import { Navigation } from "../(components)/Navigation";
+import { EmojiGlass } from "../(components)/EmojiGlass";
+import { FlipWords } from "../(components)/FlipWords";
+import { AssetLoader } from "../(components)/loader/AssetLoader";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -15,8 +45,21 @@ function shuffleArray(array) {
 }
 
 export default function Home() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    signer,
+    setNetwork,
+    allAssets,
+    fetching,
+    connectEthereumProvider,
+    connectWallet,
+    tokenSupplies,
+  } = useContext(Context);
+
   const [mounted, setMounted] = useState(false);
+  const [supplies, setSupplies] = useState(null);
   const [selectedTab, setSelectedTab] = useState("home");
+
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
       "Mint Your Mood Before It's Gone, Ser 🫡",
@@ -52,6 +95,50 @@ export default function Home() {
     setMounted(true);
   }, []);
 
+  const [htmlContent, setHtmlContent] = useState("");
+
+  // useEffect(() => {
+  //   const fetchHtml = async () => {
+  //     if (fetching) {
+  //       return;
+  //     }
+
+  //     try {
+  //       const response = await fetch("./render.html");
+  //       const data = await response.text();
+  //       setHtmlContent(data);
+  //       const protocol =
+  //         process.env.NODE_ENV === "development"
+  //           ? "http://localhost:3000"
+  //           : "https://www.degeneratives.art";
+  //       const url = `${protocol}/api/getInfo`;
+  //       const supplies = await fetch(url).then((res) => res.json());
+  //       setSupplies(supplies.results);
+  //       console.log("supplies", supplies.results);
+
+  //       // Loop through each network and supply
+  //       // const allEmojis = {};
+  //       // for (const item of supplies.results) {
+  //       //   const network = item.network;
+  //       //   const supply = item.supply;
+
+  //       //   for (let index = 0; index < supply; index++) {
+  //       //     const emojiUrl = `${protocol}/api/getEmojis/${network}/${index}`;
+  //       //     const emoji = await fetch(emojiUrl).then((res) => res.json());
+  //       //     allEmojis[network] = {
+  //       //       supply,
+  //       //       emojis: emoji,
+  //       //     };
+  //       //   }
+  //       // }
+  //     } catch (error) {
+  //       console.error("Error fetching HTML:", error);
+  //     }
+  //   };
+
+  //   fetchHtml();
+  // }, [selectedTab]);
+
   return (
     <>
       {mounted && (
@@ -73,7 +160,7 @@ export default function Home() {
               >
                 <Tab key="home" title="degeneratives.art" />
                 {/* <Tab key="analytics" title="Analytics" /> */}
-                {/* <Tab key="feels" className="text-bold" title="All Feels" /> */}
+                <Tab key="feels" className="text-bold" title="All Feels" />
               </Tabs>
             }
             mint={
@@ -114,13 +201,13 @@ export default function Home() {
                       size="sm"
                       radius="full"
                       variant="solid"
-                      className="text-white bg-black"
+                      color="default"
                       // onPress={onOpen}
-                      //   isDisabled
+                      isDisabled
                     >
                       Minting soon
                     </Button>
-                    {/* <Button
+                    <Button
                       fullWidth
                       size="sm"
                       radius="full"
@@ -129,7 +216,7 @@ export default function Home() {
                       onClick={() => setSelectedTab("feels")}
                     >
                       Discover Feels
-                    </Button> */}
+                    </Button>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -159,12 +246,7 @@ export default function Home() {
                       }
                     >
                       <div className="md:absolute grid animate-appearance-in top-[15%] left-[7%]">
-                        <Image
-                          src="/etherlink.svg"
-                          height={40}
-                          width={90}
-                          alt=""
-                        />
+                        <Image src="/etherlink.svg" height={40} width={90} />
                         <span className="text-[10px] pl-6 text-default-500">
                           Blockchain Network
                         </span>
@@ -201,7 +283,6 @@ export default function Home() {
                             height={20}
                             width={20}
                             radius="md"
-                            alt=""
                           />
                           <p className="text-sm font-bold">OnChainSupply</p>
                         </div>
@@ -242,7 +323,6 @@ export default function Home() {
                             radius="full"
                             height={20}
                             width={20}
-                            alt=""
                           />
 
                           <p className="text-sm font-bold">Degenerator</p>
@@ -281,7 +361,6 @@ export default function Home() {
                           src="/geckoterminal.svg"
                           height={40}
                           width={120}
-                          alt=""
                         />
                         <span className="text-[10px] pl-6 text-default-500">
                           Charts & Dex Tools
@@ -318,7 +397,6 @@ export default function Home() {
                           height={40}
                           width={75}
                           radius="none"
-                          alt=""
                         />
                         <span className="text-[10px] pl-6 text-default-500">
                           NFT Marketplace
@@ -356,7 +434,6 @@ export default function Home() {
                             height={40}
                             width={20}
                             radius="none"
-                            alt=""
                           />
                           <p className="text-sm font-bold">TachySwap</p>
                         </div>
@@ -502,7 +579,119 @@ export default function Home() {
               </section>
             </>
           )}
-          <div className="md:mb-6 md:mx-8">
+          {/* {selectedTab == "analytics" && (
+            <>
+              <section className="z-0 w-full md:px-12">
+                <div className="flex flex-col items-center justify-center min-h-screen p-3 space-y-6 duration-200 md:p-12 bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
+                  <h5 className="text-sm text-center text-bold">
+                    PRICE CURVE & SUPPLY DYNAMICS
+                  </h5>
+                  <div className="animate-appearance-in">
+                    <LivePriceChart />
+                  </div>
+                  <p className="pb-4 text-xs text-center text-balance">
+                    This pricing model is designed to create a fair and
+                    sustainable ecosystem for degeneratives.art. There&apos;s no
+                    cap on the number of NFTs that can be minted, but the
+                    exponential price curve acts as a natural limiting factor.
+                    The more NFTs that exist, the higher the price becomes for
+                    the next one.
+                  </p>
+                  <div className="justify-center w-full max-w-4xl p-6 mx-auto overflow-x-scroll duration-200 border-2 border-white md:overflow-auto lg:flex bg-white/50 rounded-3xl">
+                    {tokenSupplies && (
+                      <Table
+                        removeWrapper
+                        className="bg-transparent"
+                        color="primary"
+                        selectionMode="single"
+                        aria-label=""
+                      >
+                        <TableHeader>
+                          <TableColumn>BLOCKCHAIN NETWORK</TableColumn>
+                          <TableColumn>CURRENT SUPPLY</TableColumn>
+                          <TableColumn>NFT MINT PRICE</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                          {Object.keys(tokenSupplies).map((networkName) => (
+                            <TableRow key={networkName}>
+                              <TableCell>{networkName}</TableCell>
+                              <TableCell align="right">
+                                {tokenSupplies[
+                                  networkName
+                                ]?.totalSupply?.toString()}
+                              </TableCell>
+                              <TableCell align="right">
+                                {calculateMintPrice(
+                                  Number(
+                                    tokenSupplies[networkName]?.totalSupply
+                                  )
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    )}
+                  </div>
+                </div>
+              </section>
+            </>
+          )} */}
+          {selectedTab == "feels" && (
+            <>
+              <section className="min-h-screen">
+                <div className="flex flex-col items-center justify-center w-full p-3 md:p-16">
+                  <h1 className="max-w-3xl text-4xl text-center lowercase text-pretty">
+                    Discover what other homies are feeling today
+                  </h1>
+                  <div className="flex items-center justify-center mt-16">
+                    <ul className="grid gap-6 md:grid-cols-3">
+                      {fetching ? (
+                        <>
+                          <AssetLoader />
+                          <AssetLoader />
+                          <AssetLoader />
+                        </>
+                      ) : (
+                        <>
+                          {allAssets?.map((token) => (
+                            <Link
+                              href={`/id/${token.tokenId}?network=${token.network}`}
+                              key={token.tokenId}
+                              className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+                            >
+                              <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+                                <EmojisContainer token={token} />
+                              </div>
+                              <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
+                                <div className="flex items-center justify-between w-full font-semibold">
+                                  <p>degeneratives.art #{token.tokenId}</p>
+                                  <p>{token?.network}</p>
+                                </div>
+                                <div className="">
+                                  <p>
+                                    {token.owner.slice(0, 5)}
+                                    ...
+                                    {token.owner.slice(-4)}
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          ))}
+                        </>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+          {selectedTab == "explore" && (
+            <>
+              <section className="min-h-screen"></section>
+            </>
+          )}
+          <div className="md:mb-6 md:mx-12">
             <footer className="z-0 w-full p-6 text-sm text-center md:py-16 md:px-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
               Powered by{" "}
               <Link href="https://ocvlabs.com" color="foreground" size="sm">
@@ -516,6 +705,18 @@ export default function Home() {
           </div>
         </main>
       )}
+      {/* <MintModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} /> */}
     </>
   );
+}
+
+{
+  /* <div className="absolute top-0">
+  <iframe
+    ref={iframeRef}
+    title="Rendered Document"
+    width="100%"
+    className="w-screen min-h-[60vh] overflow-hidden"
+  />
+</div>; */
 }
