@@ -264,7 +264,7 @@ export default function Home() {
                         size="sm"
                         className="text-tiny"
                         as={Link}
-                        href="https://rarible.com/collection/etherlink/0xCF552524772605DE32DAe649f7ceD60a286b0D21/items"
+                        href="https://rarible.com/degeneratives"
                         isExternal
                       >
                         Buy/Sell Degeneratives
