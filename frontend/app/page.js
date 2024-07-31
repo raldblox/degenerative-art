@@ -76,18 +76,6 @@ export default function Home() {
                 {/* <Tab key="feels" className="text-bold" title="All Feels" /> */}
               </Tabs>
             }
-            mint={
-              <Button
-                size="sm"
-                color="foreground"
-                variant="bordered"
-                radius="full"
-                className="font-bold border-small bg-default-100"
-                // onPress={onOpen}
-              >
-                minting soon
-              </Button>
-            }
           />
           {selectedTab == "home" && (
             <>
@@ -114,13 +102,13 @@ export default function Home() {
                       size="sm"
                       radius="full"
                       variant="solid"
-                      className="text-white bg-black"
+                      color="default"
                       // onPress={onOpen}
-                      //   isDisabled
+                      isDisabled
                     >
                       Minting soon
                     </Button>
-                    {/* <Button
+                    <Button
                       fullWidth
                       size="sm"
                       radius="full"
@@ -129,7 +117,7 @@ export default function Home() {
                       onClick={() => setSelectedTab("feels")}
                     >
                       Discover Feels
-                    </Button> */}
+                    </Button>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -159,12 +147,7 @@ export default function Home() {
                       }
                     >
                       <div className="md:absolute grid animate-appearance-in top-[15%] left-[7%]">
-                        <Image
-                          src="/etherlink.svg"
-                          height={40}
-                          width={90}
-                          alt=""
-                        />
+                        <Image src="/etherlink.svg" height={40} width={90} />
                         <span className="text-[10px] pl-6 text-default-500">
                           Blockchain Network
                         </span>
@@ -201,7 +184,6 @@ export default function Home() {
                             height={20}
                             width={20}
                             radius="md"
-                            alt=""
                           />
                           <p className="text-sm font-bold">OnChainSupply</p>
                         </div>
@@ -242,7 +224,6 @@ export default function Home() {
                             radius="full"
                             height={20}
                             width={20}
-                            alt=""
                           />
 
                           <p className="text-sm font-bold">Degenerator</p>
@@ -281,7 +262,6 @@ export default function Home() {
                           src="/geckoterminal.svg"
                           height={40}
                           width={120}
-                          alt=""
                         />
                         <span className="text-[10px] pl-6 text-default-500">
                           Charts & Dex Tools
@@ -318,7 +298,6 @@ export default function Home() {
                           height={40}
                           width={75}
                           radius="none"
-                          alt=""
                         />
                         <span className="text-[10px] pl-6 text-default-500">
                           NFT Marketplace
@@ -356,7 +335,6 @@ export default function Home() {
                             height={40}
                             width={20}
                             radius="none"
-                            alt=""
                           />
                           <p className="text-sm font-bold">TachySwap</p>
                         </div>

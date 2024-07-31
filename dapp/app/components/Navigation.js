@@ -10,8 +10,6 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import { useContext } from "react";
-import { Context } from "../(providers)/EthereumProvider.js.bak";
 
 export const Navigation = ({ tabs }) => {
   return (
@@ -53,22 +51,8 @@ export const Navigation = ({ tabs }) => {
         className="items-center hidden gap-1 sm:flex"
         justify="end"
       >
-        <NavbarItem>{mint}</NavbarItem>
-        {/* <NavbarItem className="">
+        <NavbarItem>
           <Button
-            size="sm"
-            color="foreground"
-            variant="bordered"
-            radius="full"
-            className="font-bold border-small bg-default-100"
-          >
-            stake
-          </Button>
-        </NavbarItem> */}
-        {/* <NavbarItem className="pr-2">
-          <Button
-            as={userAddress && Link}
-            href="/account"
             size="sm"
             color="foreground"
             variant="bordered"
@@ -76,9 +60,9 @@ export const Navigation = ({ tabs }) => {
             className="font-bold border-small bg-default-100"
             onClick={connectEthereumProvider}
           >
-            {userAddress ? "account" : "connect"}
+            account
           </Button>
-        </NavbarItem> */}
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   );

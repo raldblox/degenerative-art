@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { Context } from "../(providers)/EthereumProvider";
+import { Context } from "../(providers)/EthereumProvider.js.bak";
 import {
   Button,
   Card,
