@@ -59,7 +59,7 @@ export const Navigation = ({ tabs }) => {
             radius="full"
             className="font-bold border-small bg-default-100"
           >
-            account
+            connect
           </Button>
         </NavbarItem>
       </NavbarContent>
