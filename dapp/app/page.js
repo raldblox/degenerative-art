@@ -129,7 +129,7 @@ export default function Home() {
                     <div className="font-bold text-small">etherlink.com</div>
                     <div className="text-tiny">
                       <Button size="sm" className="text-tiny">
-                        switch to this network
+                        Switch to Etherlink
                       </Button>
                     </div>
                   </div>
