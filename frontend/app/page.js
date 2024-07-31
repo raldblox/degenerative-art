@@ -356,7 +356,7 @@ export default function Home() {
           />
           {selectedTab == "home" && (
             <>
-              <section className="relative min-h-screen md:mx-12">
+              <section className="relative min-h-screen md:mx-8">
                 <div className="flex relative flex-col space-y-8 items-center min-h-[500px] justify-center w-full h-full p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
                   <span className="p-1 px-4 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
                     Where Emotions Become Art 🎨 and Currency 🪙
@@ -453,7 +453,7 @@ export default function Home() {
                         </div>
                       }
                     >
-                      <div className="md:absolute grid animate-appearance-in top-[45%] left-[2%]">
+                      <div className="md:absolute grid animate-appearance-in top-[43%] left-[4%]">
                         <div className="flex items-center gap-2">
                           <Image
                             src="/onchainsupply.png"
@@ -493,7 +493,7 @@ export default function Home() {
                         </div>
                       }
                     >
-                      <div className="md:absolute grid animate-appearance-in top-[45%] right-[2%]">
+                      <div className="md:absolute grid animate-appearance-in top-[43%] right-[4%]">
                         <div className="flex items-center gap-2">
                           <Image
                             src="/degenerator.jpg"
