@@ -4,6 +4,7 @@ import {
   Button,
   ButtonGroup,
   Chip,
+  Image,
   Input,
   Link,
   Modal,
@@ -356,7 +357,7 @@ export default function Home() {
           {selectedTab == "home" && (
             <>
               <section className="relative min-h-screen md:mx-12">
-                <div className="flex relative flex-col space-y-8 items-center min-h-[70vh] justify-center w-full h-full p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+                <div className="flex relative flex-col space-y-8 items-center min-h-[500px] justify-center w-full h-full p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
                   <span className="p-1 px-4 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
                     Where Emotions Become Art 🎨 and Currency 🪙
                   </span>
@@ -399,117 +400,6 @@ export default function Home() {
                     <Tooltip
                       shouldFlip
                       showArrow
-                      color="warning"
-                      placement="left"
-                      content={
-                        <div className="px-1 py-2 space-y-2 text-center">
-                          <div className="font-bold text-small">
-                            coredao.org
-                          </div>
-                          <div className="text-tiny">
-                            <Button
-                              size="sm"
-                              className="text-tiny"
-                              onClick={() => {
-                                connectEthereumProvider(), setNetwork("core");
-                              }}
-                            >
-                              switch to this network
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%]">
-                        <Chip
-                          className="border-none"
-                          variant="dot"
-                          color="warning"
-                        >
-                          Core
-                        </Chip>
-                        <span className="text-[10px] pl-6 text-default-500">
-                          0x45c
-                        </span>
-                      </div>
-                    </Tooltip>
-                    <Tooltip
-                      shouldFlip
-                      showArrow
-                      color="secondary"
-                      placement="right"
-                      content={
-                        <div className="px-1 py-2 space-y-2 text-center">
-                          <div className="font-bold text-small">
-                            polygon.technology
-                          </div>
-                          <div className="text-tiny">
-                            <Button
-                              size="sm"
-                              className="text-tiny"
-                              onClick={() => {
-                                connectEthereumProvider(),
-                                  setNetwork("polygon");
-                              }}
-                            >
-                              switch to this network
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <div className="md:absolute grid animate-appearance-in top-[15%] left-[10%]">
-                        <Chip
-                          className="border-none"
-                          variant="dot"
-                          color="secondary"
-                        >
-                          Polygon
-                        </Chip>
-                        <span className="text-[10px] pl-6 text-default-500">
-                          0x89
-                        </span>
-                      </div>
-                    </Tooltip>
-                    <Tooltip
-                      shouldFlip
-                      showArrow
-                      color="primary"
-                      placement="left"
-                      content={
-                        <div className="px-1 py-2 space-y-2 text-center">
-                          <div className="font-bold text-small">base.org</div>
-                          <div className="text-tiny">
-                            <Button
-                              size="sm"
-                              className="text-tiny"
-                              onClick={() => {
-                                connectEthereumProvider(), setNetwork("base");
-                              }}
-                            >
-                              switch to this network
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
-                        <Chip
-                          className="border-none"
-                          variant="dot"
-                          color="primary"
-                        >
-                          Base
-                        </Chip>
-                        <span className="text-[10px] pl-6 text-default-500">
-                          0x2105
-                        </span>
-                      </div>
-                    </Tooltip>
-
-                    <Tooltip
-                      shouldFlip
-                      showArrow
                       color="success"
                       placement="left"
                       content={
@@ -532,16 +422,201 @@ export default function Home() {
                         </div>
                       }
                     >
-                      <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
-                        <Chip
-                          className="border-none"
-                          variant="dot"
-                          color="success"
-                        >
-                          Etherlink
-                        </Chip>
+                      <div className="md:absolute grid animate-appearance-in top-[15%] left-[7%]">
+                        <Image src="/etherlink.svg" height={40} width={90} />
                         <span className="text-[10px] pl-6 text-default-500">
-                          0xa729
+                          Blockchain Network
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="default"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            onchainsupply.net
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              as={Link}
+                              href="https://onchainsupply.net"
+                              isExternal
+                            >
+                              Create Smart Assets
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[45%] left-[2%]">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src="/onchainsupply.png"
+                            height={20}
+                            width={20}
+                            radius="md"
+                          />
+                          <p className="text-sm font-bold">OnChainSupply</p>
+                        </div>
+
+                        <span className="text-[10px] pl-6 text-default-500">
+                          NFT Supplier
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="success"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            degenerator.wtf
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              as={Link}
+                              isExternal
+                              href="https://www.degenerator.wtf/"
+                            >
+                              Launch Token
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[45%] right-[2%]">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src="/degenerator.jpg"
+                            radius="full"
+                            height={20}
+                            width={20}
+                          />
+
+                          <p className="text-sm font-bold">Degenerator</p>
+                        </div>
+                        <span className="text-[10px] pl-6 text-default-500">
+                          ERC20 Deployer
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="secondary"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            geckoterminal.com
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              as={Link}
+                              isExternal
+                              href="https://www.geckoterminal.com/etherlink/pools/0xc6d0aafde70058eda2e4f3dd17200dabd350a8d5"
+                            >
+                              MOOD/XTZ Chart
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%] ">
+                        <Image
+                          src="/geckoterminal.svg"
+                          height={40}
+                          width={120}
+                        />
+                        <span className="text-[10px] pl-6 text-default-500">
+                          Charts & Dex Tools
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="warning"
+                      placement="right"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            rarible.com
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              as={Link}
+                              href=""
+                              isExternal
+                            >
+                              Buy/Sell Degeneratives
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[70%] right-[10%]">
+                        <Image
+                          src="/rarible.svg"
+                          height={40}
+                          width={75}
+                          radius="none"
+                        />
+                        <span className="text-[10px] pl-6 text-default-500">
+                          NFT Marketplace
+                        </span>
+                      </div>
+                    </Tooltip>
+                    <Tooltip
+                      shouldFlip
+                      showArrow
+                      color="primary"
+                      placement="left"
+                      content={
+                        <div className="px-1 py-2 space-y-2 text-center">
+                          <div className="font-bold text-small">
+                            tachyswap.org
+                          </div>
+                          <div className="text-tiny">
+                            <Button
+                              size="sm"
+                              className="text-tiny"
+                              as={Link}
+                              isExternal
+                              href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
+                            >
+                              Swap MOOD/XTZ
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src="/tachyswap.png"
+                            height={40}
+                            width={20}
+                            radius="none"
+                          />
+                          <p className="text-sm font-bold">TachySwap</p>
+                        </div>
+
+                        <span className="text-[10px] pl-6 text-default-500">
+                          DEX/LP Provider
                         </span>
                       </div>
                     </Tooltip>
