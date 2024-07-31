@@ -247,7 +247,7 @@ export default function Home() {
                 <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%] ">
                   <Image src="/geckoterminal.svg" height={20} width={120} />
                   <span className="text-[10px] pl-6 text-default-500">
-                    Charts & Dex Tools
+                    Charts & DEX Tools
                   </span>
                 </div>
               </Tooltip>
