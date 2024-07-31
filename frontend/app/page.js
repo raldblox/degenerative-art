@@ -336,8 +336,8 @@ export default function Home() {
                 selectedKey={selectedTab}
                 onSelectionChange={setSelectedTab}
               >
-                <Tab key="home" title="Home" />
-                <Tab key="analytics" title="Analytics" />
+                <Tab key="home" title="degeneratives.art" />
+                {/* <Tab key="analytics" title="Analytics" /> */}
                 <Tab key="feels" className="text-bold" title="All Feels" />
               </Tabs>
             }
@@ -756,7 +756,7 @@ export default function Home() {
               </section>
             </>
           )}
-          {selectedTab == "analytics" && (
+          {/* {selectedTab == "analytics" && (
             <>
               <section className="z-0 w-full md:px-12">
                 <div className="flex flex-col items-center justify-center min-h-screen p-3 space-y-6 duration-200 md:p-12 bg-gradient-to-tr from-zinc-100/50 via-transparent to-zinc-200/50 rounded-3xl">
@@ -812,9 +812,8 @@ export default function Home() {
                   </div>
                 </div>
               </section>
-              {/* <section className="sticky top-0 z-10 w-full p-16 bg-default-100 rounded-t-3xl backdrop-blur-sm"></section> */}
             </>
-          )}
+          )} */}
           {selectedTab == "feels" && (
             <>
               <section className="min-h-screen">

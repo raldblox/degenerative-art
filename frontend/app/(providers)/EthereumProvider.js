@@ -39,53 +39,6 @@ export const EthereumProvider = (props) => {
   const [instances, setInstances] = useState({});
   const [tokenSupplies, setTokenSupplies] = useState({});
 
-  const supportedNetworks = ["polygonAmoy", "polygon", "etherlink"];
-
-  const initializeNodeProvider = async () => {
-    let contractInstances = {};
-    for (const networkName of supportedNetworks) {
-      // Use for...of loop for cleaner iteration
-      const nodeUrl = contractDeployments[networkName].network.rpcUrls[0];
-
-      try {
-        const nodeProvider = new ethers.JsonRpcProvider(nodeUrl);
-        const block = await nodeProvider.getBlockNumber();
-        console.log("Connected to", networkName, "| Block", block);
-
-        setNodeProvider((prev) => ({
-          ...prev,
-          [networkName]: nodeProvider,
-        }));
-
-        if (nodeProvider) {
-          const degenerativesArtInstance = new ethers.Contract(
-            contractDeployments[networkName].DegenerativesArt.address,
-            degenArtAbi,
-            nodeProvider
-          );
-
-          setInstances((prev) => ({
-            ...prev,
-            [networkName]: { DegenerativesArt: degenerativesArtInstance },
-          }));
-
-          console.log(networkName, "contract instance is set.");
-
-          const totalSupply = await degenerativesArtInstance.totalSupply();
-          console.log("totalSupply on", networkName, totalSupply);
-          setTokenSupplies((prev) => ({
-            ...prev,
-            [networkName]: { totalSupply: totalSupply },
-          }));
-        } else {
-          console.error("Wallet not connected. Cannot set contract instance.");
-        }
-      } catch (error) {
-        console.error(`Error connecting to ${networkName}:`, error);
-      }
-    }
-  };
-
   const fetchAllFeels = async () => {
     for (const networkName of supportedNetworks) {
       const contract = instances[networkName]?.DegenerativesArt;
@@ -103,38 +56,11 @@ export const EthereumProvider = (props) => {
   };
 
   useEffect(() => {
-    const init = async () => {
-      if (window.ethereum) {
-        setIsLoading(true);
-        await initializeNodeProvider();
-        setIsLoading(false);
-      } else {
-        console.error("MetaMask not detected. Please install and connect.");
-      }
-    };
-    init();
-  }, []);
-
-  useEffect(() => {
     if (!isLoading && Object.keys(instances).length > 0) {
       const fetchInterval = setInterval(fetchAllFeels, 15000);
       return () => clearInterval(fetchInterval);
     }
   }, [instances, nodeProvider, isLoading]);
-
-  const initializeWalletProvider = async () => {
-    if (window.ethereum) {
-      try {
-        const walletProvider_ = new ethers.BrowserProvider(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        const walletSigner_ = await walletProvider_.getSigner();
-        console.log("Connected to Browser's Wallet...");
-        setWalletSigner(walletSigner_);
-      } catch (error) {
-        console.error(`Error connecting to wallet`, error);
-      }
-    }
-  };
 
   const switchNetwork = async () => {
     if (window.ethereum && network) {
@@ -180,23 +106,6 @@ export const EthereumProvider = (props) => {
     }
   };
 
-  const initializeContract = async () => {
-    if (network) {
-      await switchNetwork();
-      const currentNetwork = contractDeployments[network];
-      const degenerativesArtInstance = new ethers.Contract(
-        currentNetwork.DegenerativesArt.address,
-        degenArtAbi,
-        walletProvider
-      );
-
-      setInstances({ DegenerativesArt: degenerativesArtInstance });
-      return degenerativesArtInstance;
-    } else {
-      console.error("No network");
-    }
-  };
-
   const fetchCollectionData = async (contract) => {
     try {
       const totalSupply = await contract.totalSupply();
@@ -218,11 +127,11 @@ export const EthereumProvider = (props) => {
         setUserAddress(userAddr);
       }
 
-      const degenerativesArtInstance = await initializeContract();
-
-      if (degenerativesArtInstance) {
-        await fetchCollectionData(degenerativesArtInstance);
-      }
+      const browserProvider = new ethers.BrowserProvider(window.ethereum);
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const signer = await browserProvider.getSigner();
+      console.log("Connected to Browser's Wallet...");
+      setWalletSigner(signer);
     } catch (error) {
       console.error("Failed to connect to Ethereum provider:", error);
     }
@@ -251,9 +160,6 @@ export const EthereumProvider = (props) => {
         }
       } else {
         console.log("Ethereum object not found");
-        const { provider_ } = await initializeProvider();
-        setProvider(provider_);
-        await connectEthereumProvider();
       }
     };
     init();
