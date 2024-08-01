@@ -100,10 +100,10 @@ export default function Home() {
               <MintToken />
               {mintPrice > 0 && (
                 <>
-                  <span className="py-4 text-sm text-zinc-700">
+                  <span className="py-4 text-sm text-zinc-700 animate-appearance-in">
                     MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
                   </span>
-                  <Link href="#chart" size="sm">
+                  <Link href="#chart" size="sm"  className="animate-appearance-in">
                     [simulate mint price]
                   </Link>
                 </>
