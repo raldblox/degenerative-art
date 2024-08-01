@@ -39,13 +39,11 @@ async function main() {
 
   console.log("Graffiti Theme:", theme2.target);
 
-  const NFT = await hre.ethers.deployContract("DegenerativesArt");
-  await NFT.waitForDeployment();
+  const NFT = await hre.ethers.getContractAt(
+    "DegenerativesArt",
+    "0xcf552524772605de32dae649f7ced60a286b0d21"
+  );
   console.log("DegenerativesArt:", NFT.target);
-
-  await mood
-    .connect(wallet_0x01)
-    .transfer(NFT.target, 10000000000000000000000000n);
 
   // console.log("DEGENART BALANCE", await mood.balanceOf(NFT.target));
   console.log("DEGENART BALANCE", await mood.balanceOf(NFT.target));
@@ -65,14 +63,38 @@ async function main() {
     ["💀", "☠️", "☢️", "☣️", "😈", "🔪", "🩸", "💀", "☠️"],
   ];
 
-  for (let i = 5; i < mintEmojis.length; i++) {
-    const currentPrice = await NFT.price(i);
-    console.log("minting", i);
-    await NFT.mint(mintEmojis[i], theme.target, { value: currentPrice });
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Add 5-second delay
-  }
+  // for (let i = 5; i < mintEmojis.length; i++) {
+  //   const currentPrice = await NFT.price(i);
+  //   console.log("minting", i);
+  //   await NFT.mint(mintEmojis[i], theme.target, { value: currentPrice });
+  //   await new Promise((resolve) => setTimeout(resolve, 2000)); // Add 5-second delay
+  // }
 
-  await NFT.updateCooldown(14400);
+  console.log("treasury:", await NFT.treasury());
+  const currentSupply = await NFT.totalSupply();
+  const currentPrice = await NFT.price(currentSupply);
+  console.log("minting", currentSupply);
+
+  console.log(
+    "LastMoodUpdate:",
+    await NFT.getLastMoodUpdate(wallet_0x01.address)
+  );
+
+  await NFT.connect(wallet_0x01).mint(mintEmojis[1], theme.target, {
+    value: currentPrice,
+  });
+
+  console.log(
+    "LastMoodUpdate:",
+    await NFT.getLastMoodUpdate(wallet_0x01.address)
+  );
+
+  // await NFT.updateTreasury("0x8C60817577d6Cdb440436844c9B3898d0d069F00");
+
+  // console.log("treasury:", await NFT.treasury());
+  // await NFT.updateCooldown(14400);
+
+  console.log("treasury:", await NFT.treasury());
 
   // console.log("theme:", await NFT.getTheme(0));
   // console.log("emojis:", await NFT.getEmojis(0));
