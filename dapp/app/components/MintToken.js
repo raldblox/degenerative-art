@@ -16,7 +16,9 @@ import {
 import { ethers } from "ethers";
 
 const MintToken = () => {
-  const { userAddress, signer, countdown, timeUpdated } = useContext(Context);
+  const { userAddress, signer, countdown, timeUpdated, mintPrice } = useContext(
+    Context
+  );
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const fieldsRef = useRef(null);
@@ -212,7 +214,7 @@ const MintToken = () => {
                     <p className="text-xs text-center lowercase">
                       Ser, see that cooldown timer? Yeah, you can only
                       mint/update your feels onchain every 4 hours. Gotta pace
-                      yourself, champ! Too many mood swings aren't healthy.
+                      yourself, champ! Too many mood swings aren&apos;t healthy.
                       Remember to take breaks, hydrate, and maybe step away from
                       the screen for a bit. 🧘‍♂️💚
                     </p>
