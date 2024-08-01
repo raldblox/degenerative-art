@@ -113,13 +113,17 @@ export default function Home() {
                 content={
                   <div className="px-1 py-2 space-y-2 text-center">
                     <div className="font-bold text-small">etherlink.com</div>
-                    <div className="text-tiny">
+                    <div className="flex flex-col gap-2 text-tiny">
+                      <Button size="sm" onClick={switchNetwork}>
+                        Switch to Etherlink
+                      </Button>
                       <Button
                         size="sm"
-                        className="text-tiny"
-                        onClick={switchNetwork}
+                        as={Link}
+                        isExternal
+                        href="https://explorer.etherlink.com/token/0xCF552524772605DE32DAe649f7ceD60a286b0D21"
                       >
-                        Switch to Etherlink
+                        View all tokens
                       </Button>
                     </div>
                   </div>
