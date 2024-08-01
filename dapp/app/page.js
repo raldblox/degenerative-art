@@ -7,6 +7,7 @@ import { EmojiGlass } from "./components/EmojiGlass";
 import { Navigation } from "./components/Navigation";
 import { Context } from "./providers/Providers";
 import MintToken from "./components/MintToken";
+import { ethers } from "ethers";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -79,7 +80,7 @@ export default function Home() {
         }
       />
       {mounted && (
-        <section className="relative min-h-screen md:mx-8">
+        <section className="relative min-h-screen md:mx-8" id="start">
           <div className="flex relative flex-col space-y-8 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
             <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md shadow-blue-200 text-tiny text-balance border-small">
               Where Emotions Become Art 🎨 and Currency 🪙
@@ -94,18 +95,11 @@ export default function Home() {
               transform, and create value. Your mood swing finally found a
               match.
             </p>
-            <div className="flex gap-2 ">
+            <div className="flex flex-col items-center justify-center gap-2">
               <MintToken />
-              {/* <Button
-              fullWidth
-              size="sm"
-              radius="full"
-              variant="flat"
-              className="text-white bg-black"
-              onClick={() => setSelectedTab("feels")}
-            >
-              Discover Feels
-            </Button> */}
+              <span className="py-4 text-sm text-zinc-700">
+                MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
+              </span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -353,8 +347,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex w-full p-3">
-                  <Button variant="flat" radius="full" size="sm">
-                    minting soon
+                  <Button
+                    variant="flat"
+                    radius="full"
+                    size="sm"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    now minting
                   </Button>
                 </div>
               </div>

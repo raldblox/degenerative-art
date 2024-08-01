@@ -185,7 +185,7 @@ const MintToken = () => {
         fullWidth
         // as={Link}
         // href="#mint"
-        size="lg"
+        size="md"
         radius="full"
         variant="solid"
         color="default"
@@ -194,6 +194,7 @@ const MintToken = () => {
       >
         Mint Your Feels
       </Button>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -204,7 +205,7 @@ const MintToken = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="font-semibold tracking-tight text-center lowercase text-md text-balance md:text-xl">
+                <label className="text-xl font-semibold tracking-tight text-center lowercase text-md text-balance">
                   now enter the one-time emoji mood that universe gave you today
                 </label>
               </ModalHeader>

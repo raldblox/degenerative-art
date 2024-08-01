@@ -8,6 +8,10 @@
   }
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 .cell {
   @apply rounded-full;
   position: relative;
