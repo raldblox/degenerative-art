@@ -157,6 +157,12 @@ export const Providers = (props) => {
     if (userAddress) {
       switchNetwork();
     }
+
+    const intervalId = setInterval(() => {
+      fetchToken();
+    }, 10000);
+
+    return () => clearInterval(intervalId);
   }, [userAddress]);
 
   const value = {

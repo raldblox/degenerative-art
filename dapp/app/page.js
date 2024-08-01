@@ -20,7 +20,9 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const { mintPrice, instance, signer, switchNetwork } = useContext(Context);
+  const { mintPrice, instance, signer, fetching, switchNetwork } = useContext(
+    Context
+  );
   const [selectedTab, setSelectedTab] = useState("home");
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -100,10 +102,18 @@ export default function Home() {
               <MintToken />
               {mintPrice > 0 && (
                 <>
-                  <span className="py-4 text-sm text-zinc-700 animate-appearance-in">
+                  <span
+                    className={`py-4 text-sm text-zinc-700  ${
+                      fetching ? "animate-pulse" : "animate-appearance-in"
+                    }`}
+                  >
                     MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
                   </span>
-                  <Link href="#chart" size="sm"  className="animate-appearance-in">
+                  <Link
+                    href="#chart"
+                    size="sm"
+                    className="animate-appearance-in"
+                  >
                     [simulate mint price]
                   </Link>
                 </>
