@@ -26,18 +26,19 @@ const LivePriceChart = () => {
   const { totalSupply } = useContext(Context);
   const [data, setData] = useState([]);
 
-  const [maxSupply, setMaxSupply] = useState(100);
-
   // Off-chain price calculation function
 
   useEffect(() => {
     const fetchData = async () => {
       // Calculate mint prices for all supplies up to the max
-      const priceData = Array.from({ length: maxSupply }, (_, i) => ({
-        name: `TOKEN ID#${i.toString()}`,
-        supply: i.toString(),
-        price: calculateMintPrice(i),
-      }));
+      const priceData = Array.from(
+        { length: Number(totalSupply) + 100 },
+        (_, i) => ({
+          name: `TOKEN ID#${i.toString()}`,
+          supply: i.toString(),
+          price: calculateMintPrice(i),
+        })
+      );
 
       setData(priceData); // Set full price curve data
     };
@@ -46,7 +47,7 @@ const LivePriceChart = () => {
     const interval = setInterval(fetchData, 30000); // Update every 30 seconds
 
     return () => clearInterval(interval); // Clean up interval on unmount
-  }, []);
+  }, [totalSupply]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -98,7 +99,6 @@ const LivePriceChart = () => {
             stroke="blue"
             strokeDasharray="3 3"
           />
-          {/* <Legend verticalAlign="middle" /> */}
         </LineChart>
       </ResponsiveContainer>
     </div>
