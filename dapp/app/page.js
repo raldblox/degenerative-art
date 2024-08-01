@@ -97,9 +97,11 @@ export default function Home() {
             </p>
             <div className="flex flex-col items-center justify-center gap-2">
               <MintToken />
-              <span className="py-4 text-sm text-zinc-700">
-                MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
-              </span>
+              {mintPrice && (
+                <span className="py-4 text-sm text-zinc-700">
+                  MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
+                </span>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
