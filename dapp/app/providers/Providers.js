@@ -36,6 +36,53 @@ export const Providers = (props) => {
     }
   };
 
+  const switchNetwork = async (value) => {
+    if (!userAddress) {
+      await connectEthereumWallet();
+    }
+
+    const chainId = 42793;
+    const correctedChainId = `0x${chainId.toString(16)}`;
+
+    const etherlink = {
+      chainId: correctedChainId,
+      chainName: "Etherlink Mainnet",
+      rpcUrls: ["https://node.mainnet.etherlink.com"],
+      nativeCurrency: {
+        name: "XTZ",
+        symbol: "XTZ",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://etherlink.blockscout.com"],
+    };
+
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: correctedChainId }],
+        });
+        return chainId;
+      } catch (error) {
+        if (error.code === 4902) {
+          try {
+            console.log("Adding new network:", correctedSelectedChain);
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [etherlink],
+            });
+          } catch (error) {
+            console.error("Error adding network:", error);
+          }
+        } else {
+          console.error("Error switching network:", error);
+        }
+      }
+    } else {
+      console.error("Error:", error);
+    }
+  };
+
   const fetchToken = async () => {
     try {
       setFetching(true);
@@ -73,6 +120,9 @@ export const Providers = (props) => {
 
   React.useEffect(() => {
     fetchToken();
+    if (userAddress) {
+      switchNetwork();
+    }
   }, [userAddress]);
 
   const value = {
@@ -84,6 +134,7 @@ export const Providers = (props) => {
     mintPrice,
     balances,
     fetching,
+    switchNetwork,
   };
 
   return (

@@ -17,7 +17,7 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const { mintPrice, instance, signer } = useContext(Context);
+  const { mintPrice, instance, signer, switchNetwork } = useContext(Context);
   const [selectedTab, setSelectedTab] = useState("home");
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -130,7 +130,11 @@ export default function Home() {
                   <div className="px-1 py-2 space-y-2 text-center">
                     <div className="font-bold text-small">etherlink.com</div>
                     <div className="text-tiny">
-                      <Button size="sm" className="text-tiny">
+                      <Button
+                        size="sm"
+                        className="text-tiny"
+                        onClick={switchNetwork}
+                      >
                         Switch to Etherlink
                       </Button>
                     </div>
