@@ -18,6 +18,9 @@ export const Providers = (props) => {
   const [balances, setBalances] = React.useState({ nft: 0, mood: 0 });
   const [fetching, setFetching] = React.useState(false);
 
+  const [timeUpdated, setTimeUpdated] = React.useState(0);
+  const [countdown, setCountdown] = React.useState("00:00:00");
+
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
 
@@ -30,6 +33,11 @@ export const Providers = (props) => {
         console.log("Connected to Browser's Wallet...");
         setSigner(signer);
         setUserAddress(user);
+
+        ethereum.on("chainChanged", handleChainChanged);
+        function handleChainChanged() {
+          window.location.reload();
+        }
       } catch (error) {
         console.error(`Error connecting to wallet`, error);
       }
@@ -110,6 +118,10 @@ export const Providers = (props) => {
           nft: await nftContract.balanceOf(userAddress),
           mood: await moodContract.balanceOf(userAddress),
         });
+
+        const lastUpdateTime = await nftContract.getLastMoodUpdate(userAddress);
+        console.log("Cooldown:", lastUpdateTime);
+        setTimeUpdated(Number(lastUpdateTime));
       }
     } catch (error) {
       console.warn("Fetching error");
@@ -117,6 +129,27 @@ export const Providers = (props) => {
       setFetching(false);
     }
   };
+
+  React.useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = Math.floor(Date.now() / 1000);
+      const cooldownTime = 4 * 60 * 60; // 4 hours cooldown in seconds
+      const endCooldownTime = timeUpdated + cooldownTime;
+      const timeLeft = Math.max(0, endCooldownTime - now);
+      const hours = String(Math.floor(timeLeft / 3600)).padStart(2, "0");
+      const minutes = String(Math.floor((timeLeft % 3600) / 60)).padStart(
+        2,
+        "0"
+      );
+      const seconds = String(timeLeft % 60).padStart(2, "0");
+
+      setCountdown(`${hours}:${minutes}:${seconds}`);
+    };
+    calculateTimeLeft();
+    const intervalId = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timeUpdated, countdown]);
 
   React.useEffect(() => {
     connectEthereumWallet();
@@ -136,6 +169,8 @@ export const Providers = (props) => {
     balances,
     fetching,
     switchNetwork,
+    countdown,
+    timeUpdated,
   };
 
   return (

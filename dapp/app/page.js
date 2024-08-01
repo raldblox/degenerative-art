@@ -6,6 +6,7 @@ import { FlipWords } from "./components/FlipWords";
 import { EmojiGlass } from "./components/EmojiGlass";
 import { Navigation } from "./components/Navigation";
 import { Context } from "./providers/Providers";
+import MintToken from "./components/MintToken";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -83,7 +84,7 @@ export default function Home() {
             <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md shadow-blue-200 text-tiny text-balance border-small">
               Where Emotions Become Art 🎨 and Currency 🪙
             </span>
-            <h1 className="max-w-3xl text-3xl font-semibold text-center lowercase text-balance md:text-4xl animate-appearance-in">
+            <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase text-balance md:text-4xl animate-appearance-in">
               {shuffledContent.headline[0]}
             </h1>
             <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
@@ -94,20 +95,7 @@ export default function Home() {
               match.
             </p>
             <div className="flex gap-2 ">
-              <Button
-                fullWidth
-                // as={Link}
-                // href="#mint"
-                size="sm"
-                radius="full"
-                variant="solid"
-                color="default"
-                // onPress={onOpen}
-                // isDisabled
-                className="text-white bg-black"
-              >
-                Minting soon
-              </Button>
+              <MintToken />
               {/* <Button
               fullWidth
               size="sm"
