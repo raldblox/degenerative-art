@@ -119,6 +119,7 @@ export const Providers = (props) => {
   };
 
   React.useEffect(() => {
+    connectEthereumWallet();
     fetchToken();
     if (userAddress) {
       switchNetwork();
