@@ -8,6 +8,7 @@ import { Navigation } from "./components/Navigation";
 import { Context } from "./providers/Providers";
 import MintToken from "./components/MintToken";
 import { ethers } from "ethers";
+import LivePriceChart from "./components/PriceCharts";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -98,13 +99,18 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center gap-2">
               <MintToken />
               {mintPrice && (
-                <span className="py-4 text-sm text-zinc-700">
-                  MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
-                </span>
+                <>
+                  <span className="py-4 text-sm text-zinc-700">
+                    MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
+                  </span>
+                  <Link href="#chart" size="sm">
+                    [simulate mint price]
+                  </Link>
+                </>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 ">
               <Tooltip
                 shouldFlip
                 showArrow
@@ -319,6 +325,7 @@ export default function Home() {
               </Tooltip>
             </div>
           </div>
+
           <div
             id="mint"
             className="grid w-full h-full p-12 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
@@ -338,6 +345,7 @@ export default function Home() {
               />
             </div>
           </div>
+
           <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-3 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl">
             <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
               <div className="relative flex w-16 h-16 rounded-full aspect-square group">
@@ -456,6 +464,20 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            id="chart"
+            className="flex flex-col items-center justify-center gap-4 p-4 mx-auto md:gap-6 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+          >
+            <h1 className="text-lg">PRICE CURVE & SUPPLY DYNAMICS</h1>
+            <LivePriceChart />
+            <p className="max-w-4xl text-xs">
+              This pricing model is designed to create a fair and sustainable
+              ecosystem for degeneratives.art. There's no cap on the number of
+              NFTs that can be minted, but the exponential price curve acts as a
+              natural limiting factor. The more NFTs that exist, the higher the
+              price becomes for the next one.
+            </p>
           </div>
         </section>
       )}
