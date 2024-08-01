@@ -10,8 +10,15 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
+import { useContext } from "react";
+import { Context } from "../providers/Providers";
+import { ethers } from "ethers";
 
 export const Navigation = ({ tabs }) => {
+  const { connectEthereumWallet, userAddress, balances, fetching } = useContext(
+    Context
+  );
+
   return (
     <Navbar
       maxWidth="2xl"
@@ -51,15 +58,50 @@ export const Navigation = ({ tabs }) => {
         className="items-center hidden gap-1 sm:flex"
         justify="end"
       >
+        {userAddress && (
+          <>
+            <NavbarItem>
+              <Button
+                size="sm"
+                color="primary"
+                variant="bordered"
+                radius="full"
+                className="font-bold border-small bg-default-100 animate-appearance-in"
+                isLoading={fetching}
+              >
+                {parseFloat(ethers.formatEther(balances.mood)).toFixed(2)} MOOD
+              </Button>
+            </NavbarItem>
+            <NavbarItem>
+              <Button
+                size="sm"
+                color="primary"
+                isLoading={fetching}
+                variant="bordered"
+                radius="full"
+                className="font-bold border-small bg-default-100 animate-appearance-in"
+              >
+                {balances.nft.toString()} NFT
+              </Button>
+            </NavbarItem>
+          </>
+        )}
         <NavbarItem>
           <Button
             size="sm"
-            color="foreground"
-            variant="bordered"
+            color="primary"
+            variant="solid"
             radius="full"
-            className="font-bold border-small bg-default-100"
+            className="font-bold border-small"
+            onClick={connectEthereumWallet}
           >
-            connect
+            {userAddress ? (
+              <>
+                {userAddress.slice(0, 6)}...{userAddress.slice(-5)}
+              </>
+            ) : (
+              "connect"
+            )}
           </Button>
         </NavbarItem>
       </NavbarContent>

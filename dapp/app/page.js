@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Image, Link, Tab, Tabs, Tooltip } from "@nextui-org/react";
 import { FlipWords } from "./components/FlipWords";
 import { EmojiGlass } from "./components/EmojiGlass";
 import { Navigation } from "./components/Navigation";
+import { Context } from "./providers/Providers";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -16,6 +17,7 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const { mintPrice, instance, signer } = useContext(Context);
   const [selectedTab, setSelectedTab] = useState("home");
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -78,7 +80,7 @@ export default function Home() {
       {mounted && (
         <section className="relative min-h-screen md:mx-8">
           <div className="flex relative flex-col space-y-8 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
-            <span className="p-1 px-4 text-center lowercase rounded-full bg-default-100 text-tiny text-balance border-small">
+            <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md shadow-blue-200 text-tiny text-balance border-small">
               Where Emotions Become Art 🎨 and Currency 🪙
             </span>
             <h1 className="max-w-4xl text-3xl font-semibold text-center lowercase text-balance md:text-5xl animate-appearance-in">
