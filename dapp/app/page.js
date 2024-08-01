@@ -92,7 +92,6 @@ export default function Home() {
               {shuffledContent.headline[0]}
             </h1>
             <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
-              {" "}
               Your feelings change — your art should too. With
               degeneratives.art, your emotions aren&apos;t static. They evolve,
               transform, and create value. Your mood swing finally found a
@@ -483,10 +482,10 @@ export default function Home() {
             <LivePriceChart />
             <p className="max-w-4xl text-xs">
               This pricing model is designed to create a fair and sustainable
-              ecosystem for degeneratives.art. There's no cap on the number of
-              NFTs that can be minted, but the exponential price curve acts as a
-              natural limiting factor. The more NFTs that exist, the higher the
-              price becomes for the next one.
+              ecosystem for degeneratives.art. There&apos;s no cap on the number
+              of NFTs that can be minted, but the exponential price curve acts
+              as a natural limiting factor. The more NFTs that exist, the higher
+              the price becomes for the next one.
             </p>
           </div>
         </section>
