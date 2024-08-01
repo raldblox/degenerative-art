@@ -5,7 +5,7 @@ import * as React from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ethers } from "ethers";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
-import erc20Abi from "@/app/libraries/MoodTokenABI.json";
+import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
 
 export const Context = React.createContext();
 
@@ -83,7 +83,7 @@ export const Providers = (props) => {
     totalSupply,
     mintPrice,
     balances,
-    fetching
+    fetching,
   };
 
   return (
