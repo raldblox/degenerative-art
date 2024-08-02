@@ -501,7 +501,7 @@ export default function Home() {
               </div>
               <div
                 id="chart"
-                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto md:gap-6 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
               >
                 <h1 className="text-lg">PRICE CURVE & SUPPLY DYNAMICS</h1>
                 <LivePriceChart />
