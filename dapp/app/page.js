@@ -132,7 +132,15 @@ export default function Home() {
                     <div className="font-bold text-small">etherlink.com</div>
                     <div className="flex flex-col gap-2 text-tiny">
                       <Button size="sm" onClick={switchNetwork}>
-                        Switch to Etherlink
+                        Add/Switch to Etherlink Network
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={switchNetwork}
+                        as={Link}
+                        href="https://docs.etherlink.com/building-on-etherlink/bridging/"
+                      >
+                        Bridge XTZ from Tezos L1 to Etherlink
                       </Button>
                       <Button
                         size="sm"
@@ -140,7 +148,7 @@ export default function Home() {
                         isExternal
                         href="https://explorer.etherlink.com/token/0xCF552524772605DE32DAe649f7ceD60a286b0D21"
                       >
-                        View all tokens
+                        View all degeneratives.art NFTs
                       </Button>
                     </div>
                   </div>
