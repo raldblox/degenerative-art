@@ -9,6 +9,8 @@ import { Context } from "./providers/Providers";
 import MintToken from "./components/MintToken";
 import { ethers } from "ethers";
 import LivePriceChart from "./components/PriceCharts";
+import { AssetLoader } from "./components/AssetLoader";
+import AllFeels from "./components/AllFeels";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -20,9 +22,14 @@ function shuffleArray(array) {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const { mintPrice, instance, signer, fetching, switchNetwork } = useContext(
-    Context
-  );
+  const {
+    mintPrice,
+    instance,
+    signer,
+    fetching,
+    switchNetwork,
+    allAssets,
+  } = useContext(Context);
   const [selectedTab, setSelectedTab] = useState("home");
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
@@ -104,7 +111,7 @@ export default function Home() {
                   {mintPrice > 0 && (
                     <>
                       <span
-                        className={`py-4 text-sm font-semibold transition-all duration-500 ${
+                        className={`py-4 font-semibold transition-all duration-500 ${
                           fetching
                             ? "animate-pulse text-blue-700 scale-80 tracking-widest"
                             : "animate-appearance-in text-zinc-700 "
@@ -509,7 +516,20 @@ export default function Home() {
               </div>
             </section>
           )}
-          {selectedTab == "feels" && <section></section>}
+          {selectedTab == "feels" && (
+            <>
+              <section className="min-h-screen">
+                <div className="flex flex-col items-center justify-center w-full p-3 md:p-16">
+                  <h1 className="max-w-3xl text-4xl text-center lowercase text-pretty">
+                    Discover what other homies are feeling today
+                  </h1>
+                  <div className="flex items-center justify-center mt-16">
+                    <AllFeels />
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
         </>
       )}
     </>
