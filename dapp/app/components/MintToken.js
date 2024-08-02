@@ -185,7 +185,7 @@ const MintToken = () => {
         fullWidth
         // as={Link}
         // href="#mint"
-        size="md"
+        size="lg"
         radius="full"
         variant="solid"
         color="default"
