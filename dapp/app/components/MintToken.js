@@ -189,7 +189,7 @@ const MintToken = () => {
         radius="full"
         variant="solid"
         color="default"
-        className="text-white bg-black"
+        className="text-white transition-all duration-300 bg-black"
         onPress={onOpen}
       >
         Mint Your Feels

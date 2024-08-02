@@ -97,7 +97,7 @@ export default function Home() {
               transform, and create value. Your mood swing finally found a
               match.
             </p>
-            <div className="flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-2 transition-all duration-300">
               <MintToken />
               {mintPrice > 0 && (
                 <>
