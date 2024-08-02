@@ -104,7 +104,7 @@ export default function Home() {
                   <span
                     className={`py-4 text-sm font-semibold transition-all duration-300 ${
                       fetching
-                        ? "animate-pulse text-blue-700 scale-90 tracking-wider"
+                        ? "animate-pulse text-blue-700 scale-90 tracking-[0.2rem]"
                         : "animate-appearance-in text-zinc-700 "
                     }`}
                   >
