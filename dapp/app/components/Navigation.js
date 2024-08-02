@@ -7,6 +7,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Spinner,
   Tab,
   Tabs,
 } from "@nextui-org/react";
@@ -61,13 +62,17 @@ export const Navigation = ({ tabs }) => {
         {userAddress && (
           <>
             <NavbarItem>
+              {fetching && (
+                <Button size="sm" variant="light" isIconOnly isLoading={fetching}></Button>
+              )}
+            </NavbarItem>
+            <NavbarItem>
               <Button
                 size="sm"
                 color="primary"
                 variant="bordered"
                 radius="full"
-                className="font-bold border-small bg-default-100 animate-appearance-in"
-                isLoading={fetching}
+                className="font-bold transition-all duration-200 border-small bg-default-100 animate-appearance-in"
               >
                 {parseFloat(ethers.formatEther(balances.mood)).toFixed(2)} MOOD
               </Button>
@@ -76,10 +81,9 @@ export const Navigation = ({ tabs }) => {
               <Button
                 size="sm"
                 color="primary"
-                isLoading={fetching}
                 variant="bordered"
                 radius="full"
-                className="font-bold border-small bg-default-100 animate-appearance-in"
+                className="font-bold transition-all duration-200 border-small bg-default-100 animate-appearance-in"
               >
                 {balances.nft.toString()} NFT
               </Button>
