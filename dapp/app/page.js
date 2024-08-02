@@ -102,10 +102,10 @@ export default function Home() {
               {mintPrice > 0 && (
                 <>
                   <span
-                    className={`py-4 text-sm ${
+                    className={`py-4 text-sm font-semibold ${
                       fetching
-                        ? "animate-pulse text-blue-700"
-                        : "animate-appearance-in text-zinc-700 font-semibold"
+                        ? "animate-pulse text-blue-700 scale-90"
+                        : "animate-appearance-in text-zinc-700 "
                     }`}
                   >
                     MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
