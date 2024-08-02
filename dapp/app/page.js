@@ -102,7 +102,7 @@ export default function Home() {
               {mintPrice > 0 && (
                 <>
                   <span
-                    className={`py-4 text-sm font-semibold ${
+                    className={`py-4 text-sm font-semibold transition-all duration-300 ${
                       fetching
                         ? "animate-pulse text-blue-700 scale-90 tracking-wider"
                         : "animate-appearance-in text-zinc-700 "
