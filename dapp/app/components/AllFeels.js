@@ -110,7 +110,7 @@ const AllFeels = () => {
                 </div>
                 <div className="">
                   <p>
-                    {token.owner.slice(0, 5)}
+                    by {token.owner.slice(0, 5)}
                     ...
                     {token.owner.slice(-4)}
                   </p>
