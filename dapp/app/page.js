@@ -523,7 +523,7 @@ export default function Home() {
                   <h1 className="max-w-3xl text-4xl text-center lowercase text-pretty">
                     Discover what other homies are feeling lately
                   </h1>
-                  <div className="flex items-center justify-center mt-16">
+                  <div className="flex flex-col items-center justify-center mt-16">
                     <AllFeels />
                   </div>
                 </div>
