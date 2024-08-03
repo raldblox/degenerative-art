@@ -57,6 +57,26 @@ export default function Home() {
     placeholders: ["🤒", "🤪", "🤕", "😠", "😭", "😂", "😎", "🚀", "🔥"],
   });
 
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // useEffect(() => {
+  //   // Open the modal after 1.5 seconds
+  //   const openTimeoutId = setTimeout(() => {
+  //     setIsOpen(true);
+
+  //     // Close the modal after another 1.5 seconds
+  //     const closeTimeoutId = setTimeout(() => {
+  //       setIsOpen(false);
+  //     }, 1500);
+
+  //     // Clean up the close timeout if the component unmounts
+  //     return () => clearTimeout(closeTimeoutId);
+  //   }, 1500);
+
+  //   // Clean up the open timeout if the component unmounts
+  //   return () => clearTimeout(openTimeoutId);
+  // }, []);
+
   useEffect(() => {
     setShuffledContent({
       headline: shuffleArray([...shuffledContent.headline]),
@@ -128,11 +148,25 @@ export default function Home() {
                       </Link>
                     </>
                   )}
+                  <div className="pt-12">
+                    <Button
+                      className="uppercase"
+                      size="sm"
+                      radius="none"
+                      variant="light"
+                      href="https://x.com/_degeneratives"
+                      isExternal
+                      as={Link}
+                      showAnchorIcon
+                    >
+                      Engage in X/Twitter
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 ">
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="success"
                     placement="left"
@@ -173,7 +207,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="default"
                     placement="left"
@@ -213,7 +247,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="success"
                     placement="left"
@@ -253,7 +287,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="secondary"
                     placement="left"
@@ -284,7 +318,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="warning"
                     placement="right"
@@ -318,7 +352,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    shouldFlip
+                    closeDelay={2000}
                     showArrow
                     color="primary"
                     placement="left"
