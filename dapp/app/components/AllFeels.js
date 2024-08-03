@@ -100,7 +100,7 @@ const AllFeels = () => {
               key={token.tokenId}
               className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
             >
-              <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+              <div className="w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
                 <EmojisContainer token={token} />
               </div>
               <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
