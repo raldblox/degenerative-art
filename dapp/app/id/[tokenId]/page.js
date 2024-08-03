@@ -60,7 +60,7 @@ export default function Token({ params }) {
           <span className="absolute top-4 left-4"></span>
 
           <div className="absolute flex justify-center w-full top-8">
-            <div className="flex flex-col items-center justify-center p-3 rounded-full w-fit">
+            <div className="flex flex-col items-center justify-center p-3 space-y-3 rounded-full w-fit">
               <h1 className="flex gap-3 text-xl font-medium text-center text-white md:text-3xl">
                 <Link href="/" className="">
                   <svg
@@ -99,6 +99,19 @@ export default function Token({ params }) {
                 by {owner}
               </Chip>
             </div>
+          </div>
+          <div className="absolute flex justify-center w-full bottom-8">
+            <Button
+              as={Link}
+              isExternal
+              href={`https://rarible.com/token/etherlink/0xcf552524772605de32dae649f7ced60a286b0d21:${params.tokenId}`}
+              radius="full"
+              variant="solid"
+              className="flex items-center gap-3"
+            >
+              Collect on
+              <Image src="/rarible.svg" height={20} width={75} radius="none" />
+            </Button>
           </div>
           {/* <div className="absolute flex justify-center w-full bottom-6">
             <div className="p-3 w-fit">
