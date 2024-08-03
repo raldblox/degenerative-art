@@ -53,7 +53,7 @@ export default function Token({ params }) {
   }, []);
 
   return (
-    <main className="flex items-center justify-center w-screen min-h-screen">
+    <main className="flex items-center justify-center w-screen min-h-screen bg-black">
       {metadata ? (
         <div className="relative w-full">
           <iframe src={metadata?.animation_url} className="w-screen h-screen" />
