@@ -85,7 +85,7 @@ export default function Home() {
           >
             <Tab key="home" title="degeneratives.art" />
             {/* <Tab key="analytics" title="Analytics" /> */}
-            <Tab key="feels" className="text-bold" title="All Feels" />
+            <Tab key="feels" className="text-bold" title="Discover Feels" />
           </Tabs>
         }
       />

@@ -27,39 +27,46 @@ const AllFeels = () => {
       const totalSupply = await nftContract.totalSupply();
       console.log("totalSupply///", totalSupply);
 
-      // Create an array of promises for each token's data fetching
-      const tokenDataPromises = Array.from(
-        { length: Number(totalSupply) },
-        (_, tokenId) =>
-          Promise.all([
-            nftContract.ownerOf(tokenId),
-            nftContract.tokenURI(tokenId),
-            nftContract.getEmojis(tokenId),
-          ])
-      );
+      const promises = [];
 
-      // Wait for all promises to resolve in parallel
-      const tokenData = await Promise.all(tokenDataPromises);
+      const randomTokenIds = [];
 
-      const allAssetsData = tokenData.map(
-        ([owner, tokenURI, emojis], tokenId) => ({
-          tokenId: tokenId.toString(),
-          owner,
-          metadata: JSON.parse(atob(tokenURI?.split(",")[1])),
-          emojis,
-        })
-      );
+      while (
+        randomTokenIds.length < 9 &&
+        randomTokenIds.length < Number(totalSupply)
+      ) {
+        const randomId = Math.floor(Math.random() * Number(totalSupply)) + 1;
+        if (!randomTokenIds.includes(randomId)) {
+          randomTokenIds.push(randomId);
+        }
+      }
 
-      setAllAssets(allAssetsData);
+      for (const tokenId of randomTokenIds) {
+        promises.push(
+          (async () => {
+            const owner = await nftContract.ownerOf(tokenId);
+            const emojis = await nftContract.getEmojis(tokenId);
+            console.log("Fetched", tokenId);
+
+            return {
+              tokenId: tokenId,
+              owner,
+              emojis,
+            };
+          })()
+        );
+      }
+
+      const fetchedData = await Promise.all(promises);
+
+      setAllAssets(fetchedData);
 
       if (userAddress) {
-        const userTokensData = allAssetsData.filter(
+        const userTokensData = fetchedData.filter(
           (asset) => asset.owner.toLowerCase() === userAddress?.toLowerCase()
         );
         setUserTokens(userTokensData);
       }
-
-      console.log("All Assets:", allAssetsData);
     } catch (error) {
       console.error("Failed to fetch tokens:", error);
     } finally {
@@ -69,7 +76,7 @@ const AllFeels = () => {
 
   useEffect(() => {
     fetchTokens();
-  }, [instance]);
+  }, []);
 
   return (
     <ul className="grid gap-6 md:grid-cols-3">
