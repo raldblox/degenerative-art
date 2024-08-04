@@ -257,7 +257,7 @@ const UpdateToken = () => {
         className="transition-all duration-300 w-fit"
         onPress={onOpen}
       >
-        Your Feels
+        My Feels
       </Button>
 
       <Modal
