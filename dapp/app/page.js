@@ -11,6 +11,7 @@ import { ethers } from "ethers";
 import LivePriceChart from "./components/PriceCharts";
 import { AssetLoader } from "./components/AssetLoader";
 import AllFeels from "./components/AllFeels";
+import UpdateToken from "./components/UpdateToken";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -29,6 +30,7 @@ export default function Home() {
     fetching,
     switchNetwork,
     allAssets,
+    userAddress,
   } = useContext(Context);
   const [selectedTab, setSelectedTab] = useState("home");
   const [shuffledContent, setShuffledContent] = useState({
@@ -127,7 +129,11 @@ export default function Home() {
                   found a match.
                 </p>
                 <div className="flex flex-col items-center justify-center gap-2 transition-all duration-300">
-                  <MintToken />
+                  <div className="flex flex-wrap items-center gap-3">
+                    <MintToken />
+                    {userAddress && <UpdateToken />}
+                  </div>
+
                   {mintPrice > 0 && (
                     <>
                       <span

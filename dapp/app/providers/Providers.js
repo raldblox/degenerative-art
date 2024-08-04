@@ -160,7 +160,7 @@ export const Providers = (props) => {
 
     const intervalId = setInterval(() => {
       fetchToken();
-    }, 10000);
+    }, 15000);
 
     return () => clearInterval(intervalId);
   }, [userAddress]);

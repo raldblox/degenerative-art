@@ -11,14 +11,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Skeleton,
+  Spinner,
   useDisclosure,
 } from "@nextui-org/react";
 import { ethers } from "ethers";
+import EmojisContainer from "./EmojisContainer";
 
-const MintToken = () => {
-  const { userAddress, signer, countdown, timeUpdated, mintPrice } = useContext(
-    Context
-  );
+const UpdateToken = () => {
+  const {
+    userAddress,
+    signer,
+    countdown,
+    timeUpdated,
+    connectEthereumWallet,
+  } = useContext(Context);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const fieldsRef = useRef(null);
@@ -28,6 +35,8 @@ const MintToken = () => {
   const [activeFields, setActiveFields] = useState(3);
   const [minting, setMinting] = useState(false);
   const [txHash, setTxHash] = useState("");
+  const [userNFTs, setUserNFTs] = useState([]);
+  const [fetching, setFetching] = useState(false);
 
   const handleMint = async () => {
     console.log("emojis:", inputValues);
@@ -179,6 +188,62 @@ const MintToken = () => {
       inputRef.current[activeFields - 1].focus();
     }
   }, [activeFields]);
+
+  const fetchTokens = async () => {
+    if (userAddress) {
+      await connectEthereumWallet();
+    }
+    try {
+      setFetching(true);
+      const node = "https://node.mainnet.etherlink.com";
+      const provider = new ethers.JsonRpcProvider(node);
+      const nftContract = new ethers.Contract(
+        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        nftAbi,
+        provider
+      );
+      const totalSupply = await nftContract.totalSupply();
+      console.log("totalSupply///", totalSupply);
+      const balanceOf = await nftContract.balanceOf(userAddress);
+      console.log("balanceOf///", balanceOf);
+
+      const userTokens = [];
+
+      // Fetch token data sequentially
+      for (let tokenId = 0; tokenId < Number(totalSupply); tokenId++) {
+        const owner = await nftContract.ownerOf(tokenId);
+        if (owner.toLowerCase() === userAddress?.toLowerCase()) {
+          console.log("found///", tokenId);
+          const emojis = await nftContract.getEmojis(tokenId);
+          const moodSwing = await nftContract.getMoodSwing(tokenId);
+          userTokens.push({
+            tokenId,
+            owner,
+            emojis,
+            moodSwing: moodSwing.toString(),
+          });
+          setUserNFTs(userTokens);
+
+          if (userTokens.length === Number(balanceOf)) {
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch tokens:", error);
+    } finally {
+      setFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTokens();
+  }, []);
+
+  const handleRegenerate = () => {
+    fetchTokens(); // Call fetchTokens to refresh the data
+  };
+
   return (
     <>
       <Button
@@ -188,93 +253,101 @@ const MintToken = () => {
         size="md"
         radius="full"
         variant="solid"
-        color="default"
-        className="text-white transition-all duration-300 bg-black w-fit"
+        color="primary"
+        className="transition-all duration-300 w-fit"
         onPress={onOpen}
       >
-        Mint Your Feels
+        Your Feels
       </Button>
 
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="xl"
-        className="p-6"
+        size="full"
+        className="p-6 overflow-y-scroll"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="text-xl font-semibold tracking-tight text-center lowercase text-md text-balance">
-                  now enter the one-time emoji mood that universe gave you today
+                <label className="text-2xl font-semibold tracking-tight text-center lowercase text-balance">
+                  all your minted feels onchain
                 </label>
               </ModalHeader>
               <ModalBody>
-                {countdown !== "00:00:00" ? (
-                  <>
-                    <p className="text-xs text-center lowercase">
-                      Ser, see that cooldown timer? Yeah, you can only
-                      mint/update your feels onchain every 4 hours. Gotta pace
-                      yourself, champ! Too many mood swings aren&apos;t healthy.
-                      Remember to take breaks, hydrate, and maybe touch grass.
-                      🧘‍♂️💚
-                    </p>
-                    <p className="pt-6 mx-auto text-2xl font-semibold">
-                      {countdown}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="mt-4 text-xs text-center lowercase md:text-sm">
-                      Don&apos;t worry if your cosmic vibes change tomorrow...
-                      your dynamic NFT is so well-prepared to evolve alongside
-                      you! We&apos;ll provide you 1000 $MOOD token after mint to
-                      fuel your daily mood swings for the next 100 days! you may
-                      now mint ser 🫡
-                    </p>
-                  </>
-                )}
-
-                {countdown === "00:00:00" && (
-                  <>
-                    <div className="flex flex-col items-center justify-center space-y-4">
-                      <div
-                        ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 p-4 rounded-lg bg-white/80"
+                <>
+                  <div className="grid gap-3 md:grid-cols-5">
+                    {userNFTs?.map((token) => (
+                      <Link
+                        href={`/id/${token.tokenId}`}
+                        key={token.tokenId}
+                        className="flex flex-col items-center justify-center duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
                       >
-                        {renderInputFields()}
+                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
+                          <div className="relative grid grid-cols-3 gap-2 md:gap-4 ">
+                            {token?.emojis?.map((emoji, i) => (
+                              <div
+                                className="flex items-center justify-center duration-200 cursor-pointer group"
+                                key={i}
+                              >
+                                <span className="z-10 text-3xl text-center">
+                                  {emoji}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-start justify-between w-full px-3 py-3 text-xs text-black">
+                          <div className="flex items-center justify-between w-full font-semibold">
+                            <p>degeneratives.art #{token.tokenId}</p>
+                            <p className="flex items-center gap-1 text-zinc-600">
+                              {token?.moodSwing}
+                              <span>
+                                <svg
+                                  className="w-4 h-4"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M5 3h14v2H5zm0 16H3V5h2zm14 0v2H5v-2zm0 0h2V5h-2zM10 8H8v2h2zm4 0h2v2h-2zm1 5H9v2h6z"
+                                  />
+                                </svg>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                    {fetching && (
+                      <div className="flex flex-col items-center justify-center duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl">
+                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square">
+                          <div className="relative grid grid-cols-3 gap-2 md:gap-4 animate-appearance-in">
+                            {[...Array(9)].map((_, index) => (
+                              <Skeleton
+                                key={index}
+                                className="h-8 rounded-full"
+                              >
+                                <div className="w-8 h-8 rounded-full bg-default-200"></div>
+                              </Skeleton>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-start justify-between w-full px-3 py-3 text-xs text-black">
+                          <div className="flex items-center justify-between w-full font-semibold">
+                            <p>degeneratives.art</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <label className="pb-6 text-sm text-center">
-                      (enter 3-9 emojis only)
-                    </label>
-                    <Button
-                      size="md"
-                      radius="full"
-                      variant="solid"
-                      className="mx-auto w-fit"
-                      color={txHash ? "success" : "primary"}
-                      onClick={handleMint}
-                      isLoading={minting}
-                      isDisabled={!userAddress || txHash}
-                    >
-                      {txHash ? "SUCCESS 🎉" : "MINT"}
-                    </Button>
-                  </>
-                )}
+                    )}
+                  </div>
+                </>
               </ModalBody>
 
               <ModalFooter className="flex justify-center w-full gap-2">
-                {txHash && (
-                  <Link
-                    href={`https://explorer.etherlink.com/tx/${txHash}`}
-                    size="sm"
-                    showAnchorIcon
-                    className="animate-appearance-in"
-                  >
-                    View Transaction Receipt
-                  </Link>
-                )}
+                <Button onClick={onClose} radius="full" color="danger">
+                  Close
+                </Button>
               </ModalFooter>
             </>
           )}
@@ -284,4 +357,4 @@ const MintToken = () => {
   );
 };
 
-export default MintToken;
+export default UpdateToken;
