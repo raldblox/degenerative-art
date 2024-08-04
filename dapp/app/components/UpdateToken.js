@@ -344,9 +344,14 @@ const UpdateToken = () => {
                 </>
               </ModalBody>
 
-              <ModalFooter className="flex justify-center w-full gap-2">
-                <Button onClick={onClose} radius="full" color="danger">
-                  Close
+              <ModalFooter className="flex justify-center w-full gap-2 pt-8">
+                <Button
+                  onClick={onClose}
+                  radius="full"
+                  variant="light"
+                  color="danger"
+                >
+                  CLOSE
                 </Button>
               </ModalFooter>
             </>
