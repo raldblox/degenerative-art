@@ -165,7 +165,7 @@ export default function Home() {
                       as={Link}
                       showAnchorIcon
                     >
-                      Engage in X/Twitter
+                      Engage on X/Twitter
                     </Button>
                   </div>
                 </div>
@@ -405,7 +405,7 @@ export default function Home() {
                 className="grid w-full h-full p-12 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
               >
                 <div className="mx-auto text-3xl font-normal tracking-tighter text-pretty">
-                  let&apos;s put your emotions <br className="md:hidden" /> at{" "}
+                  let&apos;s put your emotions <br className="md:hidden" /> to{" "}
                   <FlipWords
                     words={[
                       "play",
