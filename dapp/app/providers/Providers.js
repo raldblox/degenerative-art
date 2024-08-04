@@ -42,7 +42,7 @@ export const Providers = (props) => {
         console.error(`Error connecting to wallet`, error);
       }
     } else {
-      alert("Metamask not found.");
+      // alert("Metamask not found.");
     }
   };
 
