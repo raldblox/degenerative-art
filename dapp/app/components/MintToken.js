@@ -16,9 +16,13 @@ import {
 import { ethers } from "ethers";
 
 const MintToken = () => {
-  const { userAddress, signer, countdown, timeUpdated, mintPrice } = useContext(
-    Context
-  );
+  const {
+    userAddress,
+    signer,
+    countdown,
+    timeUpdated,
+    connectEthereumWallet,
+  } = useContext(Context);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const fieldsRef = useRef(null);
@@ -179,6 +183,7 @@ const MintToken = () => {
       inputRef.current[activeFields - 1].focus();
     }
   }, [activeFields]);
+
   return (
     <>
       <Button
@@ -248,18 +253,32 @@ const MintToken = () => {
                     <label className="pb-6 text-sm text-center">
                       (enter 3-9 emojis only)
                     </label>
-                    <Button
-                      size="md"
-                      radius="full"
-                      variant="solid"
-                      className="mx-auto w-fit"
-                      color={txHash ? "success" : "primary"}
-                      onClick={handleMint}
-                      isLoading={minting}
-                      isDisabled={!userAddress || txHash}
-                    >
-                      {txHash ? "SUCCESS 🎉" : "MINT"}
-                    </Button>
+
+                    {userAddress ? (
+                      <Button
+                        size="lg"
+                        radius="full"
+                        variant="solid"
+                        className="mx-auto w-fit"
+                        color={txHash ? "success" : "primary"}
+                        onClick={handleMint}
+                        isLoading={minting}
+                        isDisabled={!userAddress || txHash}
+                      >
+                        {txHash ? "SUCCESS 🎉" : "MINT"}
+                      </Button>
+                    ) : (
+                      <Button
+                        size="md"
+                        radius="full"
+                        variant="solid"
+                        className="mx-auto w-fit"
+                        color="primary"
+                        onClick={connectEthereumWallet}
+                      >
+                        CONNECT WALLET
+                      </Button>
+                    )}
                   </>
                 )}
               </ModalBody>
