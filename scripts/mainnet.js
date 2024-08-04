@@ -75,14 +75,14 @@ async function main() {
   const currentPrice = await NFT.price(currentSupply);
   console.log("minting", currentSupply);
 
-  console.log(
-    "LastMoodUpdate:",
-    await NFT.getLastMoodUpdate(wallet_0x01.address)
-  );
+  // console.log(
+  //   "LastMoodUpdate:",
+  //   await NFT.getLastMoodUpdate(wallet_0x01.address)
+  // );
 
-  await NFT.connect(wallet_0x01).mint(mintEmojis[1], theme.target, {
-    value: currentPrice,
-  });
+  // await NFT.connect(wallet_0x01).mint(mintEmojis[1], theme.target, {
+  //   value: currentPrice,
+  // });
 
   console.log(
     "LastMoodUpdate:",
@@ -90,11 +90,11 @@ async function main() {
   );
 
   // await NFT.updateTreasury("0x8C60817577d6Cdb440436844c9B3898d0d069F00");
+  // console.log("treasury:", await NFT.treasury());
+
+  await NFT.updateCooldown(14400);
 
   // console.log("treasury:", await NFT.treasury());
-  // await NFT.updateCooldown(14400);
-
-  console.log("treasury:", await NFT.treasury());
 
   // console.log("theme:", await NFT.getTheme(0));
   // console.log("emojis:", await NFT.getEmojis(0));

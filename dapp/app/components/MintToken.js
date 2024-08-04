@@ -219,10 +219,10 @@ const MintToken = () => {
                   <>
                     <p className="text-xs text-center lowercase">
                       Ser, see that cooldown timer? Yeah, you can only
-                      mint/update your feels onchain every 4 hours. Gotta pace
-                      yourself, champ! Too many mood swings aren&apos;t healthy.
-                      Remember to take breaks, hydrate, and maybe touch grass.
-                      🧘‍♂️💚
+                      mint/update your feels onchain every 15 minutes. Gotta
+                      pace yourself, champ! Too many mood swings aren&apos;t
+                      healthy. Remember to take breaks, hydrate, and maybe touch
+                      grass. 🧘‍♂️💚
                     </p>
                     <p className="pt-6 mx-auto text-2xl font-semibold">
                       {countdown}
