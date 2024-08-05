@@ -429,7 +429,7 @@ export default function MoodMatch() {
           </NavbarItem>
         </NavbarMenu>
       </Navbar>
-      <section className="flex items-center justify-center flex-grow w-full md:p-12">
+      <section className="flex items-center justify-center flex-grow w-full p-6 md:p-12">
         <div
           className={`relative h-full text-center transition-transform duration-200 rounded-2xl ${
             d9e89869234ce2877
