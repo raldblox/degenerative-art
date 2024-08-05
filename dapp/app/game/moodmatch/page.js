@@ -381,13 +381,13 @@ export default function MoodMatch() {
 
         <NavbarContent className="pr-3 sm:hidden" justify="center">
           <NavbarBrand>
-            <p className="font-bold text-inherit">M👀DMATCH</p>
+            <p className="text-2xl font-bold text-inherit">M👀DMATCH</p>
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
           <NavbarBrand>
-            <p className="font-bold text-inherit">M👀DMATCH</p>
+            <p className="text-2xl font-bold text-inherit">M👀DMATCH</p>
           </NavbarBrand>
           {/* <NavbarItem>
             <Link color="foreground" href="#">
