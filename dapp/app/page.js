@@ -116,7 +116,7 @@ export default function Home() {
           {selectedTab == "home" && (
             <section className="relative min-h-screen md:mx-8" id="start">
               <div className="flex relative flex-col space-y-8 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
-                <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md shadow-blue-200 text-tiny text-balance border-small">
+                <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
                 <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase text-balance md:text-4xl animate-appearance-in">
@@ -154,6 +154,7 @@ export default function Home() {
                       </Link>
                     </>
                   )}
+
                   <div className="pt-12">
                     <Button
                       className="uppercase"
