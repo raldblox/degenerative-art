@@ -61,13 +61,13 @@ export const AssetLoader = () => {
           }}
         />
       </div>
-      <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
+      <div className="flex flex-col items-start justify-between w-full px-2 pt-4 pb-2 text-xs text-black">
         <div className="flex items-center justify-between w-full font-semibold">
           <p>degeneratives.art</p>
           <p>--</p>
         </div>
         <div className="">
-          <p>...</p>
+          <p>by degens</p>
         </div>
       </div>
       {/* <div className="flex items-center justify-start w-full gap-1 mt-2">
