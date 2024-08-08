@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
 import { AssetLoader } from "./AssetLoader";
-import { Button, Link } from "@nextui-org/react";
+import { Button, Image, Link } from "@nextui-org/react";
 import EmojisContainer from "./EmojisContainer";
 import { Context } from "../providers/Providers";
 import { ethers } from "ethers";
@@ -108,18 +108,52 @@ const AllFeels = () => {
                 <div className="w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
                   <EmojisContainer token={token} />
                 </div>
-                <div className="flex flex-col items-start justify-between w-full px-2 pt-3 pb-1 text-xs text-black">
-                  <div className="flex items-center justify-between w-full font-semibold">
-                    <p>degeneratives.art #{token.tokenId}</p>
-                    <p>{token?.network}</p>
+                <div className="flex items-center justify-between w-full pt-3 pb-2">
+                  <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-black">
+                    <div className="flex items-center justify-between w-full font-semibold">
+                      <p>degeneratives.art #{token.tokenId}</p>
+                      <p>{token?.network}</p>
+                    </div>
+                    <div className="">
+                      <p>
+                        by {token.owner.slice(0, 5)}
+                        ...
+                        {token.owner.slice(-4)}
+                      </p>
+                    </div>
                   </div>
-                  <div className="">
-                    <p>
-                      by {token.owner.slice(0, 5)}
-                      ...
-                      {token.owner.slice(-4)}
-                    </p>
-                  </div>
+                  <Button
+                    as={Link}
+                    isExternal
+                    href={`https://explorer.etherlink.com/token/0xCF552524772605DE32DAe649f7ceD60a286b0D21/instance/${token?.tokenId}`}
+                    radius="full"
+                    variant="light"
+                    className="flex items-center p-0"
+                    isIconOnly
+                  >
+                    <Image
+                      src="/etherlink_icon.svg"
+                      height={25}
+                      width={75}
+                      radius="none"
+                    />
+                  </Button>
+                  <Button
+                    as={Link}
+                    isExternal
+                    href={`https://rarible.com/token/etherlink/0xcf552524772605de32dae649f7ced60a286b0d21:${token?.tokenId}`}
+                    radius="full"
+                    variant="light"
+                    className="flex items-center p-0"
+                    isIconOnly
+                  >
+                    <Image
+                      src="/rarible_icon.svg"
+                      height={20}
+                      width={75}
+                      radius="none"
+                    />
+                  </Button>
                 </div>
               </Link>
             ))}

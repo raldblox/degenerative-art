@@ -1,25 +1,27 @@
 "use client";
 
-import * as React from "react";
-
 import { NextUIProvider } from "@nextui-org/react";
 import { ethers } from "ethers";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
 import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
+import { createContext, useEffect, useState } from "react";
 
-export const Context = React.createContext();
+export const Context = createContext();
 
 export const Providers = (props) => {
-  const [signer, setSigner] = React.useState(null);
-  const [userAddress, setUserAddress] = React.useState(null);
-  const [instance, setInstance] = React.useState({ nft: "", mood: "" });
-  const [totalSupply, setTotalSupply] = React.useState(0);
-  const [mintPrice, setMintPrice] = React.useState(0);
-  const [balances, setBalances] = React.useState({ nft: 0, mood: 0 });
-  const [fetching, setFetching] = React.useState(false);
+  const [signer, setSigner] = useState(null);
+  const [userAddress, setUserAddress] = useState(null);
+  const [userNFTs, setUserNFTs] = useState([]);
 
-  const [timeUpdated, setTimeUpdated] = React.useState(0);
-  const [countdown, setCountdown] = React.useState("00:00:00");
+  const [instance, setInstance] = useState({ nft: "", mood: "" });
+  const [totalSupply, setTotalSupply] = useState(0);
+  const [mintPrice, setMintPrice] = useState(0);
+  const [balances, setBalances] = useState({ nft: 0, mood: 0 });
+  const [fetching, setFetching] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [timeUpdated, setTimeUpdated] = useState(0);
+  const [countdown, setCountdown] = useState("00:00:00");
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -132,7 +134,7 @@ export const Providers = (props) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const calculateTimeLeft = () => {
       const now = Math.floor(Date.now() / 1000);
       const cooldownTime = 15 * 60; // 4 hours cooldown in seconds
@@ -153,7 +155,7 @@ export const Providers = (props) => {
     return () => clearInterval(intervalId);
   }, [timeUpdated, countdown]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     connectEthereumWallet();
     fetchToken();
     if (userAddress) {
@@ -165,6 +167,58 @@ export const Providers = (props) => {
     }, 15000);
 
     return () => clearInterval(intervalId);
+  }, [userAddress]);
+
+  const fetchUserTokens = async () => {
+    if (!userAddress) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const node = "https://node.mainnet.etherlink.com";
+      const provider = new ethers.JsonRpcProvider(node);
+      const nftContract = new ethers.Contract(
+        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        nftAbi,
+        provider
+      );
+      const totalSupply = await nftContract.totalSupply();
+      console.log("totalSupply///", totalSupply);
+      const balanceOf = await nftContract.balanceOf(userAddress);
+      console.log("balanceOf///", balanceOf);
+
+      const userTokens = [];
+
+      // Fetch token data sequentially
+      for (let tokenId = 0; tokenId < Number(totalSupply); tokenId++) {
+        const owner = await nftContract.ownerOf(tokenId);
+        if (owner.toLowerCase() === userAddress?.toLowerCase()) {
+          console.log("found///", tokenId);
+          const emojis = await nftContract.getEmojis(tokenId);
+          const moodSwing = await nftContract.getMoodSwing(tokenId);
+          userTokens.push({
+            tokenId,
+            owner,
+            emojis,
+            moodSwing: moodSwing.toString(),
+          });
+          setUserNFTs(userTokens);
+
+          if (userTokens.length === Number(balanceOf)) {
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch tokens:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserTokens();
   }, [userAddress]);
 
   const value = {
@@ -179,6 +233,10 @@ export const Providers = (props) => {
     switchNetwork,
     countdown,
     timeUpdated,
+    userNFTs,
+    setUserNFTs,
+    loading,
+    setLoading,
   };
 
   return (

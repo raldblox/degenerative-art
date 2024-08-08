@@ -11,9 +11,9 @@ async function main() {
     networkName
   );
 
-  const WeBuyMood = await hre.ethers.deployContract("IWannaBuyMoodAsap");
+  const WeBuyMood = await hre.ethers.deployContract("Treasury");
   await WeBuyMood.waitForDeployment();
-  console.log("IWannaBuyMoodAsap:", WeBuyMood.target);
+  console.log("Treasury:", WeBuyMood.target);
 }
 
 main().catch((error) => {

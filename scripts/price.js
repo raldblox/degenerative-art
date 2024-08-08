@@ -1,33 +1,30 @@
 const hre = require("hardhat");
 
-async function main() {
-  const [deployer] = await ethers.getSigners();
-  console.log("Deployer Account: ", deployer.address);
+function calculateTotalMintCost(startTokenId, endTokenId) {
+  let totalCost = BigInt(0);
 
-  const theme = await hre.ethers.deployContract("DegenerativesVisualEngine");
-  await theme.waitForDeployment();
-  console.log("Degeneratives Visual Engine:", theme.target);
-
-  const token = await hre.ethers.deployContract("DegenerativesArt", [
-    theme.target,
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  ]);
-  await token.waitForDeployment();
-  console.log("Degeneratives:", token.target);
-
-  await theme.setup(token.target);
-
-  for (let i = 0; i <= 110; i++) {
-    // Correct loop condition to simulate 10,000 mints
-    const currentPrice = await token.price(i * 1); // Access the "price" function to calculate the current price
-    console.log(
-      "Price for ",
-      i * 1,
-      ":",
-      ethers.formatEther(currentPrice),
-      "ETH"
-    ); // Format the price in ETH
+  for (let tokenId = startTokenId; tokenId <= endTokenId; tokenId++) {
+    const mintPrice = BigInt(10e12) * BigInt(tokenId) ** BigInt(2); // Calculate price in wei
+    totalCost += mintPrice;
   }
+
+  const totalCostInEth = ethers.formatEther(totalCost); // Convert to ETH
+  return parseFloat(totalCostInEth).toFixed(4); // Format to 4 decimal places
+}
+
+async function main() {
+  const startTokenId = 365;
+  const endTokenId = 865;
+  const totalMintCost = calculateTotalMintCost(startTokenId, endTokenId);
+  console.log(
+    "Total mint cost from token ID",
+    startTokenId,
+    "to",
+    endTokenId,
+    ":",
+    totalMintCost,
+    "ETH"
+  );
 }
 
 main().catch((error) => {

@@ -63,7 +63,12 @@ export const Navigation = ({ tabs }) => {
           <>
             <NavbarItem>
               {fetching && (
-                <Button size="sm" variant="light" isIconOnly isLoading={fetching}></Button>
+                <Button
+                  size="sm"
+                  variant="light"
+                  isIconOnly
+                  isLoading={fetching}
+                ></Button>
               )}
             </NavbarItem>
             <NavbarItem>

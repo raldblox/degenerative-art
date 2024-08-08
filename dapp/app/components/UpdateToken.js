@@ -317,6 +317,14 @@ const UpdateToken = () => {
                             </p>
                           </div>
                         </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <Button size="sm" radius="full" className="text-sm">
+                            UPDATE
+                          </Button>
+                          <Button size="sm" radius="full" className="text-sm">
+                            EVOLVE
+                          </Button>
+                        </div>
                       </Link>
                     ))}
                     {fetching && (

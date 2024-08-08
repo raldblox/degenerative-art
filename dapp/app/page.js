@@ -12,6 +12,7 @@ import LivePriceChart from "./components/PriceCharts";
 import { AssetLoader } from "./components/AssetLoader";
 import AllFeels from "./components/AllFeels";
 import UpdateToken from "./components/UpdateToken";
+import { MyFeels } from "./components/MyFeels";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -106,8 +107,10 @@ export default function Home() {
             onSelectionChange={setSelectedTab}
           >
             <Tab key="home" title="degeneratives.art" />
-            {/* <Tab key="analytics" title="Analytics" /> */}
-            <Tab key="feels" className="text-bold" title="Discover Feels" />
+            <Tab key="explore" title="Explore" />
+            {userAddress && (
+              <Tab key="feels" className="text-bold" title="My Feels" />
+            )}
           </Tabs>
         }
       />
@@ -131,7 +134,19 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center gap-2 transition-all duration-300">
                   <div className="flex flex-wrap items-center gap-3">
                     <MintToken />
-                    {userAddress && <UpdateToken />}
+                    {userAddress && (
+                      <Button
+                        fullWidth
+                        size="md"
+                        radius="full"
+                        variant="solid"
+                        color="primary"
+                        className="transition-all duration-300 w-fit"
+                        onClick={() => setSelectedTab("feels")}
+                      >
+                        My Feels
+                      </Button>
+                    )}
                   </div>
 
                   {mintPrice > 0 && (
@@ -557,7 +572,7 @@ export default function Home() {
               </div>
             </section>
           )}
-          {selectedTab == "feels" && (
+          {selectedTab == "explore" && (
             <>
               <section className="min-h-screen">
                 <div className="flex flex-col items-center justify-center w-full p-3 md:p-16">
@@ -566,6 +581,20 @@ export default function Home() {
                   </h1>
                   <div className="flex flex-col items-center justify-center mt-16">
                     <AllFeels />
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+          {selectedTab == "feels" && (
+            <>
+              <section className="min-h-screen">
+                <div className="flex flex-col items-center justify-center w-full p-3 md:p-16">
+                  <h1 className="max-w-3xl text-4xl text-center lowercase text-pretty">
+                    all your minted feels onchain
+                  </h1>
+                  <div className="flex flex-col items-center justify-center mt-16">
+                    <MyFeels />
                   </div>
                 </div>
               </section>
