@@ -222,9 +222,9 @@ const UpdateToken = ({ token }) => {
               <ModalBody className="text-center">
                 <p className="text-sm lowercase">
                   Pump up those mood swings, ser! Every update costs 10 $MOOD,
-                  but it's worth it. The more you switch it up, the higher your
-                  staking rewards will be. So, get moody, get creative, and get
-                  those gains!
+                  but it&apos;s worth it! The more you switch it up, the higher
+                  your staking rewards will be. The most expressive unlocks the
+                  greatest rewards!
                 </p>
                 <h1 className="py-12 text-2xl">coming very soon</h1>
               </ModalBody>
