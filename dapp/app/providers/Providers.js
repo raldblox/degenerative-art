@@ -12,6 +12,7 @@ export const Providers = (props) => {
   const [signer, setSigner] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
   const [userNFTs, setUserNFTs] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("home");
 
   const [instance, setInstance] = useState({ nft: "", mood: "" });
   const [totalSupply, setTotalSupply] = useState(0);
@@ -188,6 +189,10 @@ export const Providers = (props) => {
       const balanceOf = await nftContract.balanceOf(userAddress);
       console.log("balanceOf///", balanceOf);
 
+      if (balanceOf == 0) {
+        return;
+      }
+
       const userTokens = [];
 
       // Fetch token data sequentially
@@ -206,6 +211,7 @@ export const Providers = (props) => {
           setUserNFTs(userTokens);
 
           if (userTokens.length === Number(balanceOf)) {
+            setLoading(false);
             break;
           }
         }
@@ -237,6 +243,8 @@ export const Providers = (props) => {
     setUserNFTs,
     loading,
     setLoading,
+    selectedTab,
+    setSelectedTab,
   };
 
   return (

@@ -18,7 +18,7 @@ import {
 import { ethers } from "ethers";
 import EmojisContainer from "./EmojisContainer";
 
-const UpdateToken = () => {
+const UpdateToken = ({ token }) => {
   const {
     userAddress,
     signer,
@@ -189,64 +189,9 @@ const UpdateToken = () => {
     }
   }, [activeFields]);
 
-  const fetchTokens = async () => {
-    if (userAddress) {
-      await connectEthereumWallet();
-    }
-    try {
-      setFetching(true);
-      const node = "https://node.mainnet.etherlink.com";
-      const provider = new ethers.JsonRpcProvider(node);
-      const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
-        nftAbi,
-        provider
-      );
-      const totalSupply = await nftContract.totalSupply();
-      console.log("totalSupply///", totalSupply);
-      const balanceOf = await nftContract.balanceOf(userAddress);
-      console.log("balanceOf///", balanceOf);
-
-      const userTokens = [];
-
-      // Fetch token data sequentially
-      for (let tokenId = 0; tokenId < Number(totalSupply); tokenId++) {
-        const owner = await nftContract.ownerOf(tokenId);
-        if (owner.toLowerCase() === userAddress?.toLowerCase()) {
-          console.log("found///", tokenId);
-          const emojis = await nftContract.getEmojis(tokenId);
-          const moodSwing = await nftContract.getMoodSwing(tokenId);
-          userTokens.push({
-            tokenId,
-            owner,
-            emojis,
-            moodSwing: moodSwing.toString(),
-          });
-          setUserNFTs(userTokens);
-
-          if (userTokens.length === Number(balanceOf)) {
-            break;
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Failed to fetch tokens:", error);
-    } finally {
-      setFetching(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTokens();
-  }, []);
-
-  const handleRegenerate = () => {
-    fetchTokens(); // Call fetchTokens to refresh the data
-  };
-
   return (
     <>
-      <Button
+      <span
         fullWidth
         // as={Link}
         // href="#mint"
@@ -254,102 +199,34 @@ const UpdateToken = () => {
         radius="full"
         variant="solid"
         color="primary"
-        className="transition-all duration-300 w-fit"
-        onPress={onOpen}
+        className="text-sm lowercase transition-all duration-300 cursor-pointer text-primary hover:scale-95 w-fit"
+        onClick={onOpen}
       >
-        My Feels
-      </Button>
+        Update
+      </span>
 
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="full"
-        className="p-6 overflow-y-scroll"
+        size="xl"
+        className="p-6"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="text-2xl font-semibold tracking-tight text-center lowercase text-balance">
-                  all your minted feels onchain
+                <label className="text-xl font-semibold tracking-tight text-center text-balance">
+                  update your dynamic degeneratives.art
                 </label>
               </ModalHeader>
-              <ModalBody>
-                <>
-                  <div className="grid gap-3 md:grid-cols-5">
-                    {userNFTs?.map((token) => (
-                      <Link
-                        href={`/id/${token.tokenId}`}
-                        key={token.tokenId}
-                        className="flex flex-col items-center justify-center duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
-                      >
-                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
-                          <div className="relative grid grid-cols-3 gap-2 md:gap-4 ">
-                            {token?.emojis?.map((emoji, i) => (
-                              <div
-                                className="flex items-center justify-center duration-200 cursor-pointer group"
-                                key={i}
-                              >
-                                <span className="z-10 text-3xl text-center">
-                                  {emoji}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-start justify-between w-full px-3 py-3 text-xs text-black">
-                          <div className="flex items-center justify-between w-full font-semibold">
-                            <p>degeneratives.art #{token.tokenId}</p>
-                            <p className="flex items-center gap-1 text-zinc-600">
-                              {token?.moodSwing}
-                              <span>
-                                <svg
-                                  className="w-4 h-4"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    fill="currentColor"
-                                    d="M5 3h14v2H5zm0 16H3V5h2zm14 0v2H5v-2zm0 0h2V5h-2zM10 8H8v2h2zm4 0h2v2h-2zm1 5H9v2h6z"
-                                  />
-                                </svg>
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between gap-3">
-                          <Button size="sm" radius="full" className="text-sm">
-                            UPDATE
-                          </Button>
-                          <Button size="sm" radius="full" className="text-sm">
-                            EVOLVE
-                          </Button>
-                        </div>
-                      </Link>
-                    ))}
-                    {fetching && (
-                      <div className="flex flex-col items-center justify-center duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl">
-                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square">
-                          <div className="relative grid grid-cols-3 gap-2 md:gap-4 animate-appearance-in">
-                            {[...Array(9)].map((_, index) => (
-                              <Skeleton
-                                key={index}
-                                className="h-8 rounded-full"
-                              >
-                                <div className="w-8 h-8 rounded-full bg-default-200"></div>
-                              </Skeleton>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-start justify-between w-full px-3 py-3 text-xs text-black">
-                          <div className="flex items-center justify-between w-full font-semibold">
-                            <p>degeneratives.art</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </>
+              <ModalBody className="text-center">
+                <p className="text-sm lowercase">
+                  Pump up those mood swings, ser! Every update costs 10 $MOOD,
+                  but it's worth it. The more you switch it up, the higher your
+                  staking rewards will be. So, get moody, get creative, and get
+                  those gains!
+                </p>
+                <h1 className="py-12 text-2xl">coming very soon</h1>
               </ModalBody>
 
               <ModalFooter className="flex justify-center w-full gap-2 pt-8">

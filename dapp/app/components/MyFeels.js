@@ -5,6 +5,7 @@ import {
   Image,
   Link,
   Skeleton,
+  Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -12,6 +13,7 @@ import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
 import { Context } from "../providers/Providers";
 import { ethers } from "ethers";
 import { AssetLoader } from "./AssetLoader";
+import UpdateToken from "./UpdateToken";
 
 export const MyFeels = () => {
   const {
@@ -24,6 +26,7 @@ export const MyFeels = () => {
     setUserNFTs,
     loading,
     setLoading,
+    setSelectedTab,
   } = useContext(Context);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -39,11 +42,9 @@ export const MyFeels = () => {
     <>
       <div className="grid gap-6 md:grid-cols-3">
         {userNFTs?.map((token) => (
-          <Link
-            isExternal
-            href={`/id/${token.tokenId}`}
+          <div
             key={token.tokenId}
-            className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+            className="relative flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
           >
             <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
               <div className="relative grid grid-cols-3 gap-2 md:gap-4 ">
@@ -52,7 +53,9 @@ export const MyFeels = () => {
                     className="flex items-center justify-center duration-200 cursor-pointer group"
                     key={i}
                   >
-                    <span className="z-10 text-3xl text-center">{emoji}</span>
+                    <span className="z-10 p-2 text-4xl text-center">
+                      {emoji}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -63,12 +66,16 @@ export const MyFeels = () => {
                   <p>degeneratives.art #{token.tokenId}</p>
                   <p>{token?.network}</p>
                 </div>
-                <div className="">
-                  <p>
-                    by {token.owner.slice(0, 5)}
-                    ...
-                    {token.owner.slice(-4)}
-                  </p>
+                <div className="flex items-center gap-2">
+                  <UpdateToken token={token} />
+                  <Link
+                    color="secondary"
+                    isExternal
+                    href={`/id/${token.tokenId}`}
+                    className="text-sm hover:scale-95"
+                  >
+                    render
+                  </Link>
                 </div>
               </div>
               <Button
@@ -104,6 +111,23 @@ export const MyFeels = () => {
                 />
               </Button>
             </div>
+            <Tooltip
+              showArrow={true}
+              color="primary"
+              content="Mood Swing Counter"
+            >
+              <div className="absolute px-2 py-1 text-[10px] items-center text-black rounded-full bg-zinc-100 top-3 flex gap-1">
+                {token.moodSwing}
+                <svg
+                  className="h-3"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 3h14v2H5zm0 16H3V5h2zm14 0v2H5v-2zm0 0h2V5h-2zM10 8H8v2h2zm4 0h2v2h-2zm1 5H9v2h6z" />
+                </svg>
+              </div>
+            </Tooltip>
+
             {/* <div className="flex items-center justify-between gap-3">
               <Button size="sm" radius="full" className="text-sm">
                 UPDATE
@@ -112,11 +136,27 @@ export const MyFeels = () => {
                 EVOLVE
               </Button>
             </div> */}
-          </Link>
+          </div>
         ))}
         {loading && (
           <div className="">
             <AssetLoader />
+          </div>
+        )}
+
+        {!loading && userNFTs.length == 0 && (
+          <div className="flex flex-col items-center justify-center space-y-6 text-center md:col-span-3">
+            <p className="text-2xl">No tokens found</p>
+            <Button
+              size="md"
+              radius="full"
+              variant="solid"
+              color="default"
+              className="text-white transition-all duration-300 bg-black w-fit"
+              onClick={() => setSelectedTab("home")}
+            >
+              Mint your feels today
+            </Button>
           </div>
         )}
       </div>

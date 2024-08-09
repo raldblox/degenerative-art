@@ -32,8 +32,10 @@ export default function Home() {
     switchNetwork,
     allAssets,
     userAddress,
+    selectedTab,
+    setSelectedTab,
   } = useContext(Context);
-  const [selectedTab, setSelectedTab] = useState("home");
+
   const [shuffledContent, setShuffledContent] = useState({
     headline: [
       "Mint Your Mood Before It's Gone, Ser 🫡",
