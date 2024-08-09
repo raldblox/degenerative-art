@@ -40,6 +40,7 @@ export const MyFeels = () => {
       <div className="grid gap-6 md:grid-cols-3">
         {userNFTs?.map((token) => (
           <Link
+            isExternal
             href={`/id/${token.tokenId}`}
             key={token.tokenId}
             className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"

@@ -87,7 +87,7 @@ export default function Home() {
       placeholders: shuffleArray([...shuffledContent.placeholders]),
     });
     setMounted(true);
-  }, []);
+  }, [selectedTab]);
 
   return (
     <>
