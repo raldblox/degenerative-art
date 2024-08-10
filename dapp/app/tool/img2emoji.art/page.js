@@ -232,8 +232,8 @@ const EmojiMosaic = () => {
             </svg>
 
             <p className="w-full text-black">
-              Click to <span className="font-semibold">upload your file</span>{" "}
-              or drop your file here
+              Click to <span className="font-semibold">upload your image</span>{" "}
+              or drop your image here
             </p>
           </label>
           <input
