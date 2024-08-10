@@ -241,13 +241,13 @@ const EmojiMosaic = () => {
             type="file"
             className="hidden"
             onChange={handleImageChange}
-            disabled={balances.nft <= 10}
+            disabled={balances.nft <= 5}
           />
         </div>
       </div>
-      {balances.nft <= 10 && userAddress && (
+      {balances.nft <= 5 && userAddress && (
         <p className="w-full text-center lowercase text-danger animate-appearance-in">
-          Ser, my apologies, but you need to hold at least 10 Degeneratives.art
+          Ser, my apologies, but you need to hold at least 5 Degeneratives.art
           NFTs to access this exclusive tool.
         </p>
       )}
