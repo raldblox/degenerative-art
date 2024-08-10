@@ -196,7 +196,7 @@ export const Providers = (props) => {
       const userTokens = [];
 
       // Fetch token data sequentially
-      for (let tokenId = 0; tokenId < Number(totalSupply); tokenId++) {
+      for (let tokenId = Number(totalSupply) - 1; tokenId > 0; tokenId--) {
         const owner = await nftContract.ownerOf(tokenId);
         if (owner.toLowerCase() === userAddress?.toLowerCase()) {
           console.log("found///", tokenId);

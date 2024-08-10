@@ -34,6 +34,7 @@ export default function Home() {
     userAddress,
     selectedTab,
     setSelectedTab,
+    connectEthereumWallet,
   } = useContext(Context);
 
   const [shuffledContent, setShuffledContent] = useState({
