@@ -254,7 +254,7 @@ const EmojiMosaic = () => {
       <div className="w-full ">
         <canvas
           ref={canvasRef}
-          className="w-full p-4 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl"
+          className="w-full p-4 bg-zinc-800 rounded-3xl"
         ></canvas>
       </div>
       {canvasReady && (
