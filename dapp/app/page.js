@@ -461,8 +461,36 @@ export default function Home() {
                         onClick={() => {
                           window.scrollTo(0, 0);
                         }}
+                        className="hover:bg-black hover:text-white"
                       >
                         now minting
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                  <div className="relative flex w-16 h-16 rounded-full aspect-square group">
+                    <EmojiGlass emoji="🎨" />
+                  </div>
+                  <div className="grid content-between h-full space-y-3">
+                    <div className="h-full space-y-3">
+                      <h1 className="px-3 text-2xl font-medium">
+                        img2emoji.art
+                      </h1>
+                      <p className="px-3 text-xs">
+                        generate art from image with emojis as pixels
+                      </p>
+                    </div>
+                    <div className="flex w-full p-3">
+                      <Button
+                        variant="flat"
+                        radius="full"
+                        size="sm"
+                        as={Link}
+                        className="hover:bg-black hover:text-white"
+                        href="/tool/img2emoji.art"
+                      >
+                        now servicing
                       </Button>
                     </div>
                   </div>
@@ -485,6 +513,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🧬" />
@@ -529,7 +558,7 @@ export default function Home() {
                     <div className="h-full space-y-3">
                       <h1 className="px-3 text-2xl font-medium">win</h1>
                       <p className="px-3 text-xs">
-                        collect scratch card and win awesome prizes
+                        collect scratch cards and win awesome prizes
                       </p>
                     </div>
                     <div className="flex w-full p-3">
@@ -547,7 +576,7 @@ export default function Home() {
                     <div className="h-full space-y-3">
                       <h1 className="px-3 text-2xl font-medium">bridge</h1>
                       <p className="px-3 text-xs">
-                        bridge your tokens to other blockchain
+                        bridge your tokens to other blockchains
                       </p>
                     </div>
                     <div className="flex w-full p-3">
