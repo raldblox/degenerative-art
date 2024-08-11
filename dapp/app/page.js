@@ -109,7 +109,7 @@ export default function Home() {
             selectedKey={selectedTab}
             onSelectionChange={setSelectedTab}
           >
-            <Tab key="home" title="degeneratives.art" />
+            <Tab key="home" title="Home" />
             <Tab key="explore" title="Explore" />
             {userAddress && (
               <Tab key="feels" className="text-bold" title="My Feels" />
