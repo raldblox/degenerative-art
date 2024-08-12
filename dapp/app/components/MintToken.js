@@ -29,7 +29,7 @@ const MintToken = () => {
   const maxFields = 9;
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
-  const [activeFields, setActiveFields] = useState(3);
+  const [activeFields, setActiveFields] = useState(9);
   const [minting, setMinting] = useState(false);
   const [txHash, setTxHash] = useState("");
 
@@ -79,23 +79,9 @@ const MintToken = () => {
     } catch (error) {
       // Log error details
       console.error("Minting failed:", error);
-
-      // Handle specific errors
-      if (error.code === -32603) {
-        console.error(
-          "Internal JSON-RPC error. Check the parameters and try again."
-        );
-      } else if (error.code === "INSUFFICIENT_FUNDS") {
-        console.error(
-          "Insufficient funds for gas or value. Please ensure your wallet has enough balance."
-        );
-      } else if (error.code === "UNPREDICTABLE_GAS_LIMIT") {
-        console.error(
-          "The gas limit could not be estimated. Try setting a higher gas limit manually."
-        );
-      } else {
-        console.error("An unknown error occurred:", error.message);
-      }
+      alert(
+        "oops, something went wrong with the mint.  maybe try a different emoji pattern?"
+      );
     } finally {
       setMinting(false);
     }
@@ -133,9 +119,9 @@ const MintToken = () => {
       if (index > 0) {
         inputRef.current[index - 1].focus();
       }
-      if (activeFields > 3) {
-        setActiveFields(activeFields - 1);
-      }
+      // if (activeFields > 3) {
+      //   setActiveFields(activeFields - 1);
+      // }
     }
   };
 
@@ -215,7 +201,7 @@ const MintToken = () => {
                 </label>
               </ModalHeader>
               <ModalBody>
-                {countdown !== "00:00:00" ? (
+                {countdown !== "00:00:00" && !txHash ? (
                   <>
                     <p className="text-xs text-center lowercase">
                       Ser, see that cooldown timer? Yeah, you can only

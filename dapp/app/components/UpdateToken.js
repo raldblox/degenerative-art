@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
+import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
 import { Context } from "../providers/Providers";
 import {
   Button,
@@ -32,84 +33,26 @@ const UpdateToken = ({ token }) => {
   const maxFields = 9;
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
-  const [activeFields, setActiveFields] = useState(3);
-  const [minting, setMinting] = useState(false);
+  const [activeFields, setActiveFields] = useState(9);
+  const [updating, setUpdating] = useState(false);
   const [txHash, setTxHash] = useState("");
   const [userNFTs, setUserNFTs] = useState([]);
   const [fetching, setFetching] = useState(false);
+  const [emojis, setEmojis] = useState(token?.emojis);
 
-  const handleMint = async () => {
-    console.log("emojis:", inputValues);
-
-    try {
-      setMinting(true);
-      console.log("emojis:", inputValues);
-      const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
-        nftAbi,
-        signer
-      );
-      const totalSupply = await nftContract.totalSupply();
-      const price = await nftContract.price(totalSupply);
-
-      // Log transaction details
-      console.log("Minting transaction details:");
-      console.log("Token ID:", totalSupply.toString());
-      console.log("Price:", price.toString());
-      console.log("User Address:", userAddress);
-
-      // Send transaction
-      const tx = await nftContract.mint(
-        inputValues,
-        "0x8dc9c31AC117b29396399C2C8031b99B1af59457",
-        {
-          value: price,
-        }
-      );
-      // Wait for the transaction to be mined
-      const receipt = await tx.wait();
-      setTxHash(tx.hash);
-
-      // Find the TokenMinted event in the transaction receipt
-      const event = receipt?.events?.find((e) => e.event === "TokenMinted");
-      if (event) {
-        const actualTokenId = event.args.tokenId;
-        console.log("Actual Token ID:", actualTokenId.toString());
-        // You can now use the actualTokenId for further actions if needed
-      } else {
-        console.error("TokenMinted event not found in transaction receipt.");
-      }
-
-      console.log("Minting successful!");
-    } catch (error) {
-      // Log error details
-      console.error("Minting failed:", error);
-
-      // Handle specific errors
-      if (error.code === -32603) {
-        console.error(
-          "Internal JSON-RPC error. Check the parameters and try again."
-        );
-      } else if (error.code === "INSUFFICIENT_FUNDS") {
-        console.error(
-          "Insufficient funds for gas or value. Please ensure your wallet has enough balance."
-        );
-      } else if (error.code === "UNPREDICTABLE_GAS_LIMIT") {
-        console.error(
-          "The gas limit could not be estimated. Try setting a higher gas limit manually."
-        );
-      } else {
-        console.error("An unknown error occurred:", error.message);
-      }
-    } finally {
-      setMinting(false);
+  // Initialize inputValues with the token's emojis on initial render
+  useEffect(() => {
+    if (token?.emojis) {
+      setInputValues(token.emojis); // Take the first 3 emojis
+      setActiveFields(9); // Set active fields based on initial emojis
     }
-  };
+  }, [token]);
 
   const handleChange = (event, index) => {
-    const value = event.target.value; // Get the last entered character
-    // Log the actual value and its Unicode code point
+    const value = event.target.value;
     console.log(`New value: ${value}`);
+
+    // Update inputValues array
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
@@ -117,16 +60,14 @@ const UpdateToken = ({ token }) => {
     });
 
     if (index < activeFields - 1 && value.length > 0) {
-      // Focus on next input if current input is filled and there are more inputs
       inputRef.current[index + 1].focus();
     } else if (
       index === activeFields - 1 &&
       value.length > 0 &&
       activeFields < maxFields
     ) {
-      // Add new input if current input is filled and there are less than 9 inputs
       setActiveFields(activeFields + 1);
-      inputRef.current[index + 1].focus(); // Focus on new input
+      inputRef.current[index + 1].focus();
     }
   };
 
@@ -138,9 +79,9 @@ const UpdateToken = ({ token }) => {
       if (index > 0) {
         inputRef.current[index - 1].focus();
       }
-      if (activeFields > 3) {
-        setActiveFields(activeFields - 1);
-      }
+      // if (activeFields > 3) {
+      //   setActiveFields(activeFields - 1);
+      // }
     }
   };
 
@@ -169,6 +110,7 @@ const UpdateToken = ({ token }) => {
             handleChange(e, i);
           }}
           onKeyUp={(e) => handleKeyUp(e, i)}
+          value={inputValues[i]} // Set the initial value from token.emojis
         />
       );
     }
@@ -188,6 +130,56 @@ const UpdateToken = ({ token }) => {
       inputRef.current[activeFields - 1].focus();
     }
   }, [activeFields]);
+
+  const handleUpdate = async () => {
+    if (token.emojis == inputValues) {
+      alert("ser, we're not seeing any changes at all.");
+      return;
+    }
+
+    console.log("updating to:", inputValues);
+
+    try {
+      setUpdating(true);
+      const nftContract = new ethers.Contract(
+        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        nftAbi,
+        signer
+      );
+      const MOOD = new ethers.Contract(
+        "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
+        erc20Abi,
+        signer
+      );
+
+      const updatePrice = ethers.parseEther("10"); // 10 MOOD
+
+      const allowance = await MOOD.allowance(
+        userAddress,
+        "0xcf552524772605de32dae649f7ced60a286b0d21"
+      );
+      console.log("allowance:", allowance);
+
+      if (allowance < updatePrice) {
+        const tx = await MOOD.approve(
+          "0xcf552524772605de32dae649f7ced60a286b0d21",
+          updatePrice
+        );
+        console.log("Approval transaction sent.");
+        await tx.wait();
+      }
+
+      const updateTx = await nftContract.update(token.tokenId, inputValues);
+      await updateTx.wait();
+      setTxHash(updateTx.hash);
+      console.log("Emoji updated successfully.");
+    } catch (error) {
+      console.error("Failed to update emoji:", error);
+      alert("hmm, something went wrong. try again?");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   return (
     <>
@@ -220,24 +212,66 @@ const UpdateToken = ({ token }) => {
                 </label>
               </ModalHeader>
               <ModalBody className="text-center">
-                <p className="text-sm lowercase">
-                  Pump up those mood swings, ser! Every update costs 10 $MOOD,
-                  but it&apos;s worth it! The more you switch it up, the higher
-                  your staking rewards will be. The most expressive unlocks the
-                  greatest rewards!
-                </p>
-                <h1 className="py-12 text-2xl">coming very soon</h1>
+                {countdown !== "00:00:00" && !txHash ? (
+                  <>
+                    <p className="text-xs text-center lowercase">
+                      Ser, see that cooldown timer? Yeah, you can only
+                      mint/update your feels onchain every 15 minutes. Gotta
+                      pace yourself, champ! Too many mood swings aren&apos;t
+                      healthy. Remember to take breaks, hydrate, and maybe touch
+                      grass. 🧘‍♂️💚
+                    </p>
+                    <p className="pt-6 mx-auto text-2xl font-semibold">
+                      {countdown}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm lowercase">
+                      Pump up those mood swings, ser! Every update costs 10
+                      $MOOD, but it&apos;s worth it! The more you switch it up,
+                      the higher your staking rewards will be. The most
+                      expressive unlocks the greatest rewards!
+                    </p>
+                    <div className="mx-auto">
+                      <div className="mx-auto">
+                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square">
+                          <div
+                            ref={fieldsRef}
+                            className="grid grid-cols-3 gap-3"
+                          >
+                            {renderInputFields()}
+                          </div>
+                        </div>
+                      </div>
+                      <Button
+                        size="lg"
+                        radius="full"
+                        variant="solid"
+                        className="mx-auto w-fit"
+                        color={txHash ? "success" : "primary"}
+                        onClick={handleUpdate}
+                        isLoading={updating}
+                        isDisabled={!userAddress || txHash}
+                      >
+                        {txHash ? "UPDATED 🎉" : "UPDATE"}
+                      </Button>
+                    </div>
+                  </>
+                )}
               </ModalBody>
 
               <ModalFooter className="flex justify-center w-full gap-2 pt-8">
-                <Button
-                  onClick={onClose}
-                  radius="full"
-                  variant="light"
-                  color="danger"
-                >
-                  CLOSE
-                </Button>
+                {txHash && (
+                  <Link
+                    href={`https://explorer.etherlink.com/tx/${txHash}`}
+                    size="sm"
+                    showAnchorIcon
+                    className="animate-appearance-in"
+                  >
+                    View Transaction Receipt
+                  </Link>
+                )}
               </ModalFooter>
             </>
           )}
