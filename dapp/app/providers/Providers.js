@@ -37,6 +37,13 @@ export const Providers = (props) => {
         setSigner(signer);
         setUserAddress(user);
 
+        // Add 'accountsChanged' event listener
+        ethereum.on("accountsChanged", handleAccountsChanged);
+        function handleAccountsChanged() {
+          window.location.reload();
+        }
+
+        // Existing 'chainChanged' event listener
         ethereum.on("chainChanged", handleChainChanged);
         function handleChainChanged() {
           window.location.reload();
