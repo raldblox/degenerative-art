@@ -241,11 +241,11 @@ const EmojiMosaic = () => {
             type="file"
             className="hidden"
             onChange={handleImageChange}
-            disabled={balances.nft <= 5}
+            disabled={Number(balances.nft) <= 5}
           />
         </div>
       </div>
-      {balances.nft <= 5 && userAddress && (
+      {Number(balances.nft) <= 5 && userAddress && (
         <p className="w-full text-center lowercase text-danger animate-appearance-in">
           Ser, my apologies, but you need to hold at least 5 Degeneratives.art
           NFTs to access this exclusive tool.
