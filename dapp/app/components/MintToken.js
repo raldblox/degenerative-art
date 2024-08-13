@@ -80,7 +80,7 @@ const MintToken = () => {
       // Log error details
       console.error("Minting failed:", error);
       alert(
-        "oops, something went wrong with the mint.  maybe try a different emoji pattern?"
+        "oops, something went wrong with the mint. maybe try a different emoji pattern? or try again later!"
       );
     } finally {
       setMinting(false);
