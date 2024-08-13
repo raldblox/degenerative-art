@@ -61,6 +61,7 @@ const MintToken = () => {
           value: price,
         }
       );
+
       // Wait for the transaction to be mined
       const receipt = await tx.wait();
       setTxHash(tx.hash);
@@ -80,7 +81,7 @@ const MintToken = () => {
       // Log error details
       console.error("Minting failed:", error);
       alert(
-        "oops, something went wrong with the mint. maybe try a different emoji pattern? or try again later!"
+        "oops, something went wrong with the mint. maybe try a different emoji pattern? or just try again later!"
       );
     } finally {
       setMinting(false);
