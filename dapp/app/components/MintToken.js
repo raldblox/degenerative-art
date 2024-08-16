@@ -56,7 +56,7 @@ const MintToken = () => {
       // Send transaction
       const tx = await nftContract.mint(
         inputValues,
-        "0x8dc9c31AC117b29396399C2C8031b99B1af59457",
+        "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
         {
           value: price,
         }
