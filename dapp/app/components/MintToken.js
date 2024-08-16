@@ -183,8 +183,9 @@ const MintToken = () => {
         color="default"
         className="text-white transition-all duration-300 bg-black w-fit"
         onPress={onOpen}
+        isDisabled
       >
-        Mint Your Feels
+        V2 Migration Ongoing
       </Button>
 
       <Modal
@@ -250,7 +251,8 @@ const MintToken = () => {
                         color={txHash ? "success" : "primary"}
                         onClick={handleMint}
                         isLoading={minting}
-                        isDisabled={!userAddress || txHash}
+                        // isDisabled={!userAddress || txHash}
+                        isDisabled
                       >
                         {txHash ? "SUCCESS 🎉" : "MINT"}
                       </Button>
@@ -262,6 +264,7 @@ const MintToken = () => {
                         className="mx-auto w-fit"
                         color="primary"
                         onClick={connectEthereumWallet}
+                        isDisabled
                       >
                         CONNECT WALLET
                       </Button>
