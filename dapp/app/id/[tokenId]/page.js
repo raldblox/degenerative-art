@@ -32,7 +32,7 @@ export default function Token({ params }) {
         const node = "https://node.mainnet.etherlink.com";
         const provider = new ethers.JsonRpcProvider(node);
         const nftContract = new ethers.Contract(
-          "0xcf552524772605de32dae649f7ced60a286b0d21",
+          "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
           nftAbi,
           provider
         );
@@ -104,7 +104,7 @@ export default function Token({ params }) {
             <Button
               as={Link}
               isExternal
-              href={`https://rarible.com/token/etherlink/0xcf552524772605de32dae649f7ced60a286b0d21:${params.tokenId}`}
+              href={`https://rarible.com/token/etherlink/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F:${params.tokenId}`}
               radius="full"
               variant="solid"
               className="flex items-center gap-3"

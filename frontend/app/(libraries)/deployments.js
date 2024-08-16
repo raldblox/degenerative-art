@@ -12,7 +12,7 @@ export const contractDeployments = {
       blockExplorerUrls: ["https://etherlink.blockscout.com"],
     },
     DegenerativesArt: {
-      address: "0xCF552524772605DE32DAe649f7ceD60a286b0D21",
+      address: "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
     },
     mood: {
       address: "0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9",

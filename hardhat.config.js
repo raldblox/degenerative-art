@@ -4,6 +4,7 @@ require("dotenv").config();
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
+
   networks: {
     polygon: {
       name: "Polygon Mainnet",
@@ -38,6 +39,7 @@ module.exports = {
       name: "Etherlink",
       url: "https://node.mainnet.etherlink.com",
       accounts: [process.env.OCVLABS_PRIVATE_KEY, process.env.WALLET_0x01],
+      gasPrice: "auto",
     },
   },
   sourcify: {

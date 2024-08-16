@@ -40,7 +40,7 @@ const MintToken = () => {
       setMinting(true);
       console.log("emojis:", inputValues);
       const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
         nftAbi,
         signer
       );
@@ -183,9 +183,8 @@ const MintToken = () => {
         color="default"
         className="text-white transition-all duration-300 bg-black w-fit"
         onPress={onOpen}
-        isDisabled
       >
-        V2 Migration Ongoing
+        Mint Your Feels
       </Button>
 
       <Modal
@@ -251,8 +250,7 @@ const MintToken = () => {
                         color={txHash ? "success" : "primary"}
                         onClick={handleMint}
                         isLoading={minting}
-                        // isDisabled={!userAddress || txHash}
-                        isDisabled
+                        isDisabled={!userAddress || txHash}
                       >
                         {txHash ? "SUCCESS 🎉" : "MINT"}
                       </Button>

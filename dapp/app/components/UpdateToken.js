@@ -27,6 +27,10 @@ const UpdateToken = ({ token }) => {
     countdown,
     timeUpdated,
     connectEthereumWallet,
+    updating,
+    setUpdating,
+    updated,
+    setUpdated,
   } = useContext(Context);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -35,7 +39,7 @@ const UpdateToken = ({ token }) => {
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
   const [activeFields, setActiveFields] = useState(9);
-  const [updating, setUpdating] = useState(false);
+
   const [txHash, setTxHash] = useState("");
   const [userNFTs, setUserNFTs] = useState([]);
   const [fetching, setFetching] = useState(false);
@@ -143,7 +147,7 @@ const UpdateToken = ({ token }) => {
     try {
       setUpdating(true);
       const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
         nftAbi,
         signer
       );
@@ -157,13 +161,13 @@ const UpdateToken = ({ token }) => {
 
       const allowance = await MOOD.allowance(
         userAddress,
-        "0xcf552524772605de32dae649f7ced60a286b0d21"
+        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F"
       );
       console.log("allowance:", allowance);
 
       if (allowance < updatePrice) {
         const tx = await MOOD.approve(
-          "0xcf552524772605de32dae649f7ced60a286b0d21",
+          "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
           updatePrice
         );
         console.log("Approval transaction sent.");
@@ -173,6 +177,7 @@ const UpdateToken = ({ token }) => {
       const updateTx = await nftContract.update(token.tokenId, inputValues);
       await updateTx.wait();
       setTxHash(updateTx.hash);
+      setUpdated(true);
       console.log("Emoji updated successfully.");
     } catch (error) {
       console.error("Failed to update emoji:", error);
@@ -253,19 +258,7 @@ const UpdateToken = ({ token }) => {
                         color={txHash ? "success" : "primary"}
                         onClick={handleUpdate}
                         isLoading={updating}
-                        isDisabled={true}
-                        endContent={
-                          <svg
-                            className="h-4"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M17 9V7A5 5 0 0 0 7 7v2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-7a3 3 0 0 0-3-3M9 7a3 3 0 0 1 6 0v2H9Zm9 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1Z"
-                            />
-                          </svg>
-                        }
+                        // isDisabled={true}
                       >
                         {txHash ? "UPDATED 🎉" : "UPDATE"}
                       </Button>

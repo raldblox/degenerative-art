@@ -41,7 +41,7 @@ async function main() {
 
   const NFT = await hre.ethers.getContractAt(
     "DegenerativesArt",
-    "0xcf552524772605de32dae649f7ced60a286b0d21"
+    "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F"
   );
   console.log("DegenerativesArt:", NFT.target);
 

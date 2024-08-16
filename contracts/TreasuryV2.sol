@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "./DegenerativesArt.sol";
+import "./DegenerativesArtV2.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-contract Treasury is Ownable(msg.sender) {
+contract TreasuryV2 is Ownable(msg.sender) {
     IERC20 public moodToken;
     IERC20 public bturbToken;
-    DegenerativesArt public degenArt;
+    DegenerativesArtV2 public degenArt;
 
     IUniswapV2Router02 public immutable swapRouter;
 
@@ -20,7 +20,9 @@ contract Treasury is Ownable(msg.sender) {
     uint256 public constant MIN_ETH_FOR_SWAP = 0.1 ether;
 
     constructor() {
-        degenArt = DegenerativesArt(0xCF552524772605DE32DAe649f7ceD60a286b0D21);
+        degenArt = DegenerativesArtV2(
+            0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F
+        );
         moodToken = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9);
         bturbToken = IERC20(0xf1289118Ff03F197f0D0A50E4774984e7977965e);
         swapRouter = IUniswapV2Router02(

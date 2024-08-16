@@ -124,11 +124,6 @@
   },
   {
     "inputs": [],
-    "name": "InvalidPricer",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "NotTokenOwner",
     "type": "error"
   },
@@ -152,6 +147,11 @@
       }
     ],
     "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Paused",
     "type": "error"
   },
   {
@@ -455,6 +455,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "degenerativesV1",
+    "outputs": [
+      {
+        "internalType": "contract DegenerativesArt",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "string[]",
@@ -661,6 +674,45 @@
       }
     ],
     "name": "isApprovedForAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxEmojis",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "migrate",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "migrating",
     "outputs": [
       {
         "internalType": "bool",
@@ -1012,6 +1064,19 @@
   {
     "inputs": [
       {
+        "internalType": "bool",
+        "name": "isMigrating",
+        "type": "bool"
+      }
+    ],
+    "name": "updateBurningStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_cooldown",
         "type": "uint256"
@@ -1031,6 +1096,19 @@
       }
     ],
     "name": "updateDefaultTheme",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "isMigrating",
+        "type": "bool"
+      }
+    ],
+    "name": "updateMigrationStatus",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1064,25 +1142,6 @@
     "name": "upgrade",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "validPricers",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

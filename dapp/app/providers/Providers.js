@@ -20,6 +20,8 @@ export const Providers = (props) => {
   const [balances, setBalances] = useState({ nft: 0, mood: 0 });
   const [fetching, setFetching] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   const [timeUpdated, setTimeUpdated] = useState(0);
   const [countdown, setCountdown] = useState("00:00:00");
@@ -109,7 +111,7 @@ export const Providers = (props) => {
       const node = "https://node.mainnet.etherlink.com";
       const provider = new ethers.JsonRpcProvider(node);
       const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
         nftAbi,
         provider
       );
@@ -187,7 +189,7 @@ export const Providers = (props) => {
       const node = "https://node.mainnet.etherlink.com";
       const provider = new ethers.JsonRpcProvider(node);
       const nftContract = new ethers.Contract(
-        "0xcf552524772605de32dae649f7ced60a286b0d21",
+        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
         nftAbi,
         provider
       );
@@ -232,7 +234,7 @@ export const Providers = (props) => {
 
   useEffect(() => {
     fetchUserTokens();
-  }, [userAddress]);
+  }, [userAddress, updated]);
 
   const value = {
     connectEthereumWallet,
@@ -252,6 +254,10 @@ export const Providers = (props) => {
     setLoading,
     selectedTab,
     setSelectedTab,
+    updating,
+    setUpdating,
+    updated,
+    setUpdated,
   };
 
   return (
