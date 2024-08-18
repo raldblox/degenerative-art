@@ -198,9 +198,9 @@ const UpdateToken = ({ token }) => {
         variant="solid"
         color="primary"
         className="text-sm lowercase transition-all duration-300 cursor-pointer text-primary hover:scale-95 w-fit"
-        onClick={onOpen}
+        // onClick={onOpen}
       >
-        Update
+        Update (paused)
       </span>
 
       <Modal
