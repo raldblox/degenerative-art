@@ -68,14 +68,6 @@ export const MyFeels = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <UpdateToken token={token} />
-                  {/* <Link
-                    color="secondary"
-                    isExternal
-                    href={`/id/${token.tokenId}`}
-                    className="text-sm hover:scale-95"
-                  >
-                    render
-                  </Link> */}
                 </div>
               </div>
               <Button
