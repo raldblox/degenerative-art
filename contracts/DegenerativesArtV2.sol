@@ -199,7 +199,7 @@ contract DegenerativesArtV2 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         bool paid = MOOD.transferFrom(msg.sender, address(this), moodPayment);
         if (!paid) revert TransferFailed();
 
-        _updateTheme(tokenId, themeAddress);
+        _updateTheme(totalSupply, themeAddress);
     }
 
     //***** HELPER FUNCTIONS *****//
