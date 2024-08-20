@@ -31,14 +31,11 @@ const LivePriceChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Calculate mint prices for all supplies up to the max
-      const priceData = Array.from(
-        { length: Number(totalSupply) + 100 },
-        (_, i) => ({
-          name: `TOKEN ID#${i.toString()}`,
-          supply: i.toString(),
-          price: calculateMintPrice(i),
-        })
-      );
+      const priceData = Array.from({ length: 1100 }, (_, i) => ({
+        name: `TOKEN ID#${i.toString()}`,
+        supply: i.toString(),
+        price: calculateMintPrice(i),
+      }));
 
       setData(priceData); // Set full price curve data
     };
@@ -74,30 +71,23 @@ const LivePriceChart = () => {
           <XAxis dataKey="supply" fontSize={10} />
           <YAxis dataKey="price" fontSize={10} />
           <Tooltip
-            // content="hello"
-            // label={{
-            //   name: "hello",
-            //   position: "insideTopLeft",
-            //   fill: "blue",
-            //   fontSize: "8",
-            // }}
-            cursor={{ stroke: "black", strokeWidth: 1 }}
+            cursor={{ stroke: "blue", strokeWidth: 2 }}
             content={<CustomTooltip />}
           />
           <Line
             type="monotone"
-            name="pricee"
+            name="price"
             dataKey="price"
-            stroke="blue"
-            fill="white"
+            stroke="black"
+            fill="black"
+            r={1}
           />
           <ReferenceDot
             x={totalSupply.toString()}
             y={calculateMintPrice(totalSupply)}
             r={3}
-            fill="blue"
-            stroke="blue"
-            strokeDasharray="3 3"
+            fill="white"
+            stroke="black"
           />
         </LineChart>
       </ResponsiveContainer>
