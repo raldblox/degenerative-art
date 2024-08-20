@@ -137,7 +137,7 @@ const MintToken = () => {
           type="text"
           data-index={i}
           ref={(el) => (inputRef.current[i] = el)}
-          className={`animate-appearance-in w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+          className={` w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => {
