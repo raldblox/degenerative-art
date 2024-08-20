@@ -513,6 +513,24 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                  <div className="relative flex w-16 h-16 rounded-full aspect-square group">
+                    <EmojiGlass emoji="🏊‍♂️" />
+                  </div>
+                  <div className="grid content-between h-full space-y-3">
+                    <div className="h-full space-y-3">
+                      <h1 className="px-3 text-2xl font-medium">pool</h1>
+                      <p className="px-3 text-xs">
+                        provide liquidity to earn fees and rewards
+                      </p>
+                    </div>
+                    <div className="flex w-full p-3">
+                      <Button variant="flat" radius="full" size="sm">
+                        coming soon
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
@@ -568,6 +586,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🌉" />
