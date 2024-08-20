@@ -142,9 +142,9 @@ const MintToken = () => {
           }`}
           onChange={(e) => {
             const value = e.target.value;
-            const emoji = value.match(/[\p{Emoji}]/u);
-            if (emoji) {
-              e.target.value = emoji[0];
+            const unicodeChar = value.match(/./u);
+            if (unicodeChar) {
+              e.target.value = unicodeChar[0]; // Keep only the first character if multiple are entered
             } else {
               e.target.value = "";
             }
