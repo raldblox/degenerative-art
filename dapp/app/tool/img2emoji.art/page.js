@@ -60,9 +60,9 @@ const EmojiMosaic = () => {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = 1024;
-        canvas.height = 1024;
-        ctx.drawImage(img, 0, 0, 1024, 1024);
+        canvas.width = 512;
+        canvas.height = 512;
+        ctx.drawImage(img, 0, 0, 512, 512);
 
         const resizedDataURL = canvas.toDataURL();
         setImageFile(resizedDataURL);
@@ -330,9 +330,9 @@ const EmojiMosaic = () => {
           ref={canvasRef}
           className="w-full p-4 bg-zinc-100 rounded-3xl"
         ></canvas>
-        {canvasReady && (
-          <img src={svgImage} className="p-4 bg-zinc-100 rounded-3xl" />
-        )}
+        <div className="p-4 bg-zinc-100 rounded-3xl">
+          {canvasReady && <img src={svgImage} className="" />}
+        </div>
       </div>
 
       {canvasReady && (
