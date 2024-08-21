@@ -44,31 +44,31 @@ const EmojiMosaic = () => {
     }
   }, [imageFile, isClient]);
 
-  // const handleImageChange = (e) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     setImageFile(URL.createObjectURL(e.target.files[0]));
-  //   }
-  // };
-
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-
-      const img = new Image();
-      img.src = URL.createObjectURL(file);
-
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = 512;
-        canvas.height = 512;
-        ctx.drawImage(img, 0, 0, 512, 512);
-
-        const resizedDataURL = canvas.toDataURL();
-        setImageFile(resizedDataURL);
-      };
+      setImageFile(URL.createObjectURL(e.target.files[0]));
     }
   };
+
+  // const handleImageChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+
+  //     const img = new Image();
+  //     img.src = URL.createObjectURL(file);
+
+  //     img.onload = () => {
+  //       const canvas = document.createElement("canvas");
+  //       const ctx = canvas.getContext("2d");
+  //       canvas.width = 512;
+  //       canvas.height = 512;
+  //       ctx.drawImage(img, 0, 0, 512, 512);
+
+  //       const resizedDataURL = canvas.toDataURL();
+  //       setImageFile(resizedDataURL);
+  //     };
+  //   }
+  // };
 
   const buildEmojiMap = () => {
     const hiddenCanvas = document.createElement("canvas");
@@ -196,7 +196,7 @@ const EmojiMosaic = () => {
     }
 
     pixels.forEach((emo) => {
-      svgString += `<text x="${emo.x}" y="${emo.y}" font-size="10">${emo.key}</text>`;
+      svgString += `<text x="${emo.x}" y="${emo.y}" font-size="11">${emo.key}</text>`;
     });
 
     svgString += "</svg>";
