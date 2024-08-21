@@ -265,7 +265,7 @@ const EmojiMosaic = () => {
         </Link>
 
         {canvasReady && (
-          <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
+          <div className="flex-col hidden space-y-2 md:flex md:flex-row md:space-x-2 md:space-y-0">
             <Button
               size="md"
               fullWidth
@@ -325,7 +325,7 @@ const EmojiMosaic = () => {
           NFTs to access this exclusive tool.
         </p>
       )}
-      <div className="grid w-full grid-cols-2 gap-3">
+      <div className="grid w-full gap-3 md:grid-cols-2">
         <canvas
           ref={canvasRef}
           className="w-full p-4 bg-zinc-100 rounded-3xl"
@@ -336,15 +336,26 @@ const EmojiMosaic = () => {
       </div>
 
       {canvasReady && (
-        <Button
-          size="md"
-          fullWidth
-          radius="full"
-          className="text-white bg-black md:hidden"
-          onClick={handleDownload}
-        >
-          Download
-        </Button>
+        <div className="flex flex-col space-y-2 md:hidden md:flex-row md:space-x-2 md:space-y-0">
+          <Button
+            size="md"
+            fullWidth
+            radius="full"
+            className="text-white bg-black"
+            onClick={() => handleDownload("png")}
+          >
+            Download PNG
+          </Button>
+          <Button
+            size="md"
+            fullWidth
+            radius="full"
+            color="primary"
+            onClick={() => handleDownload("svg")}
+          >
+            Download SVG
+          </Button>
+        </div>
       )}
     </div>
   );
