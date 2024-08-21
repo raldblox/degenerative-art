@@ -13,6 +13,7 @@ const EmojiMosaic = () => {
   const [emojis, setEmojis] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [canvasReady, setCanvasReady] = useState(false);
+  const [svgImage, setSvgImage] = useState("");
   const canvasRef = useRef(null);
   const hiddenCanvasRef = useRef(null);
   const imageRef = useRef(null); // Use useRef to store reference to the image element
@@ -43,9 +44,29 @@ const EmojiMosaic = () => {
     }
   }, [imageFile, isClient]);
 
+  // const handleImageChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     setImageFile(URL.createObjectURL(e.target.files[0]));
+  //   }
+  // };
+
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setImageFile(URL.createObjectURL(e.target.files[0]));
+      const file = e.target.files[0];
+
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 1024;
+        canvas.height = 1024;
+        ctx.drawImage(img, 0, 0, 1024, 1024);
+
+        const resizedDataURL = canvas.toDataURL();
+        setImageFile(resizedDataURL);
+      };
     }
   };
 
@@ -100,15 +121,24 @@ const EmojiMosaic = () => {
     const context = canvas.getContext("2d");
     const ROWS = Math.floor(img.naturalHeight / pSize.current);
     const COLS = Math.floor(img.naturalWidth / pSize.current);
-    canvas.width = COLS * scale.current;
-    canvas.height = ROWS * scale.current - scale.current;
+
+    const scaleFactor = 1; // Adjust this factor as needed
+    const scaledWidth = COLS * scale.current * scaleFactor;
+    const scaledHeight =
+      ROWS * scale.current * scaleFactor - scale.current * scaleFactor;
+    canvas.width = scaledWidth;
+    canvas.height = scaledHeight;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     if (enableBgColor.current) {
       context.fillStyle = bgColor.current;
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
-    context.font = `${scale.current}px Segoe UI Emoji, Apple Color Emoji, Segoe UI Symbol, Noto Color Emoji`;
+
+    // Scale the font size to match the increased resolution
+    context.font = `${
+      scale.current * scaleFactor
+    }px Segoe UI Emoji, Apple Color Emoji, Segoe UI Symbol, Noto Color Emoji`;
 
     const hueMap = {};
     const pixels = [];
@@ -156,18 +186,50 @@ const EmojiMosaic = () => {
         context.fillText(emo.key, emo.x, emo.y);
       });
 
-    setCanvasReady(true); // Signal that the canvas is ready
+    // Generate SVG string
+    let svgString = `<svg xmlns="http://www.w3.org/2000/svg" fill="#000" viewBox="0 0 ${
+      COLS * scale.current
+    } ${ROWS * scale.current - scale.current}">`;
+
+    if (enableBgColor.current) {
+      svgString += `<rect width="100%" height="100%" fill="${bgColor.current}" />`;
+    }
+
+    pixels.forEach((emo) => {
+      svgString += `<text x="${emo.x}" y="${emo.y}" font-size="10">${emo.key}</text>`;
+    });
+
+    svgString += "</svg>";
+
+    // Convert SVG string to base64 data URL
+    const base64Svg = btoa(unescape(encodeURIComponent(svgString)));
+    const dataURL = `data:image/svg+xml;base64,${base64Svg}`;
+
+    // Set the data URL in your component's state or render it directly
+    setSvgImage(dataURL);
+
+    setCanvasReady(true);
   };
 
-  const handleDownload = () => {
-    const canvas = canvasRef.current;
-    const url = canvas.toDataURL();
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "degeneratives-art.png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const handleDownload = (fileType) => {
+    if (fileType === "png") {
+      const canvas = canvasRef.current;
+      const url = canvas.toDataURL();
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "degeneratives-art.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else if (fileType === "svg") {
+      const url = svgImage; // Use the svgImage data URL directly
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "degeneratives-art.svg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   };
 
   return (
@@ -203,14 +265,26 @@ const EmojiMosaic = () => {
         </Link>
 
         {canvasReady && (
-          <Button
-            size="sm"
-            radius="full"
-            className="hidden text-white bg-black md:flex"
-            onClick={handleDownload}
-          >
-            Download
-          </Button>
+          <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
+            <Button
+              size="md"
+              fullWidth
+              radius="full"
+              className="text-white bg-black"
+              onClick={() => handleDownload("png")}
+            >
+              Download PNG
+            </Button>
+            <Button
+              size="md"
+              fullWidth
+              radius="full"
+              color="primary"
+              onClick={() => handleDownload("svg")}
+            >
+              Download SVG
+            </Button>
+          </div>
         )}
       </nav>
       <div className="flex flex-col items-center justify-center w-full gap-4 md:flex-row">
@@ -251,12 +325,16 @@ const EmojiMosaic = () => {
           NFTs to access this exclusive tool.
         </p>
       )}
-      <div className="w-full ">
+      <div className="grid w-full grid-cols-2 gap-3">
         <canvas
           ref={canvasRef}
-          className="w-full p-4 bg-zinc-800 rounded-3xl"
+          className="w-full p-4 bg-zinc-100 rounded-3xl"
         ></canvas>
+        {canvasReady && (
+          <img src={svgImage} className="p-4 bg-zinc-100 rounded-3xl" />
+        )}
       </div>
+
       {canvasReady && (
         <Button
           size="md"
