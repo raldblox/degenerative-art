@@ -13,6 +13,7 @@ import { AssetLoader } from "./components/AssetLoader";
 import AllFeels from "./components/AllFeels";
 import UpdateToken from "./components/UpdateToken";
 import { MyFeels } from "./components/MyFeels";
+import MoodTokenomicsChart from "./components/Tokenomics";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -610,9 +611,11 @@ export default function Home() {
                 id="chart"
                 className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
               >
-                <h1 className="text-lg">PRICE CURVE & SUPPLY DYNAMICS</h1>
+                <h1 className="text-lg text-center">
+                  NFT MINT PRICE CURVE & SUPPLY DYNAMICS
+                </h1>
                 <LivePriceChart />
-                <p className="max-w-4xl text-xs">
+                <p className="max-w-4xl text-xs text-center">
                   This pricing model is designed to create a fair and
                   sustainable ecosystem for degeneratives.art. There&apos;s no
                   cap on the number of NFTs that can be minted, but the
@@ -620,6 +623,13 @@ export default function Home() {
                   more NFTs that exist, the higher the price becomes for the
                   next one.
                 </p>
+              </div>
+              <div
+                id="tokenomics"
+                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+              >
+                <h1 className="text-lg text-center">MOOD TOKENOMICS</h1>
+                <MoodTokenomicsChart />
               </div>
             </section>
           )}
