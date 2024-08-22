@@ -111,7 +111,7 @@ const MoodTokenomicsChart = () => {
   };
 
   return (
-    <div className="w-full h-[50vh]">
+    <div className="w-full h-[420px]">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           {/* <Pie
