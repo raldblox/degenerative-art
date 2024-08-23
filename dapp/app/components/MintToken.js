@@ -142,6 +142,7 @@ const MintToken = () => {
           }`}
           onChange={(e) => {
             const value = e.target.value;
+            s;
             const unicodeChar = value.match(/./u);
             if (unicodeChar) {
               e.target.value = unicodeChar[0]; // Keep only the first character if multiple are entered
@@ -262,7 +263,6 @@ const MintToken = () => {
                         className="mx-auto w-fit"
                         color="primary"
                         onClick={connectEthereumWallet}
-                        isDisabled
                       >
                         CONNECT WALLET
                       </Button>
