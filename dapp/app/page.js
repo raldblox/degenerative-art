@@ -503,7 +503,7 @@ export default function Home() {
                     <div className="h-full space-y-3">
                       <h1 className="px-3 text-2xl font-medium">stake</h1>
                       <p className="px-3 text-xs">
-                        stake your degenart to earn some $MOOD tokens
+                        stake your degenerative tokens to earn some tokens
                       </p>
                     </div>
                     <div className="flex w-full p-3">
@@ -540,7 +540,7 @@ export default function Home() {
                     <div className="h-full space-y-3">
                       <h1 className="px-3 text-2xl font-medium">evolve</h1>
                       <p className="px-3 text-xs">
-                        update your feels to evolve your staking power
+                        evolve your degenart to boost its staking power
                       </p>
                     </div>
                     <div className="flex w-full p-3">
