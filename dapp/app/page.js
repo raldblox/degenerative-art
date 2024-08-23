@@ -429,6 +429,7 @@ export default function Home() {
                   <FlipWords
                     words={[
                       "play",
+                      "thrill",
                       "stake",
                       "work",
                       "canvas",
@@ -475,9 +476,7 @@ export default function Home() {
                   </div>
                   <div className="grid content-between h-full space-y-3">
                     <div className="h-full space-y-3">
-                      <h1 className="px-3 text-2xl font-medium">
-                        img2emoji.art
-                      </h1>
+                      <h1 className="px-3 text-2xl font-medium">emoji.art</h1>
                       <p className="px-3 text-xs">
                         generate art from image with emojis as pixels
                       </p>
