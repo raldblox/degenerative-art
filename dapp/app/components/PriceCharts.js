@@ -31,7 +31,7 @@ const LivePriceChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Calculate mint prices for all supplies up to the max
-      const priceData = Array.from({ length: 5000 }, (_, i) => ({
+      const priceData = Array.from({ length: 10000 }, (_, i) => ({
         name: `TOKEN ID#${i.toString()}`,
         supply: i.toString(),
         price: calculateMintPrice(i),
@@ -60,7 +60,7 @@ const LivePriceChart = () => {
   };
 
   return (
-    <div className="w-[95vw] md:w-[80vw] h-[60vh] pr-8 md:pr-12 ">
+    <div className="w-[95vw] md:w-[80vw] h-[400px] pr-8 md:pr-12 ">
       <ResponsiveContainer
         width="100%"
         height="100%"
