@@ -35,7 +35,7 @@ export default function Home() {
     userAddress,
     selectedTab,
     setSelectedTab,
-    connectEthereumWallet,
+    totalSupply,
   } = useContext(Context);
 
   const [shuffledContent, setShuffledContent] = useState({
@@ -121,8 +121,11 @@ export default function Home() {
       {mounted && (
         <>
           {selectedTab == "home" && (
-            <section className="relative min-h-screen md:mx-8" id="start">
-              <div className="flex relative flex-col space-y-8 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+            <section
+              className="relative min-h-screen mb-8 space-y-4 md:mx-8"
+              id="start"
+            >
+              <div className="flex relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-zinc-50 rounded-3xl">
                 <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
@@ -422,7 +425,7 @@ export default function Home() {
 
               <div
                 id="mint"
-                className="grid w-full h-full p-12 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+                className="grid w-full h-full p-12 md:p-16 bg-zinc-50 rounded-3xl"
               >
                 <div className="mx-auto text-3xl font-normal tracking-tighter text-pretty">
                   let&apos;s put your emotions <br className="md:hidden" /> to{" "}
@@ -441,8 +444,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-3 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl">
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-3 bg-zinc-50 rounded-3xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🍬" />
                   </div>
@@ -463,14 +466,14 @@ export default function Home() {
                         onClick={() => {
                           window.scrollTo(0, 0);
                         }}
-                        className="hover:bg-black hover:text-white"
+                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
                       >
-                        now minting
+                        mint now
                       </Button>
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎨" />
                   </div>
@@ -487,15 +490,15 @@ export default function Home() {
                         radius="full"
                         size="sm"
                         as={Link}
-                        className="hover:bg-black hover:text-white"
+                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
                         href="/tool/img2emoji.art"
                       >
-                        now servicing
+                        explore
                       </Button>
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🥩" />
                   </div>
@@ -513,7 +516,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🏊‍♂️" />
                   </div>
@@ -532,7 +535,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🧬" />
                   </div>
@@ -550,7 +553,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎲" />
                   </div>
@@ -568,7 +571,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎰" />
                   </div>
@@ -587,7 +590,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer group text-pretty bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🌉" />
                   </div>
@@ -608,12 +611,13 @@ export default function Home() {
               </div>
               <div
                 id="chart"
-                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-zinc-50 rounded-3xl"
               >
                 <h1 className="text-lg text-center">
                   NFT MINT PRICE CURVE & SUPPLY DYNAMICS
                 </h1>
-                <LivePriceChart />
+                {totalSupply && <LivePriceChart />}
+
                 <p className="max-w-4xl text-xs text-center">
                   This pricing model is designed to create a fair and
                   sustainable ecosystem for degeneratives.art. There&apos;s no
@@ -625,7 +629,7 @@ export default function Home() {
               </div>
               <div
                 id="tokenomics"
-                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-gradient-to-tr from-default-200/50 via-transparent to-default-200/50 rounded-3xl"
+                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-zinc-50 rounded-3xl"
               >
                 <h1 className="text-lg text-center">MOOD TOKENOMICS</h1>
                 <MoodTokenomicsChart />

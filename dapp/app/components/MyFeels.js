@@ -60,15 +60,15 @@ export const MyFeels = () => {
                 ))}
               </div>
             </div>
-            <div className="flex items-center justify-between w-full pt-3 pb-2">
+            <div className="flex items-center justify-between w-full pt-2">
               <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-black">
                 <div className="flex items-center justify-between w-full font-semibold">
                   <p>degeneratives.art #{token.tokenId}</p>
                   <p>{token?.network}</p>
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <UpdateToken token={token} />
-                </div>
+                </div> */}
               </div>
               <Button
                 as={Link}

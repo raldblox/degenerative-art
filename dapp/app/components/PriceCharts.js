@@ -31,7 +31,7 @@ const LivePriceChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Calculate mint prices for all supplies up to the max
-      const priceData = Array.from({ length: 5000 }, (_, i) => ({
+      const priceData = Array.from({ length: 10000 }, (_, i) => ({
         name: `TOKEN ID#${i.toString()}`,
         supply: i.toString(),
         price: calculateMintPrice(i),
@@ -41,7 +41,7 @@ const LivePriceChart = () => {
     };
 
     fetchData(); // Fetch data initially
-    const interval = setInterval(fetchData, 30000); // Update every 30 seconds
+    const interval = setInterval(fetchData, 10000); // Update every 30 seconds
 
     return () => clearInterval(interval); // Clean up interval on unmount
   }, [totalSupply]);

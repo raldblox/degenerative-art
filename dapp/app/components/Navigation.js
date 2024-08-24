@@ -62,16 +62,6 @@ export const Navigation = ({ tabs }) => {
         {userAddress && (
           <>
             <NavbarItem>
-              {fetching && (
-                <Button
-                  size="sm"
-                  variant="light"
-                  isIconOnly
-                  isLoading={fetching}
-                ></Button>
-              )}
-            </NavbarItem>
-            <NavbarItem>
               <Button
                 size="sm"
                 color="primary"
