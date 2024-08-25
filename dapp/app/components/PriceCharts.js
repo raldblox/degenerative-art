@@ -68,12 +68,13 @@ const LivePriceChart = () => {
             />
             <Line
               type="monotone"
-              name="price"
+              name="mint price curve"
               dataKey="price"
               stroke="black"
               fill="black"
               r={1}
             />
+            <Legend />
             <ReferenceDot
               x={totalSupply?.toString()}
               y={calculateMintPrice(totalSupply)}
