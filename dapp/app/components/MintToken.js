@@ -89,26 +89,30 @@ const MintToken = () => {
   };
 
   const handleChange = (event, index) => {
-    const value = event.target.value; // Get the last entered character
-    // Log the actual value and its Unicode code point
-    console.log(`New value: ${value}`);
+    let value = event.target.value;
+
+    // Ensure only one Unicode character is allowed
+    if (value.length > 1) {
+      value = value.slice(0, 1); // Keep only the first character
+    }
+
+    // Update inputValues array
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
       return newValues;
     });
 
-    if (index < activeFields - 1 && value.length > 0) {
-      // Focus on next input if current input is filled and there are more inputs
+    // Move focus to the next input if this one is filled
+    if (index < activeFields - 1 && value.length === 1) {
       inputRef.current[index + 1].focus();
     } else if (
       index === activeFields - 1 &&
-      value.length > 0 &&
+      value.length === 1 &&
       activeFields < maxFields
     ) {
-      // Add new input if current input is filled and there are less than 9 inputs
       setActiveFields(activeFields + 1);
-      inputRef.current[index + 1].focus(); // Focus on new input
+      inputRef.current[index + 1].focus();
     }
   };
 
@@ -142,7 +146,6 @@ const MintToken = () => {
           }`}
           onChange={(e) => {
             const value = e.target.value;
-            s;
             const unicodeChar = value.match(/./u);
             if (unicodeChar) {
               e.target.value = unicodeChar[0]; // Keep only the first character if multiple are entered
