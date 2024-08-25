@@ -1,7 +1,7 @@
 "use client";
 
 import { Context } from "@/app/providers/Providers";
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input, Link, Slider } from "@nextui-org/react";
 import { useState, useRef, useEffect, useContext } from "react";
 
 const EmojiMosaic = () => {
@@ -14,9 +14,28 @@ const EmojiMosaic = () => {
   const [imageFile, setImageFile] = useState(null);
   const [canvasReady, setCanvasReady] = useState(false);
   const [svgImage, setSvgImage] = useState("");
+  const [scaleFactor, setScaleFactor] = useState(1);
   const canvasRef = useRef(null);
   const hiddenCanvasRef = useRef(null);
   const imageRef = useRef(null); // Use useRef to store reference to the image element
+  const [originalImage, setOriginalImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+
+      img.onload = () => {
+        // Store the original image data URL
+        setOriginalImage(img.src);
+
+        // Initial processing with the default scaleFactor
+        processImage(img);
+      };
+    }
+  };
 
   const pSize = useRef(7);
   const scale = useRef(12);
@@ -44,10 +63,46 @@ const EmojiMosaic = () => {
     }
   }, [imageFile, isClient]);
 
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(URL.createObjectURL(e.target.files[0]));
+  // const handleImageChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     setImageFile(URL.createObjectURL(e.target.files[0]));
+  //   }
+  // };
+
+  useEffect(() => {
+    if (originalImage && isClient) {
+      // Re-process the image whenever scaleFactor changes
+      const img = new Image();
+      img.src = originalImage;
+      img.onload = () => processImage(img);
     }
+  }, [originalImage, isClient, scaleFactor]);
+
+  const processImage = (img) => {
+    // Calculate aspect ratio
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+
+    // Resize to 512px on the larger dimension, maintaining aspect ratio
+    let canvasWidth, canvasHeight;
+    if (img.naturalWidth > img.naturalHeight) {
+      canvasWidth = 512;
+      canvasHeight = 512 / aspectRatio;
+    } else {
+      canvasWidth = 512 * aspectRatio;
+      canvasHeight = 512;
+    }
+
+    // Apply scaleFactor to both width and height
+    canvasWidth *= scaleFactor;
+    canvasHeight *= scaleFactor;
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+    const resizedDataURL = canvas.toDataURL();
+    setImageFile(resizedDataURL);
   };
 
   // const handleImageChange = (e) => {
@@ -58,11 +113,55 @@ const EmojiMosaic = () => {
   //     img.src = URL.createObjectURL(file);
 
   //     img.onload = () => {
+  //       // Calculate aspect ratio
+  //       const aspectRatio = img.naturalWidth / img.naturalHeight;
+
+  //       // Resize to 512px on the larger dimension, maintaining aspect ratio
+  //       let canvasWidth, canvasHeight;
+  //       if (img.naturalWidth > img.naturalHeight) {
+  //         canvasWidth = 512;
+  //         canvasHeight = 512 / aspectRatio;
+  //       } else {
+  //         canvasWidth = 512 * aspectRatio;
+  //         canvasHeight = 512;
+  //       }
+
+  //       // Apply scaleFactor to both width and height
+  //       canvasWidth *= scaleFactor;
+  //       canvasHeight *= scaleFactor;
+
   //       const canvas = document.createElement("canvas");
   //       const ctx = canvas.getContext("2d");
-  //       canvas.width = 512;
-  //       canvas.height = 512;
-  //       ctx.drawImage(img, 0, 0, 512, 512);
+  //       canvas.width = canvasWidth;
+  //       canvas.height = canvasHeight;
+  //       ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+  //       const resizedDataURL = canvas.toDataURL();
+  //       setImageFile(resizedDataURL);
+  //     };
+  //   }
+  // };
+
+  // const handleImageChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+
+  //     const img = new Image();
+  //     img.src = URL.createObjectURL(file);
+
+  //     img.onload = () => {
+  //       // Calculate the number of rows and columns based on pixelSize
+  //       const ROWS = Math.floor(img.naturalHeight / pixelSize);
+  //       const COLS = Math.floor(img.naturalWidth / pixelSize);
+
+  //       // Calculate canvas dimensions to maintain aspect ratio and have square pixels
+  //       const canvasWidth = COLS * pixelSize;
+  //       const canvasHeight = ROWS * pixelSize;
+
+  //       const canvas = document.createElement("canvas");
+  //       const ctx = canvas.getContext("2d");
+  //       canvas.width = canvasWidth;
+  //       canvas.height = canvasHeight;
+  //       ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
 
   //       const resizedDataURL = canvas.toDataURL();
   //       setImageFile(resizedDataURL);
@@ -234,7 +333,7 @@ const EmojiMosaic = () => {
 
   return (
     <div className="w-screen h-screen p-4 space-y-4 overflow-x-hidden">
-      <nav className="flex items-center justify-center w-full p-4 md:justify-between bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+      <nav className="flex items-center justify-center w-full p-4 md:justify-between bg-zinc-100 rounded-2xl">
         <Link href="/" className="flex items-center">
           <svg
             className="h-8 text-black"
@@ -287,8 +386,8 @@ const EmojiMosaic = () => {
           </div>
         )}
       </nav>
-      <div className="flex flex-col items-center justify-center w-full gap-4 md:flex-row">
-        <div className="flex flex-col items-center justify-center w-full h-40 bg-gradient-to-tr from-zinc-200/50 via-transparent to-zinc-200/50 rounded-3xl">
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="flex flex-col items-center justify-center w-full min-h-40 bg-zinc-100 rounded-2xl">
           <label
             htmlFor="file"
             className="p-4 text-center cursor-pointer md:p-8"
@@ -318,6 +417,28 @@ const EmojiMosaic = () => {
             disabled={Number(balances.nft) < 5}
           />
         </div>
+        <div className="grid grid-cols-2 gap-3 p-4 bg-zinc-100 rounded-2xl">
+          <div className="w-full ">
+            {originalImage && (
+              <div className="flex items-center justify-center w-full p-4 rounded-2xl">
+                <img src={originalImage} alt="Original Image" className="" />
+              </div>
+            )}
+          </div>
+          <Slider
+            size="sm"
+            step={0.1}
+            color="foreground"
+            label="Scale Factor"
+            value={scaleFactor}
+            onChange={setScaleFactor}
+            // showSteps={true}
+            maxValue={2}
+            minValue={0.1}
+            defaultValue={1}
+            className="max-w-md"
+          />
+        </div>
       </div>
       {Number(balances.nft) < 5 && userAddress && (
         <p className="w-full text-center lowercase text-danger animate-appearance-in">
@@ -325,13 +446,23 @@ const EmojiMosaic = () => {
           NFTs to access this exclusive tool.
         </p>
       )}
-      <div className="grid w-full gap-3 md:grid-cols-2">
-        <canvas
-          ref={canvasRef}
-          className="w-full p-4 bg-zinc-100 rounded-3xl"
-        ></canvas>
-        <div className="p-4 bg-zinc-100 rounded-3xl">
-          {canvasReady && <img src={svgImage} className="" />}
+      <div className="grid w-full gap-3 md:grid-cols-2 ">
+        <div className="relative w-full p-4 bg-zinc-100 rounded-2xl">
+          <canvas ref={canvasRef} className="w-full"></canvas>
+          <div className="absolute top-0 px-2 py-1 text-xs text-white bg-black drop-shadow-lg right-6">
+            PNG
+          </div>
+        </div>
+
+        <div className="relative w-full bg-zinc-100 rounded-2xl">
+          <div className="w-full p-4">
+            {" "}
+            {canvasReady && <img src={svgImage} className="" />}
+          </div>
+
+          <div className="absolute top-0 px-2 py-1 text-xs text-white bg-blue-600 drop-shadow-lg right-6">
+            SVG
+          </div>
         </div>
       </div>
 
