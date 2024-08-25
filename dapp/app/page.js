@@ -623,7 +623,7 @@ export default function Home() {
                     <div className="h-full space-y-3">
                       <h1 className="px-3 text-2xl font-medium">tokenomics</h1>
                       <p className="px-3 text-xs">
-                        explore our tokens' dynamics and tokenomics
+                        explore our tokens&apos; dynamics and tokenomics
                       </p>
                     </div>
                     <div className="flex w-full p-3">
