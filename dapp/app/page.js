@@ -200,7 +200,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 ">
+                <div className="grid items-center content-center justify-center grid-cols-2 gap-4 ">
                   <Tooltip
                     closeDelay={2000}
                     showArrow
@@ -235,7 +235,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[15%] left-[7%]">
+                    <div className="lg:absolute grid animate-appearance-in top-[15%] left-[7%]">
                       <Image src="./etherlink.svg" height={20} width={90} />
                       <span className="text-[10px] pl-6 text-default-500">
                         Blockchain Network
@@ -266,7 +266,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[43%] left-[4%]">
+                    <div className="lg:absolute grid animate-appearance-in top-[43%] left-[4%]">
                       <div className="flex items-center gap-2">
                         <Image
                           src="./onchainsupply.png"
@@ -306,7 +306,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[43%] right-[4%]">
+                    <div className="lg:absolute grid animate-appearance-in top-[43%] right-[4%]">
                       <div className="flex items-center gap-2">
                         <Image
                           src="/degenerator.jpg"
@@ -346,7 +346,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[70%] right-[7%] ">
+                    <div className="lg:absolute grid animate-appearance-in top-[70%] right-[7%] ">
                       <Image src="/geckoterminal.svg" height={20} width={120} />
                       <span className="text-[10px] pl-6 text-default-500">
                         Charts & DEX Tools
@@ -375,7 +375,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[70%] left-[7%]">
+                    <div className="lg:absolute grid animate-appearance-in top-[70%] left-[7%]">
                       <Image
                         src="/rarible.svg"
                         height={20}
@@ -411,7 +411,7 @@ export default function Home() {
                       </div>
                     }
                   >
-                    <div className="md:absolute grid animate-appearance-in top-[15%] right-[10%]">
+                    <div className="lg:absolute grid animate-appearance-in top-[15%] right-[10%]">
                       <div className="flex items-center gap-2">
                         <Image
                           src="/tachyswap.png"
@@ -451,7 +451,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-3 bg-zinc-50 rounded-3xl">
+              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-2 lg:grid-cols-3 bg-zinc-50 rounded-3xl">
                 <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🍬" />

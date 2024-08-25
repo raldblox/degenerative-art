@@ -40,7 +40,7 @@ export const MyFeels = () => {
 
   return (
     <>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2">
         {userNFTs?.map((token) => (
           <div
             key={token.tokenId}

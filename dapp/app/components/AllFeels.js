@@ -84,7 +84,7 @@ const AllFeels = () => {
 
   return (
     <>
-      <ul className="grid gap-6 md:grid-cols-3">
+      <ul className="grid gap-6 lg:grid-cols-3 md:grid-cols-2">
         {fetching ? (
           <>
             <AssetLoader />
