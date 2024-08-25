@@ -112,6 +112,13 @@ export default function Home() {
           >
             <Tab key="home" title="Home" />
             <Tab key="explore" title="Explore" />
+            {selectedTab == "tokenomics" && (
+              <Tab
+                className="animate-appearance-in"
+                key="tokenomics"
+                title="Tokenomics"
+              />
+            )}
             {userAddress && (
               <Tab key="feels" className="text-bold" title="My Feels" />
             )}
@@ -167,13 +174,13 @@ export default function Home() {
                       >
                         MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
                       </span>
-                      <Link
-                        href="#chart"
+                      <span
                         size="sm"
-                        className="animate-appearance-in"
+                        className="cursor-pointer animate-appearance-in text-primary"
+                        onClick={() => setSelectedTab("tokenomics")}
                       >
                         [simulate mint price]
-                      </Link>
+                      </span>
                     </>
                   )}
 
@@ -608,33 +615,69 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                id="chart"
-                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-zinc-50 rounded-3xl"
-              >
-                <h1 className="text-lg text-center">
-                  NFT MINT PRICE CURVE & SUPPLY DYNAMICS
-                </h1>
-                {totalSupply && <LivePriceChart />}
-
-                <p className="max-w-4xl text-xs text-center">
-                  This pricing model is designed to create a fair and
-                  sustainable ecosystem for degeneratives.art. There&apos;s no
-                  cap on the number of NFTs that can be minted, but the
-                  exponential price curve acts as a natural limiting factor. The
-                  more NFTs that exist, the higher the price becomes for the
-                  next one.
-                </p>
-              </div>
-              <div
-                id="tokenomics"
-                className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-zinc-50 rounded-3xl"
-              >
-                <h1 className="text-lg text-center">MOOD TOKENOMICS</h1>
-                <MoodTokenomicsChart />
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                  <div className="relative flex w-16 h-16 rounded-full aspect-square group">
+                    <EmojiGlass emoji="🪙" />
+                  </div>
+                  <div className="grid content-between h-full space-y-3">
+                    <div className="h-full space-y-3">
+                      <h1 className="px-3 text-2xl font-medium">tokenomics</h1>
+                      <p className="px-3 text-xs">
+                        explore our tokens' dynamics and tokenomics
+                      </p>
+                    </div>
+                    <div className="flex w-full p-3">
+                      <Button
+                        variant="flat"
+                        radius="full"
+                        size="sm"
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                          setSelectedTab("tokenomics");
+                        }}
+                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                      >
+                        explore
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
+          )}
+          {selectedTab == "tokenomics" && (
+            <>
+              <section
+                className="relative min-h-screen mb-8 space-y-4 md:mx-8"
+                id="start"
+              >
+                <div
+                  id="chart"
+                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-zinc-50 rounded-3xl"
+                >
+                  <h1 className="text-lg text-center">
+                    NFT MINT PRICE CURVE & SUPPLY DYNAMICS
+                  </h1>
+                  <LivePriceChart />
+
+                  <p className="max-w-4xl text-xs text-center">
+                    This pricing model is designed to create a fair and
+                    sustainable ecosystem for degeneratives.art. There&apos;s no
+                    cap on the number of NFTs that can be minted, but the
+                    exponential price curve acts as a natural limiting factor.
+                    The more NFTs that exist, the higher the price becomes for
+                    the next one.
+                  </p>
+                </div>
+                <div
+                  id="tokenomics"
+                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-zinc-50 rounded-3xl"
+                >
+                  <h1 className="text-lg text-center">MOOD TOKENOMICS</h1>
+                  <MoodTokenomicsChart />
+                </div>
+              </section>
+            </>
           )}
           {selectedTab == "explore" && (
             <>

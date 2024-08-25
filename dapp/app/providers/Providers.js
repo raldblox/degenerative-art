@@ -25,6 +25,7 @@ export const Providers = (props) => {
 
   const [timeUpdated, setTimeUpdated] = useState(0);
   const [countdown, setCountdown] = useState("00:00:00");
+  const [data, setData] = useState([]);
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -258,6 +259,8 @@ export const Providers = (props) => {
     setUpdating,
     updated,
     setUpdated,
+    data,
+    setData,
   };
 
   return (
