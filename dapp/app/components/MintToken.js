@@ -47,6 +47,16 @@ const MintToken = () => {
       const totalSupply = await nftContract.totalSupply();
       const price = await nftContract.price(totalSupply);
 
+      // Fetch user's native token balance
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const nativeBalance = await provider.getBalance(userAddress);
+
+      // Check if the user has enough native tokens
+      if (Number(nativeBalance) < Number(price)) {
+        alert("insufficient balance. please acquire more XTZ.");
+        return;
+      }
+
       // Log transaction details
       console.log("Minting transaction details:");
       console.log("Token ID:", totalSupply.toString());
