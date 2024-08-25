@@ -38,7 +38,40 @@ const MintToken = () => {
 
     try {
       setMinting(true);
+      // Check for at least one filled input
+      if (inputValues.every((value) => value === "")) {
+        alert("Please fill in at least one input.");
+        return;
+      }
+
+      // Check cooldown (assuming you have 'countdown' and 'timeUpdated' in your Context)
+      if (countdown !== "00:00:00") {
+        alert(`cooldown not over yet. please wait for ${countdown}.`);
+        return;
+      }
+
+      // Check if wallet is connected
+      if (!userAddress) {
+        alert("please connect your wallet first.");
+        connectEthereumWallet(); // Assuming you have this function in your Context
+        return;
+      }
+
+      // Fetch user's native token balance
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const nativeBalance = await provider.getBalance(userAddress);
+
+      // Check network (assuming you have the desired network ID in a variable 'targetNetworkId')
+      const network = await provider.getNetwork();
+      console.log("chainid:", network.chainId);
+      const chainId = 42793;
+
+      if (Number(network.chainId) !== chainId) {
+        alert("incorrect network. please switch to etherlink network.");
+        return;
+      }
       console.log("emojis:", inputValues);
+
       const nftContract = new ethers.Contract(
         "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
         nftAbi,
@@ -46,10 +79,6 @@ const MintToken = () => {
       );
       const totalSupply = await nftContract.totalSupply();
       const price = await nftContract.price(totalSupply);
-
-      // Fetch user's native token balance
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const nativeBalance = await provider.getBalance(userAddress);
 
       // Check if the user has enough native tokens
       if (Number(nativeBalance) < Number(price)) {
