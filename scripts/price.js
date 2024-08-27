@@ -13,8 +13,8 @@ function calculateTotalMintCost(startTokenId, endTokenId) {
 }
 
 async function main() {
-  const startTokenId = 365;
-  const endTokenId = 865;
+  const startTokenId = 0;
+  const endTokenId = 900;
   const totalMintCost = calculateTotalMintCost(startTokenId, endTokenId);
   console.log(
     "Total mint cost from token ID",
