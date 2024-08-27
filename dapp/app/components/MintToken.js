@@ -176,7 +176,7 @@ const MintToken = () => {
             }`}
             onChange={(e) => {
               const value = e.target.value;
-              const unicodeChar = value.match(/./u);
+              const unicodeChar = value.match(/[^\s]/u);
               if (unicodeChar) {
                 e.target.value = unicodeChar[0];
               } else {

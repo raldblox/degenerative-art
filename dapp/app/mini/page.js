@@ -126,7 +126,16 @@ export default function Mini() {
               key={index}
               type="text"
               value={value}
-              onChange={(e) => handleChange(e, index)}
+              onChange={(e) => {
+                const value = e.target.value;
+                const unicodeChar = value.match(/[^\s]/u);
+                if (unicodeChar) {
+                  e.target.value = unicodeChar[0];
+                } else {
+                  e.target.value = "";
+                }
+                handleChange(e, index);
+              }}
               maxLength={1}
               className="w-16 h-16 text-3xl text-center border border-black"
             />

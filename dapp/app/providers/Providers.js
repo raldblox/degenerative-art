@@ -17,7 +17,7 @@ export const Providers = (props) => {
   const [instance, setInstance] = useState({ nft: "", mood: "" });
   const [totalSupply, setTotalSupply] = useState(0);
   const [mintPrice, setMintPrice] = useState(0);
-  const [balances, setBalances] = useState({ nft: 0, mood: 0 });
+  const [balances, setBalances] = useState({ nft: 0, mood: 0, eth: 0 });
   const [fetching, setFetching] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
