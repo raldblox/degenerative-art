@@ -26,9 +26,8 @@ const MintToken = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const fieldsRef = useRef(null);
-  const maxFields = 9;
   const inputRef = useRef([]);
-  const [inputValues, setInputValues] = useState(Array(maxFields).fill(""));
+  const [inputValues, setInputValues] = useState(Array(9).fill(""));
   const [activeFields, setActiveFields] = useState(9);
   const [minting, setMinting] = useState(false);
   const [txHash, setTxHash] = useState("");
@@ -128,27 +127,19 @@ const MintToken = () => {
   };
 
   const handleChange = (event, index) => {
-    let value = event.target.value;
-
-    // Ensure only one Unicode character is allowed
-    if (value.length > 1) {
-      value = value.slice(0, 1); // Keep only the first character
-    }
-
-    // Update inputValues array
+    const value = event.target.value.slice(0, 1); // Ensure only one character
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
       return newValues;
     });
 
-    // Move focus to the next input if this one is filled
     if (index < activeFields - 1 && value.length === 1) {
       inputRef.current[index + 1].focus();
     } else if (
       index === activeFields - 1 &&
       value.length === 1 &&
-      activeFields < maxFields
+      activeFields < 9
     ) {
       setActiveFields(activeFields + 1);
       inputRef.current[index + 1].focus();
@@ -170,34 +161,35 @@ const MintToken = () => {
   };
 
   const renderInputFields = () => {
-    const inputFields = [];
-    for (let i = 0; i < maxFields; i++) {
-      inputFields.push(
-        <input
-          data-emoji-input="unicode"
-          key={i}
-          size="lg"
-          type="text"
-          data-index={i}
-          ref={(el) => (inputRef.current[i] = el)}
-          className={` w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
-            i >= activeFields ? "hidden" : ""
-          }`}
-          onChange={(e) => {
-            const value = e.target.value;
-            const unicodeChar = value.match(/./u);
-            if (unicodeChar) {
-              e.target.value = unicodeChar[0]; // Keep only the first character if multiple are entered
-            } else {
-              e.target.value = "";
-            }
-            handleChange(e, i);
-          }}
-          onKeyUp={(e) => handleKeyUp(e, i)}
-        />
-      );
-    }
-    return inputFields;
+    return (
+      <>
+        {inputValues.map((value, i) => (
+          <input
+            data-emoji-input="unicode"
+            key={i}
+            size="lg"
+            type="text"
+            data-index={i}
+            ref={(el) => (inputRef.current[i] = el)}
+            className={` w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+              i >= activeFields ? "hidden" : ""
+            }`}
+            onChange={(e) => {
+              const value = e.target.value;
+              const unicodeChar = value.match(/./u);
+              if (unicodeChar) {
+                e.target.value = unicodeChar[0];
+              } else {
+                e.target.value = "";
+              }
+              handleChange(e, i);
+            }}
+            onKeyUp={(e) => handleKeyUp(e, i)}
+            maxLength={1}
+          />
+        ))}
+      </>
+    );
   };
 
   useEffect(() => {
@@ -233,14 +225,14 @@ const MintToken = () => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="xl"
+        size="2xl"
         className="p-6"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="text-xl font-semibold tracking-tight text-center lowercase text-md text-balance">
+                <label className="text-3xl font-semibold tracking-tight text-center lowercase text-md text-balance">
                   now enter the one-time emoji mood that universe gave you today
                 </label>
               </ModalHeader>
