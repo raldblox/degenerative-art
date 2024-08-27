@@ -4,14 +4,17 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MoodToken is ERC20, Ownable(msg.sender) {
-    constructor() ERC20("Mood Token", "Mood") {
-        _mint(msg.sender, 100000000000000000000000000);
+contract MoodToken is ERC20("Test MOOD", "test MOOD"), Ownable(msg.sender) {
+    constructor() {
+        _mint(msg.sender, 100000000 * 10e18);
     }
 
-    // Burn function to destroy tokens
     function burn(uint256 amount) public {
         _burn(msg.sender, amount);
+    }
+
+    function mint(uint256 amount) public {
+        _mint(msg.sender, amount);
     }
 
     receive() external payable {}
