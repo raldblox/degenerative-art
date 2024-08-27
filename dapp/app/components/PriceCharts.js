@@ -27,6 +27,8 @@ export const calculateMintPrice = (totalSupply) => {
 const LivePriceChart = () => {
   const { totalSupply, data, setData } = useContext(Context);
 
+  const roundedTotalSupply = Math.round(Number(totalSupply) / 10) * 10;
+
   // Off-chain price calculation function
 
   useEffect(() => {
@@ -36,6 +38,8 @@ const LivePriceChart = () => {
 
     fetchData(); // Fetch data initially
   }, [totalSupply]);
+
+  // Round totalSupply to the nearest multiple of 10
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -76,8 +80,8 @@ const LivePriceChart = () => {
             />
             <Legend />
             <ReferenceDot
-              x={totalSupply?.toString()}
-              y={calculateMintPrice(totalSupply)}
+              x={roundedTotalSupply.toString()}
+              y={calculateMintPrice(roundedTotalSupply)}
               r={3}
               fill="white"
               stroke="blue"
