@@ -26,6 +26,8 @@ export default function LPStaking() {
   const [userPendingRewards, setUserPendingRewards] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
 
+  const stakingContractAddress = "0xc79F872f6be863b943bD2DF567541315278f8494";
+
   const fetchUserTokens = async () => {
     if (!userAddress) {
       return;
@@ -67,13 +69,19 @@ export default function LPStaking() {
     }
 
     const amountToStake = ethers.parseEther(stakeAmount.toString());
-    if (amountToStake.lte(0) || amountToStake.gt(userLP)) {
+    if (amountToStake < 0 || amountToStake > userLP) {
       alert("Invalid stake amount.");
       return;
     }
 
     try {
       setLoading(true);
+
+      const tachyLP = new ethers.Contract(
+        "0xC6D0AafDe70058EDA2E4F3DD17200dabD350A8D5",
+        ERC20TokenABI,
+        signer
+      );
       const stakingContract = new ethers.Contract(
         stakingContractAddress,
         lstStakingAbi,
@@ -85,33 +93,90 @@ export default function LPStaking() {
         userAddress,
         stakingContractAddress
       );
-      if (allowance.lt(amountToStake)) {
+
+      if (allowance < amountToStake) {
         const approveTx = await tachyLP.approve(
           stakingContractAddress,
-          ethers.constants.MaxUint256
+          amountToStake
         );
         await approveTx.wait();
       }
 
       // Stake the LP tokens
-      const stakeTx = await stakingContract.stake(amountToStake);
+      const stakeTx = await stakingContract.stake(amountToStake.toString());
       await stakeTx.wait();
 
-      toast({
-        title: "Success",
-        description: "LP tokens staked successfully!",
-        type: "success",
-      });
+      alert("LP tokens staked successfully!");
 
       fetchUserTokens(); // Refresh user token data
       setStakeAmount(0); // Reset stake amount input
     } catch (error) {
       console.error("Failed to stake:", error);
-      toast({
-        title: "Error",
-        description: "Failed to stake LP tokens. Please try again later.",
-        type: "error",
-      });
+      alert("Failed to stake LP tokens. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnstake = async () => {
+    if (!signer || !userAddress) {
+      alert("Please connect your wallet.");
+      return;
+    }
+
+    const amountToUnstake = ethers.parseEther(stakeAmount.toString());
+    if (amountToUnstake < 0 || amountToUnstake > userStakedLP) {
+      alert("Invalid unstake amount.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const stakingContract = new ethers.Contract(
+        stakingContractAddress,
+        lstStakingAbi,
+        signer
+      );
+
+      // Unstake the LP tokens
+      const unstakeTx = await stakingContract.unstake(amountToUnstake);
+      await unstakeTx.wait();
+
+      alert("LP tokens unstaked successfully!");
+
+      fetchUserTokens();
+      setStakeAmount(0);
+    } catch (error) {
+      console.error("Failed to unstake:", error);
+      alert("Failed to unstake LP tokens. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClaimRewards = async () => {
+    if (!signer || !userAddress) {
+      alert("Please connect your wallet.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const stakingContract = new ethers.Contract(
+        stakingContractAddress,
+        lstStakingAbi,
+        signer
+      );
+
+      // Claim rewards
+      const claimTx = await stakingContract.claim();
+      await claimTx.wait();
+
+      alert("Rewards claimed successfully!");
+      fetchUserTokens();
+    } catch (error) {
+      console.error("Failed to claim rewards:", error);
+      alert("Failed to claim rewards. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -129,9 +194,7 @@ export default function LPStaking() {
             lstStakingAbi,
             provider
           );
-          const pendingRewards = await stakingContract.calculateRewardsEarned(
-            userAddress
-          );
+          const pendingRewards = await stakingContract.earned(userAddress);
           setUserPendingRewards(pendingRewards);
         } catch (error) {
           console.error("Failed to fetch pending rewards:", error);
@@ -223,6 +286,7 @@ export default function LPStaking() {
                 <Button
                   color="primary"
                   className="w-full text-white transition-all duration-300 bg-black "
+                  onClick={handleStake}
                 >
                   Start Staking
                 </Button>
@@ -291,6 +355,7 @@ export default function LPStaking() {
                 </div>
 
                 <Button
+                  onClick={handleUnstake}
                   color="primary"
                   className="w-full text-white transition-all duration-300 bg-black "
                 >
@@ -313,6 +378,7 @@ export default function LPStaking() {
                 </div>
 
                 <Button
+                  onClick={handleClaimRewards}
                   color="primary"
                   className="w-full text-white transition-all duration-300 bg-black "
                 >
