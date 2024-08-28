@@ -27,4 +27,4 @@ STAKER 1 = 1000
 STAKER 2 = 200
 TOTAL = 1200
 
-shares = 10000 * (1000/1200) * multiplier
+shares = 10000 _ (1000/1200) _ multiplier
