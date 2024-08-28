@@ -507,24 +507,6 @@ export default function Home() {
                 </div>
                 <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
-                    <EmojiGlass emoji="🥩" />
-                  </div>
-                  <div className="grid content-between h-full space-y-3">
-                    <div className="h-full space-y-3">
-                      <h1 className="px-3 text-2xl font-medium">stake</h1>
-                      <p className="px-3 text-xs">
-                        stake your degenerative tokens to earn some tokens
-                      </p>
-                    </div>
-                    <div className="flex w-full p-3">
-                      <Button variant="flat" radius="full" size="sm">
-                        staking soon
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
-                  <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🏊‍♂️" />
                   </div>
                   <div className="grid content-between h-full space-y-3">
@@ -535,8 +517,41 @@ export default function Home() {
                       </p>
                     </div>
                     <div className="flex w-full p-3">
-                      <Button variant="flat" radius="full" size="sm">
-                        coming soon
+                      <Button
+                        as={Link}
+                        isExternal
+                        href="https://app.tachyswap.org/#/add/0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9/XTZ"
+                        variant="flat"
+                        radius="full"
+                        size="sm"
+                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                      >
+                        provide liquidity
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                  <div className="relative flex w-16 h-16 rounded-full aspect-square group">
+                    <EmojiGlass emoji="🥩" />
+                  </div>
+                  <div className="grid content-between h-full space-y-3">
+                    <div className="h-full space-y-3">
+                      <h1 className="px-3 text-2xl font-medium">stake</h1>
+                      <p className="px-3 text-xs">
+                        stake your degenerative.art tokens to earn some rewards
+                      </p>
+                    </div>
+                    <div className="flex w-full p-3">
+                      <Button
+                        as={Link}
+                        href="/stake/lp"
+                        variant="flat"
+                        radius="full"
+                        size="sm"
+                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                      >
+                        start staking
                       </Button>
                     </div>
                   </div>
