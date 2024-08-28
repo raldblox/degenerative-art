@@ -20,7 +20,7 @@ async function main() {
   await stakingToken.waitForDeployment();
   console.log("LiquityToken deployed to:", stakingToken.target);
 
-  const stakingContract = await hre.ethers.deployContract("StakingContract", [
+  const stakingContract = await hre.ethers.deployContract("LPStaking", [
     stakingToken.target, // Use the actual address, not target
     moodToken.target, // Use the actual address, not target
   ]);
@@ -59,12 +59,10 @@ async function main() {
   console.log("Transferred 1000 MOOD to the StakingContract");
 
   // Wait for some time (simulate blocks being mined)
-  console.log("Block:", await stakingContract.blockNow());
+
   console.log("2 days after");
   await mine(5760, { interval: 15 });
   await mine(5760, { interval: 15 });
-
-  console.log("Block:", await stakingContract.blockNow());
 
   // Check earned rewards for addr1 and addr2
   const balance = await stakingToken.balanceOf(stakingContract.target);
