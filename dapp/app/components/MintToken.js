@@ -185,7 +185,6 @@ const MintToken = () => {
               handleChange(e, i);
             }}
             onKeyUp={(e) => handleKeyUp(e, i)}
-            maxLength={1}
           />
         ))}
       </>

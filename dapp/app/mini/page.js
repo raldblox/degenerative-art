@@ -136,7 +136,6 @@ export default function Mini() {
                 }
                 handleChange(e, index);
               }}
-              maxLength={1}
               className="w-16 h-16 text-3xl text-center border border-black"
             />
           ))}
