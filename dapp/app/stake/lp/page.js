@@ -437,7 +437,7 @@ export default function LPStaking() {
               <div className="grid content-between min-h-[400px]">
                 <div className="pt-16 text-center">
                   <h1
-                    className={`text-3xl font-semibold animate-appearance-in ${
+                    className={`text-3xl font-semibold transition-all duration-500 ${
                       fetching
                         ? "animate-pulse text-blue-700 scale-80 tracking-widest"
                         : "animate-appearance-in text-zinc-700 "
