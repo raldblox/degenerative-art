@@ -126,15 +126,19 @@ const MintToken = () => {
     }
   };
 
+  function isSurrogatePair(high, low) {
+    return high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff;
+  }
+
   const handleChange = (event, index) => {
-    const value = event.target.value.slice(0, 1); // Ensure only one character
+    const value = event.target.value; // Ensure only one character
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
       return newValues;
     });
 
-    if (index < activeFields - 1 && value.length === 1) {
+    if (index < activeFields - 1 && value.length > 0) {
       inputRef.current[index + 1].focus();
     } else if (
       index === activeFields - 1 &&
@@ -170,15 +174,16 @@ const MintToken = () => {
             size="lg"
             type="text"
             data-index={i}
+            maxLength={2}
             ref={(el) => (inputRef.current[i] = el)}
             className={` w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
               i >= activeFields ? "hidden" : ""
             }`}
             onChange={(e) => {
               const value = e.target.value;
-              const unicodeChar = value.match(/[^\s]/u);
-              if (unicodeChar) {
-                e.target.value = unicodeChar[0];
+              const validChar = value.match(/(\p{Emoji_Presentation}|[^\s])/u);
+              if (validChar) {
+                e.target.value = validChar[0];
               } else {
                 e.target.value = "";
               }

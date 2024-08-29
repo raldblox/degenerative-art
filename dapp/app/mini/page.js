@@ -15,7 +15,7 @@ export default function Mini() {
   const [txHash, setTxHash] = useState("");
 
   const handleChange = (event, index) => {
-    const value = event.target.value.slice(0, 1); // Ensure only one character
+    const value = event.target.value; // Ensure only one character
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
@@ -128,9 +128,11 @@ export default function Mini() {
               value={value}
               onChange={(e) => {
                 const value = e.target.value;
-                const unicodeChar = value.match(/[^\s]/u);
-                if (unicodeChar) {
-                  e.target.value = unicodeChar[0];
+                const validChar = value.match(
+                  /(\p{Emoji_Presentation}|[^\s])/u
+                );
+                if (validChar) {
+                  e.target.value = validChar[0];
                 } else {
                   e.target.value = "";
                 }
