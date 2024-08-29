@@ -347,6 +347,7 @@ export default function LPStaking() {
                 </div>
 
                 <Button
+                  size="lg"
                   isLoading={loading}
                   color="primary"
                   className="w-full text-white transition-all duration-300 bg-black "
@@ -419,6 +420,7 @@ export default function LPStaking() {
                 </div>
 
                 <Button
+                  size="lg"
                   isLoading={loading}
                   onClick={handleUnstake}
                   color="primary"
