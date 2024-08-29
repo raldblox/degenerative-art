@@ -27,6 +27,7 @@ export default function LPStaking() {
   const [userPendingRewards, setUserPendingRewards] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [selectedTab, setSelectedTab] = useState("stake");
+  const [fetching, setFetching] = useState(false);
 
   const stakingContractAddress = "0xc79F872f6be863b943bD2DF567541315278f8494";
 
@@ -212,6 +213,7 @@ export default function LPStaking() {
     const intervalId = setInterval(async () => {
       if (userAddress) {
         try {
+          setFetching(true);
           const node = "https://node.mainnet.etherlink.com";
           const provider = new ethers.JsonRpcProvider(node);
           const stakingContract = new ethers.Contract(
@@ -226,6 +228,7 @@ export default function LPStaking() {
           setUserPendingRewards(
             pendingRewards > earnedRewards ? pendingRewards : earnedRewards
           );
+          setFetching(false);
         } catch (error) {
           console.error("Failed to fetch pending rewards:", error);
         }
@@ -433,7 +436,13 @@ export default function LPStaking() {
             <Tab key="claim" title="Claim">
               <div className="grid content-between min-h-[400px]">
                 <div className="pt-16 text-center">
-                  <h1 className="text-3xl font-semibold animate-appearance-in">
+                  <h1
+                    className={`text-3xl font-semibold animate-appearance-in ${
+                      fetching
+                        ? "animate-pulse text-blue-700 scale-80 tracking-widest"
+                        : "animate-appearance-in text-zinc-700 "
+                    }`}
+                  >
                     {parseFloat(ethers.formatEther(userPendingRewards)).toFixed(
                       4
                     )}{" "}
@@ -453,7 +462,7 @@ export default function LPStaking() {
                 </div>
                 <div className="grid content-start grid-cols-2">
                   <div className="leading-none text-center ">
-                    <p className="text-xl font-semibold text-primary">
+                    <p className={`text-xl font-semibold text-primary `}>
                       {parseFloat(ethers.formatEther(claimed)).toFixed(4)}
                     </p>
                     <span className="text-xs uppercase">
