@@ -180,6 +180,11 @@ export default function LPStaking() {
       return;
     }
 
+    if (userPendingRewards == 0) {
+      alert("There's nothing to claim.");
+      return;
+    }
+
     try {
       setLoading(true);
       const stakingContract = new ethers.Contract(
