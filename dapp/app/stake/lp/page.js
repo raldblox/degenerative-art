@@ -449,7 +449,11 @@ export default function LPStaking() {
                     <p className="text-xl font-semibold text-primary">
                       {parseFloat(ethers.formatEther(claimed)).toFixed(4)}
                     </p>
-                    <span className="text-xs uppercase">Claimed MOOD</span>
+                    <span className="text-xs uppercase">
+                      Claimed Rewards
+                      <br />
+                      (MOOD)
+                    </span>
                   </div>
                   <div className="leading-none text-center">
                     <p className="text-xl font-semibold text-primary">0.025</p>
