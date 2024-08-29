@@ -26,6 +26,7 @@ export default function LPStaking() {
   const [userStakedLP, setUserStakedLP] = useState(0); // Track staked LP
   const [userPendingRewards, setUserPendingRewards] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("stake");
 
   const stakingContractAddress = "0xc79F872f6be863b943bD2DF567541315278f8494";
 
@@ -67,6 +68,9 @@ export default function LPStaking() {
       setUserPendingRewards(
         pendingRewards > earnedRewards ? pendingRewards : earnedRewards
       );
+      if (pendingRewards > 0 || earnedRewards > 0) {
+        setSelectedTab("claim");
+      }
       setTotalTachyLP(totalSupply);
       setUserLP(balanceOf);
       setUserStakedLP(stakedBalance);
@@ -262,7 +266,14 @@ export default function LPStaking() {
       </div> */}
       <div className="grid content-between w-full max-w-sm p-3 space-y-4 bg-white md:p-6 animate-appearance-in drop-shadow-xl rounded-2xl">
         <div>
-          <Tabs aria-label="Options" fullWidth radius="md" color="primary">
+          <Tabs
+            aria-label="Options"
+            fullWidth
+            radius="md"
+            color="primary"
+            selectedKey={selectedTab}
+            onSelectionChange={setSelectedTab}
+          >
             <Tab key="stake" title="Stake">
               <div className="grid content-between min-h-[400px]">
                 <div className="pt-4 space-y-4">
