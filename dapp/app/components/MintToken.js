@@ -77,7 +77,7 @@ const MintToken = () => {
         signer
       );
       const totalSupply = await nftContract.totalSupply();
-      const price = await nftContract.price(totalSupply);
+      const price = await nftContract.tokenIds();
 
       // Check if the user has enough native tokens
       if (Number(nativeBalance) < Number(price)) {
@@ -222,8 +222,9 @@ const MintToken = () => {
         color="default"
         className="text-white transition-all duration-300 bg-black w-fit"
         onPress={onOpen}
+        isDisabled
       >
-        Mint Your Feels
+        Upgrade Ongoing
       </Button>
 
       <Modal
