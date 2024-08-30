@@ -3,6 +3,7 @@ import { Providers } from "./providers/Providers";
 import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"] });
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   metadataBase: new URL("https://degeneratives.art"),
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <main className="text-black bg-white">{children}</main>
           <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>
