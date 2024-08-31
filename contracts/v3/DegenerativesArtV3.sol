@@ -12,12 +12,15 @@ import "../DegenerativesArtV2.sol";
  * @title degeneratives.art NFT contract
  * @author raldblox.eth | github.com/raldblox
  * @notice This contract manages the DegenerativesArt NFT collection, where each NFT represents a unique expression of emotions through emojis.
- * @dev The contract utilizes a dynamic pricing curve model for `mint`, emojihash combination check, and
- * allows for token updates with various ERC20 tokens (managed on pricer contract).
+ * @dev The contract utilizes a dynamic pricing curve model for `mint`
  * Note: Mood pattern data is recorded by user address and not deletable by design.
  */
 
-contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
+contract DegenerativesArtV3 is
+    IDegenerativesArt,
+    ERC721("degeneratives.art", "DEGENARTV3"),
+    Ownable(msg.sender)
+{
     DegenerativesArtV2 public degenerativesV2;
 
     // Errors
@@ -30,18 +33,16 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     error Paused();
 
     // Constants
-    uint256 public cooldown = 15 minutes; // @note for mint/update cooldown
+    uint256 public cooldown = 1 minutes; // @note for mint/update cooldown
 
     // State Variables
     bool public migrated = false;
     bool public paused = true;
-    bool public customPaymentEnabled = true;
     uint public tokenIds;
     uint public totalSupply;
     uint public totalMoodSwing;
-    address payable public treasury; // @note can be set to wallet or liquidity pool contract
+    address payable public treasury;
     address public defaultTheme; // @note default theming engine
-    address public pricer; // @note
 
     // Mappings
     mapping(uint256 => string[]) private emojis;
@@ -50,6 +51,7 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     mapping(address => uint256) private lastUpdateTimestamp;
     mapping(address => MoodData[]) private moodPatterns;
     mapping(uint256 => address) private themes;
+    mapping(address => uint256[]) private owned;
 
     // Events
     event TokenMinted(
@@ -68,7 +70,7 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
 
     IERC20 public MOOD;
 
-    constructor() ERC721("degeneratives.art", "DEGENARTV3") {
+    constructor() {
         degenerativesV2 = DegenerativesArtV2(
             0xCF552524772605DE32DAe649f7ceD60a286b0D21
         );
@@ -82,11 +84,6 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         _;
     }
 
-    modifier onlyPricer() {
-        require(msg.sender == pricer, "Unauthorized");
-        _;
-    }
-
     //***** PUBLIC FUNCTION *****//
 
     /// @notice Mints a new Degenerative Art NFT bsased on a combination of emojis
@@ -96,8 +93,8 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         string[] memory _emojis,
         address themeAddress
     ) external payable validEmojis(_emojis) {
-        if (msg.value < price(tokenIds)) revert InsufficientFunds();
         if (paused) revert Paused();
+        if (msg.value < price(tokenIds)) revert InsufficientFunds();
 
         // Check if cooldown have passed since the last mint/update
         if (lastUpdateTimestamp[msg.sender] + cooldown > block.timestamp) {
@@ -118,31 +115,46 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         if (!sent) revert TransferFailed();
 
         _updateEmojis(msg.sender, tokenIds, _emojis);
-        _updateTheme(totalSupply, themeAddress);
+        _updateTheme(tokenIds, themeAddress);
         _safeMint(msg.sender, tokenIds);
         _dropMintReward(msg.sender);
 
-        emit TokenMinted(totalSupply, msg.sender, _emojis);
+        emit TokenMinted(tokenIds, msg.sender, _emojis);
         totalSupply++;
         tokenIds++;
     }
 
     function migrate(
         uint256 tokenId,
-        string[] memory _emojis
+        string[] memory _emojis,
+        uint256 moodSwingCount,
+        bool toBurn
     ) external payable onlyOwner {
         require(!migrated, "Migration finished");
-        address v1owner = degenerativesV2.ownerOf(tokenId);
-        if (v1owner == address(0)) {
-            revert ZeroAddressProvided();
+
+        address v2owner;
+
+        if (toBurn) {
+            v2owner = msg.sender;
+        } else {
+            v2owner = degenerativesV2.ownerOf(tokenId);
+            if (v2owner == address(0)) {
+                revert ZeroAddressProvided();
+            }
         }
 
         require(_ownerOf(totalSupply) == address(0), "Token already minted");
 
-        _updateEmojis(v1owner, totalSupply, _emojis);
-        _updateTheme(totalSupply, defaultTheme);
-        _safeMint(v1owner, totalSupply);
+        _updateEmojis(v2owner, tokenId, _emojis); // @note +1 moodswing
+        _updateTheme(tokenId, defaultTheme);
+        _safeMint(v2owner, tokenId);
 
+        if (toBurn) {
+            burn(tokenId);
+        }
+
+        moodSwings[tokenId] = moodSwingCount;
+        totalMoodSwing = totalMoodSwing + moodSwingCount - 1; // rebalance moodswing
         totalSupply++;
         tokenIds++;
 
@@ -154,7 +166,7 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     /// @notice Burns a Degenerative Art NFT and removes its associated token data
     /// @dev Requires ownership of the token
     /// @param tokenId The ID of the token to burn
-    function burn(uint256 tokenId) external payable {
+    function burn(uint256 tokenId) public payable {
         _requireOwned(tokenId);
         if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
 
@@ -280,6 +292,12 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         return lastUpdateTimestamp[owner];
     }
 
+    function getOwnedTokens(
+        address owner
+    ) public view returns (uint256[] memory) {
+        return owned[owner];
+    }
+
     //***** ADMIN FUNCTION *****//
 
     /// @notice Updates the Visual Engine contract address
@@ -383,5 +401,29 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         if (MOOD.balanceOf(address(this)) > moodReward) {
             MOOD.transfer(minter, moodReward);
         }
+    }
+
+    function _update(
+        address to,
+        uint256 tokenId,
+        address auth
+    ) internal virtual override returns (address) {
+        address from = _ownerOf(tokenId);
+
+        if (from != address(0)) {
+            // Remove the token from the 'from' address's owned list
+            for (uint i = 0; i < owned[from].length; i++) {
+                if (owned[from][i] == tokenId) {
+                    owned[from][i] = owned[from][owned[from].length - 1];
+                    owned[from].pop();
+                    break;
+                }
+            }
+        }
+
+        // Add the token to the 'to' address's owned list
+        owned[to].push(tokenId);
+
+        return super._update(to, tokenId, auth);
     }
 }

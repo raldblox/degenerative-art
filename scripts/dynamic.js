@@ -37,10 +37,29 @@ async function main() {
   ];
 
   console.log(
+    "opacity:",
+    await theme.calcOpacity("0xFf8B5E8E0D2242526cbf0F4B76B51690F6b70826")
+  );
+
+  console.log(
     "image:",
     await theme.generateImage(
       1,
-      "0x0418Dd6Ed60A4584Ef2CBC7A49BB0b46691ACcC7",
+      "0xFf8B5E8E0D2242526cbf0F4B76B51690F6b70826",
+      mintEmojis[0]
+    )
+  );
+
+  console.log(
+    "opacity:",
+    await theme.calcOpacity("0x914bC99c05489f9AE6625402E0003b3a9488eb98")
+  );
+
+  console.log(
+    "image:",
+    await theme.generateImage(
+      1,
+      "0x914bC99c05489f9AE6625402E0003b3a9488eb98",
       mintEmojis[0]
     )
   );

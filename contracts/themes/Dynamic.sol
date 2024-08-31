@@ -10,39 +10,40 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-interface IStaking {
-    function staked(uint256 tokenId) external view returns (bool);
-}
-
 contract Dynamic is IVisualEngine, Ownable(msg.sender) {
     string public theme = "Dynamic";
     string public network;
     IERC20 public moodToken;
     IERC20 public tachyLP;
-    IStaking public staking;
+    IERC20 public staking;
 
     constructor(string memory networkName) {
         network = networkName;
         tachyLP = IERC20(0xC6D0AafDe70058EDA2E4F3DD17200dabD350A8D5);
         moodToken = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9);
+        staking = IERC20(0xc79F872f6be863b943bD2DF567541315278f8494);
     }
 
     function updateStakingContract(address _staking) public onlyOwner {
-        staking = IStaking(_staking);
+        staking = IERC20(_staking);
     }
 
-    function stakedToken(uint256 tokenId) public view returns (bool) {
-        if (address(staking) == address(0)) {
-            return false;
-        } else {
-            return staking.staked(tokenId);
-        }
+    function stakedToken(address owner) public view returns (bool) {
+        return staking.balanceOf(owner) != 0;
     }
 
     function calcOpacity(address user) public view returns (string memory) {
-        string memory opacity = Strings.toString(
-            moodToken.balanceOf(user) / 1 ether / 1000000
-        );
+        // Calculate opacity as a decimal between 0 and 1
+        uint256 balance = moodToken.balanceOf(user);
+
+        string memory opacity;
+        if (balance >= 1000000 ether) {
+            opacity = "1"; // If balance is 1M or more, set opacity to 1
+        } else {
+            // Calculate decimal value if balance is less than 1M
+            uint256 opacityValue = (balance * 100) / 1000000 ether;
+            opacity = string.concat("0.", Strings.toString(opacityValue));
+        }
 
         return
             string(
@@ -64,7 +65,7 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
     }
 
     function indicators(
-        uint256 tokenId,
+        uint256,
         address owner
     ) public view returns (string memory) {
         string
@@ -74,13 +75,14 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
 
         string memory balanceIndicator = calcOpacity(owner);
 
-        bool staked = stakedToken(tokenId);
+        bool staked = stakedToken(owner);
         bool liquityProvider = hasLP(owner);
 
         return
             string(
                 abi.encodePacked(
-                    staked ? blink : balanceIndicator,
+                    balanceIndicator,
+                    staked ? blink : "",
                     liquityProvider ? party : ""
                 )
             );
@@ -96,18 +98,18 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
             abi.encodePacked(
                 '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" fill="none" viewBox="0 0 48 48">',
                 indicator,
-                '<text x="10" y="11" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '<text x="10" y="10" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[0],
-                '</text><text x="24" y="11" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '</text><text x="24" y="10" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[1],
                 "</text>",
-                '<text x="38" y="11" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '<text x="38" y="10" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[2],
-                '</text><text x="10" y="24" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '</text><text x="10" y="23.5" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[3],
-                '</text><text x="24" y="24" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '</text><text x="24" y="23.5" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[4],
-                '</text><text x="38" y="24" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
+                '</text><text x="38" y="23.5" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[5],
                 '</text><text x="10" y="37" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[6],
@@ -115,7 +117,8 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
                 emojis[7],
                 '</text><text x="38" y="37" fill="#bbb" dominant-baseline="central" font-family="Arial,sans-serif" font-size="10" text-anchor="middle">',
                 emojis[8],
-                "</text></svg>"
+                "</text>",
+                "</svg>"
             )
         );
 

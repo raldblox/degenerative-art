@@ -51,8 +51,17 @@ module.exports = {
       polygonAmoy: process.env.OKLINK_AMOY_API,
       coreTestnet: process.env.CORE_TESTNET_API,
       coreMainnet: process.env.CORE_MAINNET_API,
+      etherlink: "",
     },
     customChains: [
+      {
+        network: "etherlink",
+        chainId: 42793,
+        urls: {
+          apiURL: "https://explorer.etherlink.com/api",
+          browserURL: "https://explorer.etherlink.com/",
+        },
+      },
       {
         network: "coreTestnet",
         chainId: 1115,
