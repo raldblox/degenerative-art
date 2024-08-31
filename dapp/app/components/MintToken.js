@@ -231,7 +231,7 @@ const MintToken = () => {
         onPress={onOpen}
         // isDisabled
       >
-        Upgrade Ongoing
+        Mint Your Feels
       </Button>
 
       <Modal
