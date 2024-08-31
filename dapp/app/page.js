@@ -136,7 +136,7 @@ export default function Home() {
                 <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-background text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
-                <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase text-balance md:text-5xl animate-appearance-in">
+                <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase transition-all duration-500 text-balance md:text-5xl animate-appearance-in">
                   {shuffledContent.headline[0]}
                 </h1>
                 <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
