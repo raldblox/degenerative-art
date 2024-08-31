@@ -13,22 +13,8 @@ module.exports = {
   plugins: [
     nextui({
       themes: {
-        dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#fff",
-              foreground: "#000000",
-            },
-          },
-        },
-        light: {
-          colors: {
-            primary: {
-              DEFAULT: "#000",
-              foreground: "#fff",
-            },
-          },
-        },
+        dark: {},
+        light: {},
       },
     }),
   ],

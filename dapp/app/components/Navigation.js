@@ -71,7 +71,7 @@ export const Navigation = ({ tabs }) => {
                 color="primary"
                 variant="bordered"
                 radius="full"
-                className="font-bold transition-all duration-200 border-small bg-default-100 animate-appearance-in"
+                className="font-bold transition-all duration-200 border-small animate-appearance-in"
               >
                 {parseFloat(ethers.formatEther(balances.mood)).toFixed(2)} MOOD
               </Button>
@@ -82,7 +82,7 @@ export const Navigation = ({ tabs }) => {
                 color="primary"
                 variant="bordered"
                 radius="full"
-                className="font-bold transition-all duration-200 border-small bg-default-100 animate-appearance-in"
+                className="font-bold transition-all duration-200 border-small animate-appearance-in"
               >
                 {balances.nft.toString()} NFT
               </Button>
@@ -95,7 +95,7 @@ export const Navigation = ({ tabs }) => {
             color="primary"
             variant="solid"
             radius="full"
-            className="font-bold border-small"
+            className="font-bold"
             onClick={connectEthereumWallet}
           >
             {userAddress ? (

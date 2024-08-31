@@ -239,10 +239,10 @@ export default function LPStaking() {
   }, [userAddress]);
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen p-6 md:p-16 bg-zinc-100">
+    <div className="relative flex flex-col items-center justify-center min-h-screen p-6 md:p-16 bg-background">
       <Link href="/" className="absolute py-6 md:px-3 top-3">
         <svg
-          className="h-8 text-black"
+          className="h-8 text-foreground"
           viewBox="0 0 35 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +272,7 @@ export default function LPStaking() {
       {/* <div>
         <div>{parseFloat(ethers.formatEther(totalTachyLP)).toFixed(2)}</div>
       </div> */}
-      <div className="grid content-between w-full max-w-sm p-3 space-y-4 bg-white md:p-6 animate-appearance-in drop-shadow-xl rounded-2xl">
+      <div className="grid content-between w-full max-w-sm p-3 space-y-4 bg-default-50 md:p-6 animate-appearance-in drop-shadow-xl rounded-2xl">
         <div>
           <Tabs
             aria-label="Options"
@@ -288,13 +288,13 @@ export default function LPStaking() {
                   <h1 className="text-xl font-semibold animate-appearance-in">
                     Earn More with LP Staking
                   </h1>
-                  <p className="text-sm text-zinc-700">
+                  <p className="text-sm text-default-700">
                     Stake your LP tokens to earn additional MOOD rewards on top
                     of your trading fees.
                   </p>
                   <div className="flex items-center justify-between w-full pt-3">
                     <p className="text-sm">
-                      <span className="text-zinc-600">Balance:</span>{" "}
+                      <span className="text-default-600">Balance:</span>{" "}
                       <span className="font-semibold">
                         {parseFloat(ethers.formatEther(userLP)).toFixed(2)}
                       </span>
@@ -353,7 +353,7 @@ export default function LPStaking() {
                   size="lg"
                   isLoading={loading}
                   color="primary"
-                  className="w-full text-white transition-all duration-300 bg-black "
+                  className="w-full transition-all duration-300 bg-foreground text-background "
                   onClick={handleStake}
                 >
                   Start Staking
@@ -366,13 +366,13 @@ export default function LPStaking() {
                   <h1 className="text-xl font-semibold animate-appearance-in">
                     Unstake Your LP Tokens
                   </h1>
-                  <p className="text-sm text-zinc-700">
+                  <p className="text-sm text-default-700">
                     Unstake your TACHY-LP tokens to withdraw them from the
                     staking pool.
                   </p>
                   <div className="flex items-center justify-between w-full pt-3">
                     <p className="text-sm">
-                      <span className="text-zinc-600">Staked:</span>{" "}
+                      <span className="text-default-600">Staked:</span>{" "}
                       <span className="font-semibold">
                         {parseFloat(ethers.formatEther(userStakedLP)).toFixed(
                           2
@@ -427,7 +427,7 @@ export default function LPStaking() {
                   isLoading={loading}
                   onClick={handleUnstake}
                   color="primary"
-                  className="w-full text-white transition-all duration-300 bg-black "
+                  className="w-full transition-all duration-300 bg-foreground text-background "
                 >
                   Unstake
                 </Button>
@@ -440,7 +440,7 @@ export default function LPStaking() {
                     className={`text-3xl font-semibold transition-all duration-500 ${
                       fetching
                         ? "animate-pulse text-blue-700 scale-80 tracking-widest"
-                        : "animate-appearance-in text-zinc-700 "
+                        : "animate-appearance-in text-default-700 "
                     }`}
                   >
                     {parseFloat(ethers.formatEther(userPendingRewards)).toFixed(
@@ -448,14 +448,14 @@ export default function LPStaking() {
                     )}{" "}
                     <span className="">MOOD</span>
                   </h1>
-                  <p className="pb-6 text-sm text-zinc-700">
+                  <p className="pb-6 text-sm text-default-700">
                     Your unclaimed rewards
                   </p>
                   <Button
                     isLoading={loading}
                     onClick={handleClaimRewards}
                     color="primary"
-                    className="text-white transition-all duration-300 bg-black w-fit"
+                    className="transition-all duration-300 bg-foreground text-background w-fit"
                   >
                     Claim Rewards
                   </Button>
