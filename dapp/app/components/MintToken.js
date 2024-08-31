@@ -158,16 +158,10 @@ const MintToken = () => {
   };
 
   const handleKeyUp = (event, index) => {
-    if (
-      (event.key === "Delete" || event.key === "Backspace") &&
-      inputValues[index] === ""
-    ) {
+    if (event.key === "Delete" || event.key === "Backspace") {
       if (index > 0) {
         inputRef.current[index - 1].focus();
       }
-      // if (activeFields > 3) {
-      //   setActiveFields(activeFields - 1);
-      // }
     }
   };
 
