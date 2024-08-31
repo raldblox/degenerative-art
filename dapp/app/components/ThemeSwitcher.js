@@ -10,10 +10,14 @@ export function ThemeSwitcher() {
   return (
     <>
       <Switch
-        classNames={{ base: "p-0 right-0", wrapper: "gap-0 m-0" }}
+        classNames={{
+          base: "p-0 right-0 ",
+          wrapper: "gap-0 m-0 bg-foreground",
+        }}
+        value={theme}
         onValueChange={() => setTheme(theme == "dark" ? "light" : "dark")}
-        defaultSelected={theme}
         size="md"
+        color="primary"
         startContent={
           <svg
             aria-hidden="true"

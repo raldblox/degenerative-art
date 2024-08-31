@@ -473,7 +473,7 @@ export default function Home() {
                         onClick={() => {
                           window.scrollTo(0, 0);
                         }}
-                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
+                        className="hover:!bg-foreground hover:!text-background group-hover:bg-blue-600 group-hover:text-background dark:group-hover:text-foreground"
                       >
                         mint now
                       </Button>
@@ -497,7 +497,7 @@ export default function Home() {
                         radius="full"
                         size="sm"
                         as={Link}
-                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
+                        className="hover:!bg-foreground hover:!text-background group-hover:bg-blue-600 group-hover:text-background dark:group-hover:text-foreground"
                         href="/tool/img2emoji.art"
                       >
                         explore
@@ -524,7 +524,7 @@ export default function Home() {
                         variant="flat"
                         radius="full"
                         size="sm"
-                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
+                        className="hover:!bg-foreground hover:!text-background group-hover:bg-blue-600 group-hover:text-background dark:group-hover:text-foreground"
                       >
                         provide liquidity
                       </Button>
@@ -549,7 +549,7 @@ export default function Home() {
                         variant="flat"
                         radius="full"
                         size="sm"
-                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
+                        className="hover:!bg-foreground hover:!text-background group-hover:bg-blue-600 group-hover:text-background dark:group-hover:text-foreground"
                       >
                         start staking
                       </Button>
@@ -650,7 +650,7 @@ export default function Home() {
                           window.scrollTo(0, 0);
                           setSelectedTab("tokenomics");
                         }}
-                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
+                        className="hover:!bg-foreground hover:!text-background group-hover:bg-blue-600 group-hover:text-background dark:group-hover:text-foreground"
                       >
                         explore
                       </Button>
