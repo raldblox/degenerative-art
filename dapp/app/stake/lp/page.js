@@ -317,7 +317,7 @@ export default function LPStaking() {
                     onChange={(e) => setStakeAmount(e.target.value)}
                     startContent={
                       <div className="flex items-center pointer-events-none">
-                        <span className="text-default-400 text-small">QTY</span>
+                        <span className="text-default-700 text-small">QTY</span>
                       </div>
                     }
                     endContent={
@@ -326,7 +326,7 @@ export default function LPStaking() {
                           Currency
                         </label>
                         <select
-                          className="bg-transparent border-0 outline-none text-default-400 text-small"
+                          className="bg-transparent border-0 outline-none text-default-700 text-small"
                           id="currency"
                           name="currency"
                         >
@@ -399,7 +399,7 @@ export default function LPStaking() {
                     onChange={(e) => setStakeAmount(e.target.value)}
                     startContent={
                       <div className="flex items-center pointer-events-none">
-                        <span className="text-default-400 text-small">QTY</span>
+                        <span className="text-default-700 text-small">QTY</span>
                       </div>
                     }
                     endContent={
@@ -408,7 +408,7 @@ export default function LPStaking() {
                           Currency
                         </label>
                         <select
-                          className="bg-transparent border-0 outline-none text-default-400 text-small"
+                          className="bg-transparent border-0 outline-none text-default-700 text-small"
                           id="currency"
                           name="currency"
                         >
