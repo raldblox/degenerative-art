@@ -40,13 +40,13 @@ export const MyFeels = () => {
 
   return (
     <>
-      <div className="grid gap-6 lg:grid-cols-3 md:grid-cols-2">
+      <div className="grid gap-6 pb-12 lg:grid-cols-3 md:grid-cols-2">
         {userNFTs?.map((token) => (
           <div
             key={token.tokenId}
-            className="relative flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+            className="relative flex flex-col items-center justify-center p-2 duration-200 border-2 shadow-md border-background bg-default-100 hover:shadow rounded-3xl"
           >
-            <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
+            <div className="grid w-full p-6 duration-300 bg-background group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
               <div className="relative grid grid-cols-3 gap-2 md:gap-4 ">
                 {token?.emojis?.map((emoji, i) => (
                   <div
@@ -61,7 +61,7 @@ export const MyFeels = () => {
               </div>
             </div>
             <div className="flex items-center justify-between w-full pt-2">
-              <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-black">
+              <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-foreground">
                 <div className="flex items-center justify-between w-full font-semibold">
                   <p>degeneratives.art #{token.tokenId}</p>
                   <p>{token?.network}</p>
@@ -103,22 +103,22 @@ export const MyFeels = () => {
                 />
               </Button>
             </div>
-            <Tooltip
+            {/* <Tooltip
               showArrow={true}
               color="primary"
               content="Mood Swing Counter"
             >
-              <div className="absolute px-2 py-1 text-[10px] items-center text-black rounded-full bg-zinc-100 top-3 flex gap-1">
+              <div className="absolute px-2 py-1 text-[10px] items-center text-foreground rounded-full bg-default-100 top-3 flex gap-1">
                 {token.moodSwing}
                 <svg
                   className="h-3"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M5 3h14v2H5zm0 16H3V5h2zm14 0v2H5v-2zm0 0h2V5h-2zM10 8H8v2h2zm4 0h2v2h-2zm1 5H9v2h6z" />
+                  <path fill="currentColor" d="M5 3h14v2H5zm0 16H3V5h2zm14 0v2H5v-2zm0 0h2V5h-2zM10 8H8v2h2zm4 0h2v2h-2zm1 5H9v2h6z" />
                 </svg>
               </div>
-            </Tooltip>
+            </Tooltip> */}
 
             {/* <div className="flex items-center justify-between gap-3">
               <Button size="sm" radius="full" className="text-sm">

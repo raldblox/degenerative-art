@@ -7,13 +7,17 @@ import {SmartCodec} from "../utils/SmartCodec.sol";
 import {IVisualEngine} from "../interfaces/IVisualEngine.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Graffiti is IVisualEngine, Ownable(msg.sender) {
     string public theme = "Graffiti";
     string public network;
 
+    IERC20 public moodToken;
+
     constructor(string memory networkName) {
         network = networkName;
+        moodToken = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9);
     }
 
     function generateVisual(
@@ -157,5 +161,9 @@ contract Graffiti is IVisualEngine, Ownable(msg.sender) {
         }
         result = abi.encodePacked(result, "]");
         return string(result);
+    }
+
+    function getPrice() external view returns (address, uint256) {
+        return (address(moodToken), 0);
     }
 }

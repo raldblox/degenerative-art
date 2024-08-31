@@ -107,42 +107,19 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
         bytes32 emojiHash_ = emojiHash(_emojis);
         if (emojisTaken[emojiHash_]) revert EmojiCombinationAlreadyExists();
 
-        if (treasury == address(0)) revert ZeroAddressProvided();
-        (bool sent, ) = payable(treasury).call{value: msg.value}("");
-        if (!sent) revert TransferFailed();
-
-        _updateEmojis(msg.sender, totalSupply, _emojis);
-        _updateTheme(totalSupply, themeAddress);
-        _safeMint(msg.sender, totalSupply);
-        _dropMintReward(msg.sender);
-
-        emit TokenMinted(totalSupply, msg.sender, _emojis);
-        totalSupply++;
-        tokenIds++;
-    }
-
-    function mintCustom(
-        string[] memory _emojis,
-        address themeAddress
-    ) external payable validEmojis(_emojis) {
-        if (msg.value < price(tokenIds)) revert InsufficientFunds();
-        if (paused) revert Paused();
-
-        // Check if cooldown have passed since the last mint/update
-        if (lastUpdateTimestamp[msg.sender] + cooldown > block.timestamp) {
-            revert CooldownNotOver();
+        (address token, uint256 value) = IVisualEngine(themeAddress).getPrice();
+        if (value != 0 && IERC20(token).balanceOf(msg.sender) >= value) {
+            bool paid = IERC20(token).transferFrom(msg.sender, treasury, value);
+            if (!paid) revert TransferFailed();
         }
 
-        bytes32 emojiHash_ = emojiHash(_emojis);
-        if (emojisTaken[emojiHash_]) revert EmojiCombinationAlreadyExists();
-
         if (treasury == address(0)) revert ZeroAddressProvided();
         (bool sent, ) = payable(treasury).call{value: msg.value}("");
         if (!sent) revert TransferFailed();
 
-        _updateEmojis(msg.sender, totalSupply, _emojis);
+        _updateEmojis(msg.sender, tokenIds, _emojis);
         _updateTheme(totalSupply, themeAddress);
-        _safeMint(msg.sender, totalSupply);
+        _safeMint(msg.sender, tokenIds);
         _dropMintReward(msg.sender);
 
         emit TokenMinted(totalSupply, msg.sender, _emojis);
@@ -221,14 +198,19 @@ contract DegenerativesArtV3 is IDegenerativesArt, ERC721, Ownable(msg.sender) {
     }
 
     function upgrade(uint256 tokenId, address themeAddress) external payable {
-        uint256 moodPayment = 500 * 10 ** 18;
         if (themeAddress == address(0)) revert ZeroAddressProvided();
-        if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
-        if (MOOD.balanceOf(ownerOf(tokenId)) < moodPayment)
-            revert InsufficientFunds();
         if (treasury == address(0)) revert ZeroAddressProvided();
-        bool paid = MOOD.transferFrom(msg.sender, address(this), moodPayment);
-        if (!paid) revert TransferFailed();
+        if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
+
+        (address token, uint256 value) = IVisualEngine(themeAddress).getPrice();
+
+        if (IERC20(token).balanceOf(ownerOf(tokenId)) >= value)
+            revert InsufficientFunds();
+
+        if (value != 0 && IERC20(token).balanceOf(msg.sender) >= value) {
+            bool paid = IERC20(token).transferFrom(msg.sender, treasury, value);
+            if (!paid) revert TransferFailed();
+        }
 
         _updateTheme(totalSupply, themeAddress);
     }

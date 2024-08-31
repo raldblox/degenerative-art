@@ -194,4 +194,8 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
         result = abi.encodePacked(result, "]");
         return string(result);
     }
+
+    function getPrice() external view returns (address, uint256) {
+        return (address(moodToken), 0);
+    }
 }

@@ -132,11 +132,11 @@ export default function Home() {
               className="relative min-h-screen mb-8 space-y-4 md:mx-8"
               id="start"
             >
-              <div className="flex relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-zinc-50 rounded-3xl">
-                <span className="p-1 px-4 text-center lowercase bg-white rounded-full shadow-md text-tiny text-balance border-small">
+              <div className="flex relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-default-50 rounded-3xl">
+                <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-background text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
-                <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase text-balance md:text-4xl animate-appearance-in">
+                <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase text-balance md:text-5xl animate-appearance-in">
                   {shuffledContent.headline[0]}
                 </h1>
                 <p className="max-w-2xl text-[10px] md:text-sm text-center text-pretty">
@@ -169,7 +169,7 @@ export default function Home() {
                         className={`py-4 font-semibold transition-all duration-500 ${
                           fetching
                             ? "animate-pulse text-blue-700 scale-80 tracking-widest"
-                            : "animate-appearance-in text-zinc-700 "
+                            : "animate-appearance-in text-default-700 "
                         }`}
                       >
                         MINT PRICE: ~{ethers.formatEther(mintPrice)} $XTZ
@@ -432,7 +432,7 @@ export default function Home() {
 
               <div
                 id="mint"
-                className="grid w-full h-full p-12 md:p-16 bg-zinc-50 rounded-3xl"
+                className="grid w-full h-full p-12 md:p-16 bg-default-50 rounded-3xl"
               >
                 <div className="mx-auto text-3xl font-normal tracking-tighter text-pretty">
                   let&apos;s put your emotions <br className="md:hidden" /> to{" "}
@@ -451,8 +451,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-2 lg:grid-cols-3 bg-zinc-50 rounded-3xl">
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+              <div className="grid gap-4 p-4 md:gap-6 md:p-16 md:grid-cols-2 lg:grid-cols-3 bg-default-50 rounded-3xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🍬" />
                   </div>
@@ -473,14 +473,14 @@ export default function Home() {
                         onClick={() => {
                           window.scrollTo(0, 0);
                         }}
-                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
                       >
                         mint now
                       </Button>
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎨" />
                   </div>
@@ -497,7 +497,7 @@ export default function Home() {
                         radius="full"
                         size="sm"
                         as={Link}
-                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
                         href="/tool/img2emoji.art"
                       >
                         explore
@@ -505,7 +505,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🏊‍♂️" />
                   </div>
@@ -524,14 +524,14 @@ export default function Home() {
                         variant="flat"
                         radius="full"
                         size="sm"
-                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
                       >
                         provide liquidity
                       </Button>
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🥩" />
                   </div>
@@ -549,7 +549,7 @@ export default function Home() {
                         variant="flat"
                         radius="full"
                         size="sm"
-                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
                       >
                         start staking
                       </Button>
@@ -557,7 +557,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🧬" />
                   </div>
@@ -575,7 +575,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎲" />
                   </div>
@@ -593,7 +593,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🎰" />
                   </div>
@@ -612,7 +612,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🌉" />
                   </div>
@@ -630,7 +630,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="flex h-full p-8 space-x-3 duration-200 bg-white cursor-pointer group text-pretty hover:shadow-md rounded-2xl">
+                <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🪙" />
                   </div>
@@ -650,7 +650,7 @@ export default function Home() {
                           window.scrollTo(0, 0);
                           setSelectedTab("tokenomics");
                         }}
-                        className="hover:!bg-black hover:text-white group-hover:bg-blue-600 group-hover:text-white"
+                        className="hover:!bg-foreground hover:text-background group-hover:bg-blue-600 group-hover:text-foreground"
                       >
                         explore
                       </Button>
@@ -668,7 +668,7 @@ export default function Home() {
               >
                 <div
                   id="chart"
-                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-zinc-50 rounded-3xl"
+                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-16 bg-default-50 rounded-3xl"
                 >
                   <h1 className="text-lg text-center">
                     NFT MINT PRICE CURVE & SUPPLY DYNAMICS
@@ -686,7 +686,7 @@ export default function Home() {
                 </div>
                 <div
                   id="tokenomics"
-                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-zinc-50 rounded-3xl"
+                  className="flex flex-col items-center justify-center gap-4 p-4 mx-auto mb-6 md:gap-6 md:p-24 bg-default-50 rounded-3xl"
                 >
                   <h1 className="text-lg text-center">MOOD TOKENOMICS</h1>
                   <MoodTokenomicsChart />

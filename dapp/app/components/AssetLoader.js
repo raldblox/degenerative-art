@@ -4,8 +4,8 @@ import EmojisContainer from "./EmojisContainer";
 
 export const AssetLoader = () => {
   return (
-    <div className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl">
-      <div className="p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+    <div className="flex flex-col items-center justify-center p-2 duration-200 border-2 shadow-md border-background bg-default-100 hover:shadow rounded-3xl">
+      <div className="p-6 duration-300 bg-background group-hover:shadow rounded-2xl">
         <EmojisContainer
           token={{
             tokenId: "-",
@@ -61,7 +61,7 @@ export const AssetLoader = () => {
           }}
         />
       </div>
-      <div className="flex flex-col items-start justify-between w-full px-2 pt-4 pb-2 text-xs text-black">
+      <div className="flex flex-col items-start justify-between w-full px-2 pt-4 pb-2 text-xs text-foreground">
         <div className="flex items-center justify-between w-full font-semibold">
           <p>degeneratives.art</p>
           <p>--</p>

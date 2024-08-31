@@ -1,10 +1,11 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
 import { ethers } from "ethers";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
 import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
 import { createContext, useEffect, useState } from "react";
+import { NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export const Context = createContext();
 
@@ -205,25 +206,34 @@ export const Providers = (props) => {
 
       const userTokens = [];
 
-      // Fetch token data sequentially
+      // Fetch token data sequentially, handling potential errors for burned tokens
       for (let tokenId = Number(totalSupply) - 1; tokenId > 0; tokenId--) {
-        const owner = await nftContract.ownerOf(tokenId);
-        if (owner.toLowerCase() === userAddress?.toLowerCase()) {
-          console.log("found///", tokenId);
-          const emojis = await nftContract.getEmojis(tokenId);
-          const moodSwing = await nftContract.getMoodSwing(tokenId);
-          userTokens.push({
-            tokenId,
-            owner,
-            emojis,
-            moodSwing: moodSwing.toString(),
-          });
-          setUserNFTs(userTokens);
+        try {
+          const owner = await nftContract.ownerOf(tokenId);
+          if (owner.toLowerCase() === userAddress?.toLowerCase()) {
+            console.log("found///", tokenId);
+            const emojis = await nftContract.getEmojis(tokenId);
+            const moodSwing = await nftContract.getMoodSwing(tokenId);
+            userTokens.push({
+              tokenId,
+              owner,
+              emojis,
+              moodSwing: moodSwing.toString(),
+            });
+            setUserNFTs(userTokens);
 
-          if (userTokens.length === Number(balanceOf)) {
-            setLoading(false);
-            break;
+            if (userTokens.length === Number(balanceOf)) {
+              setLoading(false);
+              break;
+            }
           }
+        } catch (error) {
+          // If `ownerOf` throws an error, it likely means the token is burned.
+          // We can simply continue to the next tokenId.
+          console.warn(
+            `Error fetching token ${tokenId}, likely burned:`,
+            error
+          );
         }
       }
     } catch (error) {
@@ -265,7 +275,9 @@ export const Providers = (props) => {
 
   return (
     <NextUIProvider>
-      <Context.Provider value={value}>{props.children}</Context.Provider>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
+        <Context.Provider value={value}>{props.children}</Context.Provider>
+      </NextThemesProvider>
     </NextUIProvider>
   );
 };

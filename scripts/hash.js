@@ -16,31 +16,56 @@ async function main() {
   let allTokenData = [];
   let duplicateHashes = {};
 
-  for (let tokenId = 0; tokenId < 810; tokenId++) {
-    const emojis = await DegenerativesArtV2.getEmojis(tokenId);
-    const emojisCopy = [...emojis];
-    const hash = await DegenerativesArtV2.emojiHash(emojisCopy);
-    const swing = await DegenerativesArtV2.getMoodSwing(tokenId);
-    console.log(tokenId, emojisCopy, hash);
+  for (let tokenId = 0; tokenId < 1040; tokenId++) {
+    try {
+      const owner = await DegenerativesArtV2.ownerOf(tokenId);
+      if (owner == "0x0000000000000000000000000000000000000000") {
+        // Check if token is burned
+        allTokenData.push({
+          tokenId,
+          emojis: [], // Empty emojis for burned tokens
+          swing: 0,
+          hash: "0x0", // Set hash to 0x0 for burned tokens
+          isBurned: true,
+        });
+        continue; // Skip to the next token
+      }
 
-    allTokenData.push({
-      tokenId,
-      emojis,
-      swing,
-      hash,
-    });
+      const emojis = await DegenerativesArtV2.getEmojis(tokenId);
+      const emojisCopy = [...emojis];
+      const hash = await DegenerativesArtV2.emojiHash(emojisCopy);
+      const swing = await DegenerativesArtV2.getMoodSwing(tokenId);
+      console.log(tokenId, emojisCopy, hash);
 
-    // Check for duplicate hashes
-    if (duplicateHashes[hash]) {
-      duplicateHashes[hash].push(tokenId);
-    } else {
-      duplicateHashes[hash] = [tokenId];
+      allTokenData.push({
+        tokenId,
+        emojis,
+        swing,
+        hash,
+        isBurned: false,
+      });
+
+      // Check for duplicate hashes
+      if (duplicateHashes[hash]) {
+        duplicateHashes[hash].push(tokenId);
+      } else {
+        duplicateHashes[hash] = [tokenId];
+      }
+    } catch (error) {
+      // If `ownerOf` throws an error, it means the token doesn't exist or is burned
+      allTokenData.push({
+        tokenId,
+        emojis: [],
+        swing: 0,
+        hash: "0x0",
+        isBurned: true,
+      });
     }
   }
 
   // Write all token data to a JSON file
   fs.writeFileSync(
-    "all_token_data.json",
+    "v2.json",
     JSON.stringify(
       allTokenData,
       (key, value) => (typeof value === "bigint" ? value.toString() : value),
@@ -63,6 +88,7 @@ async function main() {
       }
       duplicateTokenData.push({
         hash,
+        emojis: allTokenData[lowestSwingTokenId].emojis,
         firstMinter: lowestSwingTokenId,
         duplicates: duplicateHashes[hash],
       });
@@ -71,7 +97,7 @@ async function main() {
 
   // Write duplicate token data to a separate JSON file
   fs.writeFileSync(
-    "duplicate_token_data.json",
+    "duplicate_tokens.json",
     JSON.stringify(duplicateTokenData, null, 2)
   );
 }

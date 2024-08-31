@@ -16,7 +16,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={montserrat.className}>
         <Providers>
-          <main className="text-black bg-white">{children}</main>
+          <main className="min-h-screen select-none text-foreground bg-background">
+            {children}
+          </main>
           <Analytics />
           <SpeedInsights />
         </Providers>

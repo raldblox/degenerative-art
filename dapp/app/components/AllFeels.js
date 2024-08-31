@@ -104,13 +104,13 @@ const AllFeels = () => {
                 // isExternal
                 // href={`/id/${token.tokenId}`}
                 key={token.tokenId}
-                className="flex flex-col items-center justify-center p-2 duration-200 border-2 border-white shadow-md bg-default-100 hover:shadow rounded-3xl"
+                className="flex flex-col items-center justify-center p-2 duration-200 border-2 shadow-md border-background bg-default-100 hover:shadow rounded-3xl"
               >
-                <div className="w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl">
+                <div className="w-full p-6 duration-300 bg-background group-hover:shadow rounded-2xl">
                   <EmojisContainer token={token} />
                 </div>
                 <div className="flex items-center justify-between w-full pt-3 pb-2">
-                  <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-black">
+                  <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-foreground">
                     <div className="flex items-center justify-between w-full font-semibold">
                       <p>degeneratives.art #{token.tokenId}</p>
                       <p>{token?.network}</p>

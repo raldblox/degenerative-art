@@ -10,4 +10,9 @@ interface IVisualEngine {
         string[] memory emojis,
         uint256 moodSwing
     ) external view returns (string memory);
+
+    function getPrice()
+        external
+        view
+        returns (address tokenAddress, uint256 tokenValue);
 }
