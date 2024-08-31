@@ -85,6 +85,19 @@ const MintToken = () => {
         return;
       }
 
+      const emojiHash = await nftContract.emojiHash(inputValues);
+      const taken = await nftContract.emojisTaken(emojiHash);
+
+      // Check if the user has enough native tokens
+      if (taken) {
+        alert("emoji mood pattern is taken");
+        return;
+      }
+
+      // Check if the user has enough native tokens
+
+      alert("upgrade ongoing. please try again later.");
+
       // Log transaction details
       console.log("Minting transaction details:");
       console.log("Token ID:", totalSupply.toString());
@@ -118,17 +131,11 @@ const MintToken = () => {
     } catch (error) {
       // Log error details
       console.error("Minting failed:", error);
-      alert(
-        "oops, something went wrong with the mint. maybe try a different emoji pattern? or just try again later!"
-      );
+      alert("oops, something went wrong with the mint. try again later!");
     } finally {
       setMinting(false);
     }
   };
-
-  function isSurrogatePair(high, low) {
-    return high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff;
-  }
 
   const handleChange = (event, index) => {
     const value = event.target.value; // Ensure only one character
@@ -176,7 +183,7 @@ const MintToken = () => {
             data-index={i}
             maxLength={2}
             ref={(el) => (inputRef.current[i] = el)}
-            className={` w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+            className={` w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-default-300 outline-none focus:border-primary ${
               i >= activeFields ? "hidden" : ""
             }`}
             onChange={(e) => {
@@ -220,9 +227,9 @@ const MintToken = () => {
         radius="full"
         variant="solid"
         color="default"
-        className="text-white transition-all duration-300 bg-black w-fit"
+        className="transition-all duration-300 text-background bg-foreground w-fit"
         onPress={onOpen}
-        isDisabled
+        // isDisabled
       >
         Upgrade Ongoing
       </Button>
@@ -230,21 +237,21 @@ const MintToken = () => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="2xl"
-        className="p-6"
+        size="xl"
+        className="p-6 border-4 border-background bg-default-100"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="text-3xl font-semibold tracking-tight text-center lowercase text-md text-balance">
+                <label className="text-2xl font-semibold tracking-tight text-center lowercase text-md">
                   now enter the one-time emoji mood that universe gave you today
                 </label>
               </ModalHeader>
               <ModalBody>
                 {countdown !== "00:00:00" ? (
                   <>
-                    <p className="text-xs text-center lowercase">
+                    <p className="text-xs text-center lowercase text-default-700 text-balance">
                       Ser, see that cooldown timer? Yeah, you can only
                       mint/update your feels every 15 minutes. Gotta pace
                       yourself, champ! Too many mood swings aren&apos;t healthy.
@@ -257,7 +264,7 @@ const MintToken = () => {
                   </>
                 ) : (
                   <>
-                    <p className="mt-4 text-xs text-center lowercase md:text-sm">
+                    <p className="mt-2 text-xs text-center lowercase text-default-700 text-balance">
                       Don&apos;t worry if your cosmic vibes change tomorrow...
                       your dynamic NFT is so well-prepared to evolve alongside
                       you! We&apos;ll provide you 1000 $MOOD token after mint to
@@ -266,20 +273,16 @@ const MintToken = () => {
                     </p>
                   </>
                 )}
-
                 {countdown === "00:00:00" && (
                   <>
                     <div className="flex flex-col items-center justify-center space-y-4">
                       <div
                         ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 p-4 rounded-lg bg-white/80"
+                        className="grid grid-cols-3 gap-2 p-6 rounded-lg"
                       >
                         {renderInputFields()}
                       </div>
                     </div>
-                    <label className="pb-6 text-sm text-center">
-                      (enter 3-9 emojis only)
-                    </label>
 
                     {userAddress ? (
                       <Button

@@ -132,7 +132,7 @@ export default function Home() {
               className="relative min-h-screen mb-8 space-y-4 md:mx-8"
               id="start"
             >
-              <div className="flex relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-default-50 rounded-3xl">
+              <div className="flex transition-all duration-200 relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-default-50 rounded-3xl">
                 <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-background text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
@@ -202,7 +202,7 @@ export default function Home() {
 
                 <div className="grid items-center content-center justify-center grid-cols-2 gap-4 ">
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="success"
                     placement="left"
@@ -236,14 +236,18 @@ export default function Home() {
                     }
                   >
                     <div className="lg:absolute grid animate-appearance-in top-[15%] left-[7%]">
-                      <Image src="./etherlink.svg" height={20} width={90} />
+                      <div className="flex items-center gap-2">
+                        <Image src="./etherlink_icon.svg" height={20} width={20} />
+
+                        <p className="text-sm font-bold">Etherlink</p>
+                      </div>
                       <span className="text-[10px] pl-6 text-default-500">
                         Blockchain Network
                       </span>
                     </div>
                   </Tooltip>
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="default"
                     placement="left"
@@ -283,7 +287,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="success"
                     placement="left"
@@ -323,7 +327,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="secondary"
                     placement="left"
@@ -354,7 +358,7 @@ export default function Home() {
                     </div>
                   </Tooltip>
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="warning"
                     placement="right"
@@ -376,19 +380,23 @@ export default function Home() {
                     }
                   >
                     <div className="lg:absolute grid animate-appearance-in top-[70%] left-[7%]">
-                      <Image
-                        src="/rarible.svg"
-                        height={20}
-                        width={75}
-                        radius="none"
-                      />
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src="/rarible_icon.svg"
+                          height={20}
+                          width={20}
+                          radius="none"
+                        />
+                        <p className="text-sm font-bold">Rarible</p>
+                      </div>
+
                       <span className="text-[10px] pl-6 text-default-500">
                         NFT Marketplace
                       </span>
                     </div>
                   </Tooltip>
                   <Tooltip
-                    closeDelay={2000}
+                    closeDelay={1000}
                     showArrow
                     color="primary"
                     placement="left"

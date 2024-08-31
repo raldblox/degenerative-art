@@ -27,7 +27,7 @@ export const Navigation = ({ tabs }) => {
   return (
     <Navbar
       maxWidth="2xl"
-      className="z-50 h-[70px] bg-transparent backdrop-blur-none"
+      className="z-50 h-[70px] bg-transparent backdrop-blur-sm"
     >
       <NavbarBrand>
         <Link href="/" className="md:pr-3">

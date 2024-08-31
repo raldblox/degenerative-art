@@ -272,7 +272,7 @@ export default function LPStaking() {
       {/* <div>
         <div>{parseFloat(ethers.formatEther(totalTachyLP)).toFixed(2)}</div>
       </div> */}
-      <div className="grid content-between w-full max-w-sm p-3 space-y-4 bg-default-50 md:p-6 animate-appearance-in drop-shadow-xl rounded-2xl">
+      <div className="grid content-between w-full max-w-sm p-3 space-y-4 border-4 border-background bg-default-50 md:p-6 animate-appearance-in drop-shadow-xl rounded-2xl">
         <div>
           <Tabs
             aria-label="Options"
