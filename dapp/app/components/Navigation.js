@@ -66,7 +66,7 @@ export const Navigation = ({ tabs }) => {
         </NavbarBrand>
         <NavbarContent className="flex h-[50px] gap-1" justify="center">
           <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
-          <NavbarItem>
+          <NavbarItem className="md:hidden">
             <Button
               size="sm"
               color="primary"
