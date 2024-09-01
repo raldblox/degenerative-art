@@ -3,6 +3,7 @@
 
 pragma solidity ^0.8.24;
 
+import "../staking/TokenStaking.sol";
 import {SmartCodec} from "../utils/SmartCodec.sol";
 import {IVisualEngine} from "../interfaces/IVisualEngine.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
@@ -15,21 +16,25 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
     string public network;
     IERC20 public moodToken;
     IERC20 public tachyLP;
-    IERC20 public staking;
+    LPStaking public staking;
 
     constructor(string memory networkName) {
         network = networkName;
         tachyLP = IERC20(0xC6D0AafDe70058EDA2E4F3DD17200dabD350A8D5);
         moodToken = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9);
-        staking = IERC20(0xc79F872f6be863b943bD2DF567541315278f8494);
+        staking = LPStaking(0xc79F872f6be863b943bD2DF567541315278f8494);
     }
 
     function updateStakingContract(address _staking) public onlyOwner {
-        staking = IERC20(_staking);
+        staking = LPStaking(_staking);
     }
 
     function stakedToken(address owner) public view returns (bool) {
-        return staking.balanceOf(owner) != 0;
+        if (staking.balanceOf(owner) == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function calcOpacity(address user) public view returns (string memory) {
@@ -69,9 +74,9 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
         address owner
     ) public view returns (string memory) {
         string
-            memory blink = '<path fill="#ff0" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0.5;0;0" dur="1s" repeatCount="indefinite"/></path><path fill="#0ff" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0.5;0;0" dur="1.5s" repeatCount="indefinite"/></path><path fill="#f0f" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0.5;0;0" dur="2s" repeatCount="indefinite"/></path>';
+            memory blink = '<path fill="#7eff7e" d="M0 0h48v48H0z"><animate attributeName="fill" values="#ff005c;#ffbf00;#0000ff;#00ffb1;#ff5e00;#faff00;#68ff00;#00f3ff;#ff005c;" dur="1.5s" repeatCount="indefinite"/></path>';
         string
-            memory party = '<path fill="#7eff7e" d="M0 0h48v48H0z"><animate attributeName="fill" values="#ff005c;#ffbf00;#0000ff;#00ffb1;#ff5e00;#faff00;#68ff00;#00f3ff;#ff005c;" dur="1.5s" repeatCount="indefinite"/></path>';
+            memory party = '<defs><linearGradient id="a" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="red"/><stop offset="100%" stop-color="#2fa9e5"/></linearGradient><linearGradient id="b" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c839ee"/><stop offset="100%" stop-color="#f0aa23"/></linearGradient><linearGradient id="c" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#a8ec31"/><stop offset="100%" stop-color="#ec1a8e"/></linearGradient></defs><path fill="url(#a)" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0;0.8;0" dur="1s" repeatCount="indefinite"/></path><path fill="url(#b)" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0.8;0;0.8" dur="1.3s" repeatCount="indefinite"/></path><path fill="url(#c)" d="M0 0h48v48H0z"><animate attributeName="fill-opacity" values="0.8;0;0.8" dur="1.5s" repeatCount="indefinite"/></path>';
 
         string memory balanceIndicator = calcOpacity(owner);
 
@@ -82,8 +87,8 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
             string(
                 abi.encodePacked(
                     balanceIndicator,
-                    staked ? blink : "",
-                    liquityProvider ? party : ""
+                    liquityProvider ? blink : "",
+                    staked ? party : ""
                 )
             );
     }
@@ -132,6 +137,34 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
         return base64Image;
     }
 
+    function generateGridTraits(
+        string[] memory emojis
+    ) public pure returns (string memory traits) {
+        traits = string(
+            abi.encodePacked(
+                '{"trait_type": "G1", "value": "',
+                emojis[0],
+                '"},{"trait_type": "G2", "value": "',
+                emojis[1],
+                '"},{"trait_type": "G3", "value": "',
+                emojis[2],
+                '"},{"trait_type": "G4", "value": "',
+                emojis[3],
+                '"},{"trait_type": "G5", "value": "',
+                emojis[4],
+                '"},{"trait_type": "G6", "value": "',
+                emojis[5],
+                '"},{"trait_type": "G7", "value": "',
+                emojis[6],
+                '"},{"trait_type": "G8", "value": "',
+                emojis[7],
+                '"},{"trait_type": "G9", "value": "',
+                emojis[8],
+                '"}'
+            )
+        );
+    }
+
     function generateMetadata(
         uint256 tokenId,
         address owner,
@@ -151,23 +184,19 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
             )
         );
 
+        string memory gridTraits = generateGridTraits(emojis);
+
         string memory metadata = string(
             abi.encodePacked(
                 '{"name":"degeneratives.art #',
                 Strings.toString(tokenId),
-                unicode'","description":"[degenerative.art](',
-                externalUrl,
-                ') is a collection of unpredictable human expressions. each token is a reflection of its owner`s mood, visualized by onchain algorithms.", "image": "',
+                unicode'","description":"Degenerative.art is a collection of unpredictable human expressions. Each token is a reflection of its owner`s mood, visualized by onchain algorithms.", "image": "',
                 image,
                 '","external_url": "',
                 externalUrl,
-                '","attributes": [{"trait_type": "Impression", "value": "',
-                emojis[0],
-                '"},{"trait_type": "1,1", "value": "',
-                emojis[1],
-                '"},{"trait_type": "Aura", "value": "',
-                emojis[2],
-                '"},{"trait_type": "Mood Swing", "value": "',
+                '","attributes": [',
+                gridTraits,
+                ',{"trait_type": "Mood Swing", "value": "',
                 Strings.toString(moodSwing),
                 '"},{"trait_type": "Theme", "value": "',
                 mode,

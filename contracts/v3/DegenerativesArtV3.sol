@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import {DegenerativesArtV2, IDegenerativesArt, IVisualEngine, IERC20, MoodData} from "./DegenerativesArtV2.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../interfaces/IDegenerativesArt.sol";
-import "../interfaces/IVisualEngine.sol";
-import "../DegenerativesArtV2.sol";
 
 /**
  * @title degeneratives.art NFT contract
@@ -18,10 +17,11 @@ import "../DegenerativesArtV2.sol";
 
 contract DegenerativesArtV3 is
     IDegenerativesArt,
-    ERC721("degeneratives.art", "DEGENARTV3"),
+    ERC721Enumerable,
     Ownable(msg.sender)
 {
     DegenerativesArtV2 public degenerativesV2;
+    IERC20 public MOOD;
 
     // Errors
     error InsufficientFunds();
@@ -39,7 +39,6 @@ contract DegenerativesArtV3 is
     bool public migrated = false;
     bool public paused = true;
     uint public tokenIds;
-    uint public totalSupply;
     uint public totalMoodSwing;
     address payable public treasury;
     address public defaultTheme; // @note default theming engine
@@ -49,9 +48,9 @@ contract DegenerativesArtV3 is
     mapping(uint256 => uint256) private moodSwings;
     mapping(bytes32 => bool) public emojisTaken;
     mapping(address => uint256) private lastUpdateTimestamp;
-    mapping(address => MoodData[]) private moodPatterns;
     mapping(uint256 => address) private themes;
-    mapping(address => uint256[]) private owned;
+    mapping(uint256 => mapping(address => bool)) public themePaid;
+    mapping(address => MoodData[]) private moodPatterns;
 
     // Events
     event TokenMinted(
@@ -62,21 +61,20 @@ contract DegenerativesArtV3 is
     event TokenUpdated(uint256 indexed tokenId, string[] newEmojis);
     event ThemeUpdated(uint256 indexed tokenId, address themeAddress);
     event TokenBurnt(uint256 indexed tokenId, address owner);
+    event ThemePaid(uint256 indexed tokenId, address indexed themeAddress);
     event FundsRecovered(
         address indexed token,
         address indexed to,
         uint256 amount
     );
 
-    IERC20 public MOOD;
-
-    constructor() {
+    constructor() ERC721("degeneratives.art", "DEGENARTV3") {
         degenerativesV2 = DegenerativesArtV2(
-            0xCF552524772605DE32DAe649f7ceD60a286b0D21
+            0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F
         );
         treasury = payable(msg.sender);
         MOOD = IERC20(0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9); // mood token
-        defaultTheme = 0xD37D8659153aC1b43704031abBE0266C8F04E8Ed; // static
+        defaultTheme = 0x7defc5C23B46F8FC35A5dFD35Df6d1923774B857; // dynamic
     }
 
     modifier validEmojis(string[] memory _emojis) {
@@ -85,16 +83,13 @@ contract DegenerativesArtV3 is
     }
 
     //***** PUBLIC FUNCTION *****//
-
-    /// @notice Mints a new Degenerative Art NFT bsased on a combination of emojis
-    /// @dev Requires sufficient ETH payment and a unique emoji combination
-    /// @param _emojis An array of emoji strings representing the mood
     function mint(
         string[] memory _emojis,
         address themeAddress
     ) external payable validEmojis(_emojis) {
         if (paused) revert Paused();
         if (msg.value < price(tokenIds)) revert InsufficientFunds();
+        if (treasury == address(0)) revert ZeroAddressProvided();
 
         // Check if cooldown have passed since the last mint/update
         if (lastUpdateTimestamp[msg.sender] + cooldown > block.timestamp) {
@@ -105,23 +100,27 @@ contract DegenerativesArtV3 is
         if (emojisTaken[emojiHash_]) revert EmojiCombinationAlreadyExists();
 
         (address token, uint256 value) = IVisualEngine(themeAddress).getPrice();
-        if (value != 0 && IERC20(token).balanceOf(msg.sender) >= value) {
+        if (
+            value != 0 &&
+            token != address(0) &&
+            IERC20(token).balanceOf(msg.sender) >= value
+        ) {
             bool paid = IERC20(token).transferFrom(msg.sender, treasury, value);
             if (!paid) revert TransferFailed();
+            themePaid[tokenIds][themeAddress] = true;
+            emit ThemePaid(tokenIds, themeAddress);
         }
 
-        if (treasury == address(0)) revert ZeroAddressProvided();
         (bool sent, ) = payable(treasury).call{value: msg.value}("");
         if (!sent) revert TransferFailed();
 
+        mint(msg.sender, tokenIds);
+
         _updateEmojis(msg.sender, tokenIds, _emojis);
         _updateTheme(tokenIds, themeAddress);
-        _safeMint(msg.sender, tokenIds);
         _dropMintReward(msg.sender);
 
         emit TokenMinted(tokenIds, msg.sender, _emojis);
-        totalSupply++;
-        tokenIds++;
     }
 
     function migrate(
@@ -131,6 +130,7 @@ contract DegenerativesArtV3 is
         bool toBurn
     ) external payable onlyOwner {
         require(!migrated, "Migration finished");
+        require(_ownerOf(tokenId) == address(0), "Token already minted");
 
         address v2owner;
 
@@ -143,29 +143,24 @@ contract DegenerativesArtV3 is
             }
         }
 
-        require(_ownerOf(totalSupply) == address(0), "Token already minted");
+        mint(v2owner, tokenId);
 
         _updateEmojis(v2owner, tokenId, _emojis); // @note +1 moodswing
         _updateTheme(tokenId, defaultTheme);
-        _safeMint(v2owner, tokenId);
-
-        if (toBurn) {
-            burn(tokenId);
-        }
 
         moodSwings[tokenId] = moodSwingCount;
         totalMoodSwing = totalMoodSwing + moodSwingCount - 1; // rebalance moodswing
-        totalSupply++;
-        tokenIds++;
 
-        if (degenerativesV2.totalSupply() == totalSupply) {
+        if (degenerativesV2.tokenIds() == tokenIds) {
             migrated = true;
         }
     }
 
-    /// @notice Burns a Degenerative Art NFT and removes its associated token data
-    /// @dev Requires ownership of the token
-    /// @param tokenId The ID of the token to burn
+    function mint(address owner, uint256 tokenId) internal {
+        _safeMint(owner, tokenId);
+        tokenIds++;
+    }
+
     function burn(uint256 tokenId) public payable {
         _requireOwned(tokenId);
         if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
@@ -177,23 +172,17 @@ contract DegenerativesArtV3 is
 
         _burn(tokenId);
         emit TokenBurnt(tokenId, msg.sender);
-        totalSupply--;
     }
 
-    /// @notice Updates the emojis associated with an existing Degenerative Art NFT
-    /// @dev Requires token ownership and payment in the specified ERC20 token
-    /// @param tokenId The ID of the token to update
-    /// @param newEmojis The new array of emoji strings
     function update(
         uint256 tokenId,
         string[] memory newEmojis
     ) external payable validEmojis(newEmojis) {
-        uint256 moodPayment = newEmojis.length * 10 ** 18;
+        uint256 updatePayment = 100 * 10 ** 18; // @note update fees 100 MOOD
         if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
-        if (MOOD.balanceOf(ownerOf(tokenId)) < moodPayment)
+        if (MOOD.balanceOf(ownerOf(tokenId)) < updatePayment)
             revert InsufficientFunds();
 
-        // Check if cooldown have passed since the last update
         if (
             lastUpdateTimestamp[ownerOf(tokenId)] + cooldown > block.timestamp
         ) {
@@ -202,50 +191,42 @@ contract DegenerativesArtV3 is
 
         if (treasury == address(0)) revert ZeroAddressProvided();
 
-        bool paid = MOOD.transferFrom(msg.sender, treasury, moodPayment);
+        bool paid = MOOD.transferFrom(msg.sender, treasury, updatePayment);
         if (!paid) revert TransferFailed();
 
-        // Update and log emojis
         _updateEmojis(ownerOf(tokenId), tokenId, newEmojis);
     }
 
     function upgrade(uint256 tokenId, address themeAddress) external payable {
         if (themeAddress == address(0)) revert ZeroAddressProvided();
-        if (treasury == address(0)) revert ZeroAddressProvided();
         if (ownerOf(tokenId) != msg.sender) revert NotTokenOwner();
 
-        (address token, uint256 value) = IVisualEngine(themeAddress).getPrice();
-
-        if (IERC20(token).balanceOf(ownerOf(tokenId)) >= value)
-            revert InsufficientFunds();
-
-        if (value != 0 && IERC20(token).balanceOf(msg.sender) >= value) {
-            bool paid = IERC20(token).transferFrom(msg.sender, treasury, value);
-            if (!paid) revert TransferFailed();
+        if (!themePaid[tokenId][themeAddress]) {
+            (address token, uint256 value) = IVisualEngine(themeAddress)
+                .getPrice();
+            if (value > 0) {
+                require(
+                    IERC20(token).transferFrom(msg.sender, treasury, value),
+                    "Payment failed"
+                );
+                themePaid[tokenId][themeAddress] = true;
+            }
         }
 
-        _updateTheme(totalSupply, themeAddress);
+        _updateTheme(tokenId, themeAddress);
     }
 
     //***** HELPER FUNCTIONS *****//
 
-    /// @notice Calculates the mint price based on current supply
-    /// @dev Uses a quadratic curve to increase price as supply increases
-    /// @param supply The current total supply of minted tokens
     function price(uint256 supply) public pure returns (uint256) {
         return 10e12 * (supply ** 2); // @note with tokenSupply 10000, price = 1000 ether
     }
 
-    /// @notice Hashes a combination of emojis for uniqueness check
-    /// @param emojis_ An array of emoji strings to be hashed
     function emojiHash(string[] memory emojis_) public pure returns (bytes32) {
         string memory emojiString = _concatEmojis(emojis_);
         return keccak256(abi.encodePacked(emojiString));
     }
 
-    /// @notice Returns the metadata URI for a given token ID
-    /// @dev Generates metadata dynamically using the Visual Engine
-    /// @param tokenId The ID of the token to fetch metadata for
     function tokenURI(
         uint256 tokenId
     ) public view override returns (string memory) {
@@ -290,12 +271,6 @@ contract DegenerativesArtV3 is
 
     function getLastMoodUpdate(address owner) public view returns (uint256) {
         return lastUpdateTimestamp[owner];
-    }
-
-    function getOwnedTokens(
-        address owner
-    ) public view returns (uint256[] memory) {
-        return owned[owner];
     }
 
     //***** ADMIN FUNCTION *****//
@@ -369,12 +344,7 @@ contract DegenerativesArtV3 is
         // Update mood swing counter; record mood patterns
         moodSwings[tokenId]++; // Increase the counter for mood swings
         totalMoodSwing++;
-        moodPatterns[owner].push(
-            MoodData(totalSupply, block.timestamp, _emojis)
-        );
-
-        //Mark the current emoji combination as used
-        emojisTaken[newEmojiHash] = true;
+        moodPatterns[owner].push(MoodData(tokenId, block.timestamp, _emojis));
         lastUpdateTimestamp[owner] = block.timestamp;
 
         emit TokenUpdated(tokenId, _emojis);
@@ -396,34 +366,10 @@ contract DegenerativesArtV3 is
     }
 
     function _dropMintReward(address minter) internal {
-        // Check if the contract has enough MOOD to reward the minter
-        uint256 moodReward = 1000 * 10 ** 18; // 1000 MOOD tokens
+        uint256 moodReward = 1000 * 10 ** 18;
         if (MOOD.balanceOf(address(this)) > moodReward) {
-            MOOD.transfer(minter, moodReward);
+            bool success = MOOD.transfer(minter, moodReward);
+            require(success, "Reward transfer failed");
         }
-    }
-
-    function _update(
-        address to,
-        uint256 tokenId,
-        address auth
-    ) internal virtual override returns (address) {
-        address from = _ownerOf(tokenId);
-
-        if (from != address(0)) {
-            // Remove the token from the 'from' address's owned list
-            for (uint i = 0; i < owned[from].length; i++) {
-                if (owned[from][i] == tokenId) {
-                    owned[from][i] = owned[from][owned[from].length - 1];
-                    owned[from].pop();
-                    break;
-                }
-            }
-        }
-
-        // Add the token to the 'to' address's owned list
-        owned[to].push(tokenId);
-
-        return super._update(to, tokenId, auth);
     }
 }

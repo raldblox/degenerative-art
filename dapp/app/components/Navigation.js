@@ -64,7 +64,7 @@ export const Navigation = ({ tabs }) => {
             </svg>
           </Link>
         </NavbarBrand>
-        <NavbarContent className="flex h-[50px] gap-2" justify="center">
+        <NavbarContent className="flex h-[50px] gap-1" justify="center">
           <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
           <NavbarItem>
             <Button
@@ -80,7 +80,7 @@ export const Navigation = ({ tabs }) => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent
-          className="items-center hidden gap-2 md:flex"
+          className="items-center hidden gap-1 md:flex"
           justify="end"
         >
           {userAddress && (
@@ -99,6 +99,9 @@ export const Navigation = ({ tabs }) => {
               </NavbarItem>
               <NavbarItem>
                 <Button
+                  as={Link}
+                  href={`https://explorer.etherlink.com/token/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F?tab=inventory&holder_address_hash=${userAddress}`}
+                  isExternal
                   size="sm"
                   color="primary"
                   variant="bordered"
