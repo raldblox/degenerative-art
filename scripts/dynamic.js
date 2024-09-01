@@ -11,7 +11,7 @@ async function main() {
     networkName
   );
 
-  const theme = await hre.ethers.deployContract("Dynamic", [networkName]);
+  const theme = await hre.ethers.deployContract("DynamicMod", [networkName]);
   await theme.waitForDeployment();
   console.log("Dynamic Theme:", theme.target);
 
@@ -37,14 +37,9 @@ async function main() {
   ];
 
   console.log(
-    "opacity:",
-    await theme.calcOpacity("0x0000704b5427D1BE19059Ee68BAdb88935E6079a")
-  );
-
-  console.log(
     "metadata:",
     await theme.generateMetadata(
-      1,
+      1039,
       "0x0000704b5427D1BE19059Ee68BAdb88935E6079a",
       mintEmojis[0],
       1

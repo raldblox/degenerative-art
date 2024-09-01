@@ -85,7 +85,7 @@ export default function Mini() {
       // Send transaction
       const tx = await nftContract.mint(
         inputValues,
-        "0x7defc5C23B46F8FC35A5dFD35Df6d1923774B857",
+        "0x88a87144ED2080c1B077075Bb90dd8EcE5CD8DAD",
         {
           value: price,
         }

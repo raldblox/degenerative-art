@@ -77,10 +77,11 @@ const MintToken = () => {
         signer
       );
       const totalSupply = await nftContract.totalSupply();
-      const price = await nftContract.tokenIds();
+      const tokenIds = await nftContract.tokenIds();
+      const mintprice = await nftContract.price(tokenIds);
 
       // Check if the user has enough native tokens
-      if (Number(nativeBalance) < Number(price)) {
+      if (Number(nativeBalance) < Number(mintprice)) {
         alert("insufficient balance. please acquire more XTZ.");
         return;
       }
@@ -94,22 +95,12 @@ const MintToken = () => {
         return;
       }
 
-      // Check if the user has enough native tokens
-
-      alert("upgrade ongoing. please try again later.");
-
-      // Log transaction details
-      console.log("Minting transaction details:");
-      console.log("Token ID:", totalSupply.toString());
-      console.log("Price:", price.toString());
-      console.log("User Address:", userAddress);
-
       // Send transaction
       const tx = await nftContract.mint(
         inputValues,
-        "0x7defc5C23B46F8FC35A5dFD35Df6d1923774B857",
+        "0x88a87144ED2080c1B077075Bb90dd8EcE5CD8DAD",
         {
-          value: price,
+          value: mintprice,
         }
       );
 
@@ -223,7 +214,6 @@ const MintToken = () => {
         color="default"
         className="transition-all duration-300 text-background bg-foreground w-fit"
         onPress={onOpen}
-        isDisabled
       >
         Mint Your Feels
       </Button>

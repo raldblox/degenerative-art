@@ -150,7 +150,7 @@ export const Providers = (props) => {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = Math.floor(Date.now() / 1000);
-      const cooldownTime = 15 * 60; // 4 hours cooldown in seconds
+      const cooldownTime = 60;
       const endCooldownTime = timeUpdated + cooldownTime;
       const timeLeft = Math.max(0, endCooldownTime - now);
       const hours = String(Math.floor(timeLeft / 3600)).padStart(2, "0");
