@@ -223,7 +223,7 @@ const MintToken = () => {
         color="default"
         className="transition-all duration-300 text-background bg-foreground w-fit"
         onPress={onOpen}
-        // isDisabled
+        isDisabled
       >
         Mint Your Feels
       </Button>
