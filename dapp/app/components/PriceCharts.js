@@ -44,7 +44,7 @@ const LivePriceChart = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="p-4 border border-black bg-white/90 rounded-xl">
+        <div className="p-4 border border-foreground bg-background/90 rounded-xl">
           <p className="text-sm">{`TOKEN SUPPLY: ${label}`}</p>
           <p className="text-sm intro">{`MINT PRICE: ${payload[0].value} $XTZ`}</p>
         </div>
@@ -74,8 +74,8 @@ const LivePriceChart = () => {
               type="monotone"
               name="mint price curve"
               dataKey="price"
-              stroke="black"
-              fill="black"
+              stroke="gray"
+              fill="gray"
               r={1}
             />
             <Legend />
@@ -83,7 +83,7 @@ const LivePriceChart = () => {
               x={roundedTotalSupply.toString()}
               y={calculateMintPrice(roundedTotalSupply)}
               r={3}
-              fill="white"
+              fill="blue"
               stroke="blue"
             />
           </LineChart>

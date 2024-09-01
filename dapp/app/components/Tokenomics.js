@@ -85,7 +85,7 @@ const renderActiveShape = (props) => {
         x={ex + (cos >= 0 ? 1 : -1) * 16}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333"
+        fill="gray"
       >
         {payload.name}
       </text>
