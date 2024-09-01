@@ -124,7 +124,8 @@ export const Providers = (props) => {
       );
       setInstance({ mood: moodContract, nft: nftContract });
       const totalSupply = await nftContract.totalSupply();
-      const price = await nftContract.price(totalSupply);
+      const tokenIds = await nftContract.tokenIds();
+      const price = await nftContract.price(tokenIds);
       setTotalSupply(totalSupply);
       setMintPrice(price);
       console.log("totalSupply:", totalSupply, price);

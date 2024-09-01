@@ -22,7 +22,7 @@ async function main() {
   const v2Data = JSON.parse(fs.readFileSync("v2.json", "utf8"));
 
   // Set the starting tokenId to 5
-  let nextTokenIdToMint = 5;
+  let nextTokenIdToMint = 935;
 
   for (const tokenData of v2Data) {
     const tokenId = tokenData.tokenId;
