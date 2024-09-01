@@ -100,7 +100,7 @@ export const Navigation = ({ tabs }) => {
               <NavbarItem>
                 <Button
                   as={Link}
-                  href={`https://explorer.etherlink.com/token/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F?tab=inventory&holder_address_hash=${userAddress}`}
+                  href={`https://explorer.etherlink.com/token/0x5F440745E21D2F0388F7360586e8d92a9058BccC?tab=inventory&holder_address_hash=${userAddress}`}
                   isExternal
                   size="sm"
                   color="primary"

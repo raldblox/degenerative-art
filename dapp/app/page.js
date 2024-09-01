@@ -227,7 +227,7 @@ export default function Home() {
                             size="sm"
                             as={Link}
                             isExternal
-                            href="https://explorer.etherlink.com/token/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F"
+                            href="https://explorer.etherlink.com/token/0x5F440745E21D2F0388F7360586e8d92a9058BccC"
                           >
                             View all degeneratives.art NFTs
                           </Button>

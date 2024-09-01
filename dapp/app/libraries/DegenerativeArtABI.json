@@ -10,6 +10,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "ERC721EnumerableForbiddenBatchMint",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -110,6 +115,22 @@
       }
     ],
     "name": "ERC721NonexistentToken",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "ERC721OutOfBoundsIndex",
     "type": "error"
   },
   {
@@ -256,6 +277,25 @@
       }
     ],
     "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "themeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ThemePaid",
     "type": "event"
   },
   {
@@ -456,10 +496,10 @@
   },
   {
     "inputs": [],
-    "name": "degenerativesV1",
+    "name": "degenerativesV2",
     "outputs": [
       {
-        "internalType": "contract DegenerativesArt",
+        "internalType": "contract DegenerativesArtV2",
         "name": "",
         "type": "address"
       }
@@ -685,24 +725,26 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "maxEmojis",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_emojis",
+        "type": "string[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "moodSwingCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "toBurn",
+        "type": "bool"
       }
     ],
     "name": "migrate",
@@ -712,7 +754,7 @@
   },
   {
     "inputs": [],
-    "name": "migrating",
+    "name": "migrated",
     "outputs": [
       {
         "internalType": "bool",
@@ -781,6 +823,32 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "isPaused",
+        "type": "bool"
+      }
+    ],
+    "name": "pause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -937,8 +1005,75 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "themePaid",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenByIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "tokenIds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenOfOwnerByIndex",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1064,19 +1199,6 @@
   {
     "inputs": [
       {
-        "internalType": "bool",
-        "name": "isMigrating",
-        "type": "bool"
-      }
-    ],
-    "name": "updateBurningStatus",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_cooldown",
         "type": "uint256"
@@ -1096,19 +1218,6 @@
       }
     ],
     "name": "updateDefaultTheme",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "isMigrating",
-        "type": "bool"
-      }
-    ],
-    "name": "updateMigrationStatus",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

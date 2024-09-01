@@ -147,7 +147,7 @@ const UpdateToken = ({ token }) => {
     try {
       setUpdating(true);
       const nftContract = new ethers.Contract(
-        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
+        "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
         nftAbi,
         signer
       );
@@ -161,13 +161,13 @@ const UpdateToken = ({ token }) => {
 
       const allowance = await MOOD.allowance(
         userAddress,
-        "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F"
+        "0x5F440745E21D2F0388F7360586e8d92a9058BccC"
       );
       console.log("allowance:", allowance);
 
       if (allowance < updatePrice) {
         const tx = await MOOD.approve(
-          "0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F",
+          "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
           updatePrice
         );
         console.log("Approval transaction sent.");

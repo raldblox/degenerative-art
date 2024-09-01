@@ -73,7 +73,7 @@ export const MyFeels = () => {
               <Button
                 as={Link}
                 isExternal
-                href={`https://explorer.etherlink.com/token/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F/instance/${token?.tokenId}`}
+                href={`https://explorer.etherlink.com/token/0x5F440745E21D2F0388F7360586e8d92a9058BccC/instance/${token?.tokenId}`}
                 radius="full"
                 variant="light"
                 className="flex items-center p-0"
@@ -89,7 +89,7 @@ export const MyFeels = () => {
               <Button
                 as={Link}
                 isExternal
-                href={`https://rarible.com/token/etherlink/0xa3c4e2C4772B879FD82Dd9a6735B4ee8a600B54F:${token?.tokenId}`}
+                href={`https://rarible.com/token/etherlink/0x5F440745E21D2F0388F7360586e8d92a9058BccC:${token?.tokenId}`}
                 radius="full"
                 variant="light"
                 className="flex items-center p-0"
