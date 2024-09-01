@@ -101,7 +101,7 @@ export default function Home() {
             size="sm"
             className=""
             classNames={{
-              tabList: "border-small gap-1 bg-default-100",
+              tabList: "border-small gap-0 bg-default-100",
             }}
             variant="bordered"
             radius="full"

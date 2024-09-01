@@ -64,8 +64,20 @@ export const Navigation = ({ tabs }) => {
             </svg>
           </Link>
         </NavbarBrand>
-        <NavbarContent className="flex h-[50px]" justify="center">
+        <NavbarContent className="flex h-[50px] gap-2" justify="center">
           <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
+          <NavbarItem>
+            <Button
+              size="sm"
+              color="primary"
+              variant="solid"
+              radius="full"
+              className="font-bold"
+              onClick={onOpen}
+            >
+              {userAddress ? "Account" : "Connect"}
+            </Button>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent
           className="items-center hidden gap-2 md:flex"

@@ -163,7 +163,7 @@ contract Dynamic is IVisualEngine, Ownable(msg.sender) {
                 externalUrl,
                 '","attributes": [{"trait_type": "Impression", "value": "',
                 emojis[0],
-                '"},{"trait_type": "Vibe", "value": "',
+                '"},{"trait_type": "1,1", "value": "',
                 emojis[1],
                 '"},{"trait_type": "Aura", "value": "',
                 emojis[2],

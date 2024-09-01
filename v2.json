@@ -22,10 +22,10 @@
   },
   {
     "tokenId": 3,
-    "emojis": ["🎲", "🎰", "🃏", "🤑", "💸", "💰", "🚀", "🌙", "🤞"],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": "1",
     "hash": "0x5a89a76f41cd8367d9b79acf9c52c5bf9ba3dad3f83716faca523f9349324ed6",
-    "isBurned": false
+    "isBurned": true
   },
   {
     "tokenId": 4,
@@ -6700,7 +6700,7 @@
   },
   {
     "tokenId": 957,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -6903,7 +6903,7 @@
   },
   {
     "tokenId": 986,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -6931,7 +6931,7 @@
   },
   {
     "tokenId": 990,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -6945,7 +6945,7 @@
   },
   {
     "tokenId": 992,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -6959,7 +6959,7 @@
   },
   {
     "tokenId": 994,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -7015,7 +7015,7 @@
   },
   {
     "tokenId": 1002,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
@@ -7267,14 +7267,14 @@
   },
   {
     "tokenId": 1038,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
   },
   {
     "tokenId": 1039,
-    "emojis": [],
+    "emojis": ["", "", "", "", "", "", "", "", ""],
     "swing": 0,
     "hash": "0x0",
     "isBurned": true
