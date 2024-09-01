@@ -133,7 +133,7 @@ export default function Home() {
               id="start"
             >
               <div className="flex transition-all duration-200 relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-default-50 rounded-3xl">
-                <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-background text-tiny text-balance border-small">
+                <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-default-50 text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
                 <h1 className="max-w-2xl text-3xl font-semibold text-center lowercase transition-all duration-500 text-balance md:text-4xl animate-appearance-in">
@@ -237,7 +237,11 @@ export default function Home() {
                   >
                     <div className="lg:absolute grid animate-appearance-in top-[15%] left-[7%]">
                       <div className="flex items-center gap-2">
-                        <Image src="./etherlink_icon.svg" height={20} width={20} />
+                        <Image
+                          src="./etherlink_icon.svg"
+                          height={20}
+                          width={20}
+                        />
 
                         <p className="text-sm font-bold">Etherlink</p>
                       </div>

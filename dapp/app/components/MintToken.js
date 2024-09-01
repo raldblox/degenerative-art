@@ -177,7 +177,7 @@ const MintToken = () => {
             data-index={i}
             maxLength={2}
             ref={(el) => (inputRef.current[i] = el)}
-            className={` w-16 h-16 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-default-300 outline-none focus:border-primary ${
+            className={` w-16 h-16 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-lg border-2 border-default-300 outline-none focus:border-primary ${
               i >= activeFields ? "hidden" : ""
             }`}
             onChange={(e) => {
@@ -231,14 +231,14 @@ const MintToken = () => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="xl"
+        size="2xl"
         className="p-6 border-4 border-background bg-default-100"
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <label className="text-2xl font-semibold tracking-tight text-center lowercase text-md">
+                <label className="text-xl font-semibold tracking-tight text-center lowercase md:text-3xl">
                   now enter the one-time emoji mood that universe gave you today
                 </label>
               </ModalHeader>
@@ -283,7 +283,7 @@ const MintToken = () => {
                         size="lg"
                         radius="full"
                         variant="solid"
-                        className="mx-auto w-fit"
+                        className="mx-auto min-w-[150px]"
                         color={txHash ? "success" : "primary"}
                         onClick={handleMint}
                         isLoading={minting}
