@@ -141,7 +141,7 @@ export const Navigation = ({ tabs }) => {
           {(onClose) => (
             <>
               <ModalHeader
-                className="flex flex-col gap-1"
+                className="flex flex-col gap-1 text-2xl text-center"
                 onClick={connectEthereumWallet}
               >
                 {userAddress ? "Account connected" : "  Connect your account"}
