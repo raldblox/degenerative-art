@@ -14,6 +14,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { ethers } from "ethers";
+import Image from "next/image";
 
 const MintToken = () => {
   const {
@@ -40,6 +41,11 @@ const MintToken = () => {
       // Check for at least one filled input
       if (inputValues.every((value) => value === "")) {
         alert("Please fill in at least one input.");
+        return;
+      }
+
+      if (inputValues.includes(":etherlink:")) {
+        alert("Etherlink logo not supported yet. Stay tuned!");
         return;
       }
 
@@ -156,33 +162,84 @@ const MintToken = () => {
     }
   };
 
+  const handleKeyDown = (event, focusedIndex) => {
+    if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      event.altKey &&
+      event.key.toLowerCase() === "e"
+    ) {
+      // Directly update the inputValues at the focusedIndex if it's empty
+      if (focusedIndex !== null && inputValues[focusedIndex] === "") {
+        setInputValues((prevValues) => {
+          const newValues = [...prevValues];
+          newValues[focusedIndex] = ":etherlink:";
+          return newValues;
+        });
+
+        // Focus on the next input if available
+        if (focusedIndex < 8) {
+          inputRef.current[focusedIndex + 1].focus();
+        }
+      } else {
+        // If no input is focused or the focused one is not empty,
+        // find the first empty one and insert
+        const nextEmptyIndex = inputValues.findIndex((value) => value === "");
+        if (nextEmptyIndex !== -1) {
+          setInputValues((prevValues) => {
+            const newValues = [...prevValues];
+            newValues[nextEmptyIndex] = ":etherlink:";
+            return newValues;
+          });
+
+          if (nextEmptyIndex < 8) {
+            inputRef.current[nextEmptyIndex + 1].focus();
+          }
+        }
+      }
+    }
+  };
+
   const renderInputFields = () => {
     return (
       <>
         {inputValues.map((value, i) => (
-          <input
-            data-emoji-input="unicode"
-            key={i}
-            size="lg"
-            type="text"
-            data-index={i}
-            maxLength={2}
-            ref={(el) => (inputRef.current[i] = el)}
-            className={` w-16 h-16 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-lg border-2 border-default-300 outline-none focus:border-primary ${
-              i >= activeFields ? "hidden" : ""
-            }`}
-            onChange={(e) => {
-              const value = e.target.value;
-              const validChar = value.match(/(\p{Emoji_Presentation}|[^\s])/u);
-              if (validChar) {
-                e.target.value = validChar[0];
-              } else {
-                e.target.value = "";
-              }
-              handleChange(e, i);
-            }}
-            onKeyUp={(e) => handleKeyUp(e, i)}
-          />
+          <>
+            <div key={i} className="relative">
+              <input
+                data-emoji-input="unicode"
+                key={i}
+                size="lg"
+                type="text"
+                data-index={i}
+                maxLength={2}
+                onKeyDown={(e) => handleKeyDown(e, i)}
+                ref={(el) => (inputRef.current[i] = el)}
+                className={` w-16 h-16 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-lg border-2 border-default-300 outline-none focus:border-primary ${
+                  i >= activeFields ? "hidden" : ""
+                }`}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validChar = value.match(
+                    /(\p{Emoji_Presentation}|[^\s])/u
+                  );
+                  if (validChar) {
+                    e.target.value = validChar[0];
+                  } else {
+                    e.target.value = "";
+                  }
+                  handleChange(e, i);
+                }}
+                onKeyUp={(e) => handleKeyUp(e, i)}
+              />
+
+              {value === ":etherlink:" && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Image src="./etherlink_icon.svg" height={25} width={25} />
+                </div>
+              )}
+            </div>
+          </>
         ))}
       </>
     );
@@ -252,20 +309,30 @@ const MintToken = () => {
                       Don&apos;t worry if your cosmic vibes change tomorrow...
                       your dynamic NFT is so well-prepared to evolve alongside
                       you! We&apos;ll provide you 1000 $MOOD token after mint to
-                      fuel your daily mood swings for the next 100 days! you may
+                      fuel your daily mood swings for the next 10 days! you may
                       now mint ser 🫡
                     </p>
                   </>
                 )}
                 {countdown === "00:00:00" && (
                   <>
-                    <div className="flex flex-col items-center justify-center space-y-4">
+                    <div className="flex flex-col items-center justify-center py-6 space-y-2">
                       <div
                         ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 p-6 rounded-lg"
+                        className="grid grid-cols-3 gap-2 rounded-lg"
                       >
                         {renderInputFields()}
                       </div>
+                      <Button
+                        className="mx-auto w-fit"
+                        size="sm"
+                        radius="full"
+                        variant="light"
+                        color="warning"
+                        onClick={() => setInputValues(Array(9).fill(""))}
+                      >
+                        Reset
+                      </Button>
                     </div>
 
                     {userAddress ? (
