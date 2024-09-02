@@ -191,13 +191,14 @@ export const Providers = (props) => {
       setLoading(true);
       const node = "https://node.mainnet.etherlink.com";
       const provider = new ethers.JsonRpcProvider(node);
+
+      // Assuming your DegenerativesArtV3 contract inherits from ERC721Enumerable
       const nftContract = new ethers.Contract(
         "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
         nftAbi,
         provider
       );
-      const totalSupply = await nftContract.totalSupply();
-      console.log("totalSupply///", totalSupply);
+
       const balanceOf = await nftContract.balanceOf(userAddress);
       console.log("balanceOf///", balanceOf);
 
@@ -207,38 +208,34 @@ export const Providers = (props) => {
 
       const userTokens = [];
 
-      // Fetch token data sequentially, handling potential errors for burned tokens
-      for (let tokenId = Number(totalSupply) - 1; tokenId > 0; tokenId--) {
-        try {
-          const owner = await nftContract.ownerOf(tokenId);
-          if (owner.toLowerCase() === userAddress?.toLowerCase()) {
-            console.log("found///", tokenId);
+      // Use ERC721Enumerable's tokenOfOwnerByIndex to iterate over owned tokens
+      for (let index = 0; index < Number(balanceOf); index++) {
+        const tokenId = await nftContract.tokenOfOwnerByIndex(
+          userAddress,
+          index
+        );
 
-            const emojis = await nftContract.getEmojis(
-              tokenId > 1038 ? Number(tokenId) + 1 : tokenId
-            );
-            const moodSwing = await nftContract.getMoodSwing(tokenId);
-            userTokens.push({
-              tokenId,
-              owner,
-              emojis,
-              moodSwing: moodSwing.toString(),
-            });
+        console.log("Fetching//", tokenId);
 
-            setUserNFTs(userTokens);
+        // Fetch emojis from the next tokenId if current tokenId is above 1039
+        const emojis = await nftContract.getEmojis(
+          tokenId > 1039 ? tokenId + 1 : tokenId
+        );
+        const moodSwing = await nftContract.getMoodSwing(tokenId);
+        console.log("emojis//", emojis, moodSwing);
 
-            if (userTokens.length === Number(balanceOf)) {
-              setLoading(false);
-              break;
-            }
-          }
-        } catch (error) {
-          // If `ownerOf` throws an error, it likely means the token is burned.
-          // We can simply continue to the next tokenId.
-          console.warn(
-            `Error fetching token ${tokenId}, likely burned:`,
-            error
-          );
+        userTokens.push({
+          tokenId: tokenId, // Convert tokenId to string
+          owner: userAddress,
+          emojis,
+          moodSwing: moodSwing.toString(),
+        });
+
+        setUserNFTs(userTokens);
+
+        if (userTokens.length === Number(balanceOf)) {
+          setLoading(false);
+          break;
         }
       }
     } catch (error) {
