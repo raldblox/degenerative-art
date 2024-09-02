@@ -323,16 +323,20 @@ const MintToken = () => {
                       >
                         {renderInputFields()}
                       </div>
-                      <Button
-                        className="mx-auto w-fit"
-                        size="sm"
-                        radius="full"
-                        variant="light"
-                        color="warning"
-                        onClick={() => setInputValues(Array(9).fill(""))}
-                      >
-                        Reset
-                      </Button>
+                      <div className="h-4">
+                        {!inputValues.every((value) => value === "") && (
+                          <Button
+                            className="mx-auto w-fit animate-appearance-in"
+                            size="sm"
+                            radius="full"
+                            variant="light"
+                            color="warning"
+                            onClick={() => setInputValues(Array(9).fill(""))}
+                          >
+                            Reset
+                          </Button>
+                        )}
+                      </div>
                     </div>
 
                     {userAddress ? (
