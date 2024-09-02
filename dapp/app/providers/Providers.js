@@ -213,7 +213,10 @@ export const Providers = (props) => {
           const owner = await nftContract.ownerOf(tokenId);
           if (owner.toLowerCase() === userAddress?.toLowerCase()) {
             console.log("found///", tokenId);
-            const emojis = await nftContract.getEmojis(tokenId);
+
+            const emojis = await nftContract.getEmojis(
+              tokenId > 1038 ? Number(tokenId) + 1 : tokenId
+            );
             const moodSwing = await nftContract.getMoodSwing(tokenId);
             userTokens.push({
               tokenId,
@@ -221,6 +224,7 @@ export const Providers = (props) => {
               emojis,
               moodSwing: moodSwing.toString(),
             });
+
             setUserNFTs(userTokens);
 
             if (userTokens.length === Number(balanceOf)) {
