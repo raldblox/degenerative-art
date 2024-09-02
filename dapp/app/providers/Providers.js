@@ -225,7 +225,7 @@ export const Providers = (props) => {
         console.log("emojis//", emojis, moodSwing);
 
         userTokens.push({
-          tokenId: tokenId, // Convert tokenId to string
+          tokenId: Number(tokenId),
           owner: userAddress,
           emojis,
           moodSwing: moodSwing.toString(),
