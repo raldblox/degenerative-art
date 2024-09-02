@@ -737,6 +737,9 @@ export default function Home() {
               </section>
             </>
           )}
+          <footer className="flex items-center justify-center w-full p-6 text-sm font-semibold bg-default-50 text-default-400">
+            <h1>Made with 💚 for Degens</h1>
+          </footer>
         </>
       )}
     </>
