@@ -133,9 +133,9 @@ export default function Home() {
               id="start"
             >
               <div className="flex transition-all duration-200 relative flex-col space-y-12 items-center min-h-[550px] justify-center w-full h-full p-6 md:p-12 bg-default-50 rounded-3xl">
-                <span className="bg-[orange] drop-shadow-md text-xs animate-bounce text-black px-3 py-1 rounded-full">
+                {/* <span className="bg-[orange] drop-shadow-md text-xs animate-bounce text-black px-3 py-1 rounded-full">
                   🚧 Upgrade Ongoing 🚧
-                </span>
+                </span> */}
                 <span className="p-1 px-4 text-center lowercase rounded-full shadow-md bg-default-50 text-tiny text-balance border-small">
                   Where Emotions Become Art 🎨 and Currency 🪙
                 </span>
@@ -245,7 +245,6 @@ export default function Home() {
                           height={20}
                           width={20}
                         />
-
                         <p className="text-sm font-bold">Etherlink</p>
                       </div>
                       <span className="text-[10px] pl-6 text-default-500">
