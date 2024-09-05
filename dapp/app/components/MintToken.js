@@ -294,7 +294,7 @@ const MintToken = () => {
                   <>
                     <p className="text-xs text-center lowercase text-default-700 text-balance">
                       Ser, see that cooldown timer? Yeah, you can only
-                      mint/update your feels every 15 minutes. Gotta pace
+                      mint/update your feels every 1 minute. Gotta pace
                       yourself, champ! Too many mood swings aren&apos;t healthy.
                       Remember to take breaks, hydrate, and maybe touch grass.
                       🧘‍♂️💚

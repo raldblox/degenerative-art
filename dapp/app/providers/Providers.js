@@ -219,7 +219,7 @@ export const Providers = (props) => {
 
         // Fetch emojis from the next tokenId if current tokenId is above 1039
         const emojis = await nftContract.getEmojis(
-          tokenId > 1038 ? tokenId + 1 : tokenId
+          tokenId > 1038 ? Number(tokenId) + 1 : tokenId
         );
         const moodSwing = await nftContract.getMoodSwing(tokenId);
         console.log("emojis//", emojis, moodSwing);

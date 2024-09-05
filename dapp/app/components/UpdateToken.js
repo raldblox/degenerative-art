@@ -101,7 +101,7 @@ const UpdateToken = ({ token }) => {
           type="text"
           data-index={i}
           ref={(el) => (inputRef.current[i] = el)}
-          className={`animate-appearance-in w-12 h-12 placeholder:saturate-0 text-2xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+          className={`animate-appearance-in w-16 h-16 placeholder:saturate-0 text-3xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => {
@@ -157,7 +157,7 @@ const UpdateToken = ({ token }) => {
         signer
       );
 
-      const updatePrice = ethers.parseEther("10"); // 10 MOOD
+      const updatePrice = ethers.parseEther("100"); // 10 MOOD
 
       const allowance = await MOOD.allowance(
         userAddress,
@@ -198,9 +198,9 @@ const UpdateToken = ({ token }) => {
         variant="solid"
         color="primary"
         className="text-sm lowercase transition-all duration-300 cursor-pointer text-primary hover:scale-95 w-fit"
-        // onClick={onOpen}
+        onClick={onOpen}
       >
-        Update (paused)
+        Update
       </span>
 
       <Modal
@@ -222,7 +222,7 @@ const UpdateToken = ({ token }) => {
                   <>
                     <p className="text-xs text-center lowercase">
                       Ser, see that cooldown timer? Yeah, you can only
-                      mint/update your feels every 15 minutes. Gotta pace
+                      mint/update your feels every 1 minute. Gotta pace
                       yourself, champ! Too many mood swings aren&apos;t healthy.
                       Remember to take breaks, hydrate, and maybe touch grass.
                       🧘‍♂️💚
@@ -239,9 +239,9 @@ const UpdateToken = ({ token }) => {
                       the higher your staking rewards will be. The most
                       expressive unlocks the greatest rewards!
                     </p>
-                    <div className="mx-auto">
+                    <div className="mx-auto space-y-3">
                       <div className="mx-auto">
-                        <div className="grid w-full p-6 duration-300 bg-white group-hover:shadow rounded-2xl aspect-square">
+                        <div className="grid w-full p-6 duration-300 group-hover:shadow rounded-2xl aspect-square">
                           <div
                             ref={fieldsRef}
                             className="grid grid-cols-3 gap-3"
@@ -274,6 +274,7 @@ const UpdateToken = ({ token }) => {
                     size="sm"
                     showAnchorIcon
                     className="animate-appearance-in"
+                    isExternal
                   >
                     View Transaction Receipt
                   </Link>
