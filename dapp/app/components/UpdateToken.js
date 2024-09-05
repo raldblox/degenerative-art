@@ -157,6 +157,15 @@ const UpdateToken = ({ token }) => {
         signer
       );
 
+      const emojiHash = await nftContract.emojiHash(inputValues);
+      const taken = await nftContract.emojisTaken(emojiHash);
+
+      // Check if the user has enough native tokens
+      if (taken) {
+        alert("emoji mood pattern is taken");
+        return;
+      }
+
       const updatePrice = ethers.parseEther("100"); // 10 MOOD
 
       const allowance = await MOOD.allowance(
