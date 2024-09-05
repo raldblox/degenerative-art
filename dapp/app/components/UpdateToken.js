@@ -41,6 +41,7 @@ const UpdateToken = ({ token }) => {
   const [activeFields, setActiveFields] = useState(9);
 
   const [txHash, setTxHash] = useState("");
+  const [emojiHash, setEmojiHash] = useState("");
   const [userNFTs, setUserNFTs] = useState([]);
   const [fetching, setFetching] = useState(false);
   const [emojis, setEmojis] = useState(token?.emojis);
@@ -158,11 +159,16 @@ const UpdateToken = ({ token }) => {
       );
 
       const emojiHash = await nftContract.emojiHash(inputValues);
+      console.log("emojihash:", emojiHash);
       const taken = await nftContract.emojisTaken(emojiHash);
 
       // Check if the user has enough native tokens
-      if (taken) {
-        alert("emoji mood pattern is taken");
+      if (
+        taken ||
+        emojiHash ==
+          "0x87e422af3ea01e04fd62404df56d04b0f0726eb090e9248390fadd644816c21b"
+      ) {
+        alert(`Emoji mood pattern is taken. EMOJIHASH: ${emojiHash}`);
         return;
       }
 
