@@ -2,18 +2,18 @@
 
 import { useContext, useEffect, useState } from "react";
 import { Button, Image, Link, Tab, Tabs, Tooltip } from "@nextui-org/react";
-import { FlipWords } from "./components/FlipWords";
-import { EmojiGlass } from "./components/EmojiGlass";
-import { Navigation } from "./components/Navigation";
-import { Context } from "./providers/Providers";
-import MintToken from "./components/MintToken";
+import { FlipWords } from "../components/FlipWords";
+import { EmojiGlass } from "../components/EmojiGlass";
+import { Navigation } from "../components/Navigation";
+import { Context } from "../providers/Providers";
+import MintToken from "../components/MintToken";
 import { ethers } from "ethers";
-import LivePriceChart from "./components/PriceCharts";
-import { AssetLoader } from "./components/AssetLoader";
-import AllFeels from "./components/AllFeels";
-import UpdateToken from "./components/UpdateToken";
-import { MyFeels } from "./components/MyFeels";
-import MoodTokenomicsChart from "./components/Tokenomics";
+import LivePriceChart from "../components/PriceCharts";
+import { AssetLoader } from "../components/AssetLoader";
+import AllFeels from "../components/AllFeels";
+import UpdateToken from "../components/UpdateToken";
+import { MyFeels } from "../components/MyFeels";
+import MoodTokenomicsChart from "../components/Tokenomics";
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {

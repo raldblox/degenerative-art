@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Providers } from "./providers/Providers";
+import { Providers } from "../providers/Providers";
 import { Montserrat } from "next/font/google";
 const montserrat = Montserrat({ subsets: ["latin"] });
 import { Analytics } from "@vercel/analytics/react";

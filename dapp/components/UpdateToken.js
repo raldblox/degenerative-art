@@ -2,8 +2,8 @@
 import * as emoji from "node-emoji";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
-import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
+import erc20Abi from "@/libraries/ERC20TokenABI.json";
 import { Context } from "../providers/Providers";
 import {
   Button,

@@ -2,7 +2,7 @@
 
 import { Button, Link } from "@nextui-org/react";
 import React, { useContext, useState } from "react";
-import { Context } from "../providers/Providers";
+import { Context } from "../../providers/Providers";
 import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
 import { ethers } from "ethers";
 

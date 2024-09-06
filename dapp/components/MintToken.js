@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
 import { Context } from "../providers/Providers";
 import {
   Button,

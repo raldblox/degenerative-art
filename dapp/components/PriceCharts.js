@@ -16,7 +16,7 @@ import {
 import { ethers } from "ethers";
 import { Context } from "../providers/Providers";
 import { Spinner } from "@nextui-org/react";
-import priceData from "@/app/libraries/price_data.json"; // Import the JSON data
+import priceData from "@/libraries/price_data.json"; // Import the JSON data
 
 export const calculateMintPrice = (totalSupply) => {
   const priceInWei = BigInt(10e12) * BigInt(totalSupply) ** BigInt(2);

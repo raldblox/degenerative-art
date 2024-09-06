@@ -1,8 +1,13 @@
 "use client";
 
 import {
+  Avatar,
   Button,
   Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Link,
   Modal,
   ModalBody,
@@ -24,11 +29,15 @@ import { Context } from "../providers/Providers";
 import { ethers } from "ethers";
 import { useTheme } from "next-themes";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import DegenerativesID from "./TwitterAccount";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export const Navigation = ({ tabs }) => {
   const { connectEthereumWallet, userAddress, balances, fetching } = useContext(
     Context
   );
+  const { data: session, status } = useSession();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -80,7 +89,7 @@ export const Navigation = ({ tabs }) => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent
-          className="items-center hidden gap-1 md:flex"
+          className="items-center hidden gap-3 md:flex"
           justify="end"
         >
           {userAddress && (
@@ -113,21 +122,102 @@ export const Navigation = ({ tabs }) => {
               </NavbarItem>
             </>
           )}
-          <NavbarItem>
-            <Button
-              size="sm"
-              color="primary"
-              variant="solid"
-              radius="full"
-              className="font-bold"
-              onClick={onOpen}
+
+          <Dropdown placement="bottom-end" className="">
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="primary"
+                name={session?.user ? session?.user.name : ""}
+                size="sm"
+                src={session?.user.image}
+              />
+            </DropdownTrigger>
+
+            <DropdownMenu
+              aria-label="Profile Actions"
+              className=""
+              variant="flat"
             >
-              {userAddress ? "Account" : "Connect"}
-            </Button>
-          </NavbarItem>
-          <NavbarItem className="flex items-center">
-            <ThemeSwitcher />
-          </NavbarItem>
+              <DropdownItem
+                key="profile"
+                className="flex flex-row gap-2"
+                variant="light"
+              >
+                <p className="text-lg font-semibold">
+                  gm,{" "}
+                  <span className="font-semibold">
+                    {session?.user ? session?.user.name : "ser"}
+                  </span>
+                </p>
+              </DropdownItem>
+              {/* {session?.user && userAddress && (
+                <DropdownItem color="primary" key="settings">
+                  <span className="flex items-center gap-2">
+                    degeneratives.id{" "}
+                    <svg
+                      className="h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M4 14v6h6v-2H6v-4z" fill="currentColor" />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M9 9v6h6V9zm4 2h-2v2h2z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M4 10V4h6v2H6v4zm16 0V4h-6v2h4v4zm0 4v6h-6v-2h4v-4z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </span>
+                </DropdownItem>
+              )} */}
+              <DropdownItem onClick={onOpen} color="warning">
+                {userAddress ? (
+                  <>
+                    {userAddress.slice(0, 7)}...{userAddress.slice(-5)}
+                  </>
+                ) : (
+                  "Connect Wallet"
+                )}
+              </DropdownItem>
+
+              {session?.user ? (
+                <DropdownItem
+                  showDivider
+                  key="logout"
+                  color="danger"
+                  className="text-danger"
+                  onClick={() => {
+                    signOut("twitter");
+                  }}
+                >
+                  Sign out X/Twitter
+                </DropdownItem>
+              ) : (
+                <DropdownItem
+                  showDivider
+                  key="logout"
+                  color="success"
+                  onClick={() => {
+                    signIn("twitter");
+                  }}
+                >
+                  Connect X/Twitter
+                </DropdownItem>
+              )}
+
+              <DropdownItem className="" variant="light">
+                <ThemeSwitcher />
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </NavbarContent>
       </Navbar>
 
@@ -156,19 +246,12 @@ export const Navigation = ({ tabs }) => {
                     "Connect Metamask Wallet"
                   )}
                 </Button>
-                <Divider />
-                <Button
-                  radius="full"
-                  variant="solid"
-                  color="primary"
-                  className="bg-foreground text-background"
-                >
-                  Sign in with X/Twitter (soon)
-                </Button>
+                {/* <Divider />
+                <DegenerativesID />
 
                 <Button radius="full" variant="solid" color="primary">
                   Create <span className="">degeneratives.id</span> (soon)
-                </Button>
+                </Button> */}
               </ModalBody>
               <ModalFooter className="flex justify-center w-full gap-2"></ModalFooter>
             </>

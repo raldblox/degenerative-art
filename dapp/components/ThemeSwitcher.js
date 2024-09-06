@@ -12,11 +12,11 @@ export function ThemeSwitcher() {
       <Switch
         classNames={{
           base: "p-0 right-0 ",
-          wrapper: "gap-0 m-0",
+          wrapper: "gap-0 m-0 ",
         }}
         value={theme}
         onValueChange={() => setTheme(theme == "dark" ? "light" : "dark")}
-        size="md"
+        size="sm"
         color="primary"
         startContent={
           <svg

@@ -1,11 +1,12 @@
 "use client";
 
 import { ethers } from "ethers";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
-import erc20Abi from "@/app/libraries/ERC20TokenABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
+import erc20Abi from "@/libraries/ERC20TokenABI.json";
 import { createContext, useEffect, useState } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 
 export const Context = createContext();
 
@@ -27,6 +28,17 @@ export const Providers = (props) => {
   const [timeUpdated, setTimeUpdated] = useState(0);
   const [countdown, setCountdown] = useState("00:00:00");
   const [data, setData] = useState([]);
+
+  // did
+  const [handle, setHandle] = useState("");
+  const [wallet, setWallet] = useState("");
+  const [primaryWallet, setPrimaryWallet] = useState("");
+  const [storageAccount, setStorageAccount] = useState(false);
+  const [handleHash, setHandleHash] = useState(null);
+  const [bindHash, setBindHash] = useState(null);
+  const [postHash, setPostHash] = useState(null);
+  const [posting, setPosting] = useState(false);
+  const [analytics, setAnalytics] = useState(null);
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -273,12 +285,32 @@ export const Providers = (props) => {
     setUpdated,
     data,
     setData,
+    handle,
+    setHandle,
+    wallet,
+    setWallet,
+    storageAccount,
+    setStorageAccount,
+    primaryWallet,
+    setPrimaryWallet,
+    handleHash,
+    setHandleHash,
+    bindHash,
+    setBindHash,
+    posting,
+    setPosting,
+    postHash,
+    setPostHash,
+    analytics,
+    setAnalytics,
   };
 
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <Context.Provider value={value}>{props.children}</Context.Provider>
+        <Context.Provider value={value}>
+          <SessionProvider>{props.children}</SessionProvider>
+        </Context.Provider>
       </NextThemesProvider>
     </NextUIProvider>
   );

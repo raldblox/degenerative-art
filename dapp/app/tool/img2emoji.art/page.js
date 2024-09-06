@@ -1,6 +1,6 @@
 "use client";
 
-import { Context } from "@/app/providers/Providers";
+import { Context } from "@/providers/Providers";
 import { Button, Input, Link, Slider } from "@nextui-org/react";
 import { useState, useRef, useEffect, useContext } from "react";
 
@@ -333,10 +333,10 @@ const EmojiMosaic = () => {
 
   return (
     <div className="w-screen h-screen p-4 space-y-4 overflow-x-hidden">
-      <nav className="flex items-center justify-center w-full p-4 md:justify-between bg-zinc-100 rounded-2xl">
-        <Link href="/" className="flex items-center">
+      <nav className="flex items-center justify-center w-full p-4 md:justify-between bg-default-100 rounded-2xl">
+        <Link href="/" className="flex items-center !text-foreground">
           <svg
-            className="h-8 text-black"
+            className="h-8"
             viewBox="0 0 35 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -358,7 +358,7 @@ const EmojiMosaic = () => {
               fill="currentColor"
             />
           </svg>
-          <p className="px-3 text-lg font-semibold text-black">
+          <p className="px-3 text-lg font-semibold">
             img2emoji<span className="opacity-50">.art</span>
           </p>
         </Link>
@@ -369,7 +369,7 @@ const EmojiMosaic = () => {
               size="md"
               fullWidth
               radius="full"
-              className="text-white bg-black"
+              className="text-foreground bg-background"
               onClick={() => handleDownload("png")}
             >
               Download PNG
@@ -387,7 +387,7 @@ const EmojiMosaic = () => {
         )}
       </nav>
       <div className="grid gap-3 md:grid-cols-2">
-        <div className="flex flex-col items-center justify-center w-full min-h-40 bg-zinc-100 rounded-2xl">
+        <div className="flex flex-col items-center justify-center w-full min-h-40 bg-default-100 rounded-2xl">
           <label
             htmlFor="file"
             className="p-4 text-center cursor-pointer md:p-8"
@@ -404,7 +404,7 @@ const EmojiMosaic = () => {
               />
             </svg>
 
-            <p className="w-full text-black">
+            <p className="w-full text-background">
               Click to <span className="font-semibold">upload your image</span>{" "}
               or drop your image here
             </p>
@@ -417,7 +417,7 @@ const EmojiMosaic = () => {
             disabled={Number(balances.nft) < 5}
           />
         </div>
-        <div className="grid grid-cols-2 gap-3 p-4 bg-zinc-100 rounded-2xl">
+        <div className="grid grid-cols-2 gap-3 p-4 bg-default-100 rounded-2xl">
           <div className="w-full ">
             {originalImage && (
               <div className="flex items-center justify-center w-full p-4 rounded-2xl">
@@ -447,20 +447,20 @@ const EmojiMosaic = () => {
         </p>
       )}
       <div className="grid w-full gap-3 md:grid-cols-2 ">
-        <div className="relative w-full p-4 bg-zinc-100 rounded-2xl">
+        <div className="relative w-full p-4 bg-default-100 rounded-2xl">
           <canvas ref={canvasRef} className="w-full"></canvas>
-          <div className="absolute top-0 px-2 py-1 text-xs text-white bg-black drop-shadow-lg right-6">
+          <div className="absolute top-0 px-2 py-1 text-xs text-foreground bg-background drop-shadow-lg right-6">
             PNG
           </div>
         </div>
 
-        <div className="relative w-full bg-zinc-100 rounded-2xl">
+        <div className="relative w-full bg-default-100 rounded-2xl">
           <div className="w-full p-4">
             {" "}
             {canvasReady && <img src={svgImage} className="" />}
           </div>
 
-          <div className="absolute top-0 px-2 py-1 text-xs text-white bg-blue-600 drop-shadow-lg right-6">
+          <div className="absolute top-0 px-2 py-1 text-xs bg-blue-600 text-foreground drop-shadow-lg right-6">
             SVG
           </div>
         </div>
@@ -472,7 +472,7 @@ const EmojiMosaic = () => {
             size="md"
             fullWidth
             radius="full"
-            className="text-white bg-black"
+            className="text-foreground bg-background"
             onClick={() => handleDownload("png")}
           >
             Download PNG

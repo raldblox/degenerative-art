@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
 import { AssetLoader } from "./AssetLoader";
 import { Button, Image, Link } from "@nextui-org/react";
 import EmojisContainer from "./EmojisContainer";

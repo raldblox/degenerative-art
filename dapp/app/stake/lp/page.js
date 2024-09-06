@@ -1,8 +1,8 @@
 "use client";
 
-import lstStakingAbi from "@/app/libraries/LPStakingABI.json";
-import ERC20TokenABI from "@/app/libraries/ERC20TokenABI.json";
-import { Context } from "@/app/providers/Providers";
+import lstStakingAbi from "@/libraries/LPStakingABI.json";
+import ERC20TokenABI from "@/libraries/ERC20TokenABI.json";
+import { Context } from "@/providers/Providers";
 import {
   Button,
   Card,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Context } from "@/app/providers/Providers";
+import { Context } from "@/providers/Providers";
 import {
   Button,
   Card,

@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useContext, useEffect, useRef, useState } from "react";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
 import { Context } from "../providers/Providers";
 import { ethers } from "ethers";
 import { AssetLoader } from "./AssetLoader";
