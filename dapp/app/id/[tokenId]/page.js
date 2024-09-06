@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import Link from "next/link";
-import nftAbi from "@/app/libraries/DegenerativeArtABI.json";
+import nftAbi from "@/libraries/DegenerativeArtABI.json";
 import { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 
