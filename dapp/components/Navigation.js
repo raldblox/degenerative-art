@@ -75,8 +75,8 @@ export const Navigation = ({ tabs }) => {
         </NavbarBrand>
         <NavbarContent className="flex h-[50px] gap-3" justify="center">
           <NavbarItem className="backdrop-blur-sm">{tabs}</NavbarItem>
-          <Dropdown placement="bottom-end" className="">
-            <DropdownTrigger>
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger className="md:hidden">
               <Avatar
                 isBordered
                 as="button"
