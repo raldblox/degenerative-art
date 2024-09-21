@@ -99,9 +99,10 @@ export const Hero = () => {
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          {/* <div className="absolute hidden p-3 text-sm text-foreground md:flex -bottom-14 -left-6">
-            lets put your emotions at work ser
-          </div> */}
+          <div className="absolute hidden p-3 text-xs text-foreground md:flex -bottom-20 -left-6">
+            $MOOD empowers the degeneratives community to create, express, and
+            play together within a unified, multi-chain ecosystem.
+          </div>
         </div>
         {selectedHomeTab == "defi" && (
           <div className="min-h-[400px] w-full md:max-h-[400px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-lg">
