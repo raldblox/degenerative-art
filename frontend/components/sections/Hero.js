@@ -25,11 +25,11 @@ export const Hero = () => {
               Join other homies put their emotions to work
             </p>
           </div>
-          <div className="absolute drop-shadow-lg space-y-0 md:space-y-4 bottom-[130px] left-[25px] md:bottom-[125px] md:left-[25vw]">
+          <div className="absolute drop-shadow-lg space-y-0 md:space-y-6 bottom-[130px] left-[25px] md:bottom-[125px] md:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
               degeneratives<span className="text-white">.art</span>
             </h1>
-            <p className="text-xs md:text-base md:pl-6">
+            <p className="text-xs md:text-sm">
               where emotions become art and currency
             </p>
           </div>
