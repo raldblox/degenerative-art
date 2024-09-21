@@ -9,7 +9,13 @@ export const Context = createContext();
 
 export const Providers = (props) => {
   const [selectedHomeTab, setSelectedHomeTab] = useState("defi");
-  const value = { selectedHomeTab, setSelectedHomeTab };
+  const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
+  const value = {
+    selectedHomeTab,
+    setSelectedHomeTab,
+    selectedNetwork,
+    setSelectedNetwork,
+  };
 
   return (
     <NextUIProvider>

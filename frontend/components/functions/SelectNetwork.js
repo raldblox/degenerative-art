@@ -1,13 +1,59 @@
 import { networks } from "@/libraries/network";
+import { Context } from "@/providers/Providers";
 import { Avatar, Select, SelectItem } from "@nextui-org/react";
-import React from "react";
+import { ethers } from "ethers";
+import React, { useContext, useEffect, useState } from "react";
 
 export const SelectNetwork = () => {
+  const { selectedNetwork, setSelectedNetwork } = useContext(Context);
+
+  const handleSelectionChange = async (e) => {
+    const chainId = Number(e.target.value);
+    setSelectedNetwork(chainId.toString());
+
+    const selectedChain = networks.find((chain) => chain.chainId === chainId);
+    const correctedChainId = `0x${chainId.toString(16)}`;
+    console.log(selectedChain);
+
+    const correctedSelectedChain = {
+      chainId: correctedChainId,
+      chainName: selectedChain.chainName,
+      rpcUrls: selectedChain.rpcUrls,
+      nativeCurrency: selectedChain.nativeCurrency,
+      blockExplorerUrls: selectedChain.blockExplorerUrls,
+    };
+
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: correctedChainId }],
+        });
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          // Network not added to MetaMask
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [correctedSelectedChain], // Pass the selectedChain object
+            });
+          } catch (addError) {
+            console.error("Error adding network:", addError);
+          }
+        } else {
+          setSelectedNetwork([]);
+          console.error("Error switching network:", switchError);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <Select
-      radius="sm"
-        defaultSelectedKeys={["42793"]}
+        radius="sm"
+        selectedKeys={[selectedNetwork]}
+        onChange={handleSelectionChange}
         disallowEmptySelection
         selectionMode="single"
         items={networks}
@@ -15,7 +61,7 @@ export const SelectNetwork = () => {
         className="max-w-xs"
         variant="flat"
         classNames={{
-          label: "group-data-[filled=true]:-translate-y-5",
+          label: "group-data-[filled=true]:-translate-y-5 text-foreground",
           trigger: "min-h-20",
           listboxWrapper: "max-h-[450px]",
         }}
@@ -23,7 +69,7 @@ export const SelectNetwork = () => {
           itemClasses: {
             base: [
               "rounded-md",
-              "text-default-800",
+              "text-foreground",
               "transition-opacity",
               "data-[hover=true]:text-foreground",
               "data-[hover=true]:bg-default-400",
