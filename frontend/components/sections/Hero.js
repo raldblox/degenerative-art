@@ -10,7 +10,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen select-none">
       <div className="grid w-full p-6 md:grid-cols-4 gap-y-6 gap-x-12">
-        <div className="min-h-[400px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50 to-success-50 bg-gradient-to-r rounded-lg">
+        <div className="min-h-[400px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50 to-success-50 bg-gradient-to-tr rounded-lg">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 top-6 right-6">
             <AvatarGroup color="success" max={4} radius="lg" total={200}>
