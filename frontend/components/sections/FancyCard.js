@@ -57,14 +57,14 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
   let style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
-    <div className="pointer-events-none select-none">
+    <div className="pointer-events-none select-none group">
       <div className="absolute inset-0 rounded-lg [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-100 "></div>
       <motion.div
         className="absolute inset-0 transition duration-700 bg-transparent rounded-lg opacity-50 group-hover/card:opacity-100 "
         style={style}
       />
       <motion.div
-        className="absolute inset-0 text-center duration-500 rounded-lg opacity-20 animate-pulse group-hover/card:opacity-100 "
+        className="absolute inset-0 text-center duration-500 rounded-lg opacity-25 group-hover:animate-pulse group-hover/card:opacity-100 "
         style={style}
       >
         <p className="absolute inset-x-0 h-full font-mono text-lg font-bold text-white break-words whitespace-pre-wrap transition duration-500">
