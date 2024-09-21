@@ -53,7 +53,7 @@ export const FancyCard = ({ text, className }) => {
 };
 
 export function CardPattern({ mouseX, mouseY, randomString }) {
-  let maskImage = useMotionTemplate`radial-gradient(800px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  let maskImage = useMotionTemplate`radial-gradient(500px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
