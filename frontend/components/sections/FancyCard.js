@@ -77,7 +77,7 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
 
 const emojiRanges = [
   [0x1f600, 0x1f64f], // Emoticons
-  [0x1f300, 0x1f5ff], // Symbols & Pictographs
+  // [0x1f300, 0x1f5ff], // Symbols & Pictographs
   //   [0x1f680, 0x1f6ff], // Transport & Map Symbols
   //   [0x2600, 0x26ff], // Miscellaneous Symbols
   //   [0x2700, 0x27bf], // Dingbats
