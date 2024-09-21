@@ -129,6 +129,7 @@ export const Hero = () => {
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 ⚡️
               </span>
+              
             </div>
             <div className="h-full relative p-6 min-h-[400px] bg-default-200 hover:bg-white transition-all duration-300   rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">

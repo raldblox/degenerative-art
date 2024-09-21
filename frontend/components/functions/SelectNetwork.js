@@ -50,13 +50,48 @@ export const SelectNetwork = () => {
     }
   };
 
+  useEffect(() => {
+    const reloadPageOnNetworkChange = async () => {
+      try {
+        if (window.ethereum) {
+          ethereum.on("chainChanged", handleChainChanged);
+          function handleChainChanged() {
+            window.location.reload();
+          }
+
+          const chain = await window.ethereum.request({
+            method: "eth_chainId",
+          });
+
+          const chainId = parseInt(chain, 16);
+
+          const network = networks.find(
+            (chain) => chain.chainId === Number(chainId)
+          );
+
+          if (network) {
+            setSelectedNetwork(network.chainId.toString());
+          } else {
+            console.error("Network not found for chain ID:", chainId);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Error switching network:", error);
+      }
+    };
+
+    reloadPageOnNetworkChange();
+  }, [selectedNetwork, setSelectedNetwork]);
+
   return (
     <>
       <Select
         radius="sm"
-        selectedKeys={
-          selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
-        }
+        // selectedKeys={
+        //   selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
+        // }
+        selectedKeys={[selectedNetwork]}
         onChange={handleSelectionChange}
         disallowEmptySelection
         selectionMode="single"
