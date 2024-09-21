@@ -34,7 +34,7 @@ export const Hero = () => {
             </p>
           </div>
 
-          <div className="absolute bottom-[60px] left-6 md:bottom-[20px] md:left-[24.5vw]">
+          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[24.5vw]">
             <Tabs
               radius="sm"
               size=""
