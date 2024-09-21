@@ -43,4 +43,26 @@ export const networks = [
     },
     blockExplorerUrls: "https://scan.coredao.org",
   },
+  {
+    chainId: 42161,
+    chainName: "Arbitrum One",
+    rpcUrls: "https://arb1.arbitrum.io/rpc",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    blockExplorerUrls: "https://arbiscan.io",
+  },
+  {
+    chainId: 56,
+    chainName: "BNB Chain",
+    rpcUrls: "https://binance.llamarpc.com",
+    nativeCurrency: {
+      name: "BNB",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    blockExplorerUrls: "https://bscscan.com",
+  },
 ];
