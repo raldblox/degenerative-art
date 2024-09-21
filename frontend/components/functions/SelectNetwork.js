@@ -92,9 +92,10 @@ export const SelectNetwork = () => {
               <Avatar
                 name={item.data.nativeCurrency.symbol}
                 // alt={item.data.chainName}
-                className="flex-shrink-0"
+                className="flex-shrink-0 p-1 dark"
                 size="sm"
                 src={item.data.icon}
+                radius="sm"
               />
               <div className="flex flex-col">
                 <span>{item.data.chainName}</span>
@@ -111,9 +112,10 @@ export const SelectNetwork = () => {
             <div className="flex items-center gap-2">
               <Avatar
                 name={chain.nativeCurrency.symbol}
-                className="flex-shrink-0"
+                className="flex-shrink-0 p-1 dark"
                 size="sm"
                 src={chain.icon}
+                radius="sm"
               />
               <div className="flex flex-col">
                 <span className="text-small">{chain.chainName}</span>

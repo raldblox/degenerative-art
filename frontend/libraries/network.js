@@ -9,6 +9,7 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://explorer.etherlink.com"],
+    icon: "./chains/etherlink.svg",
   },
   {
     chainId: 137,
@@ -20,6 +21,7 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://polygonscan.com/"],
+    icon: "./chains/polygon.png",
   },
   {
     chainId: 8453,
@@ -31,6 +33,7 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://base.blockscout.com/"],
+    icon: "./chains/base.png",
   },
   {
     chainId: 1116,
@@ -42,6 +45,7 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://scan.coredao.org"],
+    icon: "./chains/coredao.svg",
   },
   {
     chainId: 42161,
@@ -53,6 +57,7 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://arbiscan.io"],
+    icon: "./chains/arbitrum.svg",
   },
   {
     chainId: 56,
@@ -64,5 +69,6 @@ export const networks = [
       decimals: 18,
     },
     blockExplorerUrls: ["https://bscscan.com"],
+    icon: "./chains/bnb.svg",
   },
 ];
