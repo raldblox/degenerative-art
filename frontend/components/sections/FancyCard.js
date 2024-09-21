@@ -53,14 +53,14 @@ export const FancyCard = ({ text, className }) => {
 };
 
 export function CardPattern({ mouseX, mouseY, randomString }) {
-  let maskImage = useMotionTemplate`radial-gradient(500px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  let maskImage = useMotionTemplate`radial-gradient(1500px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
     <div className="pointer-events-none select-none">
       <div className="absolute  inset-0 rounded-lg [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-100 "></div>
       <motion.div
-        className="absolute inset-0 transition duration-700 bg-white rounded-lg opacity-0 group-hover/card:opacity-100 "
+        className="absolute inset-0 transition duration-700 bg-white rounded-lg opacity-50 group-hover/card:opacity-100 "
         style={style}
       />
       <motion.div
