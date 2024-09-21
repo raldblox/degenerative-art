@@ -6,6 +6,7 @@ export const SelectNetwork = () => {
   return (
     <>
       <Select
+      radius="sm"
         defaultSelectedKeys={["42793"]}
         disallowEmptySelection
         selectionMode="single"
