@@ -72,7 +72,7 @@ export const Hero = () => {
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          <div className="absolute hidden p-3 text-sm md:flex -bottom-14 -left-6">
+          <div className="absolute hidden p-3 text-sm text-foreground md:flex -bottom-14 -left-6">
             lets put your emotions at work ser
           </div>
         </div>
