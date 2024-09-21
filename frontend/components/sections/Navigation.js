@@ -23,7 +23,7 @@ export default function Navigation() {
         <NavbarContent
           as="div"
           justify="left"
-          className="items-center justify-center hidden gap-3 sm:flex"
+          className="flex items-center justify-center gap-3"
         >
           <NavbarItem>
             <NavbarBrand className="">
@@ -51,12 +51,12 @@ export default function Navigation() {
         </NavbarContent>
       </NavbarContent>
 
-      <NavbarContent
+      {/* <NavbarContent
         as="div"
         justify="center"
         className="items-center justify-center hidden gap-3 px-6 sm:flex"
       >
-        {/* <NavbarItem>
+        <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
@@ -70,8 +70,8 @@ export default function Navigation() {
           <Link color="foreground" href="#">
             Integrations
           </Link>
-        </NavbarItem> */}
-      </NavbarContent>
+        </NavbarItem>
+      </NavbarContent> */}
 
       <NavbarContent as="div" className="items-center" justify="end">
         <Input
@@ -86,6 +86,7 @@ export default function Navigation() {
           size="sm"
           startContent={<SearchIcon size={18} />}
           type="search"
+          className="hidden md:flex"
         />
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
