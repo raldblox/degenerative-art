@@ -58,13 +58,13 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
 
   return (
     <div className="pointer-events-none select-none">
-      <div className="absolute  inset-0 rounded-lg [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-100 "></div>
+      <div className="absolute inset-0 rounded-lg [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-100 "></div>
       <motion.div
-        className="absolute inset-0 transition duration-700 bg-white rounded-lg opacity-50 group-hover/card:opacity-100 "
+        className="absolute inset-0 transition duration-700 bg-transparent rounded-lg opacity-50 group-hover/card:opacity-100 "
         style={style}
       />
       <motion.div
-        className="absolute inset-0 text-center duration-500 rounded-lg opacity-80 group-hover/card:opacity-100 "
+        className="absolute inset-0 text-center duration-500 rounded-lg opacity-40 animate-pulse group-hover/card:opacity-100 "
         style={style}
       >
         <p className="absolute inset-x-0 h-full font-mono text-lg font-bold text-white break-words whitespace-pre-wrap transition duration-500">
@@ -101,18 +101,3 @@ export const generateRandomString = (length) => {
   return result;
 };
 
-export const Icon = ({ className, ...rest }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-      {...rest}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-    </svg>
-  );
-};

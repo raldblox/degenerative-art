@@ -21,7 +21,7 @@ export const SelectNetwork = () => {
         listboxProps={{
           itemClasses: {
             base: [
-              "rounded-lg",
+              "rounded-md",
               "text-default-800",
               "transition-opacity",
               "data-[hover=true]:text-foreground",
