@@ -10,7 +10,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen select-none">
       <div className="grid w-full p-6 md:grid-cols-4 gap-y-6 gap-x-12">
-        <div className="min-h-[300px] w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-zinc-100 rounded-lg">
+        <div className="min-h-[300px] w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-zinc-50 rounded-lg">
           <FancyCard text="hover" />
           <div className="absolute top-6 right-6">
             <AvatarGroup
@@ -78,17 +78,17 @@ export const Hero = () => {
         </div>
         {selectedHomeTab == "defi" && (
           <div className="min-h-[400px]  w-full max-h-[400px] grid md:grid-cols-3 gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full relative p-6 min-h-[400px] bg-default-50 drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-default-50  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🛍️
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-default-50 drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-default-50  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🏊‍♀️
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-default-50 drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-default-50  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🥩
               </span>
@@ -97,17 +97,17 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "game" && (
           <div className="min-h-[300px]  w-full max-h-[400px] grid md:grid-cols-3 gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 ⚡️
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🎲
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 💣
               </span>
@@ -116,17 +116,17 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "social" && (
           <div className="min-h-[400px] text-background  w-full max-h-[300px] grid md:grid-cols-3 gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🎨
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🖼
               </span>
             </div>
-            <div className="h-full relative p-6 min-h-[400px] bg-white drop-shadow-sm border rounded-lg">
+            <div className="h-full relative p-6 min-h-[400px] bg-white  border rounded-lg">
               <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
                 🌿
               </span>
@@ -134,7 +134,7 @@ export const Hero = () => {
           </div>
         )}
         <div className="min-h-[300px] text-background  w-full max-h-[300px] grid md:col-span-4 rounded-lg">
-          <div className="h-full relative p-6 min-h-[300px] bg-white drop-shadow-sm border rounded-lg">
+          <div className="h-full relative p-6 min-h-[300px] bg-white  border rounded-lg">
             <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full top-3 left-3 bg-foreground">
               📊
             </span>
