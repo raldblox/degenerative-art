@@ -1,198 +1,133 @@
 // SPDX-License-Identifier: MIT
 
-import "./OnchainStorage.sol";
-import "../interfaces/IOnchainStorage.sol";
-import "../interfaces/IDegenerativesID.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 pragma solidity ^0.8.24;
 
-contract DegenerativesID is Ownable(msg.sender), IDegenerativesID {
-    address public relayer;
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+import "../interfaces/IDegenerativesID.sol";
 
-    address[] public accounts;
+contract DegenerativesID is Ownable(msg.sender), Pausable, IDegenerativesID {
+    uint256 public totalUser;
 
-    mapping(string uid => address) private uidToAccount;
-    mapping(address => string uid) private walletToUid;
-    mapping(string uid => string) private handles;
-    mapping(string handle => bool) private handleTaken;
-
-    uint256 txnCounter;
-    uint256 uidCounter;
-    uint256 postCounter;
-    uint256 handleCounter;
-
-    error TransferFailed();
-
-    event FundsRecovered(
-        address indexed token,
-        address indexed to,
-        uint256 amount
-    );
-
-    constructor(address _relayer) {
-        relayer = _relayer;
+    constructor() {
+        authorized[msg.sender] = true;
     }
 
-    modifier onlyExistingUid(string memory uid) {
-        require(uidExist(uid), "UID does not exist");
-        _;
-    }
+    mapping(address => bool) public authorized;
+    mapping(uint256 userId => User) public userData;
+    mapping(string xid => uint) userIds;
+    mapping(string xid => bool) registered;
+    mapping(uint xid => string) userToXid;
+    mapping(uint userId => address[]) userWallets;
+    mapping(address wallet => uint256) walletToUserId;
 
-    modifier onlyRelayer() {
-        require(relayer == msg.sender, "Unauthorized");
-        _;
-    }
+    event NewUser(uint256 playerId, string uid, string name);
+    event WalletBound(uint256 userId, address wallet);
+    event WalletUnbound(uint256 userId, address wallet);
+    event UserUpdated(uint256 userId, string name, string image);
 
     modifier onlyAuthorized() {
-        require(relayer == msg.sender || msg.sender == owner(), "Unauthorized");
+        require(authorized[msg.sender], "Caller not authorized");
         _;
     }
 
-    function create(
-        string memory uid,
-        string memory name
-    ) public payable onlyAuthorized {
-        require(
-            uidToAccount[uid] == address(0),
-            "Account already exists for this UID"
-        );
+    function newUser(
+        string memory xid,
+        string memory userName,
+        string memory userImage
+    ) public onlyAuthorized whenNotPaused returns (uint256) {
+        require(!registered[xid], "Player already registered");
 
-        OnchainStorage newStorage = new OnchainStorage(uid);
-        uidToAccount[uid] = address(newStorage);
-        accounts.push(address(newStorage));
-        txnCounter++;
-        uidCounter++;
+        // Generate a new player ID
+        totalUser++;
+        uint256 newUserId = totalUser;
 
-        emit AccountCreated(uid, address(newStorage));
+        // Store player data
+        userIds[xid] = newUserId;
+        userToXid[newUserId] = xid;
+        userData[newUserId] = User({
+            xid: xid,
+            name: userName,
+            image: userImage,
+            attempts: 0,
+            bestScore: 0
+        });
+
+        registered[xid] = true;
+
+        // Emit an event to notify of the new user
+        emit NewUser(newUserId, xid, userName);
+
+        return newUserId;
     }
 
-    function bind(
-        string memory uid,
+    function isRegistered(string memory xid) public view returns (bool) {
+        return registered[xid];
+    }
+
+    function bindWallet(
+        string memory xid,
+        address newAddress
+    ) public onlyAuthorized whenNotPaused returns (bool) {
+        uint256 userId = userIds[xid];
+        walletToUserId[newAddress] = userId;
+        userWallets[userId].push(newAddress);
+        return true;
+    }
+
+    function unbindWallet(
         address wallet
-    ) external payable onlyExistingUid(uid) onlyAuthorized {
-        bool success = IFeelnStorage(uidToAccount[uid]).bind(wallet);
-        require(success, "Binding failed");
-        txnCounter++;
-    }
-
-    function post(
-        string memory uid,
-        string[] memory _emojis,
-        string[] memory _image,
-        string[] memory _notes
-    ) external payable onlyExistingUid(uid) onlyAuthorized {
-        bool success = IFeelnStorage(uidToAccount[uid]).post(
-            _emojis,
-            _image,
-            _notes
-        );
-        require(success, "Posting failed");
-        txnCounter++;
-        postCounter++;
-    }
-
-    function assignHandle(
-        string memory uid,
-        string memory newName
-    ) external payable onlyExistingUid(uid) onlyAuthorized {
-        // Check if the new handle is already taken
-        require(!handleTaken[newName], "Handle already taken");
-
-        // Get the old handle (if any)
-        string memory oldHandle = handles[uid];
-
-        // Update handle mappings
-        handles[uid] = newName;
-        handleTaken[newName] = true;
-
-        // If the user had an old handle, make it available again
-        if (bytes(oldHandle).length != 0) {
-            // Check if the string is empty
-            handleTaken[oldHandle] = false;
+    ) public onlyAuthorized whenNotPaused returns (bool) {
+        uint256 userId = walletToUserId[wallet];
+        if (userId == 0) {
+            revert("Wallet not bound");
         }
-
-        txnCounter++;
-        handleCounter++;
+        walletToUserId[wallet] = 0;
+        emit WalletUnbound(userId, wallet);
+        return true;
     }
 
-    function getStorageAccount(
-        string memory uid
-    ) external view onlyExistingUid(uid) returns (address) {
-        return uidToAccount[uid];
+    function updateUser(
+        uint256 userId,
+        string memory newName,
+        string memory newImage
+    ) public onlyAuthorized {
+        userData[userId].name = newName;
+        userData[userId].image = newImage;
+
+        emit UserUpdated(userId, newName, newImage);
     }
 
-    function getUidFromWallet(
+    function authorize(address wallet, bool isAuthorized) public onlyOwner {
+        authorized[wallet] = isAuthorized;
+    }
+
+    function getUserDataOfUserId(
+        uint256 userId
+    ) public view returns (User memory) {
+        return userData[userId];
+    }
+
+    function getUserIdOfXid(string memory xid) public view returns (uint256) {
+        return userIds[xid];
+    }
+
+    function getXidOfUserId(
+        uint256 userId
+    ) public view returns (string memory) {
+        return userToXid[userId];
+    }
+
+    function getWalletsOfUserId(
+        uint256 userId
+    ) public view returns (address[] memory) {
+        return userWallets[userId];
+    }
+
+    function getXidOfWallet(
         address wallet
-    ) external view returns (string memory) {
-        return walletToUid[wallet];
-    }
-
-    function getWallets(
-        string memory uid
-    ) external view returns (address[] memory wallets) {
-        wallets = IFeelnStorage(uidToAccount[uid]).getWallets();
-    }
-
-    function getPrimaryWallet(
-        string memory uid
-    ) external view returns (address primaryWallet) {
-        primaryWallet = IFeelnStorage(uidToAccount[uid]).getPrimaryWallet();
-    }
-
-    function getHandle(
-        string memory uid
-    ) external view onlyExistingUid(uid) returns (string memory) {
-        return handles[uid];
-    }
-
-    function getAnalytics()
-        external
-        view
-        returns (uint256, uint256, uint256, uint256)
-    {
-        return (txnCounter, uidCounter, postCounter, handleCounter);
-    }
-
-    function isWalletOfUid(
-        string memory uid,
-        address wallet
-    ) external view returns (bool) {
-        return IFeelnStorage(uidToAccount[uid]).uidWallet(wallet);
-    }
-
-    function uidExist(string memory uid) public view returns (bool) {
-        return uidToAccount[uid] != address(0);
-    }
-
-    function updateRelayer(address newRelayer) external onlyOwner {
-        relayer = newRelayer;
-    }
-
-    function recover(
-        address token,
-        address to,
-        uint256 amount
-    ) external onlyOwner {
-        if (token == address(0)) {
-            (bool sent, ) = payable(to).call{value: amount}("");
-            if (!sent) revert TransferFailed();
-        } else {
-            bool sent = IERC20(token).transfer(to, amount);
-            if (!sent) revert TransferFailed();
-        }
-        emit FundsRecovered(token, to, amount);
-    }
-
-    function deleteAccount(
-        string memory uid
-    ) external onlyExistingUid(uid) onlyAuthorized {
-        address storageAccount = uidToAccount[uid];
-
-        delete uidToAccount[uid];
-        delete handles[uid];
-
-        IFeelnStorage(storageAccount).destroy();
+    ) public view returns (string memory) {
+        uint256 xid = walletToUserId[wallet];
+        return userToXid[xid];
     }
 }

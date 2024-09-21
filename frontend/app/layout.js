@@ -1,6 +1,6 @@
+import { Providers } from "@/providers/Providers";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
-import { EthereumProvider } from "./(providers)/EthereumProvider.js.bak";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <EthereumProvider>{children}</EthereumProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
