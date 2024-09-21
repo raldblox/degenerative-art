@@ -100,7 +100,7 @@ export const Hero = () => {
             <SelectNetwork />
           </div>
           <div className="absolute hidden p-3 text-xs text-foreground md:flex -bottom-20 -left-6">
-            $MOOD empowers the degeneratives community to create, express, and
+            MOOD empowers the degeneratives community to create, express, and
             play together within a unified, multi-chain ecosystem.
           </div>
         </div>

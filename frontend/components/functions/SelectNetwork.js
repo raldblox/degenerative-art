@@ -29,6 +29,7 @@ export const SelectNetwork = () => {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: correctedChainId }],
         });
+        setSelectedNetwork(chainId.toString());
       } catch (switchError) {
         if (switchError.code === 4902) {
           // Network not added to MetaMask
@@ -40,6 +41,7 @@ export const SelectNetwork = () => {
           } catch (addError) {
             console.error("Error adding network:", addError);
           }
+          setSelectedNetwork(chainId.toString());
         } else {
           setSelectedNetwork([]);
           console.error("Error switching network:", switchError);
@@ -52,7 +54,9 @@ export const SelectNetwork = () => {
     <>
       <Select
         radius="sm"
-        selectedKeys={[selectedNetwork]}
+        selectedKeys={
+          selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
+        }
         onChange={handleSelectionChange}
         disallowEmptySelection
         selectionMode="single"
@@ -92,7 +96,7 @@ export const SelectNetwork = () => {
               <Avatar
                 name={item.data.nativeCurrency.symbol}
                 // alt={item.data.chainName}
-                className="flex-shrink-0 p-1 dark"
+                className="flex-shrink-0 p-1 bg-black dark"
                 size="sm"
                 src={item.data.icon}
                 radius="sm"
@@ -112,7 +116,7 @@ export const SelectNetwork = () => {
             <div className="flex items-center gap-2">
               <Avatar
                 name={chain.nativeCurrency.symbol}
-                className="flex-shrink-0 p-1 dark"
+                className="flex-shrink-0 p-1 bg-black dark"
                 size="sm"
                 src={chain.icon}
                 radius="sm"
