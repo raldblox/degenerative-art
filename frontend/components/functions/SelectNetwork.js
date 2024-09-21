@@ -10,7 +10,7 @@ export const SelectNetwork = () => {
         disallowEmptySelection
         selectionMode="single"
         items={networks}
-        label="Select Network"
+        label="Select Supported Network"
         className="max-w-xs"
         variant="flat"
         classNames={{
@@ -43,7 +43,8 @@ export const SelectNetwork = () => {
           return items.map((item) => (
             <div key={item.key} className="flex items-center gap-2">
               <Avatar
-                alt={item.data.chainName}
+                name={item.data.nativeCurrency.symbol}
+                // alt={item.data.chainName}
                 className="flex-shrink-0"
                 size="sm"
                 src={item.data.icon}
@@ -62,7 +63,7 @@ export const SelectNetwork = () => {
           <SelectItem key={chain.chainId} textValue={chain.chainName}>
             <div className="flex items-center gap-2">
               <Avatar
-                alt={chain.chainName}
+                name={chain.nativeCurrency.symbol}
                 className="flex-shrink-0"
                 size="sm"
                 src={chain.icon}

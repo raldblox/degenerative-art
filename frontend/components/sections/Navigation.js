@@ -93,7 +93,7 @@ export default function Navigation() {
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
+              color="success"
               name="Ser"
               size="sm"
               src=""
