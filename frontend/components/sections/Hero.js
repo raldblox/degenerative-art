@@ -218,7 +218,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   🎨
                 </span>
-                <h1 className="text-xl font-semibold">express</h1>
+                <h1 className="text-xl font-semibold">craft</h1>
               </div>
               <div></div>
             </div>
