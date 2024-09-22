@@ -7,11 +7,12 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FancyCard } from "./FancyCard";
 import { SelectNetwork } from "../functions/SelectNetwork";
 import { SwapByNetwork } from "../functions/SwapByNetwork";
 import { networks } from "@/libraries/network";
+import { MintEmoji } from "../functions/MintEmoji";
 
 export const Hero = () => {
   const { selectedHomeTab, setSelectedHomeTab, selectedNetwork } = useContext(
@@ -209,7 +210,8 @@ export const Hero = () => {
                 </span>
                 <h1 className="text-xl font-semibold">mint</h1>
               </div>
-              <div></div>
+
+              <MintEmoji />
             </div>
             <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
