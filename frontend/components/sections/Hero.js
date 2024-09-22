@@ -150,7 +150,7 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-2xl text-balance">
-                  openly <span className="font-semibold text-default-700">trade mood</span> on
+                  openly <span className="font-semibold">trade mood</span> on
                   decentralized exchanges.
                 </h1>
                 <div className="w-full">
@@ -171,7 +171,7 @@ export const Hero = () => {
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-2xl lowercase text-balance">
                   {/* pool your assets, not your sorrows.{" "} */}
-                  <span className="font-semibold text-default-700">Provide liquidity</span> and
+                  <span className="font-semibold">Provide liquidity</span> and
                   watch your rewards pour in!
                 </h1>
                 <div className="w-full"></div>
@@ -190,7 +190,7 @@ export const Hero = () => {
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-2xl lowercase text-balance">
                   stake your tokens and{" "}
-                  <span className="font-semibold text-default-700">get mood rewards</span> on top
+                  <span className="font-semibold">get mood rewards</span> on top
                   of trading fees.
                 </h1>
                 <div className="w-full"></div>
