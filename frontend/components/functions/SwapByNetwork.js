@@ -9,14 +9,13 @@ export const SwapByNetwork = () => {
   return (
     <>
       {selectedNetwork == "42793" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             TachySwap
           </Button>
@@ -25,22 +24,20 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             IguanaDEX
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "137" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             QuickSwap
           </Button>
@@ -49,22 +46,20 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Uniswap
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "8453" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Aerodrome
           </Button>
@@ -73,50 +68,46 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Uniswap
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "1116" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Glyph Exchange
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "42161" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Uniswap
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "56" && (
-        <ScrollShadow className="max-h-[150px] grid grid-cols-2 !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
-            fullWidth
-            className="dark border-2 border-black h-[50px]"
+            className="border-2 border-black dark "
           >
             Pancakeswap
           </Button>

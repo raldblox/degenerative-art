@@ -96,7 +96,7 @@ export const SelectNetwork = () => {
         disallowEmptySelection
         selectionMode="single"
         items={networks}
-        label="Select Supported Network"
+        label="Supported Network"
         className="max-w-xs"
         variant="flat"
         classNames={{

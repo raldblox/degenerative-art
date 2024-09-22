@@ -16,8 +16,8 @@ export const MintEmoji = () => {
   };
 
   return (
-    <div className="grid content-between !h-full space-y-8">
-      <div className="grid w-full max-w-[200px] grid-cols-3 gap-2 mx-auto">
+    <div className="flex flex-col !h-full space-y-6 mx-auto w-full">
+      {/* <div className="grid w-full max-w-[150px] grid-cols-3 gap-2 ">
         {inputValues.map((value, index) => (
           <input
             key={index}
@@ -33,17 +33,17 @@ export const MintEmoji = () => {
               }
               handleChange(e, index);
             }}
-            className="w-full h-full text-3xl text-center border-2 border-black rounded-md aspect-square"
+            className="w-full h-full text-2xl text-center border-2 border-black rounded-lg aspect-square"
           />
         ))}
-      </div>
-      <div className="grid grid-cols-2 gap-3 !w-full">
+      </div> */}
+      <div className="flex flex-wrap items-center gap-2">
         <Button
           color="primary"
           variant="solid"
           size="md"
           radius="sm"
-          className=" h-[50px]"
+          className=""
         >
           Mint
         </Button>
@@ -52,7 +52,7 @@ export const MintEmoji = () => {
           variant="bordered"
           size="md"
           radius="sm"
-          className="dark border-2 border-black  h-[50px]"
+          className="border-2 border-black dark "
         >
           Trade
         </Button>

@@ -4,6 +4,7 @@ import {
   AvatarGroup,
   Button,
   Image,
+  ScrollShadow,
   Tab,
   Tabs,
 } from "@nextui-org/react";
@@ -13,6 +14,7 @@ import { SelectNetwork } from "../functions/SelectNetwork";
 import { SwapByNetwork } from "../functions/SwapByNetwork";
 import { networks } from "@/libraries/network";
 import { MintEmoji } from "../functions/MintEmoji";
+import { ExpandableCards } from "./ExpandableCards";
 
 export const Hero = () => {
   const { selectedHomeTab, setSelectedHomeTab, selectedNetwork } = useContext(
@@ -24,14 +26,18 @@ export const Hero = () => {
       (chain) => chain.chainId === Number(selectedNetwork)
     );
     return (
-      <Image className="w-6 h-6 rounded-none grayscale" src={network?.icon} />
+      <Image
+        className="w-6 h-6 rounded-none grayscale"
+        src={network?.icon}
+        alt={network?.chainName}
+      />
     );
   };
 
   return (
-    <section className="relative w-full h-full min-h-screen select-none">
+    <section className="relative w-full h-full min-h-screen">
       <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[400px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50 to-primary-100 bg-gradient-to-tr rounded-lg">
+        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50 to-primary-100 bg-gradient-to-tr rounded-lg">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup color="success" max={4} radius="lg" total={200}>
@@ -66,15 +72,16 @@ export const Hero = () => {
               onSelectionChange={setSelectedHomeTab}
             >
               <Tab key="defi" title="DeFi" />
-              <Tab key="game" title="GameFi" />
               <Tab key="social" title="SocialFi" />
+              <Tab key="game" title="GameFi" />
             </Tabs>
           </div>
           <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-3 right-3 md:bottom-6 md:right-6">
             Powered by OnChainVision Labs
           </div>
         </div>
-        <div className="min-h-[400px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-lg backdrop-blur-sm">
+
+        <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-lg backdrop-blur-sm">
           <div>
             <span>gm 🌤</span>
           </div>
@@ -83,7 +90,7 @@ export const Hero = () => {
               dont let your <span className="font-semibold">mood</span> go to
               waste ser
             </h1>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-1">
               <Button
                 size="sm"
                 radius="sm"
@@ -120,14 +127,18 @@ export const Hero = () => {
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          <div className="absolute hidden p-3 text-xs text-foreground md:flex -bottom-20 -left-6">
+          <p className="absolute items-start hidden p-3 text-xs text-foreground md:flex h-[50px]  -bottom-16 -left-6">
             MOOD empowers the degeneratives community to create, express, and
             play together within a unified, multi-chain ecosystem.
-          </div>
+          </p>
         </div>
+
         {selectedHomeTab == "defi" && (
-          <div className="min-h-[400px] w-full md:max-h-[400px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full relative grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+          <div className="min-h-[450px] w-full md:max-h-[450px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-lg">
+            {/* <div className="w-full col-span-3">
+              <ExpandableCards />
+            </div> */}
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
@@ -137,12 +148,17 @@ export const Hero = () => {
                 </div>
                 <ChainIcon />
               </div>
-
-              <div className="w-full">
-                <SwapByNetwork />
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl text-balance">
+                  openly <span className="font-semibold text-default-700">trade mood</span> on
+                  decentralized exchanges.
+                </h1>
+                <div className="w-full">
+                  <SwapByNetwork />
+                </div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
@@ -152,10 +168,16 @@ export const Hero = () => {
                 </div>
                 <ChainIcon />
               </div>
-
-              <div></div>
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl lowercase text-balance">
+                  {/* pool your assets, not your sorrows.{" "} */}
+                  <span className="font-semibold text-default-700">Provide liquidity</span> and
+                  watch your rewards pour in!
+                </h1>
+                <div className="w-full"></div>
+              </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
@@ -165,14 +187,20 @@ export const Hero = () => {
                 </div>
                 <ChainIcon />
               </div>
-
-              <div></div>
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl lowercase text-balance">
+                  stake your tokens and{" "}
+                  <span className="font-semibold text-default-700">get mood rewards</span> on top
+                  of trading fees.
+                </h1>
+                <div className="w-full"></div>
+              </div>
             </div>
           </div>
         )}
         {selectedHomeTab == "game" && (
-          <div className="min-h-[300px]  w-full md:max-h-[400px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+          <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   ⚡️
@@ -181,7 +209,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   🎲
@@ -190,7 +218,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   💣
@@ -202,38 +230,62 @@ export const Hero = () => {
           </div>
         )}
         {selectedHomeTab == "social" && (
-          <div className="min-h-[400px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
-                  🖼
-                </span>
-                <h1 className="text-xl font-semibold">mint</h1>
+          <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 ">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
+                    🖼
+                  </span>
+                  <h1 className="text-xl font-semibold">mint</h1>
+                </div>
+                <ChainIcon />
               </div>
-
-              <MintEmoji />
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl lowercase text-balance">
+                  Mint your feels and receive free MOOD to express yourself even
+                  more onchain!
+                </h1>
+                <div className="w-full">
+                  <MintEmoji />
+                </div>
+              </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   🎨
                 </span>
                 <h1 className="text-xl font-semibold">craft</h1>
               </div>
-              <div></div>
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl lowercase text-balance">
+                  Break free from 3x3 grid! Make one-of-a-kind NFTs with our
+                  Flex Canvas.
+                </h1>
+                <div className="w-full"></div>
+              </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   🤖
                 </span>
                 <h1 className="text-xl font-semibold">generate</h1>
               </div>
-              <div></div>
+              <div className="min-h-[300px] grid content-between">
+                <h1 className="text-2xl lowercase text-balance">
+                  Turn your existing work into intriguing art with emojis as
+                  pixels!
+                </h1>
+                <div className="w-full"></div>
+              </div>
             </div>
           </div>
         )}
-        <div className="min-h-[400px]  w-full max-h-[300px] grid md:col-span-4 rounded-lg bg-white hover:bg-black transition-all duration-300 ">
+
+        <div className="min-h-[450px]  w-full max-h-[300px] grid md:col-span-4 rounded-lg bg-white hover:bg-black transition-all duration-300 ">
           <div className="h-full relative p-6 min-h-[300px]    rounded-lg">
             <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg transition-all duration-300 bg-black rounded-full hover:bg-success top-3 left-3">
               📊
