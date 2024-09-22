@@ -37,7 +37,7 @@ export default function Navigation() {
           <NavbarItem>
             <Button
               radius="full"
-              variant="solid"
+              variant="flat"
               color="primary"
               href="#"
               size="sm"
