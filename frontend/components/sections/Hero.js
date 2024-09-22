@@ -1,12 +1,31 @@
 import { Context } from "@/providers/Providers";
-import { Avatar, AvatarGroup, Button, Tab, Tabs } from "@nextui-org/react";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  Image,
+  Tab,
+  Tabs,
+} from "@nextui-org/react";
 import React, { useContext } from "react";
 import { FancyCard } from "./FancyCard";
 import { SelectNetwork } from "../functions/SelectNetwork";
 import { SwapByNetwork } from "../functions/SwapByNetwork";
+import { networks } from "@/libraries/network";
 
 export const Hero = () => {
-  const { selectedHomeTab, setSelectedHomeTab } = useContext(Context);
+  const { selectedHomeTab, setSelectedHomeTab, selectedNetwork } = useContext(
+    Context
+  );
+
+  const ChainIcon = () => {
+    const network = networks.find(
+      (chain) => chain.chainId === Number(selectedNetwork)
+    );
+    return (
+      <Image className="w-6 h-6 rounded-none grayscale" src={network?.icon} />
+    );
+  };
 
   return (
     <section className="relative w-full h-full min-h-screen select-none">
@@ -107,33 +126,45 @@ export const Hero = () => {
         </div>
         {selectedHomeTab == "defi" && (
           <div className="min-h-[400px] w-full md:max-h-[400px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
-                  🛍️
-                </span>
-                <h1 className="text-xl font-semibold">swap</h1>
+            <div className="h-full relative grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 ">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                    🛍️
+                  </span>
+                  <h1 className="text-xl font-semibold">swap</h1>
+                </div>
+                <ChainIcon />
               </div>
+
               <div className="w-full">
                 <SwapByNetwork />
               </div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
-                  🏊‍♀️
-                </span>
-                <h1 className="text-xl font-semibold">pool</h1>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 ">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                    🏊‍♀️
+                  </span>
+                  <h1 className="text-xl font-semibold">pool</h1>
+                </div>
+                <ChainIcon />
               </div>
+
               <div></div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[400px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
-                  🥩
-                </span>
-                <h1 className="text-xl font-semibold">stake</h1>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 ">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                    🥩
+                  </span>
+                  <h1 className="text-xl font-semibold">stake</h1>
+                </div>
+                <ChainIcon />
               </div>
+
               <div></div>
             </div>
           </div>
