@@ -2,6 +2,7 @@
 
 import {
   Avatar,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -23,31 +24,52 @@ export default function Navigation() {
         <NavbarContent
           as="div"
           justify="left"
-          className="flex items-center justify-center gap-3"
+          className="flex items-center justify-center gap-2"
         >
           <NavbarItem>
-            <NavbarBrand className="">
+            <NavbarBrand className="pr-6">
               <DegenerativesLogo />
               <p className="hidden text-lg font-bold sm:block text-inherit">
                 degeneratives
               </p>
             </NavbarBrand>
           </NavbarItem>
-          {/* <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
+          <NavbarItem>
+            <Button
+              radius="full"
+              variant="solid"
+              color="primary"
+              href="#"
+              size="sm"
+              className="font-bold"
+            >
+              explore
+            </Button>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link href="#" aria-current="page" color="secondary">
-              Customers
-            </Link>
+            <Button
+              radius="full"
+              variant="flat"
+              color="primary"
+              href="#"
+              size="sm"
+              className="font-bold"
+            >
+              mint
+            </Button>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem> */}
+            <Button
+              radius="full"
+              variant="flat"
+              color="primary"
+              href="#"
+              size="sm"
+              className="font-bold"
+            >
+              bridge
+            </Button>
+          </NavbarItem>
         </NavbarContent>
       </NavbarContent>
 
