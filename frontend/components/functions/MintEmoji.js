@@ -33,17 +33,17 @@ export const MintEmoji = () => {
               }
               handleChange(e, index);
             }}
-            className="w-full h-full text-3xl text-center border-black rounded-md border-1 aspect-square"
+            className="w-full h-full text-3xl text-center border-2 border-black rounded-md aspect-square"
           />
         ))}
       </div>
       <div className="grid grid-cols-2 gap-3 !w-full">
         <Button
-          color=""
+          color="primary"
           variant="solid"
           size="md"
           radius="sm"
-          className="dark text-foreground bg-black  h-[50px]"
+          className=" h-[50px]"
         >
           Mint
         </Button>
