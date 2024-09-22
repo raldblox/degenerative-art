@@ -26,12 +26,12 @@ export default function Navigation() {
           justify="left"
           className="flex items-center justify-center gap-2"
         >
-          <NavbarItem>
-            <NavbarBrand className="pr-6">
+          <NavbarItem className="md:hidden">
+            <NavbarBrand className="pr-2">
               <DegenerativesLogo />
-              <p className="hidden text-lg font-bold sm:block text-inherit">
+              {/* <p className="hidden text-lg font-bold sm:block text-inherit">
                 degeneratives
-              </p>
+              </p> */}
             </NavbarBrand>
           </NavbarItem>
           <NavbarItem>
@@ -73,12 +73,20 @@ export default function Navigation() {
         </NavbarContent>
       </NavbarContent>
 
-      {/* <NavbarContent
+      <NavbarContent
         as="div"
         justify="center"
-        className="items-center justify-center hidden gap-3 px-6 sm:flex"
+        className="items-center justify-center hidden sm:flex"
       >
         <NavbarItem>
+          <NavbarBrand className="translate-x-2">
+            <DegenerativesLogo />
+            {/* <p className="hidden text-lg font-bold sm:block text-inherit">
+              degeneratives
+            </p> */}
+          </NavbarBrand>
+        </NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
@@ -92,8 +100,8 @@ export default function Navigation() {
           <Link color="foreground" href="#">
             Integrations
           </Link>
-        </NavbarItem>
-      </NavbarContent> */}
+        </NavbarItem> */}
+      </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
         <Input
