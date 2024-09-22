@@ -86,7 +86,7 @@ export const Hero = () => {
             <span>gm 🌤</span>
           </div>
           <div className="space-y-6">
-            <h1 className="text-2xl">
+            <h1 className="text-3xl">
               dont let your <span className="font-semibold">mood</span> go to
               waste ser
             </h1>
@@ -149,7 +149,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl text-balance">
+                <h1 className="text-xl ">
                   openly <span className="font-semibold">trade mood</span> on
                   decentralized exchanges.
                 </h1>
@@ -169,10 +169,10 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl lowercase text-balance">
+                <h1 className="text-xl lowercase ">
                   {/* pool your assets, not your sorrows.{" "} */}
                   <span className="font-semibold">Provide liquidity</span> and
-                  watch your rewards pour in!
+                  watch rewards pour in!
                 </h1>
                 <div className="w-full"></div>
               </div>
@@ -188,7 +188,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl lowercase text-balance">
+                <h1 className="text-xl lowercase ">
                   stake your tokens and{" "}
                   <span className="font-semibold">get mood rewards</span> on top
                   of trading fees.
@@ -242,9 +242,9 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl lowercase text-balance">
+                <h1 className="text-xl lowercase ">
                   Mint your feels and receive free MOOD to express yourself even
-                  more onchain!
+                  more!
                 </h1>
                 <div className="w-full">
                   <MintEmoji />
@@ -260,7 +260,7 @@ export const Hero = () => {
                 <h1 className="text-xl font-semibold">craft</h1>
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl lowercase text-balance">
+                <h1 className="text-xl lowercase ">
                   Break free from 3x3 grid! Make one-of-a-kind NFTs with our
                   Flex Canvas.
                 </h1>
@@ -275,7 +275,7 @@ export const Hero = () => {
                 <h1 className="text-xl font-semibold">generate</h1>
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-2xl lowercase text-balance">
+                <h1 className="text-xl lowercase ">
                   Turn your existing work into intriguing art with emojis as
                   pixels!
                 </h1>
