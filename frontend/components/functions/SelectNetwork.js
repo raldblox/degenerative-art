@@ -55,10 +55,10 @@ export const SelectNetwork = () => {
     const reloadPageOnNetworkChange = async () => {
       try {
         if (window.ethereum) {
-          ethereum.on("chainChanged", handleChainChanged);
-          function handleChainChanged() {
-            window.location.reload();
-          }
+          // ethereum.on("chainChanged", handleChainChanged);
+          // function handleChainChanged() {
+          //   window.location.reload();
+          // }
 
           const chain = await window.ethereum.request({
             method: "eth_chainId",
@@ -97,11 +97,12 @@ export const SelectNetwork = () => {
         disallowEmptySelection
         selectionMode="single"
         items={networks}
-        label="Supported Network"
+        label="Select Supported Network"
         className="max-w-xs"
         variant="flat"
         classNames={{
-          label: "group-data-[filled=true]:-translate-y-5 text-foreground",
+          label:
+            "group-data-[filled=true]:-translate-y-5 text-black font-semibold",
           trigger: "min-h-20",
           listboxWrapper: "max-h-[400px]",
         }}
@@ -138,8 +139,8 @@ export const SelectNetwork = () => {
                 radius="sm"
               />
               <div className="flex flex-col">
-                <span>{item.data.chainName}</span>
-                <span className="text-default-500 text-tiny">
+                <span className="font-semibold">{item.data.chainName}</span>
+                <span className="text-default-700 text-tiny">
                   ({item.data.nativeCurrency.symbol})
                 </span>
               </div>
@@ -149,7 +150,7 @@ export const SelectNetwork = () => {
       >
         {(chain) => (
           <SelectItem key={chain.chainId} textValue={chain.chainName}>
-            <LinkPreview className="flex items-center gap-2" url={chain?.site}>
+            <div className="flex items-center gap-2">
               <Avatar
                 name={chain.nativeCurrency.symbol}
                 className="flex-shrink-0 p-1 bg-black dark"
@@ -158,12 +159,17 @@ export const SelectNetwork = () => {
                 radius="sm"
               />
               <div className="flex flex-col">
-                <span className="text-small">{chain.chainName}</span>
-                <span className="text-tiny text-default-400">
+                <LinkPreview
+                  className="font-semibold text-small"
+                  url={chain?.site}
+                >
+                  {chain.chainName}
+                </LinkPreview>
+                <span className="text-tiny text-default-700">
                   {chain.nativeCurrency.symbol}
                 </span>
               </div>
-            </LinkPreview>
+            </div>
           </SelectItem>
         )}
       </Select>
