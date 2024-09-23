@@ -28,7 +28,7 @@ export default function Navigation() {
         >
           <NavbarItem className="">
             <NavbarBrand className="pr-6">
-              {/* <DegenerativesLogo /> */}
+              <DegenerativesLogo />
               <p className="hidden text-xl font-bold md:flex text-inherit">
                 degeneratives
               </p>
@@ -71,36 +71,6 @@ export default function Navigation() {
             </Button>
           </NavbarItem>
         </NavbarContent>
-      </NavbarContent>
-
-      <NavbarContent
-        as="div"
-        justify="center"
-        className="items-center justify-center hidden sm:flex"
-      >
-        <NavbarItem>
-          <NavbarBrand className="translate-x-2">
-            <DegenerativesLogo />
-            {/* <p className="hidden text-lg font-bold sm:block text-inherit">
-              degeneratives
-            </p> */}
-          </NavbarBrand>
-        </NavbarItem>
-        {/* <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page" color="secondary">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem> */}
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
