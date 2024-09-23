@@ -1,31 +1,23 @@
 const { NextRequest, NextResponse } = require("next/server");
 const { ethers } = require("ethers");
-// import TokenAbi from "@/libraries/abis/Degeneratives.json";
+import ERC721 from "@/libraries/abis/ERC721.json";
 
 export const runtime = "edge";
-
-// const node = "https://rpc.coredao.org";
-// const PRIVATE_KEY = process.env.PRIVATE_KEY;
-// const contractAddress = "";
 
 export async function POST(request) {
   try {
     const { address } = await request.json();
     console.log("checking", address);
 
-    // const provider = new ethers.JsonRpcProvider(node);
-    // const relayerAddress = new ethers.Wallet(PRIVATE_KEY, provider);
-    // const contract = new ethers.Contract(
-    //   contractAddress,
-    //   TokenAbi,
-    //   relayerAddress
-    // );
-
-    // const balance = await contract.balanceOf(address.toLowerCase());
-
-    // const result = balance > 0;
-
-    const result = true;
+    const node = "https://rpc.coredao.org";
+    const provider = new ethers.JsonRpcProvider(node);
+    const interactiveCore = new ethers.Contract(
+      "0x11F0759691a0b4d65a2346ec3e5d0908bfA933F8",
+      ERC721,
+      provider
+    );
+    const balance = await interactiveCore.balanceOf(address.toLowerCase());
+    const result = balance > 0;
 
     return NextResponse.json(
       {
