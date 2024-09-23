@@ -282,6 +282,7 @@ export const MintEmoji = () => {
         </div>
       </div>
       <Modal
+        scrollBehavior="outside"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         size="3xl"
@@ -291,7 +292,7 @@ export const MintEmoji = () => {
           {(onClose) => (
             <>
               <ModalBody className="p-0 ">
-                <div className="grid w-full grid-cols-2 gap-12 !px-0">
+                <div className="grid w-full md:grid-cols-2 gap-12 !px-0">
                   <div className="grid content-start space-y-6">
                     <div>
                       <SelectNetwork />
