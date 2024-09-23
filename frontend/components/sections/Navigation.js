@@ -26,17 +26,17 @@ export default function Navigation() {
           justify="left"
           className="flex items-center justify-center gap-2"
         >
-          <NavbarItem className="md:hidden">
-            <NavbarBrand className="pr-2">
-              <DegenerativesLogo />
-              {/* <p className="hidden text-lg font-bold sm:block text-inherit">
+          <NavbarItem className="">
+            <NavbarBrand className="pr-6">
+              {/* <DegenerativesLogo /> */}
+              <p className="hidden text-xl font-bold md:flex text-inherit">
                 degeneratives
-              </p> */}
+              </p>
             </NavbarBrand>
           </NavbarItem>
           <NavbarItem>
             <Button
-              radius="full"
+              radius="sm"
               variant="flat"
               color="primary"
               href="#"
@@ -48,7 +48,7 @@ export default function Navigation() {
           </NavbarItem>
           <NavbarItem isActive>
             <Button
-              radius="full"
+              radius="sm"
               variant="flat"
               color="primary"
               href="#"
@@ -60,7 +60,7 @@ export default function Navigation() {
           </NavbarItem>
           <NavbarItem>
             <Button
-              radius="full"
+              radius="sm"
               variant="flat"
               color="primary"
               href="#"

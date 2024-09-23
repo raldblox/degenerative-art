@@ -10,6 +10,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://explorer.etherlink.com"],
     icon: "./chains/etherlink.svg",
+    site: "https://etherlink.com",
   },
   {
     chainId: 137,
@@ -22,6 +23,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://polygonscan.com/"],
     icon: "./chains/polygon.png",
+    site: "https://polygon.technology",
   },
   {
     chainId: 8453,
@@ -34,6 +36,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://base.blockscout.com/"],
     icon: "./chains/base.png",
+    site: "https://base.org",
   },
   {
     chainId: 1116,
@@ -46,6 +49,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://scan.coredao.org"],
     icon: "./chains/coredao.svg",
+    site: "https://coredao.org",
   },
   {
     chainId: 42161,
@@ -58,6 +62,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://arbiscan.io"],
     icon: "./chains/arbitrum.svg",
+    site: "https://arbitrum.io",
   },
   {
     chainId: 56,
@@ -70,5 +75,6 @@ export const networks = [
     },
     blockExplorerUrls: ["https://bscscan.com"],
     icon: "./chains/bnb.svg",
+    site: "https://bnbchain.org",
   },
 ];

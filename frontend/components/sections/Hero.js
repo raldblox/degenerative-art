@@ -15,6 +15,8 @@ import { SwapByNetwork } from "../functions/SwapByNetwork";
 import { networks } from "@/libraries/network";
 import { MintEmoji } from "../functions/MintEmoji";
 import { ExpandableCards } from "./ExpandableCards";
+import { FunCard } from "../cards/FunCard";
+import { LinkPreview } from "../functions/LinkPreview";
 
 export const Hero = () => {
   const { selectedHomeTab, setSelectedHomeTab, selectedNetwork } = useContext(
@@ -37,7 +39,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen">
       <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50 to-primary-100 bg-gradient-to-tr rounded-lg">
+        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50/80 to-primary-100/80 backdrop-blur-sm bg-gradient-to-tr rounded-lg">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup color="success" max={4} radius="lg" total={200}>
@@ -61,9 +63,9 @@ export const Hero = () => {
             </p>
           </div>
 
-          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[24.5vw]">
+          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[25vw]">
             <Tabs
-              radius="sm"
+              radius="full"
               size=""
               variant="solid"
               color="primary"
@@ -77,7 +79,9 @@ export const Hero = () => {
             </Tabs>
           </div>
           <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-3 right-3 md:bottom-6 md:right-6">
-            Powered by OnChainVision Labs
+            <LinkPreview url="https://ocvlabs.com">
+              Powered by OnChainVision Labs
+            </LinkPreview>
           </div>
         </div>
 
@@ -86,7 +90,7 @@ export const Hero = () => {
             <span>gm 🌤</span>
           </div>
           <div className="space-y-6">
-            <h1 className="text-3xl">
+            <h1 className="text-2xl">
               dont let your <span className="font-semibold">mood</span> go to
               waste ser
             </h1>
@@ -94,7 +98,7 @@ export const Hero = () => {
               <Button
                 size="sm"
                 radius="sm"
-                variant="flat"
+                variant="solid"
                 onClick={() => {
                   setSelectedHomeTab("social");
                 }}
@@ -104,7 +108,7 @@ export const Hero = () => {
               <Button
                 size="sm"
                 radius="sm"
-                variant="flat"
+                variant="solid"
                 onClick={() => {
                   setSelectedHomeTab("defi");
                 }}
@@ -114,7 +118,7 @@ export const Hero = () => {
               <Button
                 size="sm"
                 radius="sm"
-                variant="flat"
+                variant="solid"
                 onClick={() => {
                   setSelectedHomeTab("game");
                 }}
@@ -200,7 +204,7 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "game" && (
           <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   ⚡️
@@ -209,7 +213,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   🎲
@@ -218,7 +222,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
                   💣

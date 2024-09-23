@@ -1,23 +1,28 @@
 "use client";
 
 import { Context } from "@/providers/Providers";
-import { Button, ScrollShadow } from "@nextui-org/react";
+import { Button, Link, ScrollShadow } from "@nextui-org/react";
 import React, { useContext } from "react";
+import { LockIcon } from "../icons/BasicIcons";
+import { LinkPreview } from "./LinkPreview";
 
 export const SwapByNetwork = () => {
   const { selectedNetwork } = useContext(Context);
   return (
     <>
       {selectedNetwork == "42793" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="primary"
+            variant="solid"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
+            as={Link}
+            href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
+            isExternal
           >
-            TachySwap
+            <LinkPreview url="https://tachyswap.org">TachySwap</LinkPreview>
           </Button>
           <Button
             color=""
@@ -25,21 +30,25 @@ export const SwapByNetwork = () => {
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            IguanaDEX
+            <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "137" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            QuickSwap
+            <LinkPreview url="https://quickswap.exchange/">
+              QuickSwap
+            </LinkPreview>
           </Button>
           <Button
             color=""
@@ -47,21 +56,25 @@ export const SwapByNetwork = () => {
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            Uniswap
+            <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "8453" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            Aerodrome
+            <LinkPreview url="https://aerodrome.finance/">
+              Aerodrome
+            </LinkPreview>
           </Button>
           <Button
             color=""
@@ -69,47 +82,53 @@ export const SwapByNetwork = () => {
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            Uniswap
+            <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "1116" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            Glyph Exchange
+            <LinkPreview url="https://glyph.exchange/">
+              Glyph Exchange
+            </LinkPreview>
           </Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "42161" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
             className="border-2 border-black dark "
-          >
-            Uniswap
-          </Button>
+            endContent={<LockIcon />}
+          ></Button>
         </ScrollShadow>
       )}
       {selectedNetwork == "56" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-3">
+        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
             color=""
             variant="bordered"
             size="md"
             radius="sm"
             className="border-2 border-black dark "
+            endContent={<LockIcon />}
           >
-            Pancakeswap
+            <LinkPreview url="https://pancakeswap.finance/">
+              Pancakeswap
+            </LinkPreview>
           </Button>
         </ScrollShadow>
       )}

@@ -3,6 +3,7 @@ import { Context } from "@/providers/Providers";
 import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
+import { LinkPreview } from "./LinkPreview";
 
 export const SelectNetwork = () => {
   const { selectedNetwork, setSelectedNetwork } = useContext(Context);
@@ -102,7 +103,7 @@ export const SelectNetwork = () => {
         classNames={{
           label: "group-data-[filled=true]:-translate-y-5 text-foreground",
           trigger: "min-h-20",
-          listboxWrapper: "max-h-[450px]",
+          listboxWrapper: "max-h-[400px]",
         }}
         listboxProps={{
           itemClasses: {
@@ -148,7 +149,7 @@ export const SelectNetwork = () => {
       >
         {(chain) => (
           <SelectItem key={chain.chainId} textValue={chain.chainName}>
-            <div className="flex items-center gap-2">
+            <LinkPreview className="flex items-center gap-2" url={chain?.site}>
               <Avatar
                 name={chain.nativeCurrency.symbol}
                 className="flex-shrink-0 p-1 bg-black dark"
@@ -162,7 +163,7 @@ export const SelectNetwork = () => {
                   {chain.nativeCurrency.symbol}
                 </span>
               </div>
-            </div>
+            </LinkPreview>
           </SelectItem>
         )}
       </Select>
