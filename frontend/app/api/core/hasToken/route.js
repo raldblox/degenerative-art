@@ -46,3 +46,12 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET(request, { params }) {
+  try {
+    return NextResponse.json("Hello, Degeneratives.");
+  } catch (error) {
+    console.error("Error in fetch API route:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
