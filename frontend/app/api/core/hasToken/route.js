@@ -21,10 +21,6 @@ export async function POST(request) {
 
     return NextResponse.json(
       {
-        error: {
-          code: 0,
-          message: "",
-        },
         data: {
           result: result,
         },
@@ -35,7 +31,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         error: {
-          code: 1,
+          code: 0,
           message: error.toString(),
         },
         data: {
