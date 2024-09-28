@@ -148,7 +148,7 @@ export const Hero = () => {
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🛍️
                   </span>
-                  <h1 className="text-xl font-semibold">swap</h1>
+                  <h1 className="text-3xl font-bold text-default-800">swap</h1>
                 </div>
                 <ChainIcon />
               </div>
@@ -168,7 +168,7 @@ export const Hero = () => {
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🏊‍♀️
                   </span>
-                  <h1 className="text-xl font-semibold">pool</h1>
+                  <h1 className="text-3xl font-bold text-default-800">pool</h1>
                 </div>
                 <ChainIcon />
               </div>
@@ -187,7 +187,7 @@ export const Hero = () => {
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🥩
                   </span>
-                  <h1 className="text-xl font-semibold">stake</h1>
+                  <h1 className="text-3xl font-bold text-default-800">stake</h1>
                 </div>
                 <ChainIcon />
               </div>
@@ -209,7 +209,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   ⚡️
                 </span>
-                <h1 className="text-xl font-semibold">match</h1>
+                <h1 className="text-3xl font-bold text-default-800">match</h1>
               </div>
               <div></div>
             </div>
@@ -218,7 +218,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎲
                 </span>
-                <h1 className="text-xl font-semibold">roll</h1>
+                <h1 className="text-3xl font-bold text-default-800">roll</h1>
               </div>
               <div></div>
             </div>
@@ -227,7 +227,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   💣
                 </span>
-                <h1 className="text-xl font-semibold">sweep</h1>
+                <h1 className="text-3xl font-bold text-default-800">sweep</h1>
               </div>
               <div></div>
             </div>
@@ -241,7 +241,7 @@ export const Hero = () => {
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
                     🖼
                   </span>
-                  <h1 className="text-xl font-semibold">mint</h1>
+                  <h1 className="text-3xl font-bold text-default-800">mint</h1>
                 </div>
                 <ChainIcon />
               </div>
@@ -261,7 +261,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎨
                 </span>
-                <h1 className="text-xl font-semibold">craft</h1>
+                <h1 className="text-3xl font-bold text-default-800">craft</h1>
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-xl lowercase ">
@@ -276,7 +276,7 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🤖
                 </span>
-                <h1 className="text-xl font-semibold">generate</h1>
+                <h1 className="text-3xl font-bold text-default-800">generate</h1>
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-xl lowercase ">
