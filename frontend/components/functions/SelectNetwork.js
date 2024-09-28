@@ -89,10 +89,10 @@ export const SelectNetwork = () => {
     <>
       <Select
         radius="sm"
-        // selectedKeys={
-        //   selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
-        // }
-        selectedKeys={[selectedNetwork]}
+        selectedKeys={
+          selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
+        }
+        // selectedKeys={[selectedNetwork]}
         onChange={handleSelectionChange}
         disallowEmptySelection
         selectionMode="single"

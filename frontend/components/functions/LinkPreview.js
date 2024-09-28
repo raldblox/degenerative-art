@@ -127,7 +127,7 @@ export const LinkPreview = ({
                     quality={quality}
                     layout={layout}
                     priority={true}
-                    className="rounded-lg"
+                    className="rounded-xl"
                     alt="preview image"
                   />
                 </div>

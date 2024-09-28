@@ -443,7 +443,7 @@ export default function MoodMatch() {
                 {shuffledEmojis.map((emoji, index) => (
                   <div
                     key={index}
-                    className={`max-h-[73px] md:max-h-[90px] md:min-h-[90px] h-[21vw] md:h-[20vw] border-2 rounded-lg border-transparent text-3xl md:text-4xl flex justify-center items-center cursor-pointer aspect-square 
+                    className={`max-h-[73px] md:max-h-[90px] md:min-h-[90px] h-[21vw] md:h-[20vw] border-2 rounded-xl border-transparent text-3xl md:text-4xl flex justify-center items-center cursor-pointer aspect-square 
                     ${
                       d9e89869234ce2877
                         ? "border-transparent bg-[#3131ff]/90 duration-200 transition-all hover:bg-green-950 hover:border-[#3131ff] animate-appearance-in"

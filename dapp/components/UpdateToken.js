@@ -102,7 +102,7 @@ const UpdateToken = ({ token }) => {
           type="text"
           data-index={i}
           ref={(el) => (inputRef.current[i] = el)}
-          className={`animate-appearance-in w-16 h-16 placeholder:saturate-0 text-3xl text-center rounded-lg border-3 border-black outline-none focus:border-indigo-600 ${
+          className={`animate-appearance-in w-16 h-16 placeholder:saturate-0 text-3xl text-center rounded-xl border-3 border-black outline-none focus:border-indigo-600 ${
             i >= activeFields ? "hidden" : ""
           }`}
           onChange={(e) => {

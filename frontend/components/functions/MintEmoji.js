@@ -5,6 +5,7 @@ import {
   Button,
   Image,
   Link,
+  LinkIcon,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { SelectNetwork } from "./SelectNetwork";
+import { SimulatePrice } from "./SimulatePrice";
 
 export const MintEmoji = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -292,33 +294,44 @@ export const MintEmoji = () => {
           {(onClose) => (
             <>
               <ModalBody className="p-0 ">
-                <div className="grid w-full md:grid-cols-2 gap-12 !px-0">
+                <div className="grid w-full md:grid-cols-2 gap-12 !px-12">
                   <div className="grid content-start space-y-6">
                     <div>
                       <SelectNetwork />
                     </div>
 
                     <div className="grid content-between gap-1">
-                      <div className="flex items-start justify-between p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold">MINT PRICE</p>
-                        <h1 className="text-4xl font-bold">1.00</h1>
+                      <div className="grid grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
+                        <div>
+                          <p className="text-sm text-balance">
+                            CURRENT NFT MINT PRICE
+                          </p>
+                        </div>
+                        <h1 className="text-3xl font-bold text-right">1.00</h1>
                       </div>
-                      <div className="flex items-start justify-between p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold">TOKEN SUPPLY</p>
-                        <h1 className="text-4xl font-bold">0</h1>
+                      <div className="grid grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold text-balance">
+                          CURRENT NFT SUPPLY
+                        </p>
+                        <h1 className="text-3xl font-bold text-right">1000</h1>
                       </div>
-                      <div className="flex items-start justify-between p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold">TOKEN HOLDERS</p>
-                        <h1 className="text-4xl font-bold">0</h1>
+                      <div className="grid grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold text-balance">
+                          FREE MOOD DISTRIBUTED
+                        </p>
+                        <h1 className="text-3xl font-bold text-right">
+                          1000000
+                        </h1>
                       </div>
                     </div>
+                    <SimulatePrice />
                   </div>
 
                   <div className="grid content-between gap-6">
                     <div className="flex flex-col items-center justify-center">
                       <div
                         ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 rounded-lg w-fit"
+                        className="grid grid-cols-3 gap-2 rounded-xl w-fit"
                       >
                         {renderInputFields()}
                       </div>

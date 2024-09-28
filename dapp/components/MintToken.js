@@ -219,7 +219,7 @@ const MintToken = () => {
                 maxLength={2}
                 onKeyDown={(e) => handleKeyDown(e, i)}
                 ref={(el) => (inputRef.current[i] = el)}
-                className={` w-16 h-16 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-lg border-2 border-default-300 outline-none focus:border-primary ${
+                className={` w-16 h-16 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-xl border-2 border-default-300 outline-none focus:border-primary ${
                   i >= activeFields ? "hidden" : ""
                 }`}
                 onChange={(e) => {
@@ -323,7 +323,7 @@ const MintToken = () => {
                     <div className="flex flex-col items-center justify-center py-6 space-y-2">
                       <div
                         ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 rounded-lg"
+                        className="grid grid-cols-3 gap-2 rounded-xl"
                       >
                         {renderInputFields()}
                       </div>

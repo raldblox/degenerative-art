@@ -39,7 +39,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen">
       <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 from-primary-50/80 to-primary-100/80 backdrop-blur-sm bg-gradient-to-tr rounded-lg">
+        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-100 rounded-2xl">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup color="success" max={4} radius="lg" total={200}>
@@ -85,7 +85,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-lg backdrop-blur-sm">
+        <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm 🌤</span>
           </div>
@@ -138,14 +138,14 @@ export const Hero = () => {
         </div>
 
         {selectedHomeTab == "defi" && (
-          <div className="min-h-[450px] w-full md:max-h-[450px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-lg">
+          <div className="min-h-[450px] w-full md:max-h-[450px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-2xl">
             {/* <div className="w-full col-span-3">
               <ExpandableCards />
             </div> */}
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🛍️
                   </span>
                   <h1 className="text-xl font-semibold">swap</h1>
@@ -162,10 +162,10 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🏊‍♀️
                   </span>
                   <h1 className="text-xl font-semibold">pool</h1>
@@ -181,10 +181,10 @@ export const Hero = () => {
                 <div className="w-full"></div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                     🥩
                   </span>
                   <h1 className="text-xl font-semibold">stake</h1>
@@ -203,28 +203,28 @@ export const Hero = () => {
           </div>
         )}
         {selectedHomeTab == "game" && (
-          <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
+          <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   ⚡️
                 </span>
                 <h1 className="text-xl font-semibold">match</h1>
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎲
                 </span>
                 <h1 className="text-xl font-semibold">roll</h1>
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white/80 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   💣
                 </span>
                 <h1 className="text-xl font-semibold">sweep</h1>
@@ -234,8 +234,8 @@ export const Hero = () => {
           </div>
         )}
         {selectedHomeTab == "social" && (
-          <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-lg">
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+          <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
@@ -256,9 +256,9 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎨
                 </span>
                 <h1 className="text-xl font-semibold">craft</h1>
@@ -271,9 +271,9 @@ export const Hero = () => {
                 <div className="w-full"></div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-lg">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-foreground">
+                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🤖
                 </span>
                 <h1 className="text-xl font-semibold">generate</h1>
@@ -289,8 +289,8 @@ export const Hero = () => {
           </div>
         )}
 
-        <div className="min-h-[450px]  w-full max-h-[300px] grid md:col-span-4 rounded-lg bg-white hover:bg-black transition-all duration-300 ">
-          <div className="h-full relative p-6 min-h-[300px]    rounded-lg">
+        <div className="min-h-[450px]  w-full max-h-[300px] grid md:col-span-4 rounded-2xl bg-default-100 hover:bg-success transition-all duration-300 ">
+          <div className="h-full relative p-6 min-h-[300px]    rounded-2xl">
             <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg transition-all duration-300 bg-black rounded-full hover:bg-success top-3 left-3">
               📊
             </span>
