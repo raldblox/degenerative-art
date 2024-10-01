@@ -7,7 +7,12 @@ import { LinkPreview } from "./LinkPreview";
 import { LockIcon } from "../icons/BasicIcons";
 
 export const SelectNetwork = () => {
-  const { selectedNetwork, setSelectedNetwork } = useContext(Context);
+  const {
+    selectedNetwork,
+    setSelectedNetwork,
+    selectedChain,
+    setSelectedChain,
+  } = useContext(Context);
 
   const handleSelectionChange = async (e) => {
     const chainId = Number(e.target.value);

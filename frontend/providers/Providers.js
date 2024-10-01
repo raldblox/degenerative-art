@@ -13,6 +13,7 @@ export const Providers = (props) => {
   const [connectedAccount, setConnectedAccount] = useState(null);
   const [selectedHomeTab, setSelectedHomeTab] = useState("defi");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
+  const [selectedChain, setSelectedChain] = useState({});
   const [hasToken, setHasToken] = useState(false);
 
   const connectEthereumWallet = async () => {
@@ -81,7 +82,9 @@ export const Providers = (props) => {
     moodArtABI,
     connectEthereumWallet,
     connectedAccount,
-    walletSigner
+    walletSigner,
+    selectedChain,
+    setSelectedChain,
   };
 
   return (

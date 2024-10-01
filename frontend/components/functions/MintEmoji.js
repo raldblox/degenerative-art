@@ -30,6 +30,8 @@ export const MintEmoji = () => {
     connectEthereumWallet,
     connectedAccount,
     walletSigner,
+    setSelectedChain,
+    selectedChain,
   } = useContext(Context);
 
   const fieldsRef = useRef(null);
@@ -55,91 +57,70 @@ export const MintEmoji = () => {
         return;
       }
 
-      if (inputValues.includes(":etherlink:")) {
-        alert("Etherlink logo not supported yet. Stay tuned!");
-        return;
-      }
-
-      // Check cooldown (assuming you have 'countdown' and 'timeUpdated' in your Context)
-      if (countdown !== "00:00:00") {
-        alert(`cooldown not over yet. please wait for ${countdown}.`);
-        return;
-      }
-
       // Check if wallet is connected
-      if (!userAddress) {
-        alert("please connect your wallet first.");
-        connectEthereumWallet(); // Assuming you have this function in your Context
+      if (!connectedAccount) {
+        alert("Please connect your wallet first and try again.");
+        await connectEthereumWallet();
         return;
       }
 
       // Fetch user's native token balance
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const nativeBalance = await provider.getBalance(userAddress);
+      const nativeBalance = await provider.getBalance(connectedAccount);
 
       // Check network (assuming you have the desired network ID in a variable 'targetNetworkId')
       const network = await provider.getNetwork();
       console.log("chainid:", network.chainId);
-      const chainId = 42793;
+      console.log("nativeBalance:", nativeBalance);
 
-      if (Number(network.chainId) !== chainId) {
+      if (Number(network.chainId) !== Number(selectedNetwork)) {
         alert("incorrect network. please switch to etherlink network.");
         return;
       }
-      console.log("emojis:", inputValues);
 
-      const nftContract = new ethers.Contract(
-        "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
-        nftAbi,
-        signer
+      const moodArt = new ethers.Contract(
+        selectedChain?.contracts?.moodArt,
+        moodArtABI,
+        walletSigner
       );
-      const totalSupply = await nftContract.totalSupply();
-      const tokenIds = await nftContract.tokenIds();
-      const mintprice = await nftContract.price(tokenIds);
+
+      const totalSupply_ = await moodArt.totalSupply();
+      const price_ = await moodArt.price(totalSupply_);
+      setTotalSupply(totalSupply_);
+      setPrice(price_);
 
       // Check if the user has enough native tokens
-      if (Number(nativeBalance) < Number(mintprice)) {
+      if (Number(nativeBalance) < Number(price_)) {
         alert("insufficient balance. please acquire more XTZ.");
         return;
       }
 
-      const emojiHash = await nftContract.emojiHash(inputValues);
-      const taken = await nftContract.emojisTaken(emojiHash);
+      const emojiHash = await moodArt.hash(inputValues);
+      const taken = await moodArt.tokenized(emojiHash);
 
       // Check if the user has enough native tokens
-      if (
-        taken ||
-        emojiHash ==
-          "0x87e422af3ea01e04fd62404df56d04b0f0726eb090e9248390fadd644816c21b"
-      ) {
-        alert(`Emoji mood pattern is taken. EMOJIHASH: ${emojiHash}`);
+      if (taken) {
+        alert(`Your mood pattern is already tokenized. Hash: ${emojiHash}`);
         return;
       }
 
       // Send transaction
-      const tx = await nftContract.mint(
+      const tx = await moodArt.mint(
+        connectedAccount,
         inputValues,
-        "0x88a87144ED2080c1B077075Bb90dd8EcE5CD8DAD",
+        1,
+        true,
+        0,
+        "0x0000000000000000000000000000000000000000",
         {
-          value: mintprice,
+          value: price_,
         }
       );
 
-      // Wait for the transaction to be mined
-      const receipt = await tx.wait();
-      setTxHash(tx.hash);
-
-      // Find the TokenMinted event in the transaction receipt
-      const event = receipt?.events?.find((e) => e.event === "TokenMinted");
-      if (event) {
-        const actualTokenId = event.args.tokenId;
-        console.log("Actual Token ID:", actualTokenId.toString());
-        // You can now use the actualTokenId for further actions if needed
-      } else {
-        console.error("TokenMinted event not found in transaction receipt.");
+      if (tx.hash) {
+        setTxHash(tx.hash);
+        alert("Minting successful!");
       }
-
-      console.log("Minting successful!");
     } catch (error) {
       // Log error details
       console.error("Minting failed:", error);
@@ -286,6 +267,7 @@ export const MintEmoji = () => {
         const selectedChain = networks.find(
           (chain) => chain.chainId === Number(selectedNetwork)
         );
+        setSelectedChain(selectedChain);
         const node = selectedChain.rpcUrls[0];
         const provider = new ethers.JsonRpcProvider(node);
         const moodArt = new ethers.Contract(
@@ -293,11 +275,11 @@ export const MintEmoji = () => {
           moodArtABI,
           provider
         );
-        const totalSupply = await moodArt.totalSupply();
-        const price_ = await moodArt.price(totalSupply);
-        setTotalSupply(totalSupply);
+        const totalSupply_ = await moodArt.totalSupply();
+        const price_ = await moodArt.price(totalSupply_);
+        setTotalSupply(totalSupply_);
         setPrice(price_);
-        console.log(totalSupply, price_);
+        console.log(totalSupply_, price_);
       } catch (error) {
         setTotalSupply(0);
         setPrice(0);
@@ -409,7 +391,7 @@ export const MintEmoji = () => {
                       size="lg"
                       radius="sm"
                       variant="solid"
-                      className="mx-auto min-w-[150px] h-[50px]"
+                      className="mx-auto min-w-[120px] h-[50px]"
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
@@ -422,6 +404,19 @@ export const MintEmoji = () => {
               </ModalBody>
               <div className="absolute top-3 left-3">
                 {fetching && <Spinner size="sm" />}
+              </div>
+
+              <div className="absolute bottom-6">
+                {txHash && (
+                  <Link
+                    href={`${selectedChain?.blockExplorerUrls[0]}/tx/${txHash}`}
+                    size="md"
+                    showAnchorIcon
+                    className="animate-appearance-in"
+                  >
+                    View Transaction Receipt
+                  </Link>
+                )}
               </div>
             </>
           )}
