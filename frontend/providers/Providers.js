@@ -11,7 +11,7 @@ export const Context = createContext();
 export const Providers = (props) => {
   const [walletSigner, setWalletSigner] = useState(null);
   const [connectedAccount, setConnectedAccount] = useState(null);
-  const [selectedHomeTab, setSelectedHomeTab] = useState("defi");
+  const [selectedHomeTab, setSelectedHomeTab] = useState("social");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
   const [hasToken, setHasToken] = useState(false);

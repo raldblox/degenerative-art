@@ -51,6 +51,7 @@ export const MintEmoji = () => {
 
     try {
       setMinting(true);
+      setTxHash("");
       // Check for at least one filled input
       if (inputValues.every((value) => value === "")) {
         alert("Please fill in at least one input.");
