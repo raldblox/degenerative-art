@@ -125,7 +125,7 @@ export const MintEmoji = () => {
     } catch (error) {
       // Log error details
       console.error("Minting failed:", error);
-      alert("oops, something went wrong with the mint. try again later!");
+      alert("Oops, something went wrong!");
     } finally {
       setMinting(false);
     }
@@ -281,6 +281,7 @@ export const MintEmoji = () => {
         setTotalSupply(totalSupply_);
         setPrice(price_);
         console.log(totalSupply_, price_);
+        await connectEthereumWallet();
       } catch (error) {
         setTotalSupply(0);
         setPrice(0);
