@@ -12,7 +12,7 @@ export async function POST(request) {
     const node = "https://rpc.coredao.org";
     const provider = new ethers.JsonRpcProvider(node);
     const interactiveCore = new ethers.Contract(
-      "0x11F0759691a0b4d65a2346ec3e5d0908bfA933F8",
+      "0x91a8c5ce0bd41488351640564bae4c8d7d8e00bd",
       ERC721,
       provider
     );
