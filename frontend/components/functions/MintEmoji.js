@@ -292,7 +292,7 @@ export const MintEmoji = () => {
       }
     };
     fetchPrice();
-  }, [selectedNetwork]);
+  }, [selectedNetwork, txHash]);
 
   useEffect(() => {
     setTxHash("");
