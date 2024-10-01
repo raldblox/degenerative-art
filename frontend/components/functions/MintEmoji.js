@@ -265,6 +265,8 @@ export const MintEmoji = () => {
     const fetchPrice = async () => {
       try {
         setFetching(true);
+        setTotalSupply(0);
+        setPrice(0);
         const selectedChain = networks.find(
           (chain) => chain.chainId === Number(selectedNetwork)
         );
@@ -341,8 +343,11 @@ export const MintEmoji = () => {
                             Current Mint Price
                           </p>
                         </div>
-                        <h1 className="text-3xl font-bold text-right">
-                          {ethers.formatEther(price)}
+                        <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
+                          {ethers.formatEther(price)}{" "}
+                          <span className="text-lg">
+                            ${selectedChain?.nativeCurrency.symbol}
+                          </span>
                         </h1>
                       </div>
                       <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
@@ -393,13 +398,13 @@ export const MintEmoji = () => {
                       size="lg"
                       radius="sm"
                       variant="solid"
-                      className="mx-auto min-w-[120px] h-[50px]"
+                      className="mx-auto font-semibold min-w-[120px] h-[50px]"
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
                       isDisabled={txHash}
                     >
-                      {txHash ? "SUCCESS 🎉" : "MINT"}
+                      {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
                     </Button>
                   </div>
                 </div>
@@ -411,6 +416,7 @@ export const MintEmoji = () => {
               <div className="absolute bottom-6">
                 {txHash && (
                   <Link
+                    isExternal
                     href={`${selectedChain?.blockExplorerUrls[0]}/tx/${txHash}`}
                     size="md"
                     showAnchorIcon

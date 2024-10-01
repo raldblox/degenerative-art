@@ -36,10 +36,10 @@ export const Providers = (props) => {
         }
 
         // Existing 'chainChanged' event listener
-        ethereum.on("chainChanged", handleChainChanged);
-        function handleChainChanged() {
-          window.location.reload();
-        }
+        // ethereum.on("chainChanged", handleChainChanged);
+        // function handleChainChanged() {
+        //   window.location.reload();
+        // }
       } catch (error) {
         console.error(`Error connecting to wallet`, error);
       }
