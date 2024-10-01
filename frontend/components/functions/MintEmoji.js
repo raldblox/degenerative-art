@@ -349,7 +349,7 @@ export const MintEmoji = () => {
                         </div>
                         <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
                           {ethers.formatEther(price)}{" "}
-                          <span className="text-lg">
+                          <span className="text-lg opacity-60">
                             ${selectedChain?.nativeCurrency.symbol}
                           </span>
                         </h1>
