@@ -4,6 +4,7 @@ import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import { LinkPreview } from "./LinkPreview";
+import { LockIcon } from "../icons/BasicIcons";
 
 export const SelectNetwork = () => {
   const { selectedNetwork, setSelectedNetwork } = useContext(Context);
@@ -149,26 +150,33 @@ export const SelectNetwork = () => {
         }}
       >
         {(chain) => (
-          <SelectItem key={chain.chainId} textValue={chain.chainName}>
-            <div className="flex items-center gap-2">
-              <Avatar
-                name={chain.nativeCurrency.symbol}
-                className="flex-shrink-0 p-1 bg-black dark"
-                size="sm"
-                src={chain.icon}
-                radius="sm"
-              />
-              <div className="flex flex-col">
-                <LinkPreview
-                  className="font-semibold text-small"
-                  url={chain?.site}
-                >
-                  {chain.chainName}
-                </LinkPreview>
-                <span className="text-tiny text-default-700">
-                  {chain.nativeCurrency.symbol}
-                </span>
+          <SelectItem
+            key={chain.chainId}
+            textValue={chain.chainName}
+            isReadOnly={!chain.isLive}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Avatar
+                  name={chain.nativeCurrency.symbol}
+                  className="flex-shrink-0 p-1 bg-black dark"
+                  size="sm"
+                  src={chain.icon}
+                  radius="sm"
+                />
+                <div className="flex flex-col">
+                  <LinkPreview
+                    className="font-semibold text-small"
+                    url={chain?.site}
+                  >
+                    {chain.chainName}
+                  </LinkPreview>
+                  <span className="text-tiny text-default-700">
+                    {chain.nativeCurrency.symbol}
+                  </span>
+                </div>
               </div>
+              <div>{!chain.isLive && <LockIcon />}</div>
             </div>
           </SelectItem>
         )}

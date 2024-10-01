@@ -11,22 +11,38 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Slider,
+  Spinner,
   useDisclosure,
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { SelectNetwork } from "./SelectNetwork";
 import { SimulatePrice } from "./SimulatePrice";
+import { networks } from "@/libraries/network";
+import { ethers } from "ethers";
 
 export const MintEmoji = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { countdown } = useContext(Context);
+  const {
+    countdown,
+    selectedNetwork,
+    moodArtABI,
+    connectEthereumWallet,
+    connectedAccount,
+    walletSigner,
+  } = useContext(Context);
 
   const fieldsRef = useRef(null);
   const inputRef = useRef([]);
   const [inputValues, setInputValues] = useState(Array(9).fill(""));
   const [activeFields, setActiveFields] = useState(9);
+  const [fetching, setFetching] = useState(false);
   const [minting, setMinting] = useState(false);
   const [txHash, setTxHash] = useState("");
+  const [expansionLevel, setExpansionLevel] = useState(2);
+
+  const [price, setPrice] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0);
 
   const handleMint = async () => {
     console.log("emojis:", inputValues);
@@ -258,6 +274,40 @@ export const MintEmoji = () => {
     }
   }, [activeFields]);
 
+  const handleSlider = (value) => {
+    if (isNaN(Number(value))) return;
+    setExpansionLevel(value);
+  };
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        setFetching(true);
+        const selectedChain = networks.find(
+          (chain) => chain.chainId === Number(selectedNetwork)
+        );
+        const node = selectedChain.rpcUrls[0];
+        const provider = new ethers.JsonRpcProvider(node);
+        const moodArt = new ethers.Contract(
+          selectedChain.contracts?.moodArt,
+          moodArtABI,
+          provider
+        );
+        const totalSupply = await moodArt.totalSupply();
+        const price_ = await moodArt.price(totalSupply);
+        setTotalSupply(totalSupply);
+        setPrice(price_);
+        console.log(totalSupply, price_);
+      } catch (error) {
+        setTotalSupply(0);
+        setPrice(0);
+      } finally {
+        setFetching(false);
+      }
+    };
+    fetchPrice();
+  }, [selectedNetwork]);
+
   return (
     <>
       <div className="flex flex-col !h-full space-y-6 mx-auto w-full">
@@ -288,7 +338,7 @@ export const MintEmoji = () => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         size="3xl"
-        className="!px-0 bg-default-200 backdrop-blur-sm"
+        className="!px-0 bg-default-200 backdrop-blur-sm relative"
       >
         <ModalContent className="flex items-center justify-center w-full !px-0 py-20 ">
           {(onClose) => (
@@ -301,40 +351,57 @@ export const MintEmoji = () => {
                     </div>
 
                     <div className="grid content-between gap-1">
-                      <div className="grid grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
+                      <div className="grid items-center grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
                         <div>
-                          <p className="text-sm text-balance">
-                            CURRENT NFT MINT PRICE
+                          <p className="text-sm capitalize text-balance !leading-tight">
+                            Current Mint Price
                           </p>
                         </div>
-                        <h1 className="text-3xl font-bold text-right">1.00</h1>
-                      </div>
-                      <div className="grid grid-cols-2 gap-6 p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold text-balance">
-                          CURRENT NFT SUPPLY
-                        </p>
-                        <h1 className="text-3xl font-bold text-right">1000</h1>
-                      </div>
-                      <div className="grid grid-cols-2 gap-6 p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold text-balance">
-                          FREE MOOD DISTRIBUTED
-                        </p>
                         <h1 className="text-3xl font-bold text-right">
-                          1000000
+                          {ethers.formatEther(price)}
                         </h1>
                       </div>
+                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
+                          Current Token Supply
+                        </p>
+                        <h1 className="text-3xl font-bold text-right">
+                          {totalSupply.toString()}
+                        </h1>
+                      </div>
+                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
+                          Free Mood Distributed
+                        </p>
+                        <h1 className="text-3xl font-bold text-right">--</h1>
+                      </div>
                     </div>
-                    <SimulatePrice />
+                    {/* <SimulatePrice /> */}
                   </div>
 
                   <div className="grid content-between gap-6">
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center gap-6">
                       <div
                         ref={fieldsRef}
                         className="grid grid-cols-3 gap-2 rounded-xl w-fit"
                       >
                         {renderInputFields()}
                       </div>
+                      {/* <div className="w-full px-3">
+                        <Slider
+                          size="md"
+                          step={1}
+                          color="primary"
+                          label="Expansion Level"
+                          showSteps={true}
+                          maxValue={4}
+                          minValue={1}
+                          value={expansionLevel}
+                          defaultValue={2}
+                          className="max-w-md"
+                          onChange={handleSlider}
+                        />
+                      </div> */}
                     </div>
 
                     <Button
@@ -353,6 +420,9 @@ export const MintEmoji = () => {
                   </div>
                 </div>
               </ModalBody>
+              <div className="absolute top-3 left-3">
+                {fetching && <Spinner size="sm" />}
+              </div>
             </>
           )}
         </ModalContent>

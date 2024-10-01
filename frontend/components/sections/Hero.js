@@ -131,7 +131,7 @@ export const Hero = () => {
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          <p className="absolute items-start hidden p-3 text-xs text-foreground md:flex h-[50px]  -bottom-16 -left-6">
+          <p className="absolute items-start hidden px-0 text-xs text-foreground md:flex h-[50px] leading-tight -bottom-16">
             MOOD empowers the degeneratives community to create, express, and
             play together within a unified, multi-chain ecosystem.
           </p>
@@ -276,7 +276,9 @@ export const Hero = () => {
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🤖
                 </span>
-                <h1 className="text-3xl font-bold text-default-800">generate</h1>
+                <h1 className="text-3xl font-bold text-default-800">
+                  generate
+                </h1>
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-xl lowercase ">

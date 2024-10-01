@@ -1,5 +1,6 @@
 export const networks = [
   {
+    isLive: true,
     chainId: 42793,
     rpcUrls: ["https://node.mainnet.etherlink.com"],
     chainName: "Etherlink",
@@ -11,10 +12,33 @@ export const networks = [
     blockExplorerUrls: ["https://explorer.etherlink.com"],
     icon: "./chains/etherlink.svg",
     site: "https://etherlink.com",
+    contracts: {
+      moodArt: "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
+      moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+    },
   },
   {
+    isLive: true,
+    chainId: 1116,
+    chainName: "Core",
+    rpcUrls: ["https://rpc.coredao.org"],
+    nativeCurrency: {
+      name: "CORE",
+      symbol: "CORE",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://scan.coredao.org"],
+    icon: "./chains/coredao.svg",
+    site: "https://coredao.org",
+    contracts: {
+      moodArt: "0x91a8c5Ce0bD41488351640564baE4C8d7D8e00BD",
+      moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+    },
+  },
+  {
+    isLive: true,
     chainId: 137,
-    rpcUrls: ["https://polygon.llamarpc.com"],
+    rpcUrls: ["https://polygon-rpc.com/"],
     chainName: "Polygon",
     nativeCurrency: {
       name: "POL",
@@ -24,8 +48,13 @@ export const networks = [
     blockExplorerUrls: ["https://polygonscan.com/"],
     icon: "./chains/polygon.png",
     site: "https://polygon.technology",
+    contracts: {
+      moodArt: "0x957f319210eCC12B9bBbE38ea6B1e92E2748dB6c",
+      moodBank: "0x2aB32741dc8453714136bBaFD2D6A5ec77934E23",
+    },
   },
   {
+    isLive: false,
     chainId: 8453,
     chainName: "Base",
     rpcUrls: ["https://mainnet.base.org"],
@@ -38,20 +67,9 @@ export const networks = [
     icon: "./chains/base.png",
     site: "https://base.org",
   },
+
   {
-    chainId: 1116,
-    chainName: "Core",
-    rpcUrls: ["https://rpc.coredao.org"],
-    nativeCurrency: {
-      name: "CORE",
-      symbol: "CORE",
-      decimals: 18,
-    },
-    blockExplorerUrls: ["https://scan.coredao.org"],
-    icon: "./chains/coredao.svg",
-    site: "https://coredao.org",
-  },
-  {
+    isLive: false,
     chainId: 42161,
     chainName: "Arbitrum One",
     rpcUrls: ["https://arb1.arbitrum.io/rpc"],
@@ -65,6 +83,7 @@ export const networks = [
     site: "https://arbitrum.io",
   },
   {
+    isLive: false,
     chainId: 56,
     chainName: "BNB Chain",
     rpcUrls: ["https://binance.llamarpc.com"],

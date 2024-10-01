@@ -5,14 +5,9 @@ pragma solidity ^0.8.24;
 
 interface IVisualEngine {
     function generateMetadata(
-        uint256 tokenId,
-        address owner,
-        string[] memory emojis,
-        uint256 moodSwing
+        uint256,
+        address,
+        string[] memory,
+        uint256
     ) external view returns (string memory);
-
-    function getPrice()
-        external
-        view
-        returns (address tokenAddress, uint256 tokenValue);
 }

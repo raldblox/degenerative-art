@@ -4,13 +4,48 @@ import { NextUIProvider } from "@nextui-org/react";
 import { ethers } from "ethers";
 import { SessionProvider, useSession } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
+import moodArtABI from "@/libraries/abis/MOODART.json";
 
 export const Context = createContext();
 
 export const Providers = (props) => {
+  const [walletSigner, setWalletSigner] = useState(null);
+  const [connectedAccount, setConnectedAccount] = useState(null);
   const [selectedHomeTab, setSelectedHomeTab] = useState("defi");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [hasToken, setHasToken] = useState(false);
+
+  const connectEthereumWallet = async () => {
+    console.log("Connecting to Ethereum Provider...");
+
+    if (window.ethereum) {
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const signer = await provider.getSigner();
+        const user = await signer.getAddress();
+        console.log("Connected to Browser's Wallet...");
+        setWalletSigner(signer);
+        setConnectedAccount(user);
+
+        // Add 'accountsChanged' event listener
+        ethereum.on("accountsChanged", handleAccountsChanged);
+        function handleAccountsChanged() {
+          window.location.reload();
+        }
+
+        // Existing 'chainChanged' event listener
+        ethereum.on("chainChanged", handleChainChanged);
+        function handleChainChanged() {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error(`Error connecting to wallet`, error);
+      }
+    } else {
+      // alert("Metamask not found.");
+    }
+  };
 
   useEffect(() => {
     fetch("/api/core/hasToken", {
@@ -43,6 +78,10 @@ export const Providers = (props) => {
     setSelectedHomeTab,
     selectedNetwork,
     setSelectedNetwork,
+    moodArtABI,
+    connectEthereumWallet,
+    connectedAccount,
+    walletSigner
   };
 
   return (

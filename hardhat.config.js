@@ -9,36 +9,54 @@ module.exports = {
     polygon: {
       name: "Polygon Mainnet",
       url: process.env.POLYGON_RPC,
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
       gasPrice: "auto",
     },
     polygonAmoy: {
       name: "Polygon Amoy",
       url: "https://rpc-amoy.polygon.technology",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
       gasPrice: "auto",
     },
     coreTestnet: {
       name: "Core Blockchain Testnet",
       url: "https://rpc.test.btcs.network",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
       chainId: 1115,
     },
     core: {
       name: "Core",
       url: "https://rpc.coredao.org",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
       chainId: 1116,
     },
     etherlinkTestnet: {
       name: "Etherlink Testnet",
       url: "https://node.ghostnet.etherlink.com",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
     },
     etherlink: {
       name: "Etherlink",
       url: "https://node.mainnet.etherlink.com",
-      accounts: [process.env.OCVLABS_PRIVATE_KEY, process.env.WALLET_0x01],
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
       gasPrice: "auto",
     },
   },

@@ -4,93 +4,146 @@ async function main() {
   const [deployer, relayer] = await ethers.getSigners();
   const network = await ethers.provider.getNetwork();
   const networkName = network.name;
-  console.log("Deployer", deployer.address, "| Network", networkName);
+  const networkId = network.chainId;
 
-  const moodBank = await hre.ethers.deployContract("MoodBank", [networkName]);
+  console.log(
+    "Deployer",
+    deployer.address,
+    "| Network",
+    networkName,
+    networkId
+  );
+
+  const moodBank = await hre.ethers.deployContract("MoodBank");
   await moodBank.waitForDeployment();
   console.log("MoodBank", moodBank.target);
 
-  const theme = await hre.ethers.deployContract("Minimalist", [networkName]);
-  await theme.waitForDeployment();
-  console.log("Minimalist Theme:", theme.target);
-
-  const mood = await hre.ethers.deployContract("MoodToken");
-  await mood.waitForDeployment();
-  console.log("Mood Token:", mood.target);
-
-  const NFT = await hre.ethers.deployContract("DegenerativesArt", [
-    theme.target,
-    mood.target,
+  const theme = await hre.ethers.deployContract("Expandable", [
+    networkName,
+    networkId,
   ]);
-  await NFT.waitForDeployment();
-  console.log("DegenerativesArt:", NFT.target);
 
-  await mood
-    .connect(deployer)
-    .transfer(NFT.target, 10000000000000000000000000n);
+  await theme.waitForDeployment();
+  console.log("Expandable Theme:", theme.target);
 
-  console.log("NFT Mood Balance", await mood.balanceOf(NFT.target));
-  console.log("Minter Mood Balance", await mood.balanceOf(wallet1.address));
+  const moodNFT = await hre.ethers.deployContract("DegenerativesNFT", [
+    networkId,
+    moodBank.target,
+    relayer.address,
+    theme.target,
+  ]);
 
-  const mintEmojis = [
-    ["🎉", "🎊", "🥳", "🎈", "🍾", "🥂", "🎂", "🎁", "🎆"],
+  await moodNFT.waitForDeployment();
+  console.log("Mood NFT:", moodNFT.target);
+
+  await moodBank.authorize(moodNFT.target, true);
+  await moodBank.authorize(relayer.address, true);
+
+  const moods = [
+    ["🎉"],
     ["🤪", "🥳", "🍻", "🍾", "🤑", "🔥", "🚀", "💎", "💰"],
-    ["❤️", "🥰", "😍", "😘", "💑", "💏", "🌹", "💌", "💍"],
-    ["🥵", "🔥", "👅", "💋", "🍑", "🍆", "💦", "🏩", "😈"],
-    ["🤒", "🤧", "😷", "🤕", "🤢", "😴", "💊", "💉", "🌡️"],
-    ["💀", "💀", "💀", "☠️", "😵", "🤮", "🤢", "💀", "☠️"],
-    ["😡", "😠", "🤬", "😤", "💢", "💥", "😡", "😠", "🤬"],
-    ["🤬", "🖕", "🔪", "💣", "☠", "👹", "🤬", "🖕", "🔪"],
-    ["🎲", "🎰", "🃏", "🤑", "💸", "💰", "🚀", "🌙", "🤞"],
-    ["🔞", "🍑", "🍆", "💦", "😏", "😈", "👅", "🔞", "🍑"],
-    ["💀", "☠️", "☢️", "☣️", "😈", "🔪", "🩸", "💀", "☠️"],
+    [
+      "❤️",
+      "🥰",
+      "😍",
+      "😘",
+      "💑",
+      "💏",
+      "🌹",
+      "💌",
+      "💍",
+      "🥵",
+      "🔥",
+      "👅",
+      "💋",
+      "🍑",
+      "🍆",
+      "💦",
+      "🏩",
+      "😈",
+      "🤒",
+      "🤧",
+      "😷",
+      "🤕",
+      "🤢",
+      "😴",
+      "💊",
+    ],
+    [
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+      "💀",
+      "💀",
+      "💀",
+      "☠️",
+      "😵",
+      "🤮",
+      "🤢",
+    ],
   ];
 
-  const currentPrice = await NFT.price(0);
-  await NFT.connect(wallet1).mint(mintEmojis[0], theme.target, {
-    value: currentPrice,
-  });
-  console.log("Minter NFT Balance", await NFT.balanceOf(wallet1.address));
-  console.log("Minter Mood Balance", await mood.balanceOf(wallet1.address));
-
-  // for (let i = 0; i < mintEmojis.length; i++) {
-  //   const currentPrice = await NFT.price(i);
-  //   console.log("minting", i);
-  //   await NFT.connect(wallet1).mint(mintEmojis[i], theme2.target, {
-  //     value: currentPrice,
-  //   });
-  //   await new Promise((resolve) => setTimeout(resolve, 100)); // Add 5-second delay
+  // for (let i = 0; i < moods.length; i++) {
+  //   const totalSupply = await moodNFT.totalSupply();
+  //   const currentPrice = await moodNFT.price(totalSupply);
+  //   console.log("minting", totalSupply);
+  //   await moodNFT.mint(
+  //     deployer.address,
+  //     moods[i],
+  //     i,
+  //     true,
+  //     0,
+  //     deployer.address,
+  //     {
+  //       value: currentPrice,
+  //     }
+  //   );
+  //   await new Promise((resolve) => setTimeout(resolve, 100));
   // }
 
-  // await NFT.updateCooldown(14400);
-
-  console.log("theme:", await NFT.getTheme(0));
-  console.log("emojis:", await NFT.getEmojis(0));
-  console.log("getMoodSwing:", await NFT.getMoodSwing(0));
-  console.log(
-    "contract balance",
-    ethers.formatEther(await mood.balanceOf(NFT.target))
-  );
-  console.log(
-    "minter balance",
-    ethers.formatEther(await mood.balanceOf(deployer.address))
-  );
-
-  // await mood
-  //   .connect(deployer)
-  //   .approve(NFT.target, 1000000000000000000000000n);
-
-  // await NFT.update(0, mintEmojis[1]);
-
-  console.log(
-    "minter balance",
-    ethers.formatEther(await mood.balanceOf(deployer.address))
-  );
-  // console.log("getMetadata:", await NFT.getMetadata(0, theme2.target));
-  // console.log("tokenURI:", await NFT.tokenURI(0));
-  // await theme.evolve(5);
-  // console.log("----------------------------");
-  // console.log("tokenURI:", await NFT.tokenURI(5));
+  // console.log(await moodNFT.totalSupply());
+  // const token1 = await moodNFT.tokenByIndex(1);
+  // console.log(await moodNFT.getMood(token1));
+  // console.log(await moodNFT.tokenURI(token1));
 }
 
 main().catch((error) => {
