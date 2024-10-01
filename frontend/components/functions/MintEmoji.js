@@ -101,7 +101,7 @@ export const MintEmoji = () => {
 
       // Check if the user has enough native tokens
       if (taken) {
-        alert(`Your mood pattern is already tokenized. Hash: ${emojiHash}`);
+        alert(`This mood pattern is already tokenized. Hash: ${emojiHash}`);
         return;
       }
 
@@ -292,6 +292,10 @@ export const MintEmoji = () => {
       }
     };
     fetchPrice();
+  }, [selectedNetwork]);
+
+  useEffect(() => {
+    setTxHash("");
   }, [selectedNetwork]);
 
   return (
