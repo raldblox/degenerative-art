@@ -334,8 +334,8 @@ export const MintEmoji = () => {
           {(onClose) => (
             <>
               <ModalBody className="!p-0 ">
-                <div className="grid w-full md:grid-cols-2 gap-12 px-4 md:!px-12">
-                  <div className="grid content-start space-y-6">
+                <div className="grid w-full md:grid-cols-2 gap-12 px-6 md:!px-12">
+                  <div className="grid content-start w-full space-y-6">
                     <div>
                       <SelectNetwork />
                     </div>

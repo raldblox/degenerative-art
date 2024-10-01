@@ -104,7 +104,7 @@ export const SelectNetwork = () => {
         selectionMode="single"
         items={networks}
         label="Select Supported Network"
-        className="max-w-xs"
+        className="max-w-md"
         variant="flat"
         classNames={{
           label:
