@@ -43,16 +43,16 @@ export default function Navigation() {
           <NavbarItem>
             <Tabs
               radius="sm"
-              size="md"
+              size="sm"
               variant="light"
               color="primary"
               aria-label="Options"
               selectedKey={selectedNavTab}
               onSelectionChange={setSelectedNavTab}
             >
-              <Tab key="feels" title="Explore Feels" />
+              <Tab key="feels" title="Feels" />
               <Tab key="dashboard" title="Dashboard" />
-              <Tab key="games" title="Play Games" />
+              <Tab key="games" title="Games" />
             </Tabs>
           </NavbarItem>
         </NavbarContent>

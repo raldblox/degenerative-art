@@ -69,11 +69,51 @@ export const MintEmoji = () => {
         return;
       }
 
-      // Fetch user's native token balance
+      const getLiveNetworks = () => {
+        return networks
+          .filter((network) => network.isLive)
+          .map((network) => network.rpcUrls[0]);
+      };
+
+      const liveNetworkUrls = getLiveNetworks();
+
+      // Create an array of providers for each live network
+      const providers = liveNetworkUrls.map(
+        (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
+      );
+
+      const contracts = networks
+        .filter((network) => network.isLive)
+        .map(
+          (network, index) =>
+            new ethers.Contract(
+              network.contracts?.moodArt,
+              moodArtABI,
+              providers[index]
+            )
+        );
+
+      const emojiHash = await contracts[1].hash(inputValues);
+
+      const isTakenPromises = contracts.map((contract) =>
+        contract.tokenized(emojiHash).catch(() => {
+          return contract.emojisTaken(emojiHash);
+        })
+      );
+
+      const isTakenResults = await Promise.all(isTakenPromises);
+      console.log(isTakenResults);
+
+      const isTaken = isTakenResults.some((result) => result);
+
+      if (isTaken) {
+        alert(`This mood pattern is already tokenized.`);
+        return;
+      }
+
       const provider = new ethers.BrowserProvider(window.ethereum);
       const nativeBalance = await provider.getBalance(connectedAccount);
 
-      // Check network (assuming you have the desired network ID in a variable 'targetNetworkId')
       const network = await provider.getNetwork();
       console.log("chainid:", network.chainId);
       console.log("nativeBalance:", nativeBalance);
@@ -97,15 +137,6 @@ export const MintEmoji = () => {
       // Check if the user has enough native tokens
       if (Number(nativeBalance) < Number(price_)) {
         alert("insufficient balance. please acquire more XTZ.");
-        return;
-      }
-
-      const emojiHash = await moodArt.hash(inputValues);
-      const taken = await moodArt.tokenized(emojiHash);
-
-      // Check if the user has enough native tokens
-      if (taken) {
-        alert(`This mood pattern is already tokenized. Hash: ${emojiHash}`);
         return;
       }
 
@@ -378,18 +409,6 @@ export const MintEmoji = () => {
                       </div>
                       <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
                         <p className="text-sm font-semibold leading-tight capitalize text-balance">
-                          Your NFT Balance
-                        </p>
-                        <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
-                          {fetching ? (
-                            <Spinner size="sm" />
-                          ) : (
-                            <> {nftBalance.toString()}</>
-                          )}
-                        </h1>
-                      </div>
-                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
                           Your Accumulated Minting Rewards
                         </p>
                         <h1 className="flex flex-col items-end justify-center text-2xl font-bold leading-none text-right">
@@ -400,6 +419,18 @@ export const MintEmoji = () => {
                               <>{(nftBalance.toString() * 1000).toString()}</>
                               <span className="text-xs opacity-60">$MOOD</span>
                             </>
+                          )}
+                        </h1>
+                      </div>
+                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
+                          Your NFT Balance
+                        </p>
+                        <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
+                          {fetching ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <> {nftBalance.toString()}</>
                           )}
                         </h1>
                       </div>
@@ -456,7 +487,7 @@ export const MintEmoji = () => {
                     </div>
 
                     <Button
-                      isDisabled
+                      // isDisabled
                       fullWidth
                       size="lg"
                       radius="sm"
@@ -465,7 +496,7 @@ export const MintEmoji = () => {
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
-                      // isDisabled={txHash}
+                      isDisabled={txHash}
                     >
                       {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
                     </Button>
