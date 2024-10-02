@@ -14,7 +14,7 @@ export const Providers = (props) => {
   const [selectedHomeTab, setSelectedHomeTab] = useState("social");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
-  const [selectedNavTab, setSelectedNavTab] = useState("feels");
+  const [selectedNavTab, setSelectedNavTab] = useState("dashboard");
   const [hasToken, setHasToken] = useState(false);
 
   const connectEthereumWallet = async () => {
@@ -46,6 +46,29 @@ export const Providers = (props) => {
       }
     } else {
       // alert("Metamask not found.");
+    }
+  };
+
+  const addToken = async () => {
+    if (window.ethereum) {
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
+            symbol: "MOOD",
+            decimals: "18",
+            image: "https://degeneratives.art/icon_wht.png",
+          },
+        },
+      });
+
+      if (wasAdded) {
+        console.log("Thanks for your interest!");
+      } else {
+        console.log("Your loss!");
+      }
     }
   };
 
@@ -88,6 +111,7 @@ export const Providers = (props) => {
     setSelectedChain,
     selectedNavTab,
     setSelectedNavTab,
+    addToken,
   };
 
   return (

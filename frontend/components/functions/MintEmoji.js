@@ -45,6 +45,7 @@ export const MintEmoji = () => {
 
   const [price, setPrice] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
+  const [nftBalance, setNFTBalance] = useState(0);
 
   const handleMint = async () => {
     console.log("emojis:", inputValues);
@@ -263,6 +264,8 @@ export const MintEmoji = () => {
   useEffect(() => {
     const fetchPrice = async () => {
       try {
+        await connectEthereumWallet();
+
         setFetching(true);
         setTotalSupply(0);
         setPrice(0);
@@ -282,7 +285,11 @@ export const MintEmoji = () => {
         setTotalSupply(totalSupply_);
         setPrice(price_);
         console.log(totalSupply_, price_);
-        await connectEthereumWallet();
+
+        if (connectedAccount) {
+          const bal = await moodArt.balanceOf(connectedAccount);
+          setNFTBalance(bal);
+        }
       } catch (error) {
         setTotalSupply(0);
         setPrice(0);
@@ -291,7 +298,7 @@ export const MintEmoji = () => {
       }
     };
     fetchPrice();
-  }, [selectedNetwork, txHash]);
+  }, [selectedNetwork, txHash, connectedAccount]);
 
   useEffect(() => {
     setTxHash("");
@@ -352,26 +359,46 @@ export const MintEmoji = () => {
                             Current Mint Price
                           </p>
                         </div>
+
+                        <h1 className="flex flex-col items-end justify-center text-2xl font-bold leading-none text-right">
+                          {fetching ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <>
+                              {ethers.formatEther(price)}{" "}
+                              <span className="text-xs opacity-60">
+                                ${selectedChain?.nativeCurrency.symbol}
+                              </span>
+                            </>
+                          )}
+                        </h1>
+                      </div>
+                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
+                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
+                          Your NFT Balance
+                        </p>
                         <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
-                          {ethers.formatEther(price)}{" "}
-                          <span className="text-lg opacity-60">
-                            ${selectedChain?.nativeCurrency.symbol}
-                          </span>
+                          {fetching ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <> {nftBalance.toString()}</>
+                          )}
                         </h1>
                       </div>
                       <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
                         <p className="text-sm font-semibold leading-tight capitalize text-balance">
-                          Current Token Supply
+                          Your Accumulated Minting Rewards
                         </p>
-                        <h1 className="text-3xl font-bold text-right">
-                          {totalSupply.toString()}
+                        <h1 className="flex flex-col items-end justify-center text-2xl font-bold leading-none text-right">
+                          {fetching ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <>
+                              <>{(nftBalance.toString() * 1000).toString()}</>
+                              <span className="text-xs opacity-60">$MOOD</span>
+                            </>
+                          )}
                         </h1>
-                      </div>
-                      <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
-                        <p className="text-sm font-semibold leading-tight capitalize text-balance">
-                          Your Unclaimed $MOOD Drops
-                        </p>
-                        <h1 className="text-3xl font-bold text-right">--</h1>
                       </div>
                     </div>
                     {/* <SimulatePrice /> */}

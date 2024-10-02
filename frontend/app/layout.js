@@ -1,8 +1,8 @@
 import { Providers } from "@/providers/Providers";
 import "./globals.css";
-import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   metadataBase: new URL("https://degeneratives.art"),
@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
+      <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
     </html>
