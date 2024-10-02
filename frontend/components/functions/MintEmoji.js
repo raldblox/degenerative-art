@@ -390,7 +390,7 @@ export const MintEmoji = () => {
                       <div className="grid items-center grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
                         <div>
                           <p className="text-sm capitalize text-balance !leading-tight">
-                            Current Mint Price
+                            Current NFT Mint Price
                           </p>
                         </div>
 
@@ -424,7 +424,7 @@ export const MintEmoji = () => {
                       </div>
                       <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
                         <p className="text-sm font-semibold leading-tight capitalize text-balance">
-                          Your NFT Balance
+                          Your MoodArt NFT Balance
                         </p>
                         <h1 className="flex flex-col items-end justify-center text-3xl font-bold leading-none text-right">
                           {fetching ? (
