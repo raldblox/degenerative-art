@@ -27,6 +27,7 @@ export const Hero = () => {
     const network = networks.find(
       (chain) => chain.chainId === Number(selectedNetwork)
     );
+
     return (
       <Image
         className="w-6 h-6 rounded-none grayscale"
@@ -54,13 +55,13 @@ export const Hero = () => {
               Join our homies in putting emotions to work!
             </p>
           </div>
-          <div className="absolute drop-shadow-lg space-y-0 md:space-y-6 bottom-[130px] left-6 md:bottom-[125px] md:left-[25vw]">
+          <div className="absolute drop-shadow-lg space-y-0 md:space-y-6 bottom-[130px] left-6 md:bottom-[155px] md:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
-              degeneratives<span className="text-white">.art</span>
+              degeneratives<span className="text-default-400">.art</span>
             </h1>
-            <p className="text-xs md:text-sm">
+            {/* <p className="text-xs md:text-sm">
               where emotions become art and currency
-            </p>
+            </p> */}
           </div>
 
           <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[25vw]">

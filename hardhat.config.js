@@ -59,6 +59,22 @@ module.exports = {
       ],
       gasPrice: "auto",
     },
+    base: {
+      url: "https://mainnet.base.org",
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
+      gasPrice: "auto",
+    },
+    "base-sepolia": {
+      url: "https://sepolia.base.org",
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+      ],
+      gasPrice: 1000000000,
+    },
   },
   sourcify: {
     enabled: false,
@@ -70,6 +86,7 @@ module.exports = {
       coreTestnet: process.env.CORE_TESTNET_API,
       coreMainnet: process.env.CORE_MAINNET_API,
       etherlink: "abc",
+      base: process.env.BASE_API_KEY,
     },
     customChains: [
       {

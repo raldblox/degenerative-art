@@ -14,6 +14,7 @@ export const Providers = (props) => {
   const [selectedHomeTab, setSelectedHomeTab] = useState("social");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
+  const [selectedNavTab, setSelectedNavTab] = useState("feels");
   const [hasToken, setHasToken] = useState(false);
 
   const connectEthereumWallet = async () => {
@@ -85,6 +86,8 @@ export const Providers = (props) => {
     walletSigner,
     selectedChain,
     setSelectedChain,
+    selectedNavTab,
+    setSelectedNavTab,
   };
 
   return (

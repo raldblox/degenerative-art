@@ -13,11 +13,17 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Tab,
+  Tabs,
 } from "@nextui-org/react";
 import { SearchIcon } from "../icons/BasicIcons";
 import { DegenerativesLogo } from "../icons/DegenerativesLogo";
+import { useContext } from "react";
+import { Context } from "@/providers/Providers";
 
 export default function Navigation() {
+  const { setSelectedNavTab, selectedNavTab } = useContext(Context);
+
   return (
     <Navbar isBordered maxWidth="full" className="h-18">
       <NavbarContent justify="start">
@@ -35,40 +41,19 @@ export default function Navigation() {
             </NavbarBrand>
           </NavbarItem>
           <NavbarItem>
-            <Button
+            <Tabs
               radius="sm"
-              variant="flat"
+              size="md"
+              variant="light"
               color="primary"
-              href="#"
-              size="sm"
-              className="font-bold"
+              aria-label="Options"
+              selectedKey={selectedNavTab}
+              onSelectionChange={setSelectedNavTab}
             >
-              explore
-            </Button>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Button
-              radius="sm"
-              variant="flat"
-              color="primary"
-              href="#"
-              size="sm"
-              className="font-bold"
-            >
-              mint
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button
-              radius="sm"
-              variant="flat"
-              color="primary"
-              href="#"
-              size="sm"
-              className="font-bold"
-            >
-              bridge
-            </Button>
+              <Tab key="feels" title="Explore Feels" />
+              <Tab key="dashboard" title="Dashboard" />
+              <Tab key="games" title="Games" />
+            </Tabs>
           </NavbarItem>
         </NavbarContent>
       </NavbarContent>

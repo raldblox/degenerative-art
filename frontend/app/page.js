@@ -2,16 +2,20 @@
 
 import { Hero } from "@/components/sections/Hero";
 import Navigation from "@/components/sections/Navigation";
-import { useState } from "react";
+import { Context } from "@/providers/Providers";
+import { useContext, useState } from "react";
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("home");
+  const { setSelectedNavTab, selectedNavTab } = useContext(Context);
 
   return (
     <>
       <Navigation />
-      <Hero />
+      {selectedNavTab == "dashboard" && (
+        <>
+          <Hero />
+        </>
+      )}
     </>
   );
 }

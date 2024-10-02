@@ -54,7 +54,7 @@ export const networks = [
     },
   },
   {
-    isLive: false,
+    isLive: true,
     chainId: 8453,
     chainName: "Base",
     rpcUrls: ["https://mainnet.base.org"],
@@ -63,9 +63,13 @@ export const networks = [
       symbol: "ETH",
       decimals: 18,
     },
-    blockExplorerUrls: ["https://base.blockscout.com/"],
+    blockExplorerUrls: ["https://basescan.org/address/"],
     icon: "./chains/base.png",
     site: "https://base.org",
+    contracts: {
+      moodArt: "0xBF28585d32faEAf2F58E9Ab15966989f49C3dFfa",
+      moodBank: "0xF8fe97f8a779b08a7af2A9d9B86ac393f87B8c55",
+    },
   },
 
   {
