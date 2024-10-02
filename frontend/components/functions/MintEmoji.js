@@ -120,7 +120,6 @@ export const MintEmoji = () => {
 
       if (tx.hash) {
         setTxHash(tx.hash);
-        alert("Minting successful!");
       }
     } catch (error) {
       // Log error details
@@ -298,6 +297,12 @@ export const MintEmoji = () => {
     setTxHash("");
   }, [selectedNetwork]);
 
+  useEffect(() => {
+    if (txHash) {
+      setTxHash("");
+    }
+  }, [inputValues]);
+
   return (
     <>
       <div className="flex flex-col !h-full space-y-6 mx-auto w-full">
@@ -364,7 +369,7 @@ export const MintEmoji = () => {
                       </div>
                       <div className="grid items-center grid-cols-2 gap-6 p-3 bg-white rounded-md">
                         <p className="text-sm font-semibold leading-tight capitalize text-balance">
-                          Free Mood Distributed
+                          Your Unclaimed $MOOD Drops
                         </p>
                         <h1 className="text-3xl font-bold text-right">--</h1>
                       </div>
