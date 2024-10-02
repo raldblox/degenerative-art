@@ -13,6 +13,7 @@ import {
   ModalHeader,
   Slider,
   Spinner,
+  Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -32,6 +33,8 @@ export const MintEmoji = () => {
     walletSigner,
     setSelectedChain,
     selectedChain,
+    addToken,
+    setSelectedNetwork,
   } = useContext(Context);
 
   const fieldsRef = useRef(null);
@@ -401,6 +404,29 @@ export const MintEmoji = () => {
                         </h1>
                       </div>
                     </div>
+                    {selectedNetwork == "42793" && (
+                      <div>
+                        <Tooltip
+                          showArrow={true}
+                          color="warning"
+                          placement="right"
+                          content="Add $MOOD to Metamask"
+                        >
+                          <Button
+                            onClick={() => {
+                              addToken();
+                            }}
+                            radius="sm"
+                            variant="flat"
+                            color="primary"
+                            size="sm"
+                          >
+                            Add $MOOD
+                          </Button>
+                        </Tooltip>
+                      </div>
+                    )}
+
                     {/* <SimulatePrice /> */}
                   </div>
 
