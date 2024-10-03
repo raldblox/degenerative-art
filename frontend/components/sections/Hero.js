@@ -41,7 +41,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-full min-h-screen tracking-wider">
+    <section className="relative w-full h-full min-h-screen tracking-wider select-none">
       <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
         <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-100 rounded-2xl">
           <FancyCard text="hover" />

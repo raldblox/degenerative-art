@@ -49,6 +49,7 @@ export const MintEmoji = () => {
   const [price, setPrice] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [nftBalance, setNFTBalance] = useState(0);
+  const [gridCols, setGridCols] = useState(3);
 
   const handleMint = async () => {
     console.log("emojis:", inputValues);
@@ -144,7 +145,7 @@ export const MintEmoji = () => {
       const tx = await moodArt.mint(
         connectedAccount,
         inputValues,
-        1,
+        expansionLevel,
         true,
         0,
         "0x0000000000000000000000000000000000000000",
@@ -166,22 +167,19 @@ export const MintEmoji = () => {
   };
 
   const handleChange = (event, index) => {
-    const value = event.target.value; // Ensure only one character
+    const value = event.target.value;
     setInputValues((prevValues) => {
       const newValues = [...prevValues];
       newValues[index] = value;
       return newValues;
     });
 
-    if (index < activeFields - 1 && value.length > 0) {
-      inputRef.current[index + 1].focus();
-    } else if (
-      index === activeFields - 1 &&
-      value.length === 1 &&
-      activeFields < 9
-    ) {
-      setActiveFields(activeFields + 1);
-      inputRef.current[index + 1].focus();
+    if (index < inputValues.length - 1 && value.length > 0) {
+      // Check against inputValues.length
+      if (inputRef.current[index + 1]) {
+        // Check if the next input ref exists
+        inputRef.current[index + 1].focus();
+      }
     }
   };
 
@@ -236,17 +234,16 @@ export const MintEmoji = () => {
       <>
         {inputValues.map((value, i) => (
           <>
-            <div key={i} className="relative">
+            <div key={i} className="relative select-none">
               <input
                 data-emoji-input="unicode"
                 key={i}
-                size="lg"
                 type="text"
                 data-index={i}
                 maxLength={2}
                 onKeyDown={(e) => handleKeyDown(e, i)}
                 ref={(el) => (inputRef.current[i] = el)}
-                className={` w-24 h-24 placeholder:saturate-0 bg-default-50 text-2xl text-center rounded-md border-1 border-black/20 outline-none focus:border-primary ${
+                className={`w-full aspect-square h-full placeholder:saturate-0 bg-default-50 text-3xl text-center rounded-md border-1 border-black/20 outline-none focus:border-primary ${
                   i >= activeFields ? "hidden" : ""
                 }`}
                 onChange={(e) => {
@@ -291,8 +288,41 @@ export const MintEmoji = () => {
   }, [activeFields]);
 
   const handleSlider = (value) => {
-    if (isNaN(Number(value))) return;
     setExpansionLevel(value);
+
+    // Update inputValues and gridCols based on the expansion level
+    let newInputValues;
+    let newGridCols;
+    let fields;
+    switch (value) {
+      case 1:
+        fields = 1;
+        newInputValues = Array(1).fill("");
+        newGridCols = 1;
+        break;
+      case 2:
+        newInputValues = Array(9).fill("");
+        newGridCols = 3;
+        fields = 9;
+        break;
+      case 3:
+        newInputValues = Array(25).fill("");
+        newGridCols = 5;
+        fields = 25;
+        break;
+      case 4:
+        newInputValues = Array(49).fill("");
+        newGridCols = 7;
+        fields = 49;
+        break;
+      default:
+        newInputValues = Array(49).fill("");
+        newGridCols = 3;
+        fields = 9;
+    }
+    setInputValues(newInputValues);
+    setGridCols(newGridCols);
+    setActiveFields(fields);
   };
 
   useEffect(() => {
@@ -346,7 +376,7 @@ export const MintEmoji = () => {
 
   return (
     <>
-      <div className="flex flex-col !h-full space-y-6 mx-auto w-full">
+      <div className="flex flex-col !h-full space-y-6 mx-auto w-full select-none">
         <div className="flex flex-wrap items-center gap-2">
           <Button
             color="primary"
@@ -373,8 +403,8 @@ export const MintEmoji = () => {
         scrollBehavior="outside"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="3xl"
-        className="!px-0 bg-default-200 backdrop-blur-sm relative"
+        size="4xl"
+        className="!px-0 bg-default-200 backdrop-blur-sm relative select-none"
       >
         <ModalContent className="flex items-center justify-center w-full !px-0 py-20 ">
           {(onClose) => (
@@ -385,7 +415,6 @@ export const MintEmoji = () => {
                     <div>
                       <SelectNetwork />
                     </div>
-
                     <div className="grid content-between gap-1">
                       <div className="grid items-center grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
                         <div>
@@ -460,18 +489,17 @@ export const MintEmoji = () => {
 
                     {/* <SimulatePrice /> */}
                   </div>
-
-                  <div className="grid content-between gap-6">
+                  <div className="grid content-between gap-6 ">
                     <div className="flex flex-col items-center justify-center gap-6">
                       <div
                         ref={fieldsRef}
-                        className="grid grid-cols-3 gap-2 rounded-xl w-fit"
+                        className={`grid content-center items-center justify-center min-h-[380px] grid-cols-${gridCols} gap-[1px] rounded-xl w-fit`}
                       >
                         {renderInputFields()}
                       </div>
-                      {/* <div className="w-full px-3">
+                      <div className="w-full px-3">
                         <Slider
-                          size="md"
+                          size="sm"
                           step={1}
                           color="primary"
                           label="Expansion Level"
@@ -483,7 +511,7 @@ export const MintEmoji = () => {
                           className="max-w-md"
                           onChange={handleSlider}
                         />
-                      </div> */}
+                      </div>
                     </div>
 
                     <Button
@@ -496,7 +524,7 @@ export const MintEmoji = () => {
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
-                      isDisabled={txHash}
+                      isDisabled={txHash || inputValues.length == 1}
                     >
                       {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
                     </Button>
