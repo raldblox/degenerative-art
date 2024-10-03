@@ -243,7 +243,7 @@ export const MintEmoji = () => {
                 maxLength={2}
                 onKeyDown={(e) => handleKeyDown(e, i)}
                 ref={(el) => (inputRef.current[i] = el)}
-                className={`w-full aspect-square h-full placeholder:saturate-0 bg-default-50 text-3xl text-center rounded-md border-1 border-black/20 outline-none focus:border-primary ${
+                className={`w-full aspect-square h-full placeholder:saturate-0 bg-white text-3xl text-center rounded-sm border-1 outline-none focus:border-primary ${
                   i >= activeFields ? "hidden" : ""
                 }`}
                 onChange={(e) => {
@@ -493,13 +493,18 @@ export const MintEmoji = () => {
                     <div className="flex flex-col items-center justify-center gap-6">
                       <div
                         ref={fieldsRef}
-                        className={`grid content-center items-center justify-center min-h-[380px] grid-cols-${gridCols} gap-[1px] rounded-xl w-fit`}
+                        style={{
+                          gridTemplateColumns: `repeat(${Math.sqrt(
+                            inputValues.length
+                          )}, 1fr)`,
+                        }}
+                        className={`grid gap-[1px] content-center items-center justify-center rounded-xl w-fit`}
                       >
                         {renderInputFields()}
                       </div>
-                      <div className="w-full px-3">
+                      <div className="w-full ">
                         <Slider
-                          size="sm"
+                          size="md"
                           step={1}
                           color="primary"
                           label="Expansion Level"
