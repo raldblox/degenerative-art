@@ -515,7 +515,7 @@ export const MintEmoji = () => {
                     </div>
 
                     <Button
-                      // isDisabled
+                      isDisabled
                       fullWidth
                       size="lg"
                       radius="sm"
@@ -524,7 +524,7 @@ export const MintEmoji = () => {
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
-                      isDisabled={txHash || inputValues.length == 1}
+                      // isDisabled={txHash || inputValues.length == 1}
                     >
                       {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
                     </Button>
