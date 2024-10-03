@@ -17,12 +17,12 @@ export const SwapByNetwork = () => {
             variant="solid"
             size="md"
             radius="sm"
-            className=""
+            // endContent={<LockIcon />}
             as={Link}
-            href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
+            href="https://www.iguanadex.com/swap?chain=etherlink&outputCurrency=0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9"
             isExternal
           >
-            <LinkPreview url="https://tachyswap.org">TachySwap</LinkPreview>
+            <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
           <Button
             color=""
@@ -30,9 +30,11 @@ export const SwapByNetwork = () => {
             size="md"
             radius="sm"
             className="border-2 border-black dark "
-            endContent={<LockIcon />}
+            as={Link}
+            href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
+            isExternal
           >
-            <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
+            <LinkPreview url="https://tachyswap.org">TachySwap</LinkPreview>
           </Button>
         </ScrollShadow>
       )}
