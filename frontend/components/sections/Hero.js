@@ -84,7 +84,7 @@ export const Hero = () => {
               onSelectionChange={setSelectedHomeTab}
             >
               <Tab key="defi" title="DeFi" />
-              <Tab key="social" title="SocialFi" />
+              <Tab key="nft" title="NFT" />
               <Tab key="game" title="GameFi" />
             </Tabs>
           </div>
@@ -113,7 +113,7 @@ export const Hero = () => {
                 radius="sm"
                 variant="solid"
                 onClick={() => {
-                  setSelectedHomeTab("social");
+                  setSelectedHomeTab("nft");
                 }}
               >
                 Mint
@@ -189,7 +189,7 @@ export const Hero = () => {
                 <h1 className="text-lg lowercase text-default-700">
                   {/* pool your assets, not your sorrows.{" "} */}
                   <span className="font-semibold">Provide liquidity</span> and
-                  watch rewards pour in!
+                  watch your rewards pour in!
                 </h1>
                 <div className="w-full"></div>
               </div>
@@ -206,9 +206,8 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
-                  stake your tokens and{" "}
-                  <span className="font-semibold">get mood rewards</span> on top
-                  of trading fees.
+                  stake your degeneratives tokens and{" "}
+                  <span className="font-semibold">get mood rewards</span>.
                 </h1>
                 <div className="w-full"></div>
               </div>
@@ -246,7 +245,7 @@ export const Hero = () => {
             </div>
           </div>
         )}
-        {selectedHomeTab == "social" && (
+        {selectedHomeTab == "nft" && (
           <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
             <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
@@ -260,11 +259,14 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
-                  Mint your feels and receive free MOOD to express yourself even
-                  more!
+                  Mint your feels to receive free MOOD and express yourself even
+                  more in our ecosystem!
+                </h1>
+                <h1 className="text-xs tracking-wide uppercase">
+                  <span className="font-bold">1000 MOOD</span>rops await!
                 </h1>
                 <div className="w-full">
-                  <MintEmoji />
+                  <MintEmoji showSlider={false} defaultExpansionLevel={2} />
                 </div>
               </div>
             </div>
@@ -279,9 +281,14 @@ export const Hero = () => {
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
                   Break free from 3x3 grid! Make one-of-a-kind NFTs with our
-                  Flex Canvas.
+                  Expandable Canvas.
                 </h1>
-                <div className="w-full"></div>
+                <h1 className="text-xs tracking-wide uppercase">
+                  <span className="font-bold">1000 MOOD</span>rops await!
+                </h1>
+                <div className="w-full">
+                  <MintEmoji showSlider={true} defaultExpansionLevel={4} />
+                </div>
               </div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">

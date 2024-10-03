@@ -45,7 +45,7 @@ export const networks = [
       symbol: "POL",
       decimals: 18,
     },
-    blockExplorerUrls: ["https://polygonscan.com/"],
+    blockExplorerUrls: ["https://polygonscan.com"],
     icon: "./chains/polygon.png",
     site: "https://polygon.technology",
     contracts: {
@@ -63,7 +63,7 @@ export const networks = [
       symbol: "ETH",
       decimals: 18,
     },
-    blockExplorerUrls: ["https://basescan.org/address/"],
+    blockExplorerUrls: ["https://basescan.org"],
     icon: "./chains/base.png",
     site: "https://base.org",
     contracts: {

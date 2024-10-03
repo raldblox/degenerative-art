@@ -25,11 +25,11 @@ export const SwapByNetwork = () => {
             <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
           <Button
-            color=""
+            color="default"
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className="border-2 border-black "
             as={Link}
             href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
             isExternal

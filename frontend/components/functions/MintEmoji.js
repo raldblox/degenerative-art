@@ -21,8 +21,9 @@ import { SelectNetwork } from "./SelectNetwork";
 import { SimulatePrice } from "./SimulatePrice";
 import { networks } from "@/libraries/network";
 import { ethers } from "ethers";
+import { MetamaskIcon } from "../icons/BasicIcons";
 
-export const MintEmoji = () => {
+export const MintEmoji = ({ showSlider }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     countdown,
@@ -145,7 +146,7 @@ export const MintEmoji = () => {
       const tx = await moodArt.mint(
         connectedAccount,
         inputValues,
-        expansionLevel,
+        expansionLevel - 1,
         true,
         0,
         "0x0000000000000000000000000000000000000000",
@@ -323,6 +324,12 @@ export const MintEmoji = () => {
     setInputValues(newInputValues);
     setGridCols(newGridCols);
     setActiveFields(fields);
+
+    inputRef.current.forEach((input) => {
+      if (input) {
+        input.value = "";
+      }
+    });
   };
 
   useEffect(() => {
@@ -386,16 +393,7 @@ export const MintEmoji = () => {
             className=""
             onPress={onOpen}
           >
-            Mint
-          </Button>
-          <Button
-            color=""
-            variant="bordered"
-            size="md"
-            radius="sm"
-            className="border-2 border-black dark "
-          >
-            Trade
+            Mint Your Feels
           </Button>
         </div>
       </div>
@@ -477,9 +475,10 @@ export const MintEmoji = () => {
                               addToken();
                             }}
                             radius="sm"
-                            variant="flat"
-                            color="primary"
+                            variant="bordered"
+                            color="default"
                             size="sm"
+                            startContent={<MetamaskIcon />}
                           >
                             Add $MOOD
                           </Button>
@@ -502,21 +501,23 @@ export const MintEmoji = () => {
                       >
                         {renderInputFields()}
                       </div>
-                      <div className="w-full ">
-                        <Slider
-                          size="md"
-                          step={1}
-                          color="primary"
-                          label="Expansion Level"
-                          showSteps={true}
-                          maxValue={4}
-                          minValue={1}
-                          value={expansionLevel}
-                          defaultValue={2}
-                          className="max-w-md"
-                          onChange={handleSlider}
-                        />
-                      </div>
+                      {showSlider && (
+                        <div className="w-full ">
+                          <Slider
+                            size="md"
+                            step={1}
+                            color="primary"
+                            label="Expansion Level"
+                            showSteps={true}
+                            maxValue={4}
+                            minValue={1}
+                            value={expansionLevel}
+                            defaultValue={2}
+                            className="max-w-md"
+                            onChange={handleSlider}
+                          />
+                        </div>
+                      )}
                     </div>
 
                     <Button
