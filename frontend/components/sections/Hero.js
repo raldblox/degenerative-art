@@ -41,9 +41,9 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-full min-h-screen tracking-wider select-none">
+    <section className="relative w-full h-full min-h-screen select-none">
       <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-100 rounded-2xl">
+        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup
@@ -66,9 +66,9 @@ export const Hero = () => {
           </div>
           <div className="absolute drop-shadow-lg space-y-0 md:space-y-6 bottom-[130px] left-6 md:bottom-[155px] md:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
-              degeneratives<span className="text-default-400">.art</span>
+              degeneratives<span className="">.art</span>
             </h1>
-            <p className="text-xs md:text-sm">
+            <p className="px-3 text-xs md:text-base">
               where emotions become art and currency
             </p>
           </div>
@@ -144,7 +144,7 @@ export const Hero = () => {
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          <p className="absolute items-start hidden px-0 text-xs text-foreground md:flex h-[50px] leading-tight -bottom-16">
+          <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
             MOOD empowers the degeneratives community to create, express, and
             play together within a unified, multi-chain ecosystem.
           </p>
@@ -155,7 +155,7 @@ export const Hero = () => {
             {/* <div className="w-full col-span-3">
               <ExpandableCards />
             </div> */}
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -166,7 +166,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg">
+                <h1 className="text-lg text-default-700">
                   openly <span className="font-semibold">trade mood</span> on
                   decentralized exchanges.
                 </h1>
@@ -175,7 +175,7 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -186,7 +186,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase ">
+                <h1 className="text-lg lowercase text-default-700">
                   {/* pool your assets, not your sorrows.{" "} */}
                   <span className="font-semibold">Provide liquidity</span> and
                   watch rewards pour in!
@@ -194,7 +194,7 @@ export const Hero = () => {
                 <div className="w-full"></div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -205,7 +205,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase ">
+                <h1 className="text-lg lowercase text-default-700">
                   stake your tokens and{" "}
                   <span className="font-semibold">get mood rewards</span> on top
                   of trading fees.
@@ -217,7 +217,7 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "game" && (
           <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   ⚡️
@@ -226,7 +226,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎲
@@ -235,7 +235,7 @@ export const Hero = () => {
               </div>
               <div></div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   💣
@@ -248,7 +248,7 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "social" && (
           <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
                   <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
@@ -259,7 +259,7 @@ export const Hero = () => {
                 <ChainIcon />
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase ">
+                <h1 className="text-lg lowercase text-default-700">
                   Mint your feels and receive free MOOD to express yourself even
                   more!
                 </h1>
@@ -269,7 +269,7 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🎨
@@ -277,14 +277,14 @@ export const Hero = () => {
                 <h1 className="text-3xl font-bold text-default-800">craft</h1>
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase ">
+                <h1 className="text-lg lowercase text-default-700">
                   Break free from 3x3 grid! Make one-of-a-kind NFTs with our
                   Flex Canvas.
                 </h1>
                 <div className="w-full"></div>
               </div>
             </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-default-100 hover:bg-success transition-all duration-300  rounded-2xl">
+            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
                 <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
                   🤖
@@ -294,7 +294,7 @@ export const Hero = () => {
                 </h1>
               </div>
               <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase ">
+                <h1 className="text-lg lowercase text-default-700">
                   Turn your existing work into intriguing art with emojis as
                   pixels!
                 </h1>

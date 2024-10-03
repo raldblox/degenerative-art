@@ -23,7 +23,7 @@ module.exports = {
         light: {
           layout: {},
           colors: {
-            background: "#fff",
+            background: "#eee",
             foreground: "#000",
             primary: {
               DEFAULT: "#002fff",
