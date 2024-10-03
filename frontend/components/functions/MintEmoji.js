@@ -419,7 +419,7 @@ export const MintEmoji = () => {
                       <div className="grid items-center grid-cols-2 gap-6 p-3 font-semibold bg-white rounded-md">
                         <div>
                           <p className="text-sm capitalize text-balance !leading-tight">
-                            Current NFT Mint Price
+                            Current NFT Minting Price
                           </p>
                         </div>
 
