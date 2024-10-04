@@ -181,30 +181,29 @@ export default function Feels() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
-    <div className="relative flex items-center justify-center w-full h-[calc(100vh-130px)] overflow-hidden ">
-      <div className="h-[calc(100vh-140px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
-        <div className="min-w-[200px]">
-          <div className="min-h-[300px] relative grid content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
-            <div>
-              <span>gm ser 🌤</span>
-            </div>
-            <div className="space-y-6">
-              <h1 className="text-3xl">
-                how&apos;s the world treating you today?
-              </h1>
-            </div>
-
-            <div className="flex justify-between">
-              <Button color="primary" variant="solid" endContent={<LockIcon />}>
-                Express Your Feels
-              </Button>
-            </div>
-            <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
-              MOOD empowers the degeneratives community to create, express, and
-              play together within a unified, multi-chain ecosystem.
-            </p>
+    <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
+      <div className="h-[calc(100vh-50px)] md:h-[calc(100vh-140px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
+        <div className="md:min-w-[200px] min-h-[300px] relative grid content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+          <div>
+            <span>gm ser 🌤</span>
           </div>
+          <div className="space-y-6">
+            <h1 className="text-3xl">
+              how&apos;s the world treating you today?
+            </h1>
+          </div>
+
+          <div className="flex justify-between">
+            <Button color="primary" variant="solid" endContent={<LockIcon />}>
+              Express Your Feels
+            </Button>
+          </div>
+          <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
+            MOOD empowers the degeneratives community to create, express, and
+            play together within a unified, multi-chain ecosystem.
+          </p>
         </div>
+
         <Swiper
           className="mySwiper2 rounded-3xl bg-transparent min-h-[75vh] !p-3"
           style={{
