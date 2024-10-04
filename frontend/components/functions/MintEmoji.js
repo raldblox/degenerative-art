@@ -25,7 +25,7 @@ import { MetamaskIcon } from "../icons/BasicIcons";
 import LivePriceChart from "./LivePriceChart";
 import confetti from "canvas-confetti";
 
-export const MintEmoji = ({ showSlider }) => {
+export const MintEmoji = ({ showSlider, forceStop }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     countdown,
@@ -591,7 +591,9 @@ export const MintEmoji = ({ showSlider }) => {
                       onClick={handleMint}
                       // onClick={shootConfetti}
                       isLoading={minting}
-                      isDisabled={txHash || inputValues.length == 1}
+                      isDisabled={
+                        txHash || inputValues.length == 1 || forceStop
+                      }
                     >
                       <span className="!tracking-wider">
                         {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}

@@ -311,7 +311,11 @@ export const Hero = () => {
                   <span className="font-bold">1000 MOOD</span>rops await!
                 </h1>
                 <div className="w-full">
-                  <MintEmoji showSlider={true} defaultExpansionLevel={4} />
+                  <MintEmoji
+                    showSlider={true}
+                    defaultExpansionLevel={4}
+                    forceStop={true}
+                  />
                 </div>
               </div>
             </div>
