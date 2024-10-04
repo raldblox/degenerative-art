@@ -423,6 +423,8 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
   useEffect(() => {
     if (txHash) {
       setTxHash("");
+      
+      handleSlider(expansionLevel);
     }
   }, [inputValues]);
 
