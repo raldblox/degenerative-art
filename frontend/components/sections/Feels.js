@@ -31,6 +31,7 @@ import {
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { SelectNetwork } from "../functions/SelectNetwork";
+import { LockIcon } from "../icons/BasicIcons";
 
 const samplePosts = new Map([
   [
@@ -194,7 +195,7 @@ export default function Feels() {
             </div>
 
             <div className="flex justify-between">
-              <Button color="primary" variant="solid">
+              <Button color="primary" variant="solid" endContent={<LockIcon />}>
                 Express Your Feels
               </Button>
             </div>
