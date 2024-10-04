@@ -227,7 +227,7 @@ export const Hero = () => {
                 <h1 className="text-3xl font-bold text-default-800">match</h1>
               </div>
               <div className="flex items-center justify-center w-full">
-                <Image width={250} src="./soon.svg" />
+                <Image width={200} src="./soon.svg" />
               </div>
               <div className="w-full">
                 <Button size="md" radius="sm" variant="solid">
@@ -243,7 +243,7 @@ export const Hero = () => {
                 <h1 className="text-3xl font-bold text-default-800">roll</h1>
               </div>
               <div className="flex items-center justify-center w-full">
-                <Image width={250} src="./soon.svg" />
+                <Image width={200} src="./soon.svg" />
               </div>
               <div className="w-full">
                 <Button size="md" radius="sm" variant="solid">
@@ -259,7 +259,7 @@ export const Hero = () => {
                 <h1 className="text-3xl font-bold text-default-800">sweep</h1>
               </div>
               <div className="flex items-center justify-center w-full">
-                <Image width={250} src="./soon.svg" />
+                <Image width={200} src="./soon.svg" />
               </div>
               <div className="w-full">
                 <Button size="md" radius="sm" variant="solid">
