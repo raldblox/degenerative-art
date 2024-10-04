@@ -165,7 +165,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
       console.log("nativeBalance:", nativeBalance);
 
       if (Number(network.chainId) !== Number(selectedNetwork)) {
-        alert("incorrect network. please switch to etherlink network.");
+        alert("incorrect network.");
         return;
       }
 
@@ -473,7 +473,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                             <>
                               {ethers.formatEther(price)}{" "}
                               <span className="text-xs opacity-60">
-                                ${selectedChain?.nativeCurrency.symbol}
+                                ${selectedChain?.nativeCurrency?.symbol}
                               </span>
                             </>
                           )}
