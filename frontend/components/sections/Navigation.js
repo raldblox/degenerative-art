@@ -64,7 +64,7 @@ export default function Navigation() {
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
-        <Input
+        {/* <Input
           classNames={{
             base: "max-w-full sm:max-w-[12rem] h-10",
             mainWrapper: "h-full",
@@ -77,7 +77,7 @@ export default function Navigation() {
           startContent={<SearchIcon size={18} />}
           type="search"
           className="hidden md:flex"
-        />
+        /> */}
         {/* <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
@@ -106,8 +106,8 @@ export default function Navigation() {
         </Dropdown> */}
         {connectedAccount ? (
           <>
-            <Button startContent={<MetamaskIcon />}>
-              {connectedAccount.slice(0, 5)}...{connectedAccount.slice(-4)}
+            <Button size="sm" startContent={<MetamaskIcon />}>
+              {connectedAccount.slice(0, 6)}
             </Button>
           </>
         ) : (
