@@ -205,7 +205,7 @@ export default function Feels() {
         </div>
 
         <Swiper
-          className="mySwiper2 rounded-3xl bg-transparent min-h-[75vh] !p-3"
+          className="mySwiper2 rounded-2xl bg-transparent min-h-[75vh]"
           style={{
             "--swiper-navigation-color": "#ddd",
             "--swiper-pagination-color": "#ddd",
@@ -229,7 +229,7 @@ export default function Feels() {
           {[...samplePosts.entries()].map(([key, post]) => (
             <SwiperSlide key={key} className="">
               <Card className="w-full h-full bg-transparent light">
-                <CardHeader className="justify-between p-3 md:p-6 bg-zinc-100">
+                <CardHeader className="justify-between p-3 bg-white md:p-6">
                   <div className="flex w-full gap-5">
                     <Avatar
                       isBordered
@@ -275,7 +275,7 @@ export default function Feels() {
                     </div>
                   </div>
                 </CardBody>
-                <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-zinc-100 md:p-6">
+                <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
                   <div className="flex gap-1">
                     <p className="font-semibold text-default-400 text-small">
                       4
