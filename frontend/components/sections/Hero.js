@@ -17,6 +17,7 @@ import { MintEmoji } from "../functions/MintEmoji";
 import { ExpandableCards } from "./ExpandableCards";
 import { FunCard } from "../cards/FunCard";
 import { LinkPreview } from "../functions/LinkPreview";
+import { PoolByNetwork } from "../functions/PoolByNetwork";
 
 export const Hero = () => {
   const {
@@ -191,7 +192,9 @@ export const Hero = () => {
                   <span className="font-semibold">Provide liquidity</span> and
                   watch your rewards pour in!
                 </h1>
-                <div className="w-full"></div>
+                <div className="w-full">
+                  <PoolByNetwork />
+                </div>
               </div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
@@ -223,7 +226,14 @@ export const Hero = () => {
                 </span>
                 <h1 className="text-3xl font-bold text-default-800">match</h1>
               </div>
-              <div></div>
+              <div className="flex items-center justify-center w-full">
+                <Image width={250} src="./soon.svg" />
+              </div>
+              <div className="w-full">
+                <Button size="md" radius="sm" variant="solid">
+                  Under Construction
+                </Button>
+              </div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
@@ -232,7 +242,14 @@ export const Hero = () => {
                 </span>
                 <h1 className="text-3xl font-bold text-default-800">roll</h1>
               </div>
-              <div></div>
+              <div className="flex items-center justify-center w-full">
+                <Image width={250} src="./soon.svg" />
+              </div>
+              <div className="w-full">
+                <Button size="md" radius="sm" variant="solid">
+                  Under Construction
+                </Button>
+              </div>
             </div>
             <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center gap-3 ">
@@ -241,7 +258,14 @@ export const Hero = () => {
                 </span>
                 <h1 className="text-3xl font-bold text-default-800">sweep</h1>
               </div>
-              <div></div>
+              <div className="flex items-center justify-center w-full">
+                <Image width={250} src="./soon.svg" />
+              </div>
+              <div className="w-full">
+                <Button size="md" radius="sm" variant="solid">
+                  Under Construction
+                </Button>
+              </div>
             </div>
           </div>
         )}
@@ -280,7 +304,7 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
-                  Break free from 3x3 grid! Make one-of-a-kind NFTs with our
+                  Break free from 3x3 grid! Make one-of-a-kind arts with our
                   Expandable Canvas.
                 </h1>
                 <h1 className="text-xs tracking-wide uppercase">
@@ -302,10 +326,14 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
-                  Turn your existing work into intriguing art with emojis as
-                  pixels!
+                  Turn your existing digital image into a fascinating artwork
+                  with emojis as pixels!
                 </h1>
-                <div className="w-full"></div>
+                <div className="w-full">
+                  <Button size="md" radius="sm" variant="solid">
+                    Coming Soon
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

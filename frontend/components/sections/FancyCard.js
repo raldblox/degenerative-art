@@ -60,11 +60,11 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
     <div className="pointer-events-none select-none group">
       <div className="absolute inset-0 rounded-xl [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-100 "></div>
       <motion.div
-        className="absolute inset-0 transition duration-700 bg-transparent rounded-xl opacity-50 group-hover/card:opacity-100 "
+        className="absolute inset-0 transition duration-700 bg-transparent opacity-50 rounded-xl group-hover/card:opacity-100 "
         style={style}
       />
       <motion.div
-        className="absolute inset-0 text-center duration-500 rounded-xl opacity-25 group-hover:animate-pulse group-hover/card:opacity-100 "
+        className="absolute inset-0 text-center duration-500 rounded-xl opacity-40 group-hover:animate-pulse group-hover/card:opacity-100 "
         style={style}
       >
         <p className="absolute inset-x-0 h-full font-mono text-lg font-bold text-white break-words whitespace-pre-wrap transition-all duration-500">

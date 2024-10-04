@@ -22,6 +22,7 @@ import { SimulatePrice } from "./SimulatePrice";
 import { networks } from "@/libraries/network";
 import { ethers } from "ethers";
 import { MetamaskIcon } from "../icons/BasicIcons";
+import LivePriceChart from "./LivePriceChart";
 
 export const MintEmoji = ({ showSlider }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -462,29 +463,44 @@ export const MintEmoji = ({ showSlider }) => {
                         </h1>
                       </div>
                     </div>
-                    {selectedNetwork == "42793" && (
-                      <div>
-                        <Tooltip
-                          showArrow={true}
-                          color="warning"
-                          placement="right"
-                          content="Add $MOOD to Metamask"
-                        >
-                          <Button
-                            onClick={() => {
-                              addToken();
-                            }}
-                            radius="sm"
-                            variant="bordered"
-                            color="default"
-                            size="sm"
-                            startContent={<MetamaskIcon />}
-                          >
-                            Add $MOOD
-                          </Button>
-                        </Tooltip>
-                      </div>
-                    )}
+                    <div className="flex items-center gap-2">
+                      <>
+                        {selectedNetwork == "42793" && (
+                          <>
+                            <Tooltip
+                              size="sm"
+                              showArrow={true}
+                              color="warning"
+                              placement="bottom-start"
+                              content="Add $MOOD to Metamask"
+                            >
+                              <Button
+                                onClick={() => {
+                                  addToken();
+                                }}
+                                radius="sm"
+                                variant="flat"
+                                color="default"
+                                size="sm"
+                                startContent={<MetamaskIcon />}
+                              >
+                                Add $MOOD
+                              </Button>
+                            </Tooltip>
+                            <Tooltip
+                              size="sm"
+                              showArrow={true}
+                              className="max-w-[250px]"
+                              color="warning"
+                              placement="bottom-start"
+                              content="Simulate NFT mint price based on current token supply"
+                            >
+                              <LivePriceChart totalSupply={100} />
+                            </Tooltip>
+                          </>
+                        )}
+                      </>
+                    </div>
 
                     {/* <SimulatePrice /> */}
                   </div>
@@ -521,18 +537,20 @@ export const MintEmoji = ({ showSlider }) => {
                     </div>
 
                     <Button
-                      isDisabled
+                      // isDisabled
                       fullWidth
                       size="lg"
                       radius="sm"
                       variant="solid"
-                      className="mx-auto font-semibold min-w-[120px] h-[50px]"
+                      className="mx-auto font-semibold min-w-[120px]  h-[50px]"
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
                       isLoading={minting}
-                      // isDisabled={txHash || inputValues.length == 1}
+                      isDisabled={txHash || inputValues.length == 1}
                     >
-                      {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
+                      <span className="!tracking-wider">
+                        {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
+                      </span>
                     </Button>
                   </div>
                 </div>
