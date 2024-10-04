@@ -16,13 +16,18 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-import { SearchIcon } from "../icons/BasicIcons";
+import { MetamaskIcon, SearchIcon } from "../icons/BasicIcons";
 import { DegenerativesLogo } from "../icons/DegenerativesLogo";
 import { useContext } from "react";
 import { Context } from "@/providers/Providers";
 
 export default function Navigation() {
-  const { setSelectedNavTab, selectedNavTab } = useContext(Context);
+  const {
+    setSelectedNavTab,
+    selectedNavTab,
+    connectEthereumWallet,
+    connectedAccount,
+  } = useContext(Context);
 
   return (
     <Navbar isBordered maxWidth="full" className="h-18">
@@ -73,7 +78,7 @@ export default function Navigation() {
           type="search"
           className="hidden md:flex"
         />
-        <Dropdown placement="bottom-end">
+        {/* <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
               isBordered
@@ -98,7 +103,16 @@ export default function Navigation() {
               Log Out
             </DropdownItem>
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown> */}
+        {connectedAccount ? (
+          <>
+            <Button startContent={<MetamaskIcon />}>
+              {connectedAccount.slice(0, 5)}...{connectedAccount.slice(-4)}
+            </Button>
+          </>
+        ) : (
+          <Button onClick={connectEthereumWallet}>Connect Wallet</Button>
+        )}
       </NavbarContent>
     </Navbar>
   );
