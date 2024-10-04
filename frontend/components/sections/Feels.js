@@ -182,7 +182,7 @@ export default function Feels() {
 
   return (
     <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
-      <div className="h-[calc(100vh-50px)] md:h-[calc(100vh-140px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
+      <div className="h-[calc(100vh-50px)] md:h-[calc(100vh-150px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
         <div className="md:max-w-[300px] min-h-[300px] relative grid content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
@@ -198,14 +198,10 @@ export default function Feels() {
               Express Your Feels
             </Button>
           </div>
-          <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
-            MOOD empowers the degeneratives community to create, express, and
-            play together within a unified, multi-chain ecosystem.
-          </p>
         </div>
 
         <Swiper
-          className="mySwiper2 rounded-2xl bg-transparent min-h-[75vh]"
+          className="mySwiper2 rounded-2xl !bg-transparent min-h-[75vh]"
           style={{
             "--swiper-navigation-color": "#ddd",
             "--swiper-pagination-color": "#ddd",
@@ -227,7 +223,7 @@ export default function Feels() {
           modules={[FreeMode, Thumbs, Mousewheel]}
         >
           {[...samplePosts.entries()].map(([key, post]) => (
-            <SwiperSlide key={key} className="">
+            <SwiperSlide key={key} className="bg-transparent">
               <Card className="w-full h-full bg-transparent light">
                 <CardHeader className="justify-between p-3 bg-white md:p-6">
                   <div className="flex w-full gap-5">
@@ -253,7 +249,7 @@ export default function Feels() {
                     color="primary"
                     radius="full"
                     size="sm"
-                    variant="faded"
+                    variant="flat"
                   >
                     Follow
                   </Button>
