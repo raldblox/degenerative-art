@@ -23,6 +23,7 @@ import { networks } from "@/libraries/network";
 import { ethers } from "ethers";
 import { MetamaskIcon } from "../icons/BasicIcons";
 import LivePriceChart from "./LivePriceChart";
+import confetti from "canvas-confetti";
 
 export const MintEmoji = ({ showSlider }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -52,6 +53,48 @@ export const MintEmoji = ({ showSlider }) => {
   const [totalSupply, setTotalSupply] = useState(0);
   const [nftBalance, setNFTBalance] = useState(0);
   const [gridCols, setGridCols] = useState(3);
+
+  const shootConfetti = () => {
+    const scalar = 2;
+    const emoji1 = confetti.shapeFromText({ text: "🥳", scalar });
+    const emoji2 = confetti.shapeFromText({ text: "🎉", scalar });
+    const emoji3 = confetti.shapeFromText({ text: "🎊", scalar });
+    const duration = 15 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = {
+      startVelocity: 30,
+      spread: 660,
+      ticks: 60,
+      zIndex: 100,
+      shapes: [emoji1, emoji2, emoji3],
+      scalar,
+    };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function () {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+      // since particles fall down, start a bit higher than random
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      });
+      confetti({
+        ...defaults,
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      });
+    }, 250);
+  };
 
   const handleMint = async () => {
     console.log("emojis:", inputValues);
@@ -132,7 +175,7 @@ export const MintEmoji = ({ showSlider }) => {
         walletSigner
       );
 
-      const totalSupply_ = await moodArt.totalSupply();
+      const totalSupply_ = await moodArt.tokenIds();
       const price_ = await moodArt.price(totalSupply_);
       setTotalSupply(totalSupply_);
       setPrice(price_);
@@ -158,6 +201,7 @@ export const MintEmoji = ({ showSlider }) => {
 
       if (tx.hash) {
         setTxHash(tx.hash);
+        shootConfetti();
       }
     } catch (error) {
       // Log error details
@@ -352,7 +396,7 @@ export const MintEmoji = ({ showSlider }) => {
           moodArtABI,
           provider
         );
-        const totalSupply_ = await moodArt.totalSupply();
+        const totalSupply_ = await moodArt.tokenIds();
         const price_ = await moodArt.price(totalSupply_);
         setTotalSupply(totalSupply_);
         setPrice(price_);
@@ -545,6 +589,7 @@ export const MintEmoji = ({ showSlider }) => {
                       className="mx-auto font-semibold min-w-[120px]  h-[50px]"
                       color={txHash ? "success" : "primary"}
                       onClick={handleMint}
+                      // onClick={shootConfetti}
                       isLoading={minting}
                       isDisabled={txHash || inputValues.length == 1}
                     >
