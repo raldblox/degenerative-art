@@ -98,7 +98,7 @@ export const Hero = () => {
 
         <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
-            <span>gm 🌤</span>
+            <span>gm ser 🌤</span>
           </div>
           <div className="space-y-6">
             <h1 className="text-2xl">
@@ -106,7 +106,7 @@ export const Hero = () => {
               <span className="font-semibold cursor-pointer" onClick={addToken}>
                 mood
               </span>{" "}
-              go to waste ser
+              go to waste
             </h1>
             <div className="flex flex-wrap items-center gap-1">
               <Button

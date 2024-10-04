@@ -1,5 +1,6 @@
 "use client";
 
+import Feels from "@/components/sections/Feels";
 import { Hero } from "@/components/sections/Hero";
 import Navigation from "@/components/sections/Navigation";
 import { Context } from "@/providers/Providers";
@@ -12,13 +13,18 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      {selectedNavTab == "dashboard" && (
-        <>
-          <Hero />
-        </>
+      {selectedNavTab == "feels" && (
+        <div className="w-full select-none relative min-h-[calc(100vh-180px)] overflow-hidden">
+          <Feels />
+        </div>
       )}
+      {selectedNavTab == "dashboard" && (
+        <div className="">
+          <Hero />
+        </div>
+      )}
+      <Divider />
       <footer className="p-6 space-y-6">
-        <Divider />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <h1 className="text-xs text-center md:text-left text-default-700 text-balance">
             Copyright © 2024 Degeneratives. All rights reserved.
