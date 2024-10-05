@@ -65,12 +65,14 @@ export const Hero = () => {
               Join our homies in putting emotions to work!
             </p>
           </div>
-          <div className="absolute drop-shadow-lg space-y-0 md:space-y-6 bottom-[130px] left-6 md:bottom-[155px] md:left-[25vw]">
+          <div className="absolute drop-shadow-lg space-y-3 md:space-y-6 bottom-[160px] left-6 md:bottom-[120px] md:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
               degeneratives<span className="">.art</span>
             </h1>
-            <p className="px-3 text-xs md:text-base">
-              where emotions become art and currency
+            <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
+              A decentralized creative platform utilizing unicode characters for
+              generative art, onchain gaming, and defi apps within an
+              interactive onchain ecosystem.
             </p>
           </div>
 
