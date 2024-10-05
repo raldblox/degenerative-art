@@ -314,7 +314,7 @@ export const Hero = () => {
                   <MintEmoji
                     showSlider={true}
                     defaultExpansionLevel={4}
-                    forceStop={true}
+                    forceStop={false}
                   />
                 </div>
               </div>
