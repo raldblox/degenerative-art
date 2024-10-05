@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { SessionProvider, useSession } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
 import moodArtABI from "@/libraries/abis/MOODART.json";
+import { networks } from "@/libraries/network";
 
 export const Context = createContext();
 
@@ -15,7 +16,7 @@ export const Providers = (props) => {
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
   const [selectedNavTab, setSelectedNavTab] = useState("dashboard");
-  const [hasToken, setHasToken] = useState(false);
+  const [totaSupplies, settotaSupplies] = useState({});
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -72,30 +73,49 @@ export const Providers = (props) => {
     }
   };
 
+  const fetch = async () => {
+    const getLiveNetworks = () => {
+      return networks
+        .filter((network) => network.isLive)
+        .map((network) => network.rpcUrls[0]);
+    };
+
+    const liveNetworkUrls = getLiveNetworks();
+    console.log("liveNetworkUrls", liveNetworkUrls);
+    const providers = liveNetworkUrls.map(
+      (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
+    );
+
+    const contracts = networks
+      .filter((network) => network.isLive)
+      .map(
+        (network, index) =>
+          new ethers.Contract(
+            network.contracts?.moodArt,
+            moodArtABI,
+            providers[index]
+          )
+      );
+
+    const supplies = contracts.map((contract, index) =>
+      contract
+        .totalSupply()
+        .catch(() => {
+          return contract.totalSupply();
+        })
+        .then((totalSupply) => ({
+          chainName: networks[index].chainName,
+          totalSupply: Number(totalSupply),
+        }))
+    );
+
+    const totalSupplies = await Promise.all(supplies);
+    console.log("totalSupplies", totalSupplies);
+    settotaSupplies(totaSupplies);
+  };
+
   useEffect(() => {
-    fetch("/api/core/hasToken", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address: "0x0000704b5427D1BE19059Ee68BAdb88935E6079a",
-      }),
-    })
-      .then((response) => {
-        console.log("Response status:", response.status); // Check the status code here
-        if (!response.ok) {
-          // Check if the response is not OK (status code is not in the range 200-299)
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Response data:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    fetch();
   }, []);
 
   const value = {
@@ -112,6 +132,8 @@ export const Providers = (props) => {
     selectedNavTab,
     setSelectedNavTab,
     addToken,
+    totaSupplies,
+    settotaSupplies,
   };
 
   return (

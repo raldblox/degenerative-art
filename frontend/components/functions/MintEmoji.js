@@ -122,8 +122,6 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
       };
 
       const liveNetworkUrls = getLiveNetworks();
-
-      // Create an array of providers for each live network
       const providers = liveNetworkUrls.map(
         (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
       );
@@ -423,7 +421,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
   useEffect(() => {
     if (txHash) {
       setTxHash("");
-      
+
       handleSlider(expansionLevel);
     }
   }, [inputValues]);

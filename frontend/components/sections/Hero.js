@@ -18,6 +18,7 @@ import { ExpandableCards } from "./ExpandableCards";
 import { FunCard } from "../cards/FunCard";
 import { LinkPreview } from "../functions/LinkPreview";
 import { PoolByNetwork } from "../functions/PoolByNetwork";
+import { Statistics } from "../functions/Statistics";
 
 export const Hero = () => {
   const {
@@ -89,6 +90,7 @@ export const Hero = () => {
               <Tab key="defi" title="DeFi" />
               <Tab key="nft" title="NFT" />
               <Tab key="game" title="GameFi" />
+              <Tab key="stats" title="Stats" />
             </Tabs>
           </div>
           <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-3 right-3 md:bottom-6 md:right-6">
@@ -344,14 +346,15 @@ export const Hero = () => {
             </div>
           </div>
         )}
-
-        {/* <div className="min-h-[450px]  w-full max-h-[300px] grid md:col-span-4 rounded-2xl bg-default-100 hover:bg-success transition-all duration-300 ">
-          <div className="h-full relative p-6 min-h-[300px]    rounded-2xl">
-            <span className="absolute flex items-center justify-center w-10 h-10 p-2 text-lg transition-all duration-300 bg-black rounded-full hover:bg-success top-3 left-3">
-              📊
-            </span>
+        {selectedHomeTab == "stats" && (
+          <div className="min-h-[450px]  w-full md:max-h-[300px] gap-3 md:gap-6 md:col-span-3 rounded-2xl">
+            <div className="h-full relative grid content-center items-center justify-center p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
+              <Statistics />
+            </div>
           </div>
-        </div> */}
+        )}
+
+        {/*  */}
       </div>
     </section>
   );
