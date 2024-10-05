@@ -111,7 +111,7 @@ export default function Navigation() {
             </Button>
           </>
         ) : (
-          <Button onClick={connectEthereumWallet}>Connect Wallet</Button>
+          <Button onClick={connectEthereumWallet}>Connect</Button>
         )}
       </NavbarContent>
     </Navbar>
