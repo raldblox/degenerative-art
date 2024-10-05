@@ -182,8 +182,8 @@ export default function Feels() {
 
   return (
     <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
-      <div className="h-[calc(100vh-50px)] md:h-[calc(100vh-150px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
-        <div className="md:max-w-[300px] min-h-[300px] relative grid content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+      <div className="h-[calc(100vh-50px)] p-3 md:h-[calc(100vh-150px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
+        <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
           </div>
@@ -199,7 +199,6 @@ export default function Feels() {
             </Button>
           </div>
         </div>
-
         <Swiper
           className="mySwiper2 rounded-2xl !bg-transparent min-h-[75vh]"
           style={{
@@ -207,14 +206,15 @@ export default function Feels() {
             "--swiper-pagination-color": "#ddd",
           }}
           loop={true}
-          freeMode={false}
           spaceBetween={10}
           breakpoints={{
             "@0.0": {
               slidesPerView: 2,
+              freeMode: true,
             },
             "@1.00": {
               slidesPerView: 1,
+              freeMode: false,
             },
           }}
           mousewheel={true}
