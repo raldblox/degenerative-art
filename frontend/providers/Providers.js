@@ -16,7 +16,7 @@ export const Providers = (props) => {
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
   const [selectedNavTab, setSelectedNavTab] = useState("dashboard");
-  const [totaSupplies, settotaSupplies] = useState({});
+  const [totalSupplies, setTotaSupplies] = useState({});
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -104,14 +104,14 @@ export const Providers = (props) => {
           return contract.totalSupply();
         })
         .then((totalSupply) => ({
-          chainName: networks[index].chainName,
-          totalSupply: Number(totalSupply),
+          name: networks[index].chainName,
+          value: Number(totalSupply),
         }))
     );
 
     const totalSupplies = await Promise.all(supplies);
     console.log("totalSupplies", totalSupplies);
-    settotaSupplies(totaSupplies);
+    setTotaSupplies(totalSupplies);
   };
 
   useEffect(() => {
@@ -132,8 +132,8 @@ export const Providers = (props) => {
     selectedNavTab,
     setSelectedNavTab,
     addToken,
-    totaSupplies,
-    settotaSupplies,
+    totalSupplies,
+    setTotaSupplies,
   };
 
   return (

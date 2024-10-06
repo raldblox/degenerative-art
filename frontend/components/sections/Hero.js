@@ -26,6 +26,7 @@ export const Hero = () => {
     setSelectedHomeTab,
     selectedNetwork,
     addToken,
+    totalSupplies,
   } = useContext(Context);
 
   const ChainIcon = () => {
@@ -348,8 +349,8 @@ export const Hero = () => {
         )}
         {selectedHomeTab == "stats" && (
           <div className="min-h-[450px]  w-full md:max-h-[300px] gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full relative grid content-center items-center justify-center p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <Statistics />
+            <div className="h-full relative grid content-center p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
+              <Statistics data={totalSupplies} />
             </div>
           </div>
         )}

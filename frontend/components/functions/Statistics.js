@@ -79,10 +79,8 @@ const renderActiveShape = (props) => {
   );
 };
 
-export const Statistics = () => {
-  const { totalSupplies } = useContext(Context);
+export const Statistics = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [chartData, setChartData] = useState([]);
 
   const onPieEnter = useCallback(
     (_, index) => {
@@ -91,59 +89,49 @@ export const Statistics = () => {
     [setActiveIndex]
   );
 
-  useEffect(() => {
-    const init = async () => {
-      console.log(totalSupplies);
-      const data =
-        totalSupplies &&
-        totalSupplies?.map((item) => ({
-          name: item.name,
-          value: parseInt(item.value),
-        }));
-      const data_ =
-        data?.length > 0
-          ? data
-          : [
-              {
-                name: "Etherlink",
-                value: 1120,
-              },
-              {
-                name: "Core",
-                value: 31,
-              },
-              {
-                name: "Polygon",
-                value: 190,
-              },
-              {
-                name: "Base",
-                value: 12,
-              },
-            ];
-      console.log(data_);
-      setChartData(data_);
-    };
-
-    init();
-  }, [totalSupplies]);
-
   return (
-    <div>
-      <PieChart width={400} height={400}>
-        <Pie
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          data={chartData}
-          cx={200}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#000"
-          dataKey="value"
-          onMouseEnter={onPieEnter}
-        />
-      </PieChart>
+    <div className="grid w-full gap-3 p-6 md:grid-cols-2">
+      <div className="flex items-center justify-center ">
+        <PieChart width={400} height={400}>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={
+              data?.length > 0
+                ? data
+                : [
+                    {
+                      name: "Etherlink",
+                      value: 1120,
+                    },
+                  ]
+            }
+            cx={200}
+            cy={200}
+            innerRadius={60}
+            outerRadius={80}
+            fill="#000"
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+          />
+        </PieChart>
+      </div>
+
+      <div className="grid items-center content-center justify-center h-full max-w-sm grid-cols-2 gap-6 mx-auto gap-x-12">
+        {data.map((supply, index) => (
+          <>
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center text-center"
+            >
+              <h1 className="text-5xl font-semibold">{supply.value}</h1>
+              <h1 className="text-xs font-semibold uppercase text-default-700">
+                {supply.name} NFTs
+              </h1>
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 };
