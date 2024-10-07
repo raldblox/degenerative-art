@@ -329,14 +329,14 @@ export default function Feels() {
                                 post.emojis.length
                               )}, 1fr)`,
                             }}
-                            className={`grid text-xl gap-1 mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                            className={`grid text-xl gap-[1px] mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                           >
                             {Object.values(post.emojis)
                               .reverse()
                               .map((emoji, index) => (
                                 <div
                                   key={index}
-                                  className="flex items-center justify-center w-8 leading-none tracking-tighter rounded-sm md:w-12 animate-appearance-in drop-shadow-md bg-black/5 aspect-square"
+                                  className="flex items-center justify-center w-8 leading-none tracking-tighter rounded-sm md:w-12 animate-appearance-in border-1 border-black/5 aspect-square"
                                 >
                                   {emoji}
                                 </div>
