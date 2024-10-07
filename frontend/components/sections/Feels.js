@@ -172,7 +172,7 @@ export default function Feels() {
               "--swiper-pagination-color": "#ddd",
             }}
             loop={true}
-            freeMode={false}
+            freeMode={true}
             spaceBetween={10}
             breakpoints={{
               "@0.0": {
