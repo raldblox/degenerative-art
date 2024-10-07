@@ -37,108 +37,6 @@ import { Context } from "@/providers/Providers";
 import { networks } from "@/libraries/network";
 import { ethers } from "ethers";
 
-const samplePosts = new Map([
-  [
-    "post1",
-    {
-      user: {
-        name: "Tony Reichert",
-        handle: "@tonyreichert",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/1.png",
-      },
-      content: {
-        emojis: ["🚀", "🌕", "🌐", "⚙️", "💻", "🔗", "💰", "💡", "📈"],
-        note: "Excited about the future of Ethereum!",
-      },
-    },
-  ],
-  [
-    "post2",
-    {
-      user: {
-        name: "Zoey Lang",
-        handle: "@zoeylang",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/1.png",
-      },
-      content: {
-        emojis: ["₿", "🔑", "🔒", "⛓️", "🌐", "💰", "📈", "💪", "😎"],
-        note: "Bitcoin is the future of money.",
-      },
-    },
-  ],
-  [
-    "post3",
-    {
-      user: {
-        name: "Jane Fisher",
-        handle: "@janefisher",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/2.png",
-      },
-      content: {
-        emojis: ["🖼️", "🎨", "🌎", "🧑‍🤝‍🧑", "✨", "🎉", "🥳", "🫂", "💬"],
-        note: "Building the open metaverse.",
-      },
-    },
-  ],
-  [
-    "post4",
-    {
-      user: {
-        name: "William Howard",
-        handle: "@williamhoward",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/2.png",
-      },
-      content: {
-        emojis: ["🦍", "💎", "🌴", "🛥️", "😎", "🥳", "🍾", "💰", "🔥"],
-        note: "Apeing into the weekend! 🍌",
-      },
-    },
-  ],
-  [
-    "post5",
-    {
-      user: {
-        name: "Kristen Copper",
-        handle: "@kristencopper",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/3.png",
-      },
-      content: {
-        emojis: ["🎨", "🖼️", "🖌️", "🌈", "✨", "🤯", "👁️", "👀", "🎁"],
-        note: "New drop coming soon... stay tuned!",
-      },
-    },
-  ],
-  [
-    "post6",
-    {
-      user: {
-        name: "Brian Kim",
-        handle: "@briankim",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/3.png",
-      },
-      content: {
-        emojis: ["🌐", "🤝", "🫂", "🗣️", "💬", "📢", "📣", "🌍", "🙏"],
-        note: "Web3 is all about community and collaboration.",
-      },
-    },
-  ],
-  [
-    "moodart",
-    {
-      token: {
-        id: "",
-        owner: "",
-        emojis: ["👗", "👠", "🕶️", "👜", "✨", "💃", "🕺", "📸", "💅"],
-      },
-      user: {
-        name: "Anonymous",
-        handle: "--",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/4.png",
-      },
-    },
-  ],
-]);
-
 export default function Feels() {
   //   const { data: session, status } = useSession();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -184,7 +82,7 @@ export default function Feels() {
 
               // Generate 10 random valid indices for each chain
               const randomIndices = [];
-              for (let i = 0; i < 10; i++) {
+              for (let i = 0; i < 14; i++) {
                 let randomIndex = Math.floor(Math.random() * totalSupply);
                 randomIndices.push(randomIndex);
               }
@@ -192,7 +90,6 @@ export default function Feels() {
               // Fetch token data for the random indices
               const tokenPromises = randomIndices.map(async (randomIndex) => {
                 try {
-                  console.log("fetching:", randomIndex);
                   const tokenId = await contract.tokenByIndex(
                     Number(randomIndex)
                   );
@@ -228,12 +125,18 @@ export default function Feels() {
               flattenedFeels[i],
             ];
           }
-          setRandomFeels(flattenedFeels);
+
+          if (randomFeels.size === 0) {
+            setRandomFeels(
+              new Map(flattenedFeels.map((feel, index) => [index, feel]))
+            );
+          }
           setFetching(false);
         }
       } catch (error) {
         console.error("Error in getFeels:", error);
       } finally {
+        setFetching(false);
       }
     };
     getFeels();
@@ -258,6 +161,8 @@ export default function Feels() {
             </Button>
           </div>
         </div>
+
+        {fetching && <Spinner />}
 
         <>
           <Swiper
@@ -303,7 +208,7 @@ export default function Feels() {
                             </h5>
                           </div>
                         </div>
-                        <Button
+                        {/* <Button
                           isExternal
                           as={Link}
                           href={`https://x.com/`}
@@ -313,7 +218,10 @@ export default function Feels() {
                           variant="flat"
                         >
                           Follow
-                        </Button>
+                        </Button> */}
+                        <div className="flex items-center justify-center h-full">
+                          <ChainIcon chainName={post?.chainName} />
+                        </div>
                       </CardHeader>
                       <CardBody className="flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                         <div className="p-8 text-center cursor-pointer w-fit cell group">
