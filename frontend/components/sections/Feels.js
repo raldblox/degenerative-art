@@ -162,8 +162,6 @@ export default function Feels() {
           </div>
         </div>
 
-        {fetching && <Spinner />}
-
         <>
           <Swiper
             className="mySwiper2 rounded-2xl !bg-transparent min-h-[75vh]"
