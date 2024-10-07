@@ -108,10 +108,8 @@ export const Hero = () => {
           <div className="space-y-6">
             <h1 className="text-2xl">
               dont let your{" "}
-              <span className="font-semibold cursor-pointer" onClick={addToken}>
-                mood
-              </span>{" "}
-              go to waste
+              <span className="font-semibold cursor-pointer">mood</span> go to
+              waste
             </h1>
             <div className="flex flex-wrap items-center gap-1">
               <Button

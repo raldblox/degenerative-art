@@ -21,17 +21,17 @@ const renderActiveShape = (props) => {
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
+  const sx = cx + (outerRadius + 5) * cos;
+  const sy = cy + (outerRadius + 5) * sin;
   const mx = cx + (outerRadius + 30) * cos;
   const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 5;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={7} textAnchor="middle" fill={fill}>
         {payload.name}
       </text>
       <Sector
@@ -48,8 +48,8 @@ const renderActiveShape = (props) => {
         cy={cy}
         startAngle={startAngle}
         endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
+        innerRadius={outerRadius + 3}
+        outerRadius={outerRadius + 5}
         fill={fill}
       />
       <path
@@ -57,9 +57,9 @@ const renderActiveShape = (props) => {
         stroke={fill}
         fill="none"
       />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <circle cx={ex} cy={ey} r={3} fill={fill} stroke="none" />
       <text
-        className="text-sm"
+        className="text-xs"
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
@@ -92,8 +92,9 @@ export const Statistics = ({ data }) => {
   return (
     <div className="grid w-full gap-3 p-6 md:grid-cols-2">
       <div className="flex items-center justify-center ">
-        <PieChart width={400} height={400}>
+        <PieChart width={320} height={320}>
           <Pie
+            className="p-16"
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={
@@ -101,15 +102,15 @@ export const Statistics = ({ data }) => {
                 ? data
                 : [
                     {
-                      name: "Etherlink",
-                      value: 1120,
+                      name: "No Data",
+                      value: 100,
                     },
                   ]
             }
-            cx={200}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
+            cx={160}
+            cy={160}
+            innerRadius={50}
+            outerRadius={60}
             fill="#000"
             dataKey="value"
             onMouseEnter={onPieEnter}
