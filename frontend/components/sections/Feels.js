@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   FreeMode,
@@ -28,10 +27,15 @@ import {
   DropdownTrigger,
   Link,
   User,
+  Image,
+  Spinner,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { SelectNetwork } from "../functions/SelectNetwork";
 import { LockIcon } from "../icons/BasicIcons";
+import { Context } from "@/providers/Providers";
+import { networks } from "@/libraries/network";
+import { ethers } from "ethers";
 
 const samplePosts = new Map([
   [
@@ -119,58 +123,17 @@ const samplePosts = new Map([
     },
   ],
   [
-    "post7",
+    "moodart",
     {
-      user: {
-        name: "Michael Hunt",
-        handle: "@michaelhunt",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/4.png",
-      },
-      content: {
+      token: {
+        id: "",
+        owner: "",
         emojis: ["👗", "👠", "🕶️", "👜", "✨", "💃", "🕺", "📸", "💅"],
-        note: "Feeling good about the future of digital fashion.",
       },
-    },
-  ],
-  [
-    "post8",
-    {
       user: {
-        name: "Samantha Brooks",
-        handle: "@samanthabrooks",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/4.png",
-      },
-      content: {
-        emojis: ["🤖", "😎", "👽", "👾", "🎨", "🟩", "💜", "🖤", "❤️"],
-        note: "Punks not dead!",
-      },
-    },
-  ],
-  [
-    "post9",
-    {
-      user: {
-        name: "Frank Harrison",
-        handle: "@frankharrison",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/5.png",
-      },
-      content: {
-        emojis: ["🌈", "✨", "🍭", "🍦", "🍩", "🍬", "🎂", "🥳", "🎈"],
-        note: "Stay colorful and positive!",
-      },
-    },
-  ],
-  [
-    "post10",
-    {
-      user: {
-        name: "Emma Adams",
-        handle: "@emmaadams",
-        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/5.png",
-      },
-      content: {
-        emojis: ["📈", "💰", "🗣️", "🚀", "💡", "🔥", "🎯", "✅", "💪"],
-        note: "Remember: cloud over castle, every single day!",
+        name: "Anonymous",
+        handle: "--",
+        image: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/4.png",
       },
     },
   ],
@@ -179,6 +142,102 @@ const samplePosts = new Map([
 export default function Feels() {
   //   const { data: session, status } = useSession();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const { totalSupplies, randomFeels, setRandomFeels, moodArtABI } = useContext(
+    Context
+  );
+  const [fetching, setFetching] = useState(false);
+
+  useEffect(() => {
+    const getFeels = async () => {
+      try {
+        setFetching(true);
+        if (totalSupplies) {
+          const getLiveNetworks = () => {
+            return networks
+              .filter((network) => network.isLive)
+              .map((network) => network.rpcUrls[0]);
+          };
+
+          const liveNetworkUrls = getLiveNetworks();
+          console.log("liveNetworkUrls", liveNetworkUrls);
+          const providers = liveNetworkUrls.map(
+            (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
+          );
+
+          const instances = networks
+            .filter((network) => network.isLive)
+            .map(
+              (network, index) =>
+                new ethers.Contract(
+                  network.contracts?.moodArt,
+                  moodArtABI,
+                  providers[index]
+                )
+            );
+
+          const filteredSupplies = totalSupplies.slice(1);
+          const filteredInstances = instances.slice(1);
+          const feels = await Promise.all(
+            filteredSupplies.map(async (supplyData, index) => {
+              const contract = filteredInstances[index];
+              const totalSupply = parseInt(supplyData.value);
+
+              // Generate 10 random valid indices for each chain
+              const randomIndices = [];
+              for (let i = 0; i < 10; i++) {
+                let randomIndex = Math.floor(Math.random() * totalSupply);
+                randomIndices.push(randomIndex);
+              }
+
+              // Fetch token data for the random indices
+              const tokenPromises = randomIndices.map(async (randomIndex) => {
+                try {
+                  console.log("fetching:", randomIndex);
+                  const tokenId = await contract.tokenByIndex(
+                    Number(randomIndex)
+                  );
+
+                  const [emojis, owner] = await Promise.all([
+                    contract.getMood(tokenId),
+                    contract.ownerOf(tokenId),
+                  ]);
+                  return {
+                    chainName: supplyData.name,
+                    tokenId: tokenId,
+                    owner: owner,
+                    emojis: emojis,
+                  };
+                } catch (error) {
+                  console.error("Error fetching token data:", error);
+                  return null; // Or handle the error as needed
+                }
+              });
+
+              const tokensData = await Promise.all(tokenPromises);
+              return tokensData.filter((tokenData) => tokenData !== null); // Remove any null values
+            })
+          );
+
+          // Flatten the feels array and update state
+          let flattenedFeels;
+          flattenedFeels = feels.flat();
+          for (let i = flattenedFeels.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [flattenedFeels[i], flattenedFeels[j]] = [
+              flattenedFeels[j],
+              flattenedFeels[i],
+            ];
+          }
+          setRandomFeels(flattenedFeels);
+          setFetching(false);
+        }
+      } catch (error) {
+        console.error("Error in getFeels:", error);
+      } finally {
+      }
+    };
+    getFeels();
+  }, [totalSupplies]);
 
   return (
     <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
@@ -199,125 +258,156 @@ export default function Feels() {
             </Button>
           </div>
         </div>
-        <Swiper
-          className="mySwiper2 rounded-2xl !bg-transparent min-h-[75vh]"
-          style={{
-            "--swiper-navigation-color": "#ddd",
-            "--swiper-pagination-color": "#ddd",
-          }}
-          loop={true}
-          spaceBetween={10}
-          breakpoints={{
-            "@0.0": {
-              slidesPerView: 2,
-              freeMode: true,
-            },
-            "@1.00": {
-              slidesPerView: 1,
-              freeMode: false,
-            },
-          }}
-          mousewheel={true}
-          direction={"vertical"}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Thumbs, Mousewheel]}
-        >
-          {[...samplePosts.entries()].map(([key, post]) => (
-            <SwiperSlide key={key} className="bg-transparent">
-              <Card className="w-full h-full bg-transparent light">
-                <CardHeader className="justify-between p-3 bg-white md:p-6">
-                  <div className="flex w-full gap-5">
-                    <Avatar
-                      isBordered
-                      radius="full"
-                      size="md"
-                      src={post?.user.image}
-                    />
-                    <div className="flex flex-col items-start justify-center gap-1">
-                      <h4 className="font-semibold leading-none text-small text-default-600">
-                        Anonymous
-                      </h4>
-                      <h5 className="tracking-tight text-small text-default-400">
-                        @anonymous
-                      </h5>
-                    </div>
-                  </div>
-                  <Button
-                    isExternal
-                    as={Link}
-                    href={`https://x.com/`}
-                    color="primary"
-                    radius="full"
-                    size="sm"
-                    variant="flat"
-                  >
-                    Follow
-                  </Button>
-                </CardHeader>
-                <CardBody className="flex items-center justify-center w-full h-full p-8 overflow-hidden text-4xl shadow-inner group md:text-7xl">
-                  <div className="w-full p-3 text-center cursor-pointer cell group">
-                    <span className="absolute md:flex hidden text-nowrap scale-125 tracking-[-14rem] text-center z-0 text-[22rem] transition-all duration-1000 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 opacity-100 blur-3xl saturate-150">
-                      {post.content.emojis.reverse().join(" ")}
-                    </span>
-                    <div className="z-10 p-3 w-fit mx-auto justify-center items-center gap-6 md:gap-10 grid grid-cols-3 text-2xl text-center duration-200 md:text-[3rem] drop-shadow-xl">
-                      {post.content.emojis.reverse().map((emoji, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center leading-none tracking-tighter"
-                        >
-                          {emoji}
+
+        <>
+          <Swiper
+            className="mySwiper2 rounded-2xl !bg-transparent min-h-[75vh]"
+            style={{
+              "--swiper-navigation-color": "#ddd",
+              "--swiper-pagination-color": "#ddd",
+            }}
+            loop={true}
+            freeMode={false}
+            spaceBetween={10}
+            breakpoints={{
+              "@0.0": {
+                slidesPerView: 2,
+              },
+              "@1.00": {
+                slidesPerView: 1,
+              },
+            }}
+            mousewheel={true}
+            direction={"vertical"}
+            thumbs={{ swiper: thumbsSwiper }}
+            modules={[FreeMode, Thumbs, Mousewheel]}
+          >
+            {[...randomFeels?.entries()].map(([key, post]) => (
+              <SwiperSlide key={key} className="bg-transparent">
+                <Card className="w-full h-full bg-transparent light ">
+                  {fetching ? (
+                    <CardBody className="flex items-center justify-center w-full h-full overflow-hidden shadow-inner group ">
+                      <Spinner />
+                    </CardBody>
+                  ) : (
+                    <>
+                      <CardHeader className="justify-between bg-white md:p-6">
+                        <div className="flex w-full gap-5">
+                          <Avatar isBordered radius="full" size="md" src="" />
+                          <div className="flex flex-col items-start justify-center gap-1">
+                            <h4 className="font-semibold leading-none text-small text-default-600">
+                              Anonymous
+                            </h4>
+                            <h5 className="tracking-tight text-small text-default-400">
+                              {post?.owner.slice(0, 7)}
+                            </h5>
+                          </div>
                         </div>
-                      ))}
-                    </div>
+                        <Button
+                          isExternal
+                          as={Link}
+                          href={`https://x.com/`}
+                          color="primary"
+                          radius="full"
+                          size="sm"
+                          variant="flat"
+                        >
+                          Follow
+                        </Button>
+                      </CardHeader>
+                      <CardBody className="flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
+                        <div className="p-8 text-center cursor-pointer w-fit cell group">
+                          <span className="absolute md:flex hidden text-nowrap scale-125 tracking-[-14rem] text-center z-0 text-[22rem] transition-all duration-1000 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 opacity-100 blur-3xl saturate-50">
+                            {Object.values(post.emojis)
+                              .slice()
+                              .reverse()
+                              .join(" ")}
+                          </span>
+                          <div
+                            style={{
+                              gridTemplateColumns: `repeat(${Math.sqrt(
+                                post.emojis.length
+                              )}, 1fr)`,
+                            }}
+                            className={`grid text-2xl gap-1 mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                          >
+                            {Object.values(post.emojis)
+                              .reverse()
+                              .map((emoji, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center justify-center w-12 leading-none tracking-tighter rounded-sm animate-appearance-in drop-shadow-md bg-white/10 aspect-square"
+                                >
+                                  {emoji}
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </CardBody>
+                      <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
+                        <div className="flex gap-1">
+                          <p className="font-semibold text-default-400 text-small">
+                            MOODART #{post?.tokenId.toString()}
+                          </p>
+                        </div>
+                      </CardFooter>
+                    </>
+                  )}
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Swiper
+            onSwiper={setThumbsSwiper}
+            loop={true}
+            freeMode={true}
+            watchSlidesProgress={true}
+            mousewheel={true}
+            modules={[FreeMode, Navigation, Thumbs, Pagination, Mousewheel]}
+            breakpoints={{
+              "@0.0": {
+                slidesPerView: 2,
+                spaceBetween: 10,
+                direction: "horizontal",
+              },
+              "@1.00": {
+                slidesPerView: 8,
+                spaceBetween: 10,
+                direction: "vertical",
+              },
+            }}
+            className="md:!flex mySwiper !hidden md:!w-fit min-w-[300px]"
+          >
+            {[...randomFeels?.entries()].map(([key, post]) => (
+              <SwiperSlide key={key} className="max-h-[100px] animate-appearance-in">
+                <div className="flex items-center justify-start h-full gap-3 p-3 bg-white rounded-xl">
+                  <div className="flex items-center justify-center h-full">
+                    <ChainIcon chainName={post?.chainName} />
                   </div>
-                </CardBody>
-                <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
-                  <div className="flex gap-1">
-                    <p className="font-semibold text-default-400 text-small">
-                      4
-                    </p>
-                    <p className=" text-default-400 text-small">Views</p>
+                  <div>
+                    <h1 className="text-sm text-nowrap">
+                      {`#${post?.tokenId.toString()}`}
+                    </h1>
                   </div>
-                </CardFooter>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <Swiper
-          onSwiper={setThumbsSwiper}
-          loop={true}
-          freeMode={true}
-          watchSlidesProgress={true}
-          mousewheel={true}
-          modules={[FreeMode, Navigation, Thumbs, Pagination, Mousewheel]}
-          breakpoints={{
-            "@0.0": {
-              slidesPerView: 2,
-              spaceBetween: 10,
-              direction: "horizontal",
-            },
-            "@1.00": {
-              slidesPerView: 8,
-              spaceBetween: 10,
-              direction: "vertical",
-            },
-          }}
-          className="md:!flex mySwiper !hidden md:!w-fit min-w-[300px]"
-        >
-          {[...samplePosts.entries()].map(([key, post]) => (
-            <SwiperSlide key={key} className="max-h-[100px]">
-              <div className="flex items-center justify-start h-full p-3 bg-white rounded-xl">
-                <User
-                  name={post.content.emojis.join(" ")}
-                  avatarProps={{
-                    src: post?.user.image,
-                  }}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </>
       </div>
     </div>
   );
 }
+
+const ChainIcon = ({ chainName }) => {
+  const network = networks.find((chain) => chain.chainName === chainName);
+
+  return (
+    <Image
+      width={20}
+      className="w-12 h-12 !rounded-none"
+      src={network?.icon}
+      alt={network?.chainName}
+    />
+  );
+};

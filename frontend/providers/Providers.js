@@ -18,6 +18,12 @@ export const Providers = (props) => {
   const [selectedNavTab, setSelectedNavTab] = useState("dashboard");
   const [totalSupplies, setTotaSupplies] = useState({});
 
+  // instances
+  const [providers, setProviders] = useState([]);
+  const [instances, setInstances] = useState([]);
+
+  const [randomFeels, setRandomFeels] = useState(new Map([]));
+
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
 
@@ -134,6 +140,13 @@ export const Providers = (props) => {
     addToken,
     totalSupplies,
     setTotaSupplies,
+    providers,
+    setProviders,
+    instances,
+    setInstances,
+    randomFeels,
+    setRandomFeels,
+    moodArtABI,
   };
 
   return (

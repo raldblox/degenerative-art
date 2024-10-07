@@ -38,7 +38,7 @@ export const networks = [
   {
     isLive: true,
     chainId: 137,
-    rpcUrls: ["https://polygon-rpc.com/"],
+    rpcUrls: ["https://polygon.llamarpc.com", "https://polygon-rpc.com/"],
     chainName: "Polygon",
     nativeCurrency: {
       name: "POL",
@@ -57,7 +57,7 @@ export const networks = [
     isLive: true,
     chainId: 8453,
     chainName: "Base",
-    rpcUrls: ["https://mainnet.base.org"],
+    rpcUrls: ["https://base.llamarpc.com", "https://mainnet.base.org"],
     nativeCurrency: {
       name: "ETH",
       symbol: "ETH",

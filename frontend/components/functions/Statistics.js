@@ -1,6 +1,7 @@
 "use client";
 
 import { Context } from "@/providers/Providers";
+import { Divider } from "@nextui-org/react";
 import React, { useContext, useEffect, useCallback, useState } from "react";
 import { Pie, PieChart, Sector } from "recharts";
 
@@ -90,8 +91,8 @@ export const Statistics = ({ data }) => {
   );
 
   return (
-    <div className="grid w-full gap-3 p-6 md:grid-cols-2">
-      <div className="flex items-center justify-center ">
+    <div className="grid content-center w-full gap-3 md:grid-cols-2">
+      <div className="flex items-center justify-center">
         <PieChart width={320} height={320}>
           <Pie
             className="p-16"
@@ -118,12 +119,12 @@ export const Statistics = ({ data }) => {
         </PieChart>
       </div>
 
-      <div className="grid items-center content-center justify-center h-full max-w-sm grid-cols-2 gap-6 mx-auto gap-x-12">
-        {data.map((supply, index) => (
+      <div className="grid items-center content-center justify-center h-full max-w-sm grid-cols-2 gap-6 py-6 mx-auto gap-x-12">
+        {data?.map((supply, index) => (
           <>
             <div
               key={index}
-              className="flex flex-col items-center justify-center text-center"
+              className="flex flex-col items-center justify-start text-center md:justify-center"
             >
               <h1 className="text-5xl font-semibold">{supply.value}</h1>
               <h1 className="text-xs font-semibold uppercase text-default-700">
