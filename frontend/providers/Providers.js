@@ -107,7 +107,7 @@ export const Providers = (props) => {
       contract
         .totalSupply()
         .catch(() => {
-          return contract.totalSupply();
+          return 0;
         })
         .then((totalSupply) => ({
           name: networks[index].chainName,
@@ -147,6 +147,7 @@ export const Providers = (props) => {
     randomFeels,
     setRandomFeels,
     moodArtABI,
+    fetch
   };
 
   return (

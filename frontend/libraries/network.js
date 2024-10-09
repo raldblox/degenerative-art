@@ -57,7 +57,7 @@ export const networks = [
     isLive: true,
     chainId: 8453,
     chainName: "Base",
-    rpcUrls: ["https://base.llamarpc.com", "https://mainnet.base.org"],
+    rpcUrls: ["https://mainnet.base.org", "https://base.llamarpc.com"],
     nativeCurrency: {
       name: "ETH",
       symbol: "ETH",

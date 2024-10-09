@@ -40,16 +40,20 @@ import { ethers } from "ethers";
 export default function Feels() {
   //   const { data: session, status } = useSession();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const { totalSupplies, randomFeels, setRandomFeels, moodArtABI } = useContext(
-    Context
-  );
+  const {
+    totalSupplies,
+    randomFeels,
+    setRandomFeels,
+    moodArtABI,
+    fetch,
+  } = useContext(Context);
   const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     const getFeels = async () => {
       try {
         setFetching(true);
-        if (totalSupplies) {
+        if (totalSupplies.length > 0) {
           const getLiveNetworks = () => {
             return networks
               .filter((network) => network.isLive)
@@ -82,7 +86,7 @@ export default function Feels() {
 
               // Generate 10 random valid indices for each chain
               const randomIndices = [];
-              for (let i = 0; i < 14; i++) {
+              for (let i = 0; i < 5; i++) {
                 let randomIndex = Math.floor(Math.random() * totalSupply);
                 randomIndices.push(randomIndex);
               }
@@ -105,8 +109,7 @@ export default function Feels() {
                     emojis: emojis,
                   };
                 } catch (error) {
-                  console.error("Error fetching token data:", error);
-                  return null; // Or handle the error as needed
+                  return null;
                 }
               });
 
@@ -132,6 +135,8 @@ export default function Feels() {
             );
           }
           setFetching(false);
+        } else {
+          fetch();
         }
       } catch (error) {
         console.error("Error in getFeels:", error);
