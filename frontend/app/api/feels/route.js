@@ -2,6 +2,7 @@ const { NextRequest, NextResponse } = require("next/server");
 const { ethers } = require("ethers");
 import ERC721 from "@/libraries/abis/ERC721.json";
 import { networks } from "@/libraries/network";
+import moodArtABI from "@/libraries/abis/MOODART.json";
 
 export const runtime = "edge";
 
@@ -20,7 +21,7 @@ export async function GET(request) {
 
     const liveNetworkUrls = getLiveNetworks();
     const providers = liveNetworkUrls.map(
-      (rpcUrl) => new ethers.providers.JsonRpcProvider(rpcUrl)
+      (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
     );
 
     const instances = networks
