@@ -201,11 +201,14 @@ export const Providers = (props) => {
           ];
         }
 
-        if (randomFeels.size === 0) {
-          setRandomFeels(
-            new Map(flattenedFeels.map((feel, index) => [index, feel]))
-          );
-        }
+        setRandomFeels((prevFeels) => {
+          const updatedFeels = new Map(prevFeels); // Create a copy of the map
+          flattenedFeels.forEach((feel, index) => {
+            updatedFeels.set(prevFeels.size + index, feel); // Add new feels with unique keys
+          });
+          return updatedFeels;
+        });
+
         setFetching(false);
       } else {
         fetch();
