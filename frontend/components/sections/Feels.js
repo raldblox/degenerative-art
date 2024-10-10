@@ -154,7 +154,7 @@ export default function Feels() {
                                   120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 md:bg-white/50 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-white/50 aspect-square`}
                             >
                               {emoji}
                             </div>
