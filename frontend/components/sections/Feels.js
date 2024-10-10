@@ -72,7 +72,7 @@ export default function Feels() {
 
         <>
           <Swiper
-            className="mySwiper2 rounded-none md:rounded-2xl min-h-[75vh]"
+            className="mySwiper2 bg-blue-200 !p-3 rounded-none min-h-[75vh]"
             // style={{
             //   "--swiper-navigation-color": "#ddd",
             //   "--swiper-pagination-color": "#ddd",
@@ -97,9 +97,9 @@ export default function Feels() {
             }}
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide key={key} className=" animate-appearance-in">
-                <Card className="w-full h-full bg-transparent light ">
-                  <CardHeader className="justify-between bg-white md:p-6">
+              <SwiperSlide key={key} className="border-none animate-appearance-in">
+                <Card className="w-full h-full !border-none bg-default-200 rounded-2xl light ">
+                  <CardHeader className="justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
                       <Avatar isBordered radius="full" size="md" src="" />
                       <div className="flex flex-col items-start justify-center gap-1">
@@ -137,14 +137,22 @@ export default function Feels() {
                             post.emojis.length
                           )}, 1fr)`,
                         }}
-                        className={`grid text-xl gap-[1px] mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                        className={`grid text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                       >
                         {Object.values(post.emojis)
                           .reverse()
                           .map((emoji, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-center w-8 leading-none tracking-tighter rounded-sm md:w-12 animate-appearance-in border-1 border-black/5 aspect-square"
+                              style={{
+                                width: `${
+                                  250 / Math.sqrt(post.emojis.length)
+                                }px`,
+                                fontSize: `${
+                                  150 / Math.sqrt(post.emojis.length)
+                                }px`,
+                              }}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-default-100/50 aspect-square`}
                             >
                               {emoji}
                             </div>
@@ -168,7 +176,7 @@ export default function Feels() {
                   <CardHeader className="justify-between bg-white md:p-6">
                     <div className="max-w-[300px] w-full flex items-center gap-3">
                       <div>
-                        <Skeleton className="flex w-12 h-12 rounded-full" />
+                        <Skeleton className="flex w-16 h-16 rounded-full" />
                       </div>
                       <div className="flex flex-col w-full gap-2">
                         <Skeleton className="w-3/5 h-3 rounded-lg" />
@@ -178,15 +186,15 @@ export default function Feels() {
                   </CardHeader>
                   <CardBody className="flex items-center justify-center w-full h-full">
                     <div className="grid items-center content-center justify-center h-full grid-cols-3 gap-[1px] mx-auto w-fit">
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
-                      <Skeleton className="flex w-12 h-12 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      <Skeleton className="flex w-16 h-16 rounded-sm" />
                     </div>
                   </CardBody>
                   <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
@@ -251,7 +259,7 @@ const ChainIcon = ({ chainName }) => {
   return (
     <Image
       width={20}
-      className="w-12 h-12 !rounded-none"
+      className="w-16 h-16 !rounded-none"
       src={network?.icon}
       alt={network?.chainName}
     />

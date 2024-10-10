@@ -30,7 +30,7 @@ export default function Navigation() {
   } = useContext(Context);
 
   return (
-    <Navbar hid isBordered maxWidth="full" shouldHideOnScroll className="h-18">
+    <Navbar hid isBordered maxWidth="full" shouldHideOnScroll className="border-none h-18">
       <NavbarContent justify="start">
         <NavbarContent
           as="div"
