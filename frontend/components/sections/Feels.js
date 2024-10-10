@@ -39,6 +39,7 @@ import { LockIcon } from "../icons/BasicIcons";
 import { Context } from "@/providers/Providers";
 import { networks } from "@/libraries/network";
 import { ethers } from "ethers";
+import { FancyCard } from "./FancyCard";
 
 export default function Feels() {
   //   const { data: session, status } = useSession();
@@ -141,13 +142,15 @@ export default function Feels() {
                           Follow
                         </Button> */}
                   </CardHeader>
+
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/3 scale-125 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-15 saturate-50`}
+                        className={`absolute invert text-nowrap tracking-[-25rem] -translate-x-2/3 scale-125 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-1/4 opacity-5 saturate-100`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
+
                       <div
                         style={{
                           gridTemplateColumns: `repeat(${Math.sqrt(
