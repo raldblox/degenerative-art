@@ -72,7 +72,7 @@ export default function Feels() {
 
         <>
           <Swiper
-            className="mySwiper2 bg-blue-200 !p-3 rounded-none min-h-[75vh]"
+            className="mySwiper2 !p-3 rounded-none min-h-[75vh]"
             // style={{
             //   "--swiper-navigation-color": "#ddd",
             //   "--swiper-pagination-color": "#ddd",
@@ -102,7 +102,7 @@ export default function Feels() {
                 className="border-none animate-appearance-in"
               >
                 <Card className="w-full h-full !border-none bg-default-200 rounded-2xl light ">
-                  <CardHeader className="justify-between bg-white border-none md:p-6">
+                  <CardHeader className="relative justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
                       <Avatar isBordered radius="full" size="md" src="" />
                       <div className="flex flex-col items-start justify-center gap-1">
@@ -125,13 +125,10 @@ export default function Feels() {
                         >
                           Follow
                         </Button> */}
-                    <div className="flex items-center justify-center h-full">
-                      <ChainIcon chainName={post?.chainName} />
-                    </div>
                   </CardHeader>
-                  <CardBody className="flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
+                  <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
-                      <span className="absolute md:flex hidden text-nowrap scale-125 tracking-[-14rem] text-center z-0 text-[22rem] transition-all duration-1000 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 opacity-100 blur-3xl saturate-50">
+                      <span className="absolute flex text-nowrap scale-125 tracking-[-14rem] text-center z-0 text-[22rem] transition-all duration-1000 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 opacity-10 saturate-50">
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
                       <div
@@ -140,7 +137,7 @@ export default function Feels() {
                             post.emojis.length
                           )}, 1fr)`,
                         }}
-                        className={`grid text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                        className={`grid  text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                       >
                         {Object.values(post.emojis)
                           .reverse()
@@ -157,16 +154,19 @@ export default function Feels() {
                                   120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 md:bg-default-100/50 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 md:bg-white/50 aspect-square`}
                             >
                               {emoji}
                             </div>
                           ))}
                       </div>
+                      <div className="absolute bottom-3 right-3">
+                        <ChainIcon chainName={post?.chainName} />
+                      </div>
                     </div>
                   </CardBody>
                   <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 ">
                       <p className="font-semibold text-default-400 text-small">
                         MOODART #{post?.tokenId.toString()}
                       </p>

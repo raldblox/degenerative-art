@@ -60,7 +60,7 @@ export default function Navigation() {
             >
               <Tab key="feels" title="Feels" />
               <Tab key="dashboard" title="Dashboard" />
-              <Tab key="games" title="Games" isDisabled/>
+              {/* <Tab key="games" title="Games" isDisabled/> */}
             </Tabs>
           </NavbarItem>
         </NavbarContent>
