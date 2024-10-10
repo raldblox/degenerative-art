@@ -137,7 +137,7 @@ export default function Feels() {
                             post.emojis.length
                           )}, 1fr)`,
                         }}
-                        className={`grid  text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                        className={`grid gap-[1px] text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                       >
                         {Object.values(post.emojis)
                           .reverse()
@@ -154,7 +154,7 @@ export default function Feels() {
                                   120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 backdrop-blur-sm border-white/20 bg-white/80 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-white/80 aspect-square`}
                             >
                               {emoji}
                             </div>
