@@ -27,6 +27,7 @@ export const Hero = () => {
     selectedNetwork,
     addToken,
     totalSupplies,
+    setSelectedNavTab,
   } = useContext(Context);
 
   const ChainIcon = () => {
@@ -137,10 +138,10 @@ export const Hero = () => {
                 radius="sm"
                 variant="solid"
                 onClick={() => {
-                  setSelectedHomeTab("game");
+                  setSelectedNavTab("feels");
                 }}
               >
-                Play
+                Explore
               </Button>
             </div>
           </div>
