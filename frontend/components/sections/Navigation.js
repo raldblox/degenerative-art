@@ -34,7 +34,7 @@ export default function Navigation() {
       hid
       isBordered
       maxWidth="full"
-      shouldHideOnScroll
+      // shouldHideOnScroll
       className="border-none h-18"
     >
       <NavbarContent justify="start">
