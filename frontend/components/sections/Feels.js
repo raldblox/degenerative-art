@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -43,109 +44,10 @@ export default function Feels() {
   const {
     totalSupplies,
     randomFeels,
-    setRandomFeels,
-    moodArtABI,
-    fetch,
+    fetching,
+    setFetching,
+    getFeels,
   } = useContext(Context);
-  const [fetching, setFetching] = useState(false);
-
-  useEffect(() => {
-    const getFeels = async () => {
-      try {
-        setFetching(true);
-        if (totalSupplies.length > 0) {
-          const getLiveNetworks = () => {
-            return networks
-              .filter((network) => network.isLive)
-              .map((network) => network.rpcUrls[0]);
-          };
-
-          const liveNetworkUrls = getLiveNetworks();
-          console.log("liveNetworkUrls", liveNetworkUrls);
-          const providers = liveNetworkUrls.map(
-            (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
-          );
-
-          const instances = networks
-            .filter((network) => network.isLive)
-            .map(
-              (network, index) =>
-                new ethers.Contract(
-                  network.contracts?.moodArt,
-                  moodArtABI,
-                  providers[index]
-                )
-            );
-
-          const filteredSupplies = totalSupplies.slice(1);
-          const filteredInstances = instances.slice(1);
-          const feels = await Promise.all(
-            filteredSupplies.map(async (supplyData, index) => {
-              const contract = filteredInstances[index];
-              const totalSupply = parseInt(supplyData.value);
-
-              // Generate 10 random valid indices for each chain
-              const randomIndices = [];
-              for (let i = 0; i < 5; i++) {
-                let randomIndex = Math.floor(Math.random() * totalSupply);
-                randomIndices.push(randomIndex);
-              }
-
-              // Fetch token data for the random indices
-              const tokenPromises = randomIndices.map(async (randomIndex) => {
-                try {
-                  const tokenId = await contract.tokenByIndex(
-                    Number(randomIndex)
-                  );
-
-                  const [emojis, owner] = await Promise.all([
-                    contract.getMood(tokenId),
-                    contract.ownerOf(tokenId),
-                  ]);
-                  return {
-                    chainName: supplyData.name,
-                    tokenId: tokenId,
-                    owner: owner,
-                    emojis: emojis,
-                  };
-                } catch (error) {
-                  return null;
-                }
-              });
-
-              const tokensData = await Promise.all(tokenPromises);
-              return tokensData.filter((tokenData) => tokenData !== null); // Remove any null values
-            })
-          );
-
-          // Flatten the feels array and update state
-          let flattenedFeels;
-          flattenedFeels = feels.flat();
-          for (let i = flattenedFeels.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [flattenedFeels[i], flattenedFeels[j]] = [
-              flattenedFeels[j],
-              flattenedFeels[i],
-            ];
-          }
-
-          if (randomFeels.size === 0) {
-            setRandomFeels(
-              new Map(flattenedFeels.map((feel, index) => [index, feel]))
-            );
-          }
-          setFetching(false);
-        } else {
-          fetch();
-        }
-      } catch (error) {
-        console.error("Error in getFeels:", error);
-      } finally {
-        setFetching(false);
-      }
-    };
-    getFeels();
-  }, [totalSupplies]);
 
   return (
     <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
