@@ -159,28 +159,26 @@ export default function Feels() {
                         }}
                         className={`grid text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                       >
-                        {Object.values(post.emojis)
-                          .reverse()
-                          .map((emoji, index) => (
-                            <div
-                              key={index}
-                              style={{
-                                width: `${
-                                  window.innerWidth > 768
-                                    ? 400 / Math.sqrt(post.emojis.length)
-                                    : 280 / Math.sqrt(post.emojis.length)
-                                }px`,
-                                fontSize: `${
-                                  window.innerWidth > 768
-                                    ? 300 / Math.sqrt(post.emojis.length)
-                                    : 200 / Math.sqrt(post.emojis.length)
-                                }px`,
-                              }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
-                            >
-                              {emoji}
-                            </div>
-                          ))}
+                        {Object.values(post.emojis).map((emoji, index) => (
+                          <div
+                            key={index}
+                            style={{
+                              width: `${
+                                window.innerWidth > 768
+                                  ? 400 / Math.sqrt(post.emojis.length)
+                                  : 280 / Math.sqrt(post.emojis.length)
+                              }px`,
+                              fontSize: `${
+                                window.innerWidth > 768
+                                  ? 300 / Math.sqrt(post.emojis.length)
+                                  : 180 / Math.sqrt(post.emojis.length)
+                              }px`,
+                            }}
+                            className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
+                          >
+                            {emoji}
+                          </div>
+                        ))}
                       </div>
                       <div className="absolute bottom-3 right-3">
                         <ChainIcon chainName={post?.chainName} />

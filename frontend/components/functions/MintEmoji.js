@@ -37,6 +37,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
     setSelectedChain,
     selectedChain,
     addToken,
+    setSelectedNavTab,
     setSelectedNetwork,
   } = useContext(Context);
 
@@ -438,7 +439,22 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
             className=""
             onPress={onOpen}
           >
-            Mint Your Feels
+            Mint Feels
+          </Button>
+          <Button
+            color="primary"
+            variant="bordered"
+            size="md"
+            radius="sm"
+            className=""
+            onClick={() => {
+              window.scrollTo(0, 0);
+              setTimeout(() => {
+                setSelectedNavTab("feels");
+              }, 500);
+            }}
+          >
+            Explore Feels
           </Button>
         </div>
       </div>
