@@ -101,7 +101,7 @@ export default function Feels() {
                 key={key}
                 className="border-none animate-appearance-in"
               >
-                <Card className="w-full h-full !border-none bg-default-200 rounded-2xl light ">
+                <Card className="w-full h-full !border-none bg-default-50 rounded-2xl light ">
                   <CardHeader className="relative justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
                       <Avatar isBordered radius="full" size="md" src="" />
