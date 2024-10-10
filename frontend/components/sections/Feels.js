@@ -115,11 +115,11 @@ export default function Feels() {
               {/* <span className="text-xs" ref={progressContent}></span> */}
             </div>
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide key={key} className="border-none">
-                <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 rounded-2xl light ">
-                  <CardHeader className="relative justify-between bg-white border-none shadow-none drop-shadow-none md:p-6">
-                    <div className="flex w-full gap-5">
-                      <Avatar isBordered radius="full" size="md" src="" />
+              <SwiperSlide key={key} className="border-none !rounded-none">
+                <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 !rounded-none light ">
+                  <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-4">
+                    <div className="flex items-center w-full gap-5">
+                      <Avatar isBordered radius="full" size="sm" src="" />
                       <div className="flex flex-col items-start justify-center gap-1">
                         <h4 className="font-semibold leading-none text-small text-default-600">
                           Anonymous
@@ -165,12 +165,12 @@ export default function Feels() {
                                 width: `${
                                   window.innerWidth > 768
                                     ? 380 / Math.sqrt(post.emojis.length)
-                                    : 220 / Math.sqrt(post.emojis.length)
+                                    : 180 / Math.sqrt(post.emojis.length)
                                 }px`,
                                 fontSize: `${
                                   window.innerWidth > 768
                                     ? 300 / Math.sqrt(post.emojis.length)
-                                    : 160 / Math.sqrt(post.emojis.length)
+                                    : 120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
                               className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
@@ -184,7 +184,7 @@ export default function Feels() {
                       </div>
                     </div>
                   </CardBody>
-                  <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
+                  <CardFooter className="items-center !rounded-none justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
                     <div className="flex gap-1 ">
                       <p className="font-semibold text-default-400 text-small">
                         MOODART #{post?.tokenId.toString()}
