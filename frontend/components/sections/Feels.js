@@ -98,10 +98,7 @@ export default function Feels() {
             }}
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide
-                key={key}
-                className="border-none animate-appearance-in"
-              >
+              <SwiperSlide key={key} className="border-none">
                 <Card className="w-full h-full !border-none bg-default-100 rounded-2xl light ">
                   <CardHeader className="relative justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
