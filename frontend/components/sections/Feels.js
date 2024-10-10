@@ -149,13 +149,15 @@ export default function Feels() {
                               key={index}
                               style={{
                                 width: `${
-                                  250 / Math.sqrt(post.emojis.length)
+                                  window.innerWidth > 768
+                                    ? 300 / Math.sqrt(post.emojis.length)
+                                    : 220 / Math.sqrt(post.emojis.length)
                                 }px`,
                                 fontSize: `${
-                                  150 / Math.sqrt(post.emojis.length)
+                                  120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-default-100/50 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 md:bg-default-100/50 aspect-square`}
                             >
                               {emoji}
                             </div>
