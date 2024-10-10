@@ -154,7 +154,7 @@ export default function Feels() {
                                   120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-white/80 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 bg-white/80 aspect-square`}
                             >
                               {emoji}
                             </div>
@@ -237,7 +237,7 @@ export default function Feels() {
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide
                 key={key}
-                className="max-h-[100px] animate-appearance-in"
+                className="max-h-[100px]"
               >
                 <div className="flex items-center justify-start h-full gap-3 p-3 bg-white rounded-xl">
                   <div className="flex items-center justify-center h-full">
