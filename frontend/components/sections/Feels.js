@@ -144,7 +144,7 @@ export default function Feels() {
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert flex text-nowrap scale-125 tracking-[-8rem] text-center z-0 text-[20rem] transition-all duration-500 transform -translate-x-[50%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-15 saturate-50`}
+                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/3 scale-125 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-50`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
@@ -154,7 +154,7 @@ export default function Feels() {
                             post.emojis.length
                           )}, 1fr)`,
                         }}
-                        className={`grid gap-[1px] text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+                        className={`grid text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
                       >
                         {Object.values(post.emojis)
                           .reverse()
@@ -164,14 +164,16 @@ export default function Feels() {
                               style={{
                                 width: `${
                                   window.innerWidth > 768
-                                    ? 300 / Math.sqrt(post.emojis.length)
+                                    ? 380 / Math.sqrt(post.emojis.length)
                                     : 220 / Math.sqrt(post.emojis.length)
                                 }px`,
                                 fontSize: `${
-                                  120 / Math.sqrt(post.emojis.length)
+                                  window.innerWidth > 768
+                                    ? 300 / Math.sqrt(post.emojis.length)
+                                    : 160 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 bg-white/80 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
                             >
                               {emoji}
                             </div>
