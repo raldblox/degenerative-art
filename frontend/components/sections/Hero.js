@@ -45,7 +45,7 @@ export const Hero = () => {
 
   return (
     <section className="relative w-full h-full min-h-screen select-none">
-      <div className="grid w-full p-3 md:p-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
+      <div className="grid w-full px-3 md:px-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
         <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">

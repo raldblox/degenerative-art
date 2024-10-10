@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide, useSwiper, useSwiperSlide } from "swiper/react";
 import {
   FreeMode,
@@ -8,6 +8,7 @@ import {
   Thumbs,
   Pagination,
   Mousewheel,
+  Autoplay,
 } from "swiper/modules";
 
 import "swiper/css";
@@ -49,11 +50,16 @@ export default function Feels() {
     setFetching,
     getFeels,
   } = useContext(Context);
-  const swiperSlide = useSwiperSlide();
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    progressCircle.current.style.setProperty("--progress", 1 - progress);
+    // progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
 
   return (
-    <div className="relative flex items-center justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
-      <div className="h-[calc(100vh-50px)] p-0 md:h-[calc(100vh-150px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:p-6 overflow-hidden">
+    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-130px)] overflow-hidden ">
+      <div className="h-[calc(100vh-50px)] p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
         <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
@@ -78,6 +84,7 @@ export default function Feels() {
             //   "--swiper-navigation-color": "#ddd",
             //   "--swiper-pagination-color": "#ddd",
             // }}
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
             loop={false}
             freeMode={true}
             spaceBetween={10}
@@ -90,13 +97,23 @@ export default function Feels() {
               },
             }}
             mousewheel={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
             direction={"vertical"}
             thumbs={{ swiper: thumbsSwiper }}
-            modules={[FreeMode, Thumbs, Mousewheel]}
+            modules={[FreeMode, Thumbs, Mousewheel, Autoplay]}
             onReachEnd={() => {
               getFeels();
             }}
           >
+            <div className="autoplay-progress" slot="container-end">
+              <svg viewBox="0 0 48 48" ref={progressCircle}>
+                <circle cx="24" cy="24" r="8"></circle>
+              </svg>
+              {/* <span className="text-xs" ref={progressContent}></span> */}
+            </div>
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="border-none">
                 <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 rounded-2xl light ">
