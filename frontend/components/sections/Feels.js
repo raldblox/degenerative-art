@@ -73,7 +73,7 @@ export default function Feels() {
 
         <>
           <Swiper
-            className="mySwiper2 !p-3 rounded-none min-h-[75vh]"
+            className="mySwiper2 !p-0 rounded-none min-h-[75vh]"
             // style={{
             //   "--swiper-navigation-color": "#ddd",
             //   "--swiper-pagination-color": "#ddd",
@@ -235,10 +235,7 @@ export default function Feels() {
             className="md:!flex mySwiper !hidden md:!w-fit min-w-[300px]"
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide
-                key={key}
-                className="max-h-[100px]"
-              >
+              <SwiperSlide key={key} className="max-h-[100px]">
                 <div className="flex items-center justify-start h-full gap-3 p-3 bg-white rounded-xl">
                   <div className="flex items-center justify-center h-full">
                     <ChainIcon chainName={post?.chainName} />
