@@ -23,6 +23,7 @@ export const Providers = (props) => {
   const [instances, setInstances] = useState([]);
 
   const [randomFeels, setRandomFeels] = useState(new Map([]));
+  const [usedIndices, setUsedIndices] = useState([]);
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -79,7 +80,7 @@ export const Providers = (props) => {
     }
   };
 
-  const fetch = async () => {
+  const getSupplies = async () => {
     const getLiveNetworks = () => {
       return networks
         .filter((network) => network.isLive)
@@ -149,18 +150,32 @@ export const Providers = (props) => {
               )
           );
 
-        const filteredSupplies = totalSupplies.slice(1);
-        const filteredInstances = instances.slice(1);
         const feels = await Promise.all(
-          filteredSupplies.map(async (supplyData, index) => {
-            const contract = filteredInstances[index];
+          totalSupplies.map(async (supplyData, index) => {
+            const contract = instances[index];
             const totalSupply = parseInt(supplyData.value);
 
-            // Generate 10 random valid indices for each chain
+            // Initialize usedIndices for the current chain if it doesn't exist
+            if (!usedIndices[index]) {
+              usedIndices[index] = [];
+            }
+
+            // Generate random indices, excluding usedIndices, within the range of totalSupply
             const randomIndices = [];
-            for (let i = 0; i < 5; i++) {
+            while (
+              randomIndices.length < 5 &&
+              usedIndices[index].length < totalSupply
+            ) {
               let randomIndex = Math.floor(Math.random() * totalSupply);
-              randomIndices.push(randomIndex);
+              if (!usedIndices[index].includes(randomIndex)) {
+                randomIndices.push(randomIndex);
+                usedIndices[index].push(randomIndex);
+              }
+            }
+
+            // If no new random indices can be generated, skip fetching for this chain
+            if (randomIndices.length === 0) {
+              return [];
             }
 
             // Fetch token data for the random indices
@@ -186,7 +201,7 @@ export const Providers = (props) => {
             });
 
             const tokensData = await Promise.all(tokenPromises);
-            return tokensData.filter((tokenData) => tokenData !== null); // Remove any null values
+            return tokensData.filter((tokenData) => tokenData !== null);
           })
         );
 
@@ -209,9 +224,10 @@ export const Providers = (props) => {
           return updatedFeels;
         });
 
+        setUsedIndices(usedIndices); // Update usedIndices state
         setFetching(false);
       } else {
-        fetch();
+        getSupplies();
       }
     } catch (error) {
       console.error("Error in getFeels:", error);
@@ -221,7 +237,7 @@ export const Providers = (props) => {
   };
 
   useEffect(() => {
-    fetch();
+    getSupplies();
   }, []);
 
   useEffect(() => {
@@ -251,7 +267,7 @@ export const Providers = (props) => {
     randomFeels,
     setRandomFeels,
     moodArtABI,
-    fetch,
+    getSupplies,
     fetching,
     setFetching,
     getFeels,
