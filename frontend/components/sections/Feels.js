@@ -90,7 +90,7 @@ export default function Feels() {
             }}
             mousewheel={true}
             direction={"vertical"}
-            // thumbs={{ swiper: thumbsSwiper }}
+            thumbs={{ swiper: thumbsSwiper }}
             modules={[FreeMode, Thumbs, Mousewheel]}
             onReachEnd={() => {
               getFeels();
