@@ -117,7 +117,7 @@ export default function Feels() {
             </div>
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="border-none !rounded-none">
-                <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 !rounded-none light ">
+                <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 !rounded-2xl light ">
                   <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-4">
                     <div className="flex items-center w-full gap-5">
                       <Avatar isBordered radius="full" size="sm" src="" />
