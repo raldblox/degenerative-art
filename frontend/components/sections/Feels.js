@@ -58,8 +58,8 @@ export default function Feels() {
   };
 
   return (
-    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-150px)] overflow-hidden ">
-      <div className="h-[calc(100vh-150px)] p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
+    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-190px)] overflow-hidden ">
+      <div className="h-[calc(100vh-160px)] p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
         <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
@@ -90,7 +90,7 @@ export default function Feels() {
             spaceBetween={10}
             breakpoints={{
               "@0.0": {
-                slidesPerView: 2,
+                slidesPerView: 1,
               },
               "@1.00": {
                 slidesPerView: 1,
@@ -144,7 +144,7 @@ export default function Feels() {
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/3 scale-125 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-50`}
+                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/3 scale-125 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-15 saturate-50`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
@@ -164,13 +164,13 @@ export default function Feels() {
                               style={{
                                 width: `${
                                   window.innerWidth > 768
-                                    ? 380 / Math.sqrt(post.emojis.length)
-                                    : 180 / Math.sqrt(post.emojis.length)
+                                    ? 400 / Math.sqrt(post.emojis.length)
+                                    : 280 / Math.sqrt(post.emojis.length)
                                 }px`,
                                 fontSize: `${
                                   window.innerWidth > 768
                                     ? 300 / Math.sqrt(post.emojis.length)
-                                    : 120 / Math.sqrt(post.emojis.length)
+                                    : 220 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
                               className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
