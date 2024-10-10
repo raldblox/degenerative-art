@@ -102,7 +102,7 @@ export default function Feels() {
                 key={key}
                 className="border-none animate-appearance-in"
               >
-                <Card className="w-full h-full !border-none bg-default-50 rounded-2xl light ">
+                <Card className="w-full h-full !border-none bg-default-100 rounded-2xl light ">
                   <CardHeader className="relative justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
                       <Avatar isBordered radius="full" size="md" src="" />
@@ -130,7 +130,7 @@ export default function Feels() {
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert flex text-nowrap scale-125 tracking-[-10rem] text-center z-0 text-[20rem] transition-all duration-200 transform -translate-x-[60%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-10 saturate-50`}
+                        className={`absolute invert flex text-nowrap scale-125 tracking-[-8rem] text-center z-0 text-[20rem] transition-all duration-200 transform -translate-x-[50%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-50 saturate-50`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
@@ -157,7 +157,7 @@ export default function Feels() {
                                   120 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
-                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 border-white/20 bg-white/50 aspect-square`}
+                              className={`flex items-center justify-center w-8 leading-none tracking-tighter animate-appearance-in border-1 backdrop-blur-sm border-white/20 bg-white/80 aspect-square`}
                             >
                               {emoji}
                             </div>
