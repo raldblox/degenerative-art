@@ -128,7 +128,7 @@ export default function Feels() {
                   </CardHeader>
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
-                      <span className="absolute flex text-nowrap scale-125 tracking-[-14rem] text-center z-0 text-[22rem] transition-all duration-1000 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 opacity-10 saturate-50">
+                      <span className="absolute invert flex text-nowrap scale-125 tracking-[-10rem] text-center z-0 text-[20rem] transition-all duration-1000 transform -translate-x-[60%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-10 saturate-0">
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
                       <div
