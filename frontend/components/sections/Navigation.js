@@ -30,21 +30,24 @@ export default function Navigation() {
   } = useContext(Context);
 
   return (
-    <Navbar hid isBordered maxWidth="full" shouldHideOnScroll className="border-none h-18">
+    <Navbar
+      hid
+      isBordered
+      maxWidth="full"
+      shouldHideOnScroll
+      className="border-none h-18"
+    >
       <NavbarContent justify="start">
         <NavbarContent
           as="div"
           justify="left"
           className="flex items-center justify-center gap-2"
         >
-          {/* <NavbarItem className="">
-            <NavbarBrand className="pr-6">
+          <NavbarItem className="">
+            <NavbarBrand className="pr-3">
               <DegenerativesLogo />
-              <p className="hidden text-xl font-bold md:flex text-inherit">
-                degeneratives
-              </p>
             </NavbarBrand>
-          </NavbarItem> */}
+          </NavbarItem>
           <NavbarItem>
             <Tabs
               radius="sm"
@@ -57,7 +60,7 @@ export default function Navigation() {
             >
               <Tab key="feels" title="Feels" />
               <Tab key="dashboard" title="Dashboard" />
-              <Tab key="games" title="Games" />
+              <Tab key="games" title="Games" isDisabled/>
             </Tabs>
           </NavbarItem>
         </NavbarContent>

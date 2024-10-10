@@ -78,7 +78,7 @@ export default function Feels() {
             //   "--swiper-pagination-color": "#ddd",
             // }}
             loop={false}
-            freeMode={true}
+            freeMode={false}
             spaceBetween={10}
             breakpoints={{
               "@0.0": {
@@ -97,7 +97,10 @@ export default function Feels() {
             }}
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide key={key} className="border-none animate-appearance-in">
+              <SwiperSlide
+                key={key}
+                className="border-none animate-appearance-in"
+              >
                 <Card className="w-full h-full !border-none bg-default-200 rounded-2xl light ">
                   <CardHeader className="justify-between bg-white border-none md:p-6">
                     <div className="flex w-full gap-5">
