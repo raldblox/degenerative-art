@@ -99,8 +99,8 @@ export default function Feels() {
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="border-none">
-                <Card className="w-full h-full !border-none bg-default-100 rounded-2xl light ">
-                  <CardHeader className="relative justify-between bg-white border-none md:p-6">
+                <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 rounded-2xl light ">
+                  <CardHeader className="relative justify-between bg-white border-none shadow-none drop-shadow-none md:p-6">
                     <div className="flex w-full gap-5">
                       <Avatar isBordered radius="full" size="md" src="" />
                       <div className="flex flex-col items-start justify-center gap-1">
@@ -127,7 +127,7 @@ export default function Feels() {
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert flex text-nowrap scale-125 tracking-[-8rem] text-center z-0 text-[20rem] transition-all duration-200 transform -translate-x-[50%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-15 saturate-50`}
+                        className={`absolute invert flex text-nowrap scale-125 tracking-[-8rem] text-center z-0 text-[20rem] transition-all duration-200 transform -translate-x-[50%] text-white -translate-y-1/2 top-1/2 left-1/2 opacity-15 saturate-0`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
