@@ -59,7 +59,7 @@ export default function Navigation() {
               onSelectionChange={setSelectedNavTab}
             >
               <Tab key="feels" title="Feels" />
-              <Tab key="dashboard" title="Dashboard" />
+              <Tab key="home" title="Home" />
               {/* <Tab key="games" title="Games" isDisabled/> */}
             </Tabs>
           </NavbarItem>

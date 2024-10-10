@@ -41,7 +41,7 @@ export default function Home() {
               <Feels />
             </div>
           )}
-          {selectedNavTab == "dashboard" && (
+          {selectedNavTab == "home" && (
             <div className="">
               <Hero />
             </div>

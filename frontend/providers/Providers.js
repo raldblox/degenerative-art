@@ -15,7 +15,7 @@ export const Providers = (props) => {
   const [selectedHomeTab, setSelectedHomeTab] = useState("nft");
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
-  const [selectedNavTab, setSelectedNavTab] = useState("dashboard");
+  const [selectedNavTab, setSelectedNavTab] = useState("home");
   const [totalSupplies, setTotaSupplies] = useState({});
 
   // instances
