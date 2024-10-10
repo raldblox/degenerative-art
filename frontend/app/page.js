@@ -5,24 +5,50 @@ import { Hero } from "@/components/sections/Hero";
 import Navigation from "@/components/sections/Navigation";
 import { Context } from "@/providers/Providers";
 import { Divider } from "@nextui-org/react";
+import { useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 
 export default function Home() {
-  const { setSelectedNavTab, selectedNavTab } = useContext(Context);
+  const { setSelectedNavTab, selectedNavTab, setSelectedNetwork } = useContext(
+    Context
+  );
+  const searchParams = useSearchParams();
+
+  const [mounted, setMounted] = useState(false);
+
+  if (!mounted) {
+    const tab = searchParams.get("tab");
+    const chain = searchParams.get("network");
+
+    if (tab) {
+      setSelectedNavTab(tab);
+    }
+
+    if (chain) {
+      setSelectedNetwork(chain);
+    }
+
+    setMounted(true);
+  }
 
   return (
     <>
       <Navigation />
-      {selectedNavTab == "feels" && (
-        <div className="w-full select-none relative min-h-[calc(100vh-180px)] overflow-hidden">
-          <Feels />
-        </div>
+      {mounted && (
+        <>
+          {selectedNavTab == "feels" && (
+            <div className="w-full select-none relative min-h-[calc(100vh-180px)] overflow-hidden">
+              <Feels />
+            </div>
+          )}
+          {selectedNavTab == "dashboard" && (
+            <div className="">
+              <Hero />
+            </div>
+          )}
+        </>
       )}
-      {selectedNavTab == "dashboard" && (
-        <div className="">
-          <Hero />
-        </div>
-      )}
+
       <Divider />
       <footer className="p-6 space-y-6">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
