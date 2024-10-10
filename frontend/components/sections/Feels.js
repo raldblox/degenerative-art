@@ -60,7 +60,7 @@ export default function Feels() {
 
   return (
     <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-190px)] overflow-hidden ">
-      <div className="h-[calc(100vh-160px)] p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
+      <div className="h-[calc(100vh-160px)] p-3 md:p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
         <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
@@ -173,7 +173,7 @@ export default function Feels() {
                                 fontSize: `${
                                   window.innerWidth > 768
                                     ? 300 / Math.sqrt(post.emojis.length)
-                                    : 220 / Math.sqrt(post.emojis.length)
+                                    : 200 / Math.sqrt(post.emojis.length)
                                 }px`,
                               }}
                               className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
