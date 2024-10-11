@@ -60,7 +60,7 @@ export default function Feels() {
 
   return (
     <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-190px)] overflow-hidden ">
-      <div className="h-[calc(100vh-160px)] p-3 md:p-0 md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
+      <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-150px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 md:px-6 overflow-hidden">
         <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
@@ -196,41 +196,78 @@ export default function Feels() {
               </SwiperSlide>
             ))}
             {fetching && (
-              <SwiperSlide className="bg-transparent animate-appearance-in">
-                <Card className="w-full h-full bg-transparent light ">
-                  <CardHeader className="justify-between bg-white md:p-6">
-                    <div className="max-w-[300px] w-full flex items-center gap-3">
-                      <div>
-                        <Skeleton className="flex w-16 h-16 rounded-full" />
+              <>
+                <SwiperSlide className="bg-transparent animate-appearance-in">
+                  <Card className="w-full h-full bg-transparent light ">
+                    <CardHeader className="justify-between bg-white md:p-6">
+                      <div className="max-w-[300px] w-full flex items-center gap-3">
+                        <div>
+                          <Skeleton className="flex w-16 h-16 rounded-full" />
+                        </div>
+                        <div className="flex flex-col w-full gap-2">
+                          <Skeleton className="w-3/5 h-3 rounded-lg" />
+                          <Skeleton className="w-4/5 h-3 rounded-lg" />
+                        </div>
                       </div>
-                      <div className="flex flex-col w-full gap-2">
-                        <Skeleton className="w-3/5 h-3 rounded-lg" />
-                        <Skeleton className="w-4/5 h-3 rounded-lg" />
+                    </CardHeader>
+                    <CardBody className="flex items-center justify-center w-full h-full">
+                      <div className="grid items-center content-center justify-center h-full grid-cols-3 gap-[1px] mx-auto w-fit">
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardBody className="flex items-center justify-center w-full h-full">
-                    <div className="grid items-center content-center justify-center h-full grid-cols-3 gap-[1px] mx-auto w-fit">
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                      <Skeleton className="flex w-16 h-16 rounded-sm" />
-                    </div>
-                  </CardBody>
-                  <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
-                    <div className="flex gap-1">
-                      <p className="font-semibold text-default-400 text-small">
-                        MOODART BY DEGENS
-                      </p>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </SwiperSlide>
+                    </CardBody>
+                    <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
+                      <div className="flex gap-1">
+                        <p className="font-semibold text-default-400 text-small">
+                          MOODART BY DEGENS
+                        </p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </SwiperSlide>
+                <SwiperSlide className="bg-transparent animate-appearance-in">
+                  <Card className="w-full h-full bg-transparent light ">
+                    <CardHeader className="justify-between bg-white md:p-6">
+                      <div className="max-w-[300px] w-full flex items-center gap-3">
+                        <div>
+                          <Skeleton className="flex w-16 h-16 rounded-full" />
+                        </div>
+                        <div className="flex flex-col w-full gap-2">
+                          <Skeleton className="w-3/5 h-3 rounded-lg" />
+                          <Skeleton className="w-4/5 h-3 rounded-lg" />
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardBody className="flex items-center justify-center w-full h-full">
+                      <div className="grid items-center content-center justify-center h-full grid-cols-3 gap-[1px] mx-auto w-fit">
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                        <Skeleton className="flex w-16 h-16 rounded-sm" />
+                      </div>
+                    </CardBody>
+                    <CardFooter className="items-center justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
+                      <div className="flex gap-1">
+                        <p className="font-semibold text-default-400 text-small">
+                          MOODART BY DEGENS
+                        </p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </SwiperSlide>
+              </>
             )}
           </Swiper>
           <Swiper

@@ -9,17 +9,30 @@ import {
   DropdownTrigger,
   Input,
   Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   Tab,
   Tabs,
+  useDisclosure,
+  User,
 } from "@nextui-org/react";
-import { MetamaskIcon, SearchIcon } from "../icons/BasicIcons";
+import {
+  LockIcon,
+  MetamaskIcon,
+  SearchIcon,
+  TwitterIcon,
+} from "../icons/BasicIcons";
 import { DegenerativesLogo } from "../icons/DegenerativesLogo";
 import { useContext } from "react";
 import { Context } from "@/providers/Providers";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Navigation() {
   const {
@@ -27,6 +40,7 @@ export default function Navigation() {
     selectedNavTab,
     connectEthereumWallet,
     connectedAccount,
+    setConnectedAccount,
   } = useContext(Context);
 
   return (
@@ -81,42 +95,148 @@ export default function Navigation() {
           type="search"
           className="hidden md:flex"
         /> */}
-        {/* <Dropdown placement="bottom-end">
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="success"
-              name="Ser"
-              size="sm"
-              src=""
-            />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="gap-2 h-14">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">Anonymous</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown> */}
-        {connectedAccount ? (
-          <>
-            <Button size="sm" startContent={<MetamaskIcon />}>
-              {connectedAccount.slice(0, 6)}
-            </Button>
-          </>
-        ) : (
-          <Button onClick={connectEthereumWallet}>Connect</Button>
-        )}
+        <Account />
       </NavbarContent>
     </Navbar>
+  );
+}
+
+export function Account() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    connectEthereumWallet,
+    connectedAccount,
+    setConnectedAccount,
+  } = useContext(Context);
+  const { data: session, status } = useSession();
+
+  return (
+    <>
+      <Dropdown placement="bottom-end">
+        <DropdownTrigger>
+          <User
+            name={
+              <span className="text-xs font-semibold text-primary">
+                {session?.user ? session?.user.name.split(" ")[0] : "Anonymous"}
+              </span>
+            }
+            description={
+              <div className="flex items-center gap-2 text-xs font-semibold group-hover:text-default-600">
+                Account
+              </div>
+            }
+            avatarProps={{
+              src: session?.user.image,
+            }}
+          />
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Profile Actions" variant="flat">
+          {connectedAccount ? (
+            <DropdownItem
+              key="profile"
+              className=""
+              startContent={<MetamaskIcon />}
+            >
+              <p className="font-bold">
+                {connectedAccount?.slice(0, 6)}...
+                {connectedAccount?.slice(-6)}
+              </p>
+            </DropdownItem>
+          ) : (
+            <DropdownItem
+              color="warning"
+              key="profile"
+              className=""
+              onClick={connectEthereumWallet}
+              startContent={<MetamaskIcon />}
+            >
+              <p className="font-semibold">Connect Metamask</p>
+            </DropdownItem>
+          )}
+
+          <DropdownItem
+            key="connect"
+            onClick={() => {
+              signIn("twitter");
+            }}
+            color="primary"
+            startContent={<TwitterIcon />}
+          >
+            {session?.user ? "Connected" : "Connect X/Twitter"}
+          </DropdownItem>
+
+          <DropdownItem
+            key="settings"
+            // onClick={onOpen}
+            startContent={<LockIcon />}
+            color="secondary"
+          >
+            Smart Account
+          </DropdownItem>
+
+          {/* <DropdownItem key="configurations">Configurations</DropdownItem>
+          <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
+          {!session?.user && (
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onClick={() => {
+                setConnectedAccount("");
+                signOut("twitter");
+              }}
+            >
+              Log Out
+            </DropdownItem>
+          )}
+        </DropdownMenu>
+      </Dropdown>
+
+      <Modal
+        size="md"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        // isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        className="p-6 pb-0"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text-xl text-center">
+                Smart Account
+              </ModalHeader>
+              <ModalBody>
+                {connectedAccount ? (
+                  <>
+                    <Button size="lg" startContent={<MetamaskIcon />}>
+                      {connectedAccount?.slice(0, 6)}...
+                      {connectedAccount?.slice(-6)}
+                    </Button>
+                  </>
+                ) : (
+                  <Button size="lg" onClick={connectEthereumWallet}>
+                    Connect Metamask
+                  </Button>
+                )}
+
+                <Button
+                  size="lg"
+                  onClick={() => {
+                    signIn("twitter");
+                  }}
+                >
+                  Login with X/Twitter
+                </Button>
+              </ModalBody>
+              <ModalFooter className="flex justify-center">
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

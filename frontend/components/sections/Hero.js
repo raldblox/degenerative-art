@@ -19,6 +19,7 @@ import { FunCard } from "../cards/FunCard";
 import { LinkPreview } from "../functions/LinkPreview";
 import { PoolByNetwork } from "../functions/PoolByNetwork";
 import { Statistics } from "../functions/Statistics";
+import { useSession } from "next-auth/react";
 
 export const Hero = () => {
   const {
@@ -29,6 +30,7 @@ export const Hero = () => {
     totalSupplies,
     setSelectedNavTab,
   } = useContext(Context);
+  const { data: session, status } = useSession();
 
   const ChainIcon = () => {
     const network = networks.find(
@@ -104,13 +106,15 @@ export const Hero = () => {
 
         <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
-            <span>gm ser 🌤</span>
+            <span className="lowercase">
+              gm {session?.user.name.split(" ")[0]} 🌤
+            </span>
           </div>
           <div className="space-y-6">
             <h1 className="text-2xl">
               dont let your{" "}
               <span className="font-semibold cursor-pointer">mood</span> go to
-              waste
+              waste ser
             </h1>
             <div className="flex flex-wrap items-center gap-1">
               <Button

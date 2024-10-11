@@ -252,6 +252,7 @@ export const Providers = (props) => {
     moodArtABI,
     connectEthereumWallet,
     connectedAccount,
+    setConnectedAccount,
     walletSigner,
     selectedChain,
     setSelectedChain,
