@@ -4,7 +4,6 @@ import {
   AvatarGroup,
   Button,
   Image,
-  ScrollShadow,
   Tab,
   Tabs,
 } from "@nextui-org/react";

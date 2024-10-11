@@ -18,28 +18,17 @@ import "swiper/css/thumbs";
 import {
   Avatar,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Link,
-  User,
   Image,
-  Spinner,
   Skeleton,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
-import { SelectNetwork } from "../functions/SelectNetwork";
+
 import { LockIcon } from "../icons/BasicIcons";
 import { Context } from "@/providers/Providers";
 import { networks } from "@/libraries/network";
-import { ethers } from "ethers";
-import { FancyCard } from "./FancyCard";
 
 export default function Feels() {
   //   const { data: session, status } = useSession();

@@ -49,7 +49,7 @@ export default function Home() {
         </>
       )}
 
-      <Divider className="hidden md:block" />
+      {/* <Divider className="hidden md:block" /> */}
       <footer className="p-6 space-y-6">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <h1 className="text-xs text-center md:text-left text-default-700 text-balance">
