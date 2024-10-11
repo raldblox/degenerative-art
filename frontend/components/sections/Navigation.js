@@ -176,7 +176,7 @@ export function Account() {
 
           {/* <DropdownItem key="configurations">Configurations</DropdownItem>
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
-          {!session?.user && (
+          {session?.user && (
             <DropdownItem
               key="logout"
               color="danger"
