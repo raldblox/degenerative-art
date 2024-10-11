@@ -102,7 +102,6 @@ export default function Feels() {
               <svg viewBox="0 0 48 48" ref={progressCircle}>
                 <circle cx="24" cy="24" r="5"></circle>
               </svg>
-              {/* <span className="text-xs" ref={progressContent}></span> */}
             </div>
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="border-none !rounded-none">
@@ -128,7 +127,7 @@ export default function Feels() {
                           size="sm"
                           variant="flat"
                         >
-                          Follow
+                          View
                         </Button> */}
                   </CardHeader>
 
