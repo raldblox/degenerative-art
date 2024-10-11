@@ -160,9 +160,6 @@ export const Hero = () => {
 
         {selectedHomeTab == "defi" && (
           <div className="min-h-[450px] w-full md:max-h-[450px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            {/* <div className="w-full col-span-3">
-              <ExpandableCards />
-            </div> */}
             <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 ">
@@ -195,7 +192,6 @@ export const Hero = () => {
               </div>
               <div className="min-h-[300px] grid content-between">
                 <h1 className="text-lg lowercase text-default-700">
-                  {/* pool your assets, not your sorrows.{" "} */}
                   <span className="font-semibold">Provide liquidity</span> and
                   watch your rewards pour in!
                 </h1>
