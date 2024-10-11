@@ -49,16 +49,16 @@ export default function Navigation() {
       isBordered
       maxWidth="full"
       // shouldHideOnScroll
-      className="border-none h-18"
+      className="!p-0 border-none h-18"
     >
-      <NavbarContent justify="start">
+      <NavbarContent justify="start !p-0">
         <NavbarContent
           as="div"
           justify="left"
           className="flex items-center justify-center gap-2"
         >
           <NavbarItem className="">
-            <NavbarBrand className="pr-3">
+            <NavbarBrand className="md:pr-3">
               <DegenerativesLogo />
             </NavbarBrand>
           </NavbarItem>
