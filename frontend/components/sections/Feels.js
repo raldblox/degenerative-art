@@ -100,7 +100,7 @@ export default function Feels() {
           >
             <div className="autoplay-progress" slot="container-end">
               <svg viewBox="0 0 48 48" ref={progressCircle}>
-                <circle cx="24" cy="24" r="8"></circle>
+                <circle cx="24" cy="24" r="6"></circle>
               </svg>
               {/* <span className="text-xs" ref={progressContent}></span> */}
             </div>
@@ -135,7 +135,7 @@ export default function Feels() {
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
                     <div className="p-8 text-center cursor-pointer w-fit cell group">
                       <span
-                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/3 scale-100 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-100`}
+                        className={`absolute invert text-nowrap tracking-[-10rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-100`}
                       >
                         {Object.values(post.emojis).slice().reverse().join(" ")}
                       </span>
@@ -154,12 +154,12 @@ export default function Feels() {
                             style={{
                               width: `${
                                 window.innerWidth > 768
-                                  ? 400 / Math.sqrt(post.emojis.length)
+                                  ? 350 / Math.sqrt(post.emojis.length)
                                   : 280 / Math.sqrt(post.emojis.length)
                               }px`,
                               fontSize: `${
                                 window.innerWidth > 768
-                                  ? 300 / Math.sqrt(post.emojis.length)
+                                  ? 280 / Math.sqrt(post.emojis.length)
                                   : 180 / Math.sqrt(post.emojis.length)
                               }px`,
                             }}

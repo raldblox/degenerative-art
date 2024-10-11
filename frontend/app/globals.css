@@ -104,7 +104,7 @@ body {
   stroke-width: 2px;
   stroke: var(--swiper-theme-color);
   fill: none;
-  stroke-dashoffset: calc(90 * (1 - var(--progress)));
-  stroke-dasharray: 90;
+  stroke-dashoffset: calc(50 * (1 - var(--progress)));
+  stroke-dasharray: 50;
   transform: rotate(-90deg);
 }
