@@ -23,6 +23,8 @@ import {
   CardFooter,
   CardHeader,
   Image,
+  Link,
+  LinkIcon,
   Skeleton,
 } from "@nextui-org/react";
 
@@ -40,6 +42,7 @@ export default function Feels() {
     fetching,
     setFetching,
     getFeels,
+    selectedChain,
     setSelectedHomeTab,
     setSelectedNavTab,
   } = useContext(Context);
@@ -125,17 +128,10 @@ export default function Feels() {
                         </h5>
                       </div>
                     </div>
-                    {/* <Button
-                          isExternal
-                          as={Link}
-                          href={`https://x.com/`}
-                          color="primary"
-                          radius="full"
-                          size="sm"
-                          variant="flat"
-                        >
-                          View
-                        </Button> */}
+                    <TokenLink
+                      chainName={post?.chainName}
+                      tokenId={post?.tokenId}
+                    />
                   </CardHeader>
 
                   <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
@@ -282,5 +278,25 @@ const ChainIcon = ({ chainName }) => {
       src={network?.icon}
       alt={network?.chainName}
     />
+  );
+};
+
+const TokenLink = ({ chainName, tokenId }) => {
+  const network = networks.find((chain) => chain.chainName === chainName);
+
+  const id = tokenId ? tokenId : 0;
+
+  return (
+    <Button
+      isExternal
+      as={Link}
+      href={`${network?.blockExplorerUrls[0]}/nft/${network?.contracts?.moodArt}/${id}`}
+      color="primary"
+      radius="full"
+      size="sm"
+      variant="flat"
+    >
+      View
+    </Button>
   );
 };
