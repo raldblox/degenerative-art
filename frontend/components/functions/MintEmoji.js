@@ -429,35 +429,17 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
 
   return (
     <>
-      <div className="flex flex-col !h-full space-y-6 mx-auto w-full select-none">
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            color="primary"
-            variant="solid"
-            size="md"
-            radius="sm"
-            className=""
-            onPress={onOpen}
-          >
-            Mint Feels
-          </Button>
-          <Button
-            color="primary"
-            variant="bordered"
-            size="md"
-            radius="sm"
-            className=""
-            onClick={() => {
-              window.scrollTo(0, 0);
-              setTimeout(() => {
-                setSelectedNavTab("feels");
-              }, 500);
-            }}
-          >
-            Explore Feels
-          </Button>
-        </div>
-      </div>
+      <Button
+        color="primary"
+        variant="solid"
+        size="md"
+        radius="sm"
+        className="w-fit"
+        onPress={onOpen}
+      >
+        Mint Your Feels
+      </Button>
+
       <Modal
         scrollBehavior="outside"
         isOpen={isOpen}

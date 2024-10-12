@@ -381,8 +381,23 @@ export const Hero = () => {
                     <h1 className="text-xs tracking-wide uppercase">
                       <span className="font-bold">1000 MOOD</span>rops await!
                     </h1>
-                    <div className="w-full">
+                    <div className="flex items-center w-full gap-2">
                       <MintEmoji showSlider={false} defaultExpansionLevel={2} />
+                      <Button
+                        color="primary"
+                        variant="bordered"
+                        size="md"
+                        radius="sm"
+                        className=""
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                          setTimeout(() => {
+                            setSelectedNavTab("feels");
+                          }, 500);
+                        }}
+                      >
+                        Explore Feels
+                      </Button>
                     </div>
                   </div>
                 </section>
@@ -405,12 +420,27 @@ export const Hero = () => {
                     <h1 className="text-xs tracking-wide uppercase">
                       <span className="font-bold">1000 MOOD</span>rops await!
                     </h1>
-                    <div className="w-full">
+                    <div className="flex items-center w-full gap-2">
                       <MintEmoji
                         showSlider={true}
                         defaultExpansionLevel={4}
                         forceStop={false}
                       />
+                      <Button
+                        color="primary"
+                        variant="bordered"
+                        size="md"
+                        radius="sm"
+                        className=""
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                          setTimeout(() => {
+                            setSelectedNavTab("feels");
+                          }, 500);
+                        }}
+                      >
+                        Explore Feels
+                      </Button>
                     </div>
                   </div>
                 </section>

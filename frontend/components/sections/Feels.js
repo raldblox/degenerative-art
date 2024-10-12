@@ -29,6 +29,7 @@ import {
 import { LockIcon } from "../icons/BasicIcons";
 import { Context } from "@/providers/Providers";
 import { networks } from "@/libraries/network";
+import { MintEmoji } from "../functions/MintEmoji";
 
 export default function Feels() {
   //   const { data: session, status } = useSession();
@@ -39,6 +40,8 @@ export default function Feels() {
     fetching,
     setFetching,
     getFeels,
+    setSelectedHomeTab,
+    setSelectedNavTab,
   } = useContext(Context);
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
@@ -50,7 +53,7 @@ export default function Feels() {
   return (
     <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-170px)] ">
       <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col md:gap-3 px-3 md:px-6 overflow-hidden">
-        <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+        <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-4 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
           </div>
@@ -60,9 +63,10 @@ export default function Feels() {
             </h1>
           </div>
 
-          <div className="flex justify-between">
-            <Button color="primary" variant="solid" endContent={<LockIcon />}>
-              Express Your Feels
+          <div className="flex items-center gap-2">
+            <MintEmoji />
+            <Button color="success" variant="solid" endContent={<LockIcon />}>
+              Express It
             </Button>
           </div>
         </div>
@@ -252,7 +256,7 @@ export default function Feels() {
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="max-h-[100px]">
-                <div className="flex items-center justify-start h-full gap-3 p-3 bg-white rounded-xl">
+                <div className="flex items-center justify-start h-full gap-3 px-6 bg-white rounded-xl">
                   <div className="flex items-center justify-center h-full">
                     <ChainIcon chainName={post?.chainName} />
                   </div>
