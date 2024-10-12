@@ -48,9 +48,9 @@ export default function Feels() {
   };
 
   return (
-    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-170px)] overflow-hidden ">
-      <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start md:flex-row flex-col md:gap-3 px-3 md:px-6 overflow-hidden">
-        <div className=" hidden md:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-170px)] ">
+      <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col md:gap-3 px-3 md:px-6 overflow-hidden">
+        <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-6 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm ser 🌤</span>
           </div>
@@ -82,6 +82,9 @@ export default function Feels() {
               "@0.0": {
                 slidesPerView: 1,
               },
+              "@0.2": {
+                slidesPerView: 2,
+              },
               "@1.00": {
                 slidesPerView: 1,
               },
@@ -104,7 +107,10 @@ export default function Feels() {
               </svg>
             </div>
             {[...randomFeels?.entries()].map(([key, post]) => (
-              <SwiperSlide key={key} className="border-none !rounded-none">
+              <SwiperSlide
+                key={key}
+                className="border-none !rounded-none md:min-w-[400px]"
+              >
                 <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 !rounded-2xl light ">
                   <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-4">
                     <div className="flex items-center w-full gap-5">
@@ -277,7 +283,7 @@ export default function Feels() {
                 direction: "vertical",
               },
             }}
-            className="md:!flex mySwiper !hidden md:!w-fit min-w-[300px]"
+            className="lg:!flex mySwiper !hidden md:!w-fit min-w-[300px]"
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="max-h-[100px]">
