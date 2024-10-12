@@ -546,19 +546,19 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                       </>
                     </div>
                     <div className="text-xs">
-                      <Accordion variant="splitted" isCompact>
+                      <Accordion variant="bordered" className="border-1" isCompact>
                         <AccordionItem
                           key="1"
                           aria-label="Craft"
                           title="Craft Your Masterpiece"
                         >
-                          🎨 First things first, choose your blockchain
-                          battleground! Each chain has its own vibe and minting
-                          price, so pick wisely. Now, let those emojis fly! Add
-                          at least one to the grid to capture your current mood.
-                          Once you&apos;ve got your emojis lined up, get
-                          creative with the arrangement! Mix and match,
-                          experiment, and let your inner artist shine.
+                          🎨 First things first, choose the blockchain of your
+                          choice! Each chain has its own vibe and minting price,
+                          so pick wisely. Add at least one to the grid to
+                          capture your current mood. Once you&apos;ve got your
+                          emojis lined up, get creative with the arrangement!
+                          Mix and match, experiment, and let your inner artist
+                          shine.
                         </AccordionItem>
 
                         <AccordionItem
