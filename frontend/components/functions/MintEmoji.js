@@ -449,7 +449,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
         size="5xl"
         className="!px-0 bg-default-200 backdrop-blur-sm relative select-none"
       >
-        <ModalContent className="flex items-center justify-center w-full !px-0 py-20 ">
+        <ModalContent className="flex items-center justify-center w-full !px-0 py-8 md:py-16 ">
           {(onClose) => (
             <>
               <ModalBody className="!p-0 ">
@@ -546,7 +546,11 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                       </>
                     </div>
                     <div className="text-xs">
-                      <Accordion variant="bordered" className="border-1" isCompact>
+                      <Accordion
+                        variant="bordered"
+                        className="border-1"
+                        isCompact
+                      >
                         <AccordionItem
                           key="1"
                           aria-label="Craft"
