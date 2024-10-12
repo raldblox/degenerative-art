@@ -43,7 +43,7 @@ export const Hero = () => {
 
     return (
       <Image
-        className="!w-6 !h-6 rounded-none grayscale"
+        className="!w-7 !h-7 !rounded-none grayscale p-1"
         src={network?.icon}
         alt={network?.chainName}
       />
