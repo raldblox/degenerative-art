@@ -468,6 +468,29 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🎁
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      rewards
+                    </h1>
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700 text-balance">
+                      start claiming your moodart minting reward!
+                    </h1>
+
+                    <div className="flex items-center w-full gap-2">
+                      <Button size="md" radius="sm" variant="solid">
+                        Opening Soon
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
             </Swiper>
           </>
         )}
