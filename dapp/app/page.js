@@ -625,7 +625,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-
                 <div className="flex h-full p-8 space-x-3 duration-200 cursor-pointer bg-default-100 group text-pretty hover:shadow-md rounded-2xl">
                   <div className="relative flex w-16 h-16 rounded-full aspect-square group">
                     <EmojiGlass emoji="🌉" />

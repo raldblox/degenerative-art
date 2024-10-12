@@ -242,7 +242,11 @@ export const Hero = () => {
                     stake your degeneratives tokens and{" "}
                     <span className="font-semibold">get mood rewards</span>.
                   </h1>
-                  <div className="w-full"></div>
+                  <div className="w-full">
+                    <Button size="md" radius="sm" variant="solid">
+                      Coming Soon
+                    </Button>
+                  </div>
                 </div>
               </section>
             </SwiperSlide>
@@ -262,7 +266,11 @@ export const Hero = () => {
                   <h1 className="text-lg lowercase text-default-700">
                     bridge your degeneratives tokens to other blockchain.
                   </h1>
-                  <div className="w-full"></div>
+                  <div className="w-full">
+                    <Button size="md" radius="sm" variant="solid">
+                      Coming Soon
+                    </Button>
+                  </div>
                 </div>
               </section>
             </SwiperSlide>

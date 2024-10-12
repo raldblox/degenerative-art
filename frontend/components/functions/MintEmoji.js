@@ -2,6 +2,8 @@
 
 import { Context } from "@/providers/Providers";
 import {
+  Accordion,
+  AccordionItem,
   Button,
   Image,
   Link,
@@ -444,7 +446,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
         scrollBehavior="outside"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        size="4xl"
+        size="5xl"
         className="!px-0 bg-default-200 backdrop-blur-sm relative select-none"
       >
         <ModalContent className="flex items-center justify-center w-full !px-0 py-20 ">
@@ -542,6 +544,46 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                           </>
                         )}
                       </>
+                    </div>
+                    <div className="text-xs">
+                      <Accordion isCompact>
+                        <AccordionItem
+                          key="1"
+                          aria-label="Craft"
+                          title="Craft Your Masterpiece"
+                        >
+                          🎨 First things first, choose your blockchain
+                          battleground! Each chain has its own vibe and minting
+                          price, so pick wisely. Now, let those emojis fly! Add
+                          at least one to the grid to capture your current mood.
+                          Once you&apos;ve got your emojis lined up, get
+                          creative with the arrangement! Mix and match,
+                          experiment, and let your inner artist shine.
+                        </AccordionItem>
+
+                        <AccordionItem
+                          key="2"
+                          aria-label="Mint"
+                          title="Mint Your Feels"
+                        >
+                          📸 Happy with your masterpiece? Awesome! Smash that
+                          MINT button and unleash your feels onto the
+                          blockchain! Your unique <i>moodart</i> NFT will be
+                          born, forever capturing your emotional snapshot.
+                        </AccordionItem>
+
+                        <AccordionItem
+                          key="3"
+                          aria-label="Claim"
+                          title="Claim Your Rewards"
+                        >
+                          🎁 Soon, you&apos;ll be able to claim 1,000 $MOOD
+                          tokens just for minting your <i>moodart</i>. Use them
+                          to level up your creation, dive into the Degeneratives
+                          ecosystem, explore onchain gaming, and unlock a whole
+                          world of awesome tools and features.
+                        </AccordionItem>
+                      </Accordion>
                     </div>
 
                     {/* <SimulatePrice /> */}
