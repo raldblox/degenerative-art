@@ -71,7 +71,7 @@ export const Hero = () => {
               <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
             </AvatarGroup>
             <p className="text-xs">
-              Join our homies in putting emotions to work!
+              Join our homies putting their emotions to work!
             </p>
           </div>
           <div className="absolute drop-shadow-lg space-y-3 md:space-y-6 bottom-[160px] left-6 md:bottom-[120px] md:left-[25vw]">
