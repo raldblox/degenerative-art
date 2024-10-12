@@ -546,7 +546,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                       </>
                     </div>
                     <div className="text-xs">
-                      <Accordion isCompact>
+                      <Accordion variant="splitted" isCompact>
                         <AccordionItem
                           key="1"
                           aria-label="Craft"
