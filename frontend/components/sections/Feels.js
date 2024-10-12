@@ -86,7 +86,7 @@ export default function Feels() {
               "@0.0": {
                 slidesPerView: 1,
               },
-              "@0.2": {
+              "@0.5": {
                 slidesPerView: 2,
               },
               "@1.00": {
