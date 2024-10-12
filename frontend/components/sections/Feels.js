@@ -18,6 +18,7 @@ import "swiper/css/thumbs";
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
@@ -176,11 +177,15 @@ export default function Feels() {
                       </div>
                     </div>
                   </CardBody>
-                  <CardFooter className="items-center !rounded-none justify-between w-full h-16 gap-3 p-3 bg-white md:p-6">
-                    <div className="flex gap-1 ">
+                  <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
+                    <div className="grid gap-1 ">
                       <p className="font-semibold text-default-400 text-small">
                         MOODART #{post?.tokenId.toString()}
                       </p>
+                      <Marketplace
+                        chainName={post?.chainName}
+                        tokenId={post?.tokenId}
+                      />
                     </div>
                   </CardFooter>
                 </Card>
@@ -298,5 +303,66 @@ const TokenLink = ({ chainName, tokenId }) => {
     >
       View
     </Button>
+  );
+};
+
+const Marketplace = ({ chainName, tokenId }) => {
+  const network = networks.find((chain) => chain.chainName === chainName);
+  const id = tokenId ? tokenId : 0;
+
+  return (
+    <div className="flex items-center gap-2">
+      {network?.marketplaces.map((marketplace, index) => {
+        // Construct the marketplace URL based on its schema
+        let marketplaceUrl;
+        switch (marketplace.name) {
+          case "Rarible":
+            marketplaceUrl = `${
+              marketplace.link
+            }/${network.chainName.toLowerCase()}/${
+              network.contracts.moodArt
+            }:${id}`;
+            break;
+          case "Opensea":
+            const chainNameForOpensea =
+              network.chainName === "Polygon"
+                ? "matic"
+                : network.chainName.toLowerCase();
+            marketplaceUrl = `${marketplace.link}/${chainNameForOpensea}/${network.contracts.moodArt}/${id}`;
+            break;
+          case "MagicEden":
+            marketplaceUrl = `${
+              marketplace.link
+            }/${network.chainName.toLowerCase()}/${
+              network.contracts.moodArt
+            }/${id}`;
+            break;
+          case "YoungParrot":
+            marketplaceUrl = `${marketplace.link}/${network.contracts.moodArt}/${id}`;
+            break;
+          default:
+            marketplaceUrl = "#"; // Or handle the default case as needed
+        }
+
+        return (
+          <Link
+            key={index}
+            isExternal
+            href={marketplaceUrl}
+            color="primary"
+            radius="full"
+            size="md"
+            variant="flat"
+          >
+            <Image
+              width={20}
+              className="w-7 h-7 !rounded-none"
+              src={marketplace?.icon}
+              alt={marketplace?.name}
+            />
+          </Link>
+        );
+      })}
+    </div>
   );
 };
