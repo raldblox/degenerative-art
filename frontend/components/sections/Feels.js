@@ -178,7 +178,7 @@ export default function Feels() {
                     </div>
                   </CardBody>
                   <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
-                    <div className="grid gap-2">
+                    <div className="grid gap-1 md:gap-2">
                       <p className="font-semibold text-default-400 text-small">
                         MOODART #{post?.tokenId.toString()}
                       </p>
