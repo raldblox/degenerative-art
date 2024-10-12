@@ -379,7 +379,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        await connectEthereumWallet();
+        // await connectEthereumWallet();
 
         setFetching(true);
         setTotalSupply(0);
