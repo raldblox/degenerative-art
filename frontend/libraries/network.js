@@ -61,7 +61,7 @@ export const networks = [
     },
     blockExplorerUrls: ["https://polygonscan.com"],
     icon: "./chains/polygon.png",
-    site: "https://polygon.technology",
+    site: "https://polygon.technology/",
     contracts: {
       moodArt: "0x957f319210eCC12B9bBbE38ea6B1e92E2748dB6c",
       moodBank: "0x2aB32741dc8453714136bBaFD2D6A5ec77934E23",
@@ -142,5 +142,33 @@ export const networks = [
     blockExplorerUrls: ["https://bscscan.com"],
     icon: "./chains/bnb.svg",
     site: "https://bnbchain.org",
+  },
+  {
+    isLive: false,
+    chainId: 10,
+    chainName: "OP Mainnet",
+    rpcUrls: ["https://mainnet.optimism.io"],
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://optimistic.etherscan.io"],
+    icon: "./chains/optimism.svg",
+    site: "https://optimism.io",
+  },
+  {
+    isLive: false,
+    chainId: 1946,
+    chainName: "Soneium Minato",
+    rpcUrls: ["https://optimistic.etherscan.io"],
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://explorer-testnet.soneium.org"],
+    icon: "./chains/soneium.svg",
+    site: "https://soneium.org",
   },
 ];
