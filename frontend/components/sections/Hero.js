@@ -19,6 +19,11 @@ import { LinkPreview } from "../functions/LinkPreview";
 import { PoolByNetwork } from "../functions/PoolByNetwork";
 import { Statistics } from "../functions/Statistics";
 import { useSession } from "next-auth/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Mousewheel, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 export const Hero = () => {
   const {
@@ -38,7 +43,7 @@ export const Hero = () => {
 
     return (
       <Image
-        className="w-6 h-6 rounded-none grayscale"
+        className="!w-6 !h-6 rounded-none grayscale"
         src={network?.icon}
         alt={network?.chainName}
       />
@@ -47,7 +52,7 @@ export const Hero = () => {
 
   return (
     <section className="relative w-full h-full min-h-screen select-none">
-      <div className="grid w-full px-3 md:px-6 md:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
+      <div className="grid w-full px-3 md:px-6 lg:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
         <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
@@ -80,7 +85,7 @@ export const Hero = () => {
             </p>
           </div>
 
-          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[25vw]">
+          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[360px]">
             <Tabs
               radius="full"
               size=""
@@ -93,7 +98,7 @@ export const Hero = () => {
               <Tab key="defi" title="DeFi" />
               <Tab key="nft" title="NFT" />
               <Tab key="game" title="GameFi" />
-              <Tab key="stats" title="Stats" />
+              <Tab key="tools" title="Tools" />
             </Tabs>
           </div>
           <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-3 right-3 md:bottom-6 md:right-6">
@@ -103,7 +108,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
+        <div className="min-h-[450px] !md:max-w-[300px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
             <span className="lowercase">
               gm {session?.user.name.split(" ")[0]} 🌤
@@ -159,201 +164,338 @@ export const Hero = () => {
         </div>
 
         {selectedHomeTab == "defi" && (
-          <div className="min-h-[450px] w-full md:max-h-[450px] grid md:grid-cols-3  gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                    🛍️
-                  </span>
-                  <h1 className="text-3xl font-bold text-default-800">swap</h1>
+          <Swiper
+            slidesPerView={"auto"}
+            spaceBetween={25}
+            // loop={true}
+            mousewheel={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            modules={[Pagination, Mousewheel, Autoplay]}
+            className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+          >
+            <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <section className="grid content-between w-full h-full p-6 ">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🛍️
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      swap
+                    </h1>
+                  </div>
+                  <ChainIcon />
                 </div>
-                <ChainIcon />
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg text-default-700">
-                  openly <span className="font-semibold">trade mood</span> on
-                  decentralized exchanges.
-                </h1>
-                <div className="w-full">
-                  <SwapByNetwork />
+                <div className="min-h-[300px] grid content-between">
+                  <h1 className="text-lg text-default-700">
+                    openly <span className="font-semibold">trade mood</span> on
+                    decentralized exchanges.
+                  </h1>
+                  <div className="w-full">
+                    <SwapByNetwork />
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                    🏊‍♀️
-                  </span>
-                  <h1 className="text-3xl font-bold text-default-800">pool</h1>
+              </section>
+            </SwiperSlide>
+            <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <section className="grid content-between w-full h-full p-6 ">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🏊‍♀️
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      pool
+                    </h1>
+                  </div>
+                  <ChainIcon />
                 </div>
-                <ChainIcon />
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase text-default-700">
-                  <span className="font-semibold">Provide liquidity</span> and
-                  watch your rewards pour in!
-                </h1>
-                <div className="w-full">
-                  <PoolByNetwork />
+                <div className="min-h-[300px] grid content-between">
+                  <h1 className="text-lg lowercase text-default-700">
+                    <span className="font-semibold">Provide liquidity</span> and
+                    watch your rewards pour in!
+                  </h1>
+                  <div className="w-full">
+                    <PoolByNetwork />
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                    🥩
-                  </span>
-                  <h1 className="text-3xl font-bold text-default-800">stake</h1>
+              </section>
+            </SwiperSlide>
+            <SwiperSlide className="!h-full !w-[330px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <section className="grid content-between w-full h-full p-6 ">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🥩
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      stake
+                    </h1>
+                  </div>
+                  <ChainIcon />
                 </div>
-                <ChainIcon />
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase text-default-700">
-                  stake your degeneratives tokens and{" "}
-                  <span className="font-semibold">get mood rewards</span>.
-                </h1>
-                <div className="w-full"></div>
-              </div>
-            </div>
-          </div>
+                <div className="min-h-[300px] grid content-between">
+                  <h1 className="text-lg lowercase text-default-700">
+                    stake your degeneratives tokens and{" "}
+                    <span className="font-semibold">get mood rewards</span>.
+                  </h1>
+                  <div className="w-full"></div>
+                </div>
+              </section>
+            </SwiperSlide>
+            <SwiperSlide className="!h-full !w-[330px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <section className="grid content-between w-full h-full p-6 ">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🌉
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      bridge
+                    </h1>
+                  </div>
+                </div>
+                <div className="min-h-[300px] grid content-between">
+                  <h1 className="text-lg lowercase text-default-700">
+                    bridge your degeneratives tokens to other blockchain.
+                  </h1>
+                  <div className="w-full"></div>
+                </div>
+              </section>
+            </SwiperSlide>
+          </Swiper>
         )}
+
         {selectedHomeTab == "game" && (
-          <div className="min-h-[300px]  w-full md:max-h-[450px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                  ⚡️
-                </span>
-                <h1 className="text-3xl font-bold text-default-800">match</h1>
-              </div>
-              <div className="flex items-center justify-center w-full">
-                <Image width={200} src="./soon.svg" />
-              </div>
-              <div className="w-full">
-                <Button size="md" radius="sm" variant="solid">
-                  Under Construction
-                </Button>
-              </div>
-            </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                  🎲
-                </span>
-                <h1 className="text-3xl font-bold text-default-800">roll</h1>
-              </div>
-              <div className="flex items-center justify-center w-full">
-                <Image width={200} src="./soon.svg" />
-              </div>
-              <div className="w-full">
-                <Button size="md" radius="sm" variant="solid">
-                  Under Construction
-                </Button>
-              </div>
-            </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white backdrop-blur-sm hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                  💣
-                </span>
-                <h1 className="text-3xl font-bold text-default-800">sweep</h1>
-              </div>
-              <div className="flex items-center justify-center w-full">
-                <Image width={200} src="./soon.svg" />
-              </div>
-              <div className="w-full">
-                <Button size="md" radius="sm" variant="solid">
-                  Under Construction
-                </Button>
-              </div>
-            </div>
-          </div>
+          <>
+            <Swiper
+              slidesPerView={"auto"}
+              spaceBetween={25}
+              // loop={true}
+              mousewheel={true}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              modules={[Pagination, Mousewheel, Autoplay]}
+              className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+            >
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      ⚡️
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      match
+                    </h1>
+                  </div>
+                  <div className="flex items-center justify-center w-full">
+                    <Image width={200} src="./soon.svg" />
+                  </div>
+                  <div className="w-full">
+                    <Button size="md" radius="sm" variant="solid">
+                      Under Construction
+                    </Button>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🎲
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      roll
+                    </h1>
+                  </div>
+                  <div className="flex items-center justify-center w-full">
+                    <Image width={200} src="./soon.svg" />
+                  </div>
+                  <div className="w-full">
+                    <Button size="md" radius="sm" variant="solid">
+                      Under Construction
+                    </Button>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[330px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      💣
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      sweep
+                    </h1>
+                  </div>
+                  <div className="flex items-center justify-center w-full">
+                    <Image width={200} src="./soon.svg" />
+                  </div>
+                  <div className="w-full">
+                    <Button size="md" radius="sm" variant="solid">
+                      Under Construction
+                    </Button>
+                  </div>
+                </section>
+              </SwiperSlide>
+            </Swiper>
+          </>
         )}
         {selectedHomeTab == "nft" && (
-          <div className="min-h-[450px]  w-full md:max-h-[300px] grid md:grid-cols-3 gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full relative grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 ">
-                  <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
-                    🖼
-                  </span>
-                  <h1 className="text-3xl font-bold text-default-800">mint</h1>
-                </div>
-                <ChainIcon />
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase text-default-700">
-                  Mint your feels to receive free MOOD and express yourself even
-                  more in our ecosystem!
-                </h1>
-                <h1 className="text-xs tracking-wide uppercase">
-                  <span className="font-bold">1000 MOOD</span>rops await!
-                </h1>
-                <div className="w-full">
-                  <MintEmoji showSlider={false} defaultExpansionLevel={2} />
-                </div>
-              </div>
-            </div>
-
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                  🎨
-                </span>
-                <h1 className="text-3xl font-bold text-default-800">craft</h1>
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase text-default-700">
-                  Break free from 3x3 grid! Make one-of-a-kind arts with our
-                  Expandable Canvas.
-                </h1>
-                <h1 className="text-xs tracking-wide uppercase">
-                  <span className="font-bold">1000 MOOD</span>rops await!
-                </h1>
-                <div className="w-full">
-                  <MintEmoji
-                    showSlider={true}
-                    defaultExpansionLevel={4}
-                    forceStop={false}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="h-full grid content-between p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <div className="flex items-center gap-3 ">
-                <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                  🤖
-                </span>
-                <h1 className="text-3xl font-bold text-default-800">
-                  generate
-                </h1>
-              </div>
-              <div className="min-h-[300px] grid content-between">
-                <h1 className="text-lg lowercase text-default-700">
-                  Turn your existing digital image into a fascinating artwork
-                  with emojis as pixels!
-                </h1>
-                <div className="w-full">
-                  <Button size="md" radius="sm" variant="solid">
-                    Coming Soon
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <>
+            <Swiper
+              slidesPerView={"auto"}
+              spaceBetween={25}
+              // loop={true}
+              mousewheel={true}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              modules={[Pagination, Mousewheel, Autoplay]}
+              className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+            >
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 ">
+                      <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
+                        🖼
+                      </span>
+                      <h1 className="text-3xl font-bold text-default-800">
+                        mint
+                      </h1>
+                    </div>
+                    <ChainIcon />
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700">
+                      Mint your feels to receive free MOOD and express yourself
+                      even more in our ecosystem!
+                    </h1>
+                    <h1 className="text-xs tracking-wide uppercase">
+                      <span className="font-bold">1000 MOOD</span>rops await!
+                    </h1>
+                    <div className="w-full">
+                      <MintEmoji showSlider={false} defaultExpansionLevel={2} />
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🎨
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      craft
+                    </h1>
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700">
+                      Break free from 3x3 grid! Make one-of-a-kind arts with our
+                      Expandable Canvas.
+                    </h1>
+                    <h1 className="text-xs tracking-wide uppercase">
+                      <span className="font-bold">1000 MOOD</span>rops await!
+                    </h1>
+                    <div className="w-full">
+                      <MintEmoji
+                        showSlider={true}
+                        defaultExpansionLevel={4}
+                        forceStop={false}
+                      />
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[330px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🤖
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      generate
+                    </h1>
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700">
+                      Turn your existing digital image into a fascinating
+                      artwork with emojis as pixels!
+                    </h1>
+                    <div className="w-full">
+                      <Button size="md" radius="sm" variant="solid">
+                        Coming Soon
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🤖
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      analytics
+                    </h1>
+                  </div>
+                  <div className="h-full">
+                    <Statistics data={totalSupplies} />
+                  </div>
+                </section>
+              </SwiperSlide>
+            </Swiper>
+          </>
         )}
-        {selectedHomeTab == "stats" && (
-          <div className="min-h-[450px]  w-full md:max-h-[300px] gap-3 md:gap-6 md:col-span-3 rounded-2xl">
-            <div className="h-full relative grid content-center p-6 min-h-[450px] bg-white hover:bg-success transition-all duration-300  rounded-2xl">
-              <Statistics data={totalSupplies} />
-            </div>
-          </div>
+        {selectedHomeTab == "tools" && (
+          <>
+            <Swiper
+              slidesPerView={"auto"}
+              spaceBetween={25}
+              // loop={true}
+              mousewheel={true}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              modules={[Pagination, Mousewheel, Autoplay]}
+              className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+            >
+              <SwiperSlide className="!h-full !w-[330px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🤖
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      generate
+                    </h1>
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700">
+                      Turn your existing digital image into a fascinating
+                      artwork with emojis as pixels!
+                    </h1>
+                    <div className="w-full">
+                      <Button size="md" radius="sm" variant="solid">
+                        Coming Soon
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+            </Swiper>
+          </>
         )}
-
-        {/*  */}
       </div>
     </section>
   );

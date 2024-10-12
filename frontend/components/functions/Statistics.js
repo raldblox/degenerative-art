@@ -91,49 +91,55 @@ export const Statistics = ({ data }) => {
   );
 
   return (
-    <div className="grid content-center w-full gap-3 md:grid-cols-2">
-      <div className="flex items-center justify-center">
-        <PieChart width={320} height={320}>
-          <Pie
-            className="p-16"
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={
-              data?.length > 0
-                ? data
-                : [
-                    {
-                      name: "No Data",
-                      value: 100,
-                    },
-                  ]
-            }
-            cx={160}
-            cy={160}
-            innerRadius={50}
-            outerRadius={60}
-            fill="#000"
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-          />
-        </PieChart>
-      </div>
-
-      <div className="grid items-center content-center justify-center h-full max-w-sm grid-cols-2 gap-6 py-6 mx-auto gap-x-12">
-        {data?.map((supply, index) => (
-          <>
-            <div
-              key={index}
-              className="flex flex-col items-center justify-start text-center md:justify-center"
-            >
-              <h1 className="text-5xl font-semibold">{supply.value}</h1>
-              <h1 className="text-xs font-semibold uppercase text-default-700">
-                {supply.name} NFTs
-              </h1>
+    <>
+      {data.length > 0 && (
+        <>
+          <div className="flex items-center justify-center w-full bg-transparent !h-[350px] gap-3">
+            <div className="flex items-center justify-center h-fit w-fit">
+              <PieChart width={320} height={320}>
+                <Pie
+                  className="p-16"
+                  activeIndex={activeIndex}
+                  activeShape={renderActiveShape}
+                  data={
+                    data?.length > 0
+                      ? data
+                      : [
+                          {
+                            name: "No Data",
+                            value: 100,
+                          },
+                        ]
+                  }
+                  cx={160}
+                  cy={160}
+                  innerRadius={50}
+                  outerRadius={60}
+                  fill="#000"
+                  dataKey="value"
+                  onMouseEnter={onPieEnter}
+                />
+              </PieChart>
             </div>
-          </>
-        ))}
-      </div>
-    </div>
+
+            <div className="grid items-center content-center justify-center h-full max-w-sm grid-cols-2 gap-6 mx-auto gap-x-12">
+              {data?.map((supply, index) => (
+                <>
+                  <div
+                    key={index}
+                    className="flex flex-col items-center justify-start text-center md:justify-center"
+                  >
+                    <h1 className="text-5xl font-semibold">{supply.value}</h1>
+                    <h1 className="text-xs font-semibold uppercase text-default-700">
+                      {supply.name} NFTs
+                    </h1>
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
