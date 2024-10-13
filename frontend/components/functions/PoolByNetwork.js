@@ -25,11 +25,11 @@ export const PoolByNetwork = () => {
             <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
           <Button
-            color="default"
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black "
+            className=""
             as={Link}
             href="https://app.tachyswap.org/#/add/0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9/XTZ"
             isExternal
@@ -53,7 +53,7 @@ export const PoolByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color=""
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"
@@ -79,7 +79,7 @@ export const PoolByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color=""
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"

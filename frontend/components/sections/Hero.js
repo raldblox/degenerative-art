@@ -4,6 +4,7 @@ import {
   AvatarGroup,
   Button,
   Image,
+  Link,
   Tab,
   Tabs,
 } from "@nextui-org/react";
@@ -267,8 +268,15 @@ export const Hero = () => {
                     bridge your degeneratives tokens to other blockchain.
                   </h1>
                   <div className="w-full">
-                    <Button size="md" radius="sm" variant="solid">
-                      Coming Soon
+                    <Button
+                      size="md"
+                      radius="sm"
+                      color="primary"
+                      variant="solid"
+                      as={Link}
+                      href="/bridge"
+                    >
+                      Open Bridge
                     </Button>
                   </div>
                 </div>

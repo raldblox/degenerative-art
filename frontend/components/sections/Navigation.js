@@ -30,9 +30,10 @@ import {
   TwitterIcon,
 } from "../icons/BasicIcons";
 import { DegenerativesLogo } from "../icons/DegenerativesLogo";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "@/providers/Providers";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navigation() {
   const {
@@ -43,9 +44,18 @@ export default function Navigation() {
     setConnectedAccount,
   } = useContext(Context);
 
+  const [path, setPath] = useState("");
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const url = pathname;
+    setPath(url);
+  }, [pathname]);
+
   return (
     <Navbar
-      hid
       isBordered
       maxWidth="full"
       // shouldHideOnScroll
@@ -72,8 +82,10 @@ export default function Navigation() {
               selectedKey={selectedNavTab}
               onSelectionChange={setSelectedNavTab}
             >
-              <Tab key="feels" title="Feels" />
-              <Tab key="home" title="Home" />
+              {path == "/" && <Tab key="feels" title="Feels" />}
+              {path == "/" && <Tab key="home" title="Home" />}
+              {path == "/bridge" && <Tab key="bridge" title="Bridge" />}
+
               {/* <Tab key="games" title="Games" isDisabled/> */}
             </Tabs>
           </NavbarItem>

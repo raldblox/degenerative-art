@@ -1,6 +1,7 @@
 export const networks = [
   {
     isLive: true,
+    hasBridge: true,
     chainId: 42793,
     rpcUrls: ["https://node.mainnet.etherlink.com"],
     chainName: "Etherlink",
@@ -26,6 +27,7 @@ export const networks = [
   },
   {
     isLive: true,
+    hasBridge: true,
     chainId: 1116,
     chainName: "Core",
     rpcUrls: ["https://rpc.coredao.org"],
@@ -51,6 +53,7 @@ export const networks = [
   },
   {
     isLive: true,
+    hasBridge: true,
     chainId: 137,
     rpcUrls: ["https://polygon.llamarpc.com", "https://polygon-rpc.com/"],
     chainName: "Polygon",

@@ -25,11 +25,11 @@ export const SwapByNetwork = () => {
             <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
           <Button
-            color="default"
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black "
+            className=""
             as={Link}
             href="https://app.tachyswap.org/#/swap?outputCurrency=0xd08b30c1eda1284cd70e73f29ba27b5315acc3f9"
             isExternal
@@ -45,7 +45,7 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://quickswap.exchange/">
@@ -53,11 +53,11 @@ export const SwapByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color=""
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
@@ -71,7 +71,7 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://aerodrome.finance/">
@@ -79,11 +79,11 @@ export const SwapByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color=""
+            color="primary"
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
@@ -97,7 +97,7 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://glyph.exchange/">
@@ -113,7 +113,7 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           ></Button>
         </ScrollShadow>
@@ -125,7 +125,7 @@ export const SwapByNetwork = () => {
             variant="bordered"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
+            className=""
             endContent={<LockIcon />}
           >
             <LinkPreview url="https://pancakeswap.finance/">
