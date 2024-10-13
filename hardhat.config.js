@@ -12,6 +12,7 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       gasPrice: "auto",
     },
@@ -21,6 +22,7 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       gasPrice: "auto",
     },
@@ -30,6 +32,7 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       chainId: 1115,
     },
@@ -39,6 +42,7 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       chainId: 1116,
     },
@@ -48,6 +52,7 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
     },
     etherlink: {
@@ -56,18 +61,22 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       gasPrice: "auto",
     },
     base: {
+      name: "Base",
       url: "https://mainnet.base.org",
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       gasPrice: "auto",
     },
     "base-sepolia": {
+      name: "Base Sepolia",
       url: "https://sepolia.base.org",
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
@@ -86,6 +95,7 @@ module.exports = {
       coreTestnet: process.env.CORE_TESTNET_API,
       coreMainnet: process.env.CORE_MAINNET_API,
       etherlink: "abc",
+      etherlinkTestnet: "abc",
       base: process.env.BASE_API_KEY,
     },
     customChains: [
@@ -95,6 +105,14 @@ module.exports = {
         urls: {
           apiURL: "https://explorer.etherlink.com/api",
           browserURL: "https://explorer.etherlink.com/",
+        },
+      },
+      {
+        network: "etherlinkTestnet",
+        chainId: 128123,
+        urls: {
+          apiURL: "https://testnet.explorer.etherlink.com/api",
+          browserURL: "https://testnet.explorer.etherlink.com",
         },
       },
       {
