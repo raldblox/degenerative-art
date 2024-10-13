@@ -84,7 +84,7 @@ export default function Bridge() {
           <Select
             radius="sm"
             selectedKeys={
-              selectedNetwork.length > 0 ? [selectedNetwork] : ["42793"]
+              selectedNetwork.length > 0 ? [selectedNetwork] : ["128123"]
             }
             // selectedKeys={[selectedNetwork]}
             onChange={handleSelectionChange}
@@ -99,7 +99,7 @@ export default function Bridge() {
               label:
                 "group-data-[filled=true]:-translate-y-5 text-black font-semibold",
               trigger: "min-h-20 ",
-              listboxWrapper: "max-h-[400px]",
+              listboxWrapper: "max-h-[300px]",
             }}
             listboxProps={{
               itemClasses: {
@@ -170,7 +170,7 @@ export default function Bridge() {
           <Select
             radius="sm"
             selectedKeys={
-              destinationNetwork.length > 0 ? [destinationNetwork] : ["1116"]
+              destinationNetwork.length > 0 ? [destinationNetwork] : ["1115"]
             }
             // selectedKeys={[selectedNetwork]}
             onChange={handleDestinationChange}
@@ -185,7 +185,7 @@ export default function Bridge() {
               label:
                 "group-data-[filled=true]:-translate-y-5 text-black font-semibold",
               trigger: "min-h-20 ",
-              listboxWrapper: "max-h-[400px]",
+              listboxWrapper: "max-h-[300px]",
             }}
             listboxProps={{
               itemClasses: {

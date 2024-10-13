@@ -98,7 +98,7 @@ export const Providers = (props) => {
       .map(
         (network, index) =>
           new ethers.Contract(
-            network.contracts?.moodArt,
+            network?.contracts?.moodArt,
             moodArtABI,
             providers[index]
           )

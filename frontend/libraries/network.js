@@ -1,7 +1,7 @@
 export const networks = [
   {
     isLive: true,
-    hasBridge: true,
+    hasBridge: false,
     chainId: 42793,
     rpcUrls: ["https://node.mainnet.etherlink.com"],
     chainName: "Etherlink",
@@ -27,7 +27,7 @@ export const networks = [
   },
   {
     isLive: true,
-    hasBridge: true,
+    hasBridge: false,
     chainId: 1116,
     chainName: "Core",
     rpcUrls: ["https://rpc.coredao.org"],
@@ -53,7 +53,7 @@ export const networks = [
   },
   {
     isLive: true,
-    hasBridge: true,
+    hasBridge: false,
     chainId: 137,
     rpcUrls: ["https://polygon.llamarpc.com", "https://polygon-rpc.com/"],
     chainName: "Polygon",
@@ -173,5 +173,65 @@ export const networks = [
     blockExplorerUrls: ["https://explorer-testnet.soneium.org"],
     icon: "./chains/soneium.svg",
     site: "https://soneium.org",
+  },
+  {
+    isLive: false,
+    hasBridge: true,
+    chainId: 128123,
+    rpcUrls: ["https://testnet.explorer.etherlink.com/api"],
+    chainName: "Etherlink Testnet",
+    nativeCurrency: {
+      name: "XTZ",
+      symbol: "XTZ",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://testnet.explorer.etherlink.com"],
+    icon: "./chains/etherlink.svg",
+    site: "https://etherlink.com",
+    contracts: {
+      wrappedMOOD: "0x9141913013164CaFbc8F17659fF8a09D3B85bF5D",
+      hexalanaBridge: "0xE8560171e6fe13bB803eacb29396b1b7E0a0E634",
+    },
+    marketplaces: [],
+  },
+  {
+    isLive: false,
+    hasBridge: true,
+    chainId: 1115,
+    chainName: "Core Testnet",
+    rpcUrls: ["https://api.test.btcs.network/api"],
+    nativeCurrency: {
+      name: "CORE",
+      symbol: "CORE",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://scan.test.btcs.network"],
+    icon: "./chains/coredao.svg",
+    site: "https://coredao.org",
+    contracts: {
+      wrappedMOOD: "0xbba7dDc9502C196f6e2284183E408Bf895044Ca1",
+      hexalanaBridge: "0xd4A045892ACD59423dFD16928e5EBbA7a3f37Ae6",
+    },
+    marketplaces: [],
+  },
+  {
+    isLive: false,
+    hasBridge: true,
+    chainId: 80002,
+    rpcUrls: ["https://rpc-amoy.polygon.technology"],
+    chainName: "Polygon Amoy",
+    nativeCurrency: {
+      name: "POL",
+      symbol: "POL",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://www.oklink.com/amoy"],
+    icon: "./chains/polygon.png",
+    site: "https://polygon.technology/",
+    contracts: {
+      wrappedMOOD: "0x2f949759779288E6cE43bB0618039F2A8345aBa4",
+      hexalanaBridge: "0x67478CBbAc85F9bD3eb1b4fF4f5de5727ABff157",
+    },
+    marketplaces: [],
   },
 ];
