@@ -8,6 +8,7 @@ import { Divider } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 import Bridge from "./bridge/page";
+import { networks } from "@/libraries/network";
 
 export default function Home() {
   const { setSelectedNavTab, selectedNavTab, setSelectedNetwork } = useContext(
@@ -19,14 +20,22 @@ export default function Home() {
 
   if (!mounted) {
     const tab = searchParams.get("tab");
-    const chain = searchParams.get("network");
+    const network = searchParams.get("network");
 
     if (tab) {
       setSelectedNavTab(tab);
     }
 
-    if (chain) {
-      setSelectedNetwork(chain);
+    if (network) {
+      const foundNetwork = networks.find(
+        (n) => n.chainName.toLowerCase() === network.toLowerCase() // Convert both to lowercase for case-insensitive comparison
+      );
+      if (foundNetwork) {
+        setSelectedNetwork(foundNetwork.chainId.toString());
+      } else {
+        // Handle the case where the network is not found (e.g., display an error message)
+        console.error("Network not found:", network);
+      }
     }
 
     setMounted(true);
@@ -46,11 +55,11 @@ export default function Home() {
               <Hero />
             </div>
           )}
-          {selectedNavTab == "bridge" && (
+          {/* {selectedNavTab == "bridge" && (
             <div className="">
               <Bridge />
             </div>
-          )}
+          )} */}
         </>
       )}
 

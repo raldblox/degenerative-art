@@ -162,6 +162,7 @@ export const networks = [
   },
   {
     isLive: false,
+    isTestnet: true,
     chainId: 1946,
     chainName: "Soneium Minato",
     rpcUrls: ["https://optimistic.etherscan.io"],
@@ -176,6 +177,7 @@ export const networks = [
   },
   {
     isLive: false,
+    isTestnet: true,
     hasBridge: true,
     chainId: 128123,
     rpcUrls: ["https://testnet.explorer.etherlink.com/api"],
@@ -196,6 +198,7 @@ export const networks = [
   },
   {
     isLive: false,
+    isTestnet: true,
     hasBridge: true,
     chainId: 1115,
     chainName: "Core Testnet",
@@ -216,6 +219,7 @@ export const networks = [
   },
   {
     isLive: false,
+    isTestnet: true,
     hasBridge: true,
     chainId: 80002,
     rpcUrls: ["https://rpc-amoy.polygon.technology"],

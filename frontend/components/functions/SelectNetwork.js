@@ -156,6 +156,7 @@ export const SelectNetwork = () => {
       >
         {(chain) => (
           <SelectItem
+            color={chain.isTestnet ? "warning" : "default"}
             key={chain.chainId}
             textValue={chain.chainName}
             isReadOnly={!chain.isLive}
