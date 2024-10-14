@@ -33,6 +33,7 @@ import { LockIcon } from "../icons/BasicIcons";
 import { Context } from "@/providers/Providers";
 import { networks } from "@/libraries/network";
 import { MintEmoji } from "../functions/MintEmoji";
+import { useSession } from "next-auth/react";
 
 export default function Feels() {
   //   const { data: session, status } = useSession();
@@ -48,7 +49,7 @@ export default function Feels() {
     setSelectedNavTab,
   } = useContext(Context);
   const progressCircle = useRef(null);
-  const progressContent = useRef(null);
+  const { data: session, status } = useSession();
   const onAutoplayTimeLeft = (s, time, progress) => {
     progressCircle.current.style.setProperty("--progress", 1 - progress);
     // progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
@@ -59,7 +60,7 @@ export default function Feels() {
       <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col md:gap-3 px-3 md:px-6 overflow-hidden">
         <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-4 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
-            <span>gm ser 🌤</span>
+            <span>gm {session?.user?.name.split(" ")[0]} 🌤</span>
           </div>
           <div className="space-y-6">
             <h1 className="text-3xl">
@@ -69,9 +70,9 @@ export default function Feels() {
 
           <div className="flex items-center gap-2">
             <MintEmoji />
-            <Button color="success" variant="solid" endContent={<LockIcon />}>
+            {/* <Button color="success" variant="solid" endContent={<LockIcon />}>
               Express It
-            </Button>
+            </Button> */}
           </div>
         </div>
 

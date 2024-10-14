@@ -492,7 +492,13 @@ export const Hero = () => {
                     </h1>
 
                     <div className="flex items-center w-full gap-2">
-                      <Button size="md" radius="sm" variant="solid">
+                      <Button
+                        size="md"
+                        radius="sm"
+                        variant="solid"
+                        as={Link}
+                        href="/claim"
+                      >
                         Opening Soon
                       </Button>
                     </div>

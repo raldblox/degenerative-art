@@ -14,7 +14,8 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import React, { useContext, useState } from "react";
+import { ethers } from "ethers";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Bridge() {
   const {
@@ -22,17 +23,36 @@ export default function Bridge() {
     setSelectedNetwork,
     selectedChain,
     setSelectedChain,
+    connectedAccount,
+    connectEthereumWallet,
+    bridgeABI,
+    wrappedERC0ABI,
   } = useContext(Context);
 
-  const [destinationNetwork, setDestinationNetwork] = useState(new Set([]));
+  const [sourceNetwork, setSourceNetwork] = useState("128123");
+  const [destinationNetwork, setDestinationNetwork] = useState("1115");
 
-  const handleSelectionChange = async (e) => {
-    const chainId = Number(e.target.value);
-    setSelectedNetwork(chainId.toString());
+  const [sourceChain, setSourceChain] = useState(null);
+  const [destinationChain, setDestinationChain] = useState(null);
+
+  const [sourceERC20Instance, setSourceERC20Instance] = useState(null);
+  const [destinationERC20Instance, setDestinationERC20Instance] = useState(
+    null
+  );
+
+  const [sourceERC20Balance, setSourceERC20Balance] = useState(0);
+  const [destinationERC20Balance, setDestinationERC20Balance] = useState(0);
+
+  const [tokenAmount, setTokenAmount] = useState(0);
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSourceChange = async (e) => {
+    const chainId = e ? Number(e.target.value) : Number(sourceNetwork);
+    setSourceNetwork(chainId.toString());
 
     const selectedChain = networks.find((chain) => chain.chainId === chainId);
     const correctedChainId = `0x${chainId.toString(16)}`;
-    console.log(selectedChain);
 
     const correctedSelectedChain = {
       chainId: correctedChainId,
@@ -48,7 +68,7 @@ export default function Bridge() {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: correctedChainId }],
         });
-        setSelectedNetwork(chainId.toString());
+        setSourceNetwork(chainId.toString());
       } catch (switchError) {
         if (switchError.code === 4902) {
           // Network not added to MetaMask
@@ -60,9 +80,9 @@ export default function Bridge() {
           } catch (addError) {
             console.error("Error adding network:", addError);
           }
-          setSelectedNetwork(chainId.toString());
+          setSourceNetwork(chainId.toString());
         } else {
-          setSelectedNetwork([]);
+          setSourceNetwork([]);
           console.error("Error switching network:", switchError);
         }
       }
@@ -73,6 +93,101 @@ export default function Bridge() {
     const chainId = Number(e.target.value);
     setDestinationNetwork(chainId.toString());
   };
+
+  const handleSend = async (e) => {
+    try {
+      if (loading) {
+        return;
+      }
+      if (!connectedAccount) {
+        await connectEthereumWallet();
+      }
+      // Check if contract instances are available
+      if (!sourceERC20Instance || !destinationERC20Instance) {
+        throw new Error("Contract instances not available yet.");
+      }
+
+      const sourceBalance = await sourceERC20Instance.balanceOf(
+        connectedAccount
+      );
+
+      const destinationBalance = await destinationERC20Instance.balanceOf(
+        connectedAccount
+      );
+    } catch (error) {
+      console.error("Error getting balances:", error);
+      // Consider displaying an error message to the user (e.g., using an alert or a toast notification)
+      alert(`Error: ${error.message}`);
+    }
+
+    // get balance of account
+  };
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      if (
+        sourceNetwork &&
+        destinationNetwork &&
+        networks &&
+        window.ethereum &&
+        connectedAccount &&
+        wrappedERC0ABI
+      ) {
+        try {
+          setLoading(true);
+          await handleSourceChange();
+          const source = networks.find(
+            (n) => n.chainId === Number(sourceNetwork)
+          );
+          setSourceChain(source);
+
+          const destination = networks.find(
+            (n) => n.chainId === Number(destinationNetwork)
+          );
+          setDestinationChain(destination);
+
+          // get providers
+          const sourceProvider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await sourceProvider.getSigner();
+          const destinationProvider = new ethers.JsonRpcProvider(
+            destination?.rpcUrls[0]
+          );
+
+          // get instances
+          const sourceERC0 = new ethers.Contract(
+            source?.contracts?.wrappedMOOD,
+            wrappedERC0ABI,
+            signer
+          );
+
+          const destinationERC0 = new ethers.Contract(
+            destination?.contracts?.wrappedMOOD,
+            wrappedERC0ABI,
+            destinationProvider
+          );
+
+          setSourceERC20Instance(sourceERC0);
+          setDestinationERC20Instance(destinationERC0);
+
+          if (connectedAccount) {
+            const sourceBalance = await sourceERC0.balanceOf(connectedAccount);
+
+            const destinationBalance = await destinationERC0.balanceOf(
+              connectedAccount
+            );
+
+            setSourceERC20Balance(ethers.formatEther(sourceBalance));
+            setDestinationERC20Balance(ethers.formatEther(destinationBalance));
+          }
+        } catch (error) {
+          console.warn("Error initializing contracts:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchAll();
+  }, [sourceNetwork, destinationNetwork, connectedAccount, wrappedERC0ABI]);
 
   // bridge plan
   // 1. lock token to etherlink
@@ -87,18 +202,19 @@ export default function Bridge() {
         <div className="flex flex-wrap items-start w-full h-full gap-3 mx-auto md:flex-nowrap max-h-lg">
           <Select
             radius="sm"
-            selectedKeys={
-              selectedNetwork.length > 0 ? [selectedNetwork] : ["128123"]
+            selectedKeys={[sourceNetwork]}
+            onChange={handleSourceChange}
+            description={
+              <span className="text-default-500">
+                Balance: {sourceERC20Balance.toString()}
+              </span>
             }
-            // selectedKeys={[selectedNetwork]}
-            onChange={handleSelectionChange}
             disallowEmptySelection
             selectionMode="single"
             items={networks}
             label="Source"
             className=""
             variant="flat"
-            description={<span className="text-default-500">Balance: --</span>}
             classNames={{
               label:
                 "group-data-[filled=true]:-translate-y-5 text-black font-semibold",
@@ -173,12 +289,13 @@ export default function Bridge() {
           </Select>
           <Select
             radius="sm"
-            selectedKeys={
-              destinationNetwork.length > 0 ? [destinationNetwork] : ["1115"]
-            }
-            // selectedKeys={[selectedNetwork]}
+            selectedKeys={[destinationNetwork]}
             onChange={handleDestinationChange}
-            description={<span className="text-default-500">Balance: --</span>}
+            description={
+              <span className="text-default-500">
+                Balance: {destinationERC20Balance.toString()}
+              </span>
+            }
             disallowEmptySelection
             selectionMode="single"
             items={networks}
@@ -264,6 +381,8 @@ export default function Bridge() {
             radius="sm"
             size="lg"
             type="number"
+            value={tokenAmount}
+            onChange={(e) => setTokenAmount(e.target.value)}
             // label="Token Supply"
             placeholder="0.00"
             labelPlacement="inside"
@@ -282,6 +401,9 @@ export default function Bridge() {
         </div>
         <div className="w-full mt-6">
           <Button
+            isLoading={loading}
+            isDisabled={loading}
+            onClick={handleSend}
             fullWidth
             size="lg"
             color="primary"

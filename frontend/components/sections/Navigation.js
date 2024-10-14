@@ -86,6 +86,7 @@ export default function Navigation() {
               {path == "/" && <Tab key="feels" title="Feels" />}
               {path == "/" && <Tab key="home" title="Home" />}
               {path == "/bridge" && <Tab key="bridge" title="Bridge" />}
+              {path == "/claim" && <Tab key="reward" title="Reward" />}
 
               {/* <Tab key="games" title="Games" isDisabled/> */}
             </Tabs>

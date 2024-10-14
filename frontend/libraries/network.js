@@ -180,7 +180,7 @@ export const networks = [
     isTestnet: true,
     hasBridge: true,
     chainId: 128123,
-    rpcUrls: ["https://testnet.explorer.etherlink.com/api"],
+    rpcUrls: ["https://node.ghostnet.etherlink.com"],
     chainName: "Etherlink Testnet",
     nativeCurrency: {
       name: "XTZ",
@@ -191,7 +191,8 @@ export const networks = [
     icon: "./chains/etherlink.svg",
     site: "https://etherlink.com",
     contracts: {
-      wrappedMOOD: "0x9141913013164CaFbc8F17659fF8a09D3B85bF5D",
+      MOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
+      wrappedMOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
       hexalanaBridge: "0xE8560171e6fe13bB803eacb29396b1b7E0a0E634",
     },
     marketplaces: [],
@@ -202,7 +203,7 @@ export const networks = [
     hasBridge: true,
     chainId: 1115,
     chainName: "Core Testnet",
-    rpcUrls: ["https://api.test.btcs.network/api"],
+    rpcUrls: ["https://rpc.test.btcs.network"],
     nativeCurrency: {
       name: "CORE",
       symbol: "CORE",
