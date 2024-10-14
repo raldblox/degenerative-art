@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { SessionProvider } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
 import moodArtABI from "@/libraries/abis/MOODART.json";
+import wrappedERC20ABI from "@/libraries/abis/WRAPPEDERC20.json";
 import { networks } from "@/libraries/network";
 
 export const Context = createContext();
@@ -16,7 +17,9 @@ export const Providers = (props) => {
   const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
   const [selectedChain, setSelectedChain] = useState({});
   const [selectedNavTab, setSelectedNavTab] = useState("home");
-  const [totalSupplies, setTotaSupplies] = useState({});
+  const [totalSupplies, setTotalSupplies] = useState({});
+  const [tokenBalances, setTokenBalances] = useState({});
+  const [nftBalances, setNFTBalances] = useState([]);
 
   // instances
   const [providers, setProviders] = useState([]);
@@ -25,30 +28,20 @@ export const Providers = (props) => {
   const [randomFeels, setRandomFeels] = useState(new Map([]));
   const [usedIndices, setUsedIndices] = useState([]);
 
+  const [fetching, setFetching] = useState(false);
+
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
 
     if (window.ethereum) {
       try {
         const provider = new ethers.BrowserProvider(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
         const signer = await provider.getSigner();
         const user = await signer.getAddress();
-        console.log("Connected to Browser's Wallet...");
         setWalletSigner(signer);
         setConnectedAccount(user);
-
-        // Add 'accountsChanged' event listener
-        ethereum.on("accountsChanged", handleAccountsChanged);
-        function handleAccountsChanged() {
-          window.location.reload();
-        }
-
-        // Existing 'chainChanged' event listener
-        // ethereum.on("chainChanged", handleChainChanged);
-        // function handleChainChanged() {
-        //   window.location.reload();
-        // }
+        localStorage.setItem("lastWalletConnection", Date.now().toString());
+        console.log("Connected to Browser's Wallet...");
       } catch (error) {
         console.error(`Error connecting to wallet`, error);
       }
@@ -93,6 +86,8 @@ export const Providers = (props) => {
       (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
     );
 
+    setProviders(providers);
+
     const contracts = networks
       .filter((network) => network.isLive)
       .map(
@@ -118,10 +113,25 @@ export const Providers = (props) => {
 
     const totalSupplies = await Promise.all(supplies);
     console.log("totalSupplies", totalSupplies);
-    setTotaSupplies(totalSupplies);
-  };
+    setTotalSupplies(totalSupplies);
 
-  const [fetching, setFetching] = useState(false);
+    if (connectedAccount) {
+      const userBalances = contracts.map((contract, index) =>
+        contract
+          .balanceOf(connectedAccount)
+          .catch(() => {
+            return 0;
+          })
+          .then((totalSupply) => ({
+            name: networks[index].chainName,
+            value: Number(totalSupply),
+          }))
+      );
+      const results = await Promise.all(userBalances);
+      console.log("nftBalances", results);
+      setNFTBalances(results);
+    }
+  };
 
   const getFeels = async () => {
     try {
@@ -236,6 +246,53 @@ export const Providers = (props) => {
     }
   };
 
+  const getBalances = async () => {
+    if (!connectedAccount) {
+      return;
+    }
+
+    const bridgeNetworks = networks.filter((network) => network.hasBridge);
+    const providers = bridgeNetworks.map(
+      (network) => new ethers.JsonRpcProvider(network.rpcUrls[0])
+    );
+
+    const contracts = bridgeNetworks.map(
+      (network, index) =>
+        new ethers.Contract(
+          network?.contracts?.wrappedMOOD,
+          wrappedERC20ABI,
+          providers[index]
+        )
+    );
+
+    const balances = await Promise.all(
+      contracts.map((contract, index) =>
+        contract
+          .balanceOf(connectedAccount)
+          .catch(() => 0)
+          .then((balance) => ({
+            name: bridgeNetworks[index].chainName, // Use bridgeNetworks here
+            value: Number(balance),
+          }))
+      )
+    );
+
+    console.log("tokenBalances", balances);
+    setTokenBalances(balances);
+  };
+
+  useEffect(() => {
+    const lastConnectionTimestamp = localStorage.getItem(
+      "lastWalletConnection"
+    );
+    if (
+      lastConnectionTimestamp &&
+      Date.now() - parseInt(lastConnectionTimestamp) < 60 * 60 * 1000
+    ) {
+      connectEthereumWallet();
+    }
+  }, []);
+
   useEffect(() => {
     getSupplies();
   }, []);
@@ -260,7 +317,7 @@ export const Providers = (props) => {
     setSelectedNavTab,
     addToken,
     totalSupplies,
-    setTotaSupplies,
+    setTotalSupplies,
     providers,
     setProviders,
     instances,

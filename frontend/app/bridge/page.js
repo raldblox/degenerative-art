@@ -74,6 +74,10 @@ export default function Bridge() {
     setDestinationNetwork(chainId.toString());
   };
 
+  // bridge plan
+  // 1. lock token to etherlink
+  // 2. burn it
+
   return (
     <div className="flex-grow flex-col min-h-[calc(100vh-130px)] flex justify-center items-center p-3">
       <div className="flex flex-col items-start w-full max-w-lg gap-6 p-6 bg-white rounded-3xl">

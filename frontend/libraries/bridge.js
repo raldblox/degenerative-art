@@ -3,7 +3,8 @@ export const bridges = [
     chainId: 128123,
     chainName: "Etherlink Testnet",
     MOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
-    wrappedMOOD: "0x9141913013164CaFbc8F17659fF8a09D3B85bF5D",
+    wrappedMOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
+    // wrappedMOOD: "0x9141913013164CaFbc8F17659fF8a09D3B85bF5D",
     hexalanaBridge: "0xE8560171e6fe13bB803eacb29396b1b7E0a0E634",
   },
   {

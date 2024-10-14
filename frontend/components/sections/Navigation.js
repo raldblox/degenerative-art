@@ -20,6 +20,7 @@ import {
   NavbarItem,
   Tab,
   Tabs,
+  Tooltip,
   useDisclosure,
   User,
 } from "@nextui-org/react";
@@ -93,10 +94,47 @@ export default function Navigation() {
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
-        {connectedAccount && (
-          <NavbarItem>
-            <Button size="sm" variant="solid" color="default">
-              My Assets
+        {connectedAccount ? (
+          <NavbarItem className="hidden md:block">
+            <Tooltip
+              shadow
+              showArrow
+              placement="bottom-end"
+              content={
+                <div className="px-1 py-2 w-[180px]">
+                  <p className="mb-1 text-tiny text-default-500">Balances</p>
+                  <div className="flex items-center justify-between font-semibold text-tiny">
+                    <span>MOODART NFT</span>
+                    <span>--</span>
+                  </div>
+                  <div className="flex items-center justify-between font-semibold text-tiny">
+                    <span>MOOD TOKEN</span>
+                    <span>--</span>
+                  </div>
+                </div>
+              }
+            >
+              <Button
+                size="sm"
+                variant="solid"
+                color="default"
+                as={Link}
+                href={`/user/${connectedAccount}`}
+              >
+                My Assets
+              </Button>
+            </Tooltip>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="hidden md:block">
+            <Button
+              size="sm"
+              variant="solid"
+              color="default"
+              onClick={connectEthereumWallet}
+              startContent={<MetamaskIcon />}
+            >
+              Connect
             </Button>
           </NavbarItem>
         )}
@@ -157,6 +195,17 @@ export function Account() {
               startContent={<MetamaskIcon />}
             >
               <p className="font-semibold">Connect Metamask</p>
+            </DropdownItem>
+          )}
+
+          {connectedAccount && (
+            <DropdownItem
+              className="block md:hidden"
+              key="connect"
+              color="primary"
+              href={`/user/${connectedAccount}`}
+            >
+              My Assets
             </DropdownItem>
           )}
 

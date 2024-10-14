@@ -314,7 +314,7 @@ export const Hero = () => {
                   </div>
                   <div className="w-full">
                     <Button size="md" radius="sm" variant="solid">
-                      Under Construction
+                      Coming Soon
                     </Button>
                   </div>
                 </section>
@@ -334,7 +334,7 @@ export const Hero = () => {
                   </div>
                   <div className="w-full">
                     <Button size="md" radius="sm" variant="solid">
-                      Under Construction
+                      Coming Soon
                     </Button>
                   </div>
                 </section>
@@ -354,7 +354,7 @@ export const Hero = () => {
                   </div>
                   <div className="w-full">
                     <Button size="md" radius="sm" variant="solid">
-                      Under Construction
+                      Coming Soon
                     </Button>
                   </div>
                 </section>
@@ -395,8 +395,7 @@ export const Hero = () => {
                       even more in our ecosystem!
                     </h1>
                     <h1 className="text-xs tracking-wide uppercase">
-                      <span className="font-bold">1000 MOOD</span>rops per mint
-                      await!
+                      <span className="font-bold">1000 MOOD</span>rops await!
                     </h1>
                     <div className="flex items-center w-full gap-2">
                       <MintEmoji showSlider={false} defaultExpansionLevel={2} />
@@ -435,8 +434,7 @@ export const Hero = () => {
                       Expandable Canvas.
                     </h1>
                     <h1 className="text-xs tracking-wide uppercase">
-                      <span className="font-bold">1000 MOOD</span>rops per mint
-                      await!
+                      <span className="font-bold">1000 MOOD</span>rops await!
                     </h1>
                     <div className="flex items-center w-full gap-2">
                       <MintEmoji
