@@ -8,39 +8,22 @@ async function main() {
   console.log("Relayer", relayer.address);
   console.log("Hexalana", hexalana.address);
 
-  const CHAIN_ID_FOR_CORE = 1115;
-  const CHAIN_ID_FOR_ETHERLINK = 128123;
-  const MOOD = "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd";
+  const MOOD = "0xC5f485F6014c45e165BC1845aFE15Cb59045a2b3"; // etherlinkTestnet
 
-  const BRIDGE = await hre.ethers.deployContract("RemoteHexalanaBridge", [
+  const RemoteBRIDGE = await hre.ethers.deployContract("RemoteHexalanaBridge", [
     hexalana.address,
   ]);
-  await BRIDGE.waitForDeployment();
-  console.log(`HexalanaBridge deployed to ${network.name}:`, BRIDGE.target);
+  await RemoteBRIDGE.waitForDeployment();
+  console.log(`RemoteHexalanaBridge:${network.name}:`, RemoteBRIDGE.target);
 
-  const wrappedMOOD = await hre.ethers.deployContract("MOOD", [BRIDGE.target]);
+  const wrappedMOOD = await hre.ethers.deployContract("MOOD", [
+    RemoteBRIDGE.target,
+  ]);
   await wrappedMOOD.waitForDeployment();
-  console.log(`WrappedMOOD deployed to ${network.name}:`, wrappedMOOD.target);
+  console.log(`WrappedMOOD:${network.name}:`, wrappedMOOD.target);
 
-  // Add MOOD as a supported token on each bridge
-  await BRIDGE.addSupportedToken(MOOD, wrappedMOOD.target);
+  await RemoteBRIDGE.addSupportedToken(MOOD, wrappedMOOD.target);
   console.log(`WrappedMOOD added`);
-
-  // // Perform bridge 100 tokens to Core from Etherlink
-  // const amount = ethers.parseEther("100");
-
-  // const lockTx = await BRIDGE.connect(hexalana).unlockTokens(
-  //   MOOD,
-  //   deployer.address,
-  //   amount,
-  //   CHAIN_ID_FOR_ETHERLINK
-  // );
-  // await lockTx.wait();
-
-  // console.log(
-  //   `Unlocked Balance:`,
-  //   await wrappedMOOD.balanceOf(deployer.address)
-  // );
 }
 
 main().catch((error) => {

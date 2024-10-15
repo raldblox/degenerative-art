@@ -8,46 +8,19 @@ async function main() {
   console.log("Relayer", relayer.address);
   console.log("Hexalana", hexalana.address);
 
-  const CHAIN_ID_FOR_CORE = 1115;
-  const CHAIN_ID_FOR_ETHERLINK = 128123;
-
-  // 1. Deploy the original MOOD ERC20 token (on Etherlink)
-  const MOOD = await hre.ethers.deployContract("MockMOOD", {
-    network: "etherlinkTestnet", // Make sure to deploy on Etherlink
-  });
+  const MOOD = await hre.ethers.deployContract("MockMOOD");
   await MOOD.waitForDeployment();
   console.log("MOOD deployed to:", MOOD.target);
 
-  const BRIDGE = await hre.ethers.deployContract("HexalanaBridge", [
+  const LocalBRIDGE = await hre.ethers.deployContract("HexalanaBridge", [
     hexalana.address,
   ]);
-  await BRIDGE.waitForDeployment();
-  console.log(`HexalanaBridge deployed to ${network.name}:`, BRIDGE.target);
+  await LocalBRIDGE.waitForDeployment();
 
-  const wrappedMOOD = await hre.ethers.deployContract("MOOD", [BRIDGE.target]);
-  await wrappedMOOD.waitForDeployment();
-  console.log(`WrappedMOOD deployed to ${network.name}:`, wrappedMOOD.target);
+  console.log(`Local HexalanaBridge: ${network.name}:`, LocalBRIDGE.target);
 
-  // Add MOOD as a supported token on each bridge
-  await BRIDGE.addSupportedToken(MOOD.target, wrappedMOOD.target);
+  await LocalBRIDGE.addSupportedToken(MOOD.target, MOOD.target);
   console.log(`MOOD added.`);
-
-  // // Perform bridge 100 tokens to Core from Etherlink
-  // const amount = ethers.parseEther("100");
-  // await MOOD.approve(BRIDGE.target, amount);
-  // console.log(
-  //   `Approved allowance:`,
-  //   await MOOD.allowance(deployer.address, BRIDGE.target)
-  // );
-
-  // const lockTx = await BRIDGE.lockTokens(
-  //   MOOD.target,
-  //   amount,
-  //   CHAIN_ID_FOR_CORE
-  // );
-  // await lockTx.wait();
-
-  // console.log(`Locked Balance:`, await MOOD.balanceOf(BRIDGE.target));
 }
 
 main().catch((error) => {

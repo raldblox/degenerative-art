@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract RemoteHexalanaBridge is Ownable(msg.sender) {
     address public hexalana;
+    uint256 public fee;
 
     mapping(address => bool) public supportedTokens;
     mapping(address => address) public wrappedTokenAddresses;
@@ -38,21 +39,26 @@ contract RemoteHexalanaBridge is Ownable(msg.sender) {
 
     function lockTokens(
         address _token,
+        address _sender,
         uint256 _amount,
         uint256 _chainId
-    ) external {
+    ) external payable {
         require(supportedTokens[_token], "Token not supported");
+        require(msg.value >= fee, "Insufficient fund");
+        address wrappedToken = wrappedTokenAddresses[_token];
         require(
-            WrappedERC20(_token).transferFrom(
-                msg.sender,
+            WrappedERC20(wrappedToken).transferFrom(
+                _sender,
                 address(this),
                 _amount
             ),
             "Token transfer failed"
         );
+        (bool success, ) = payable(hexalana).call{value: msg.value}("");
+        require(success, "Payment failed");
 
-        WrappedERC20(_token).burn(address(this), _amount);
-        emit TokenLocked(_token, msg.sender, _amount, _chainId);
+        WrappedERC20(wrappedToken).burn(address(this), _amount);
+        emit TokenLocked(_token, _sender, _amount, _chainId);
     }
 
     function unlockTokens(
@@ -72,7 +78,7 @@ contract RemoteHexalanaBridge is Ownable(msg.sender) {
     function addSupportedToken(
         address _token,
         address _wrappedToken
-    ) external payable onlyOwner {
+    ) external onlyOwner {
         supportedTokens[_token] = true;
         wrappedTokenAddresses[_token] = _wrappedToken;
     }
@@ -80,5 +86,9 @@ contract RemoteHexalanaBridge is Ownable(msg.sender) {
     function removeSupportedToken(address _token) external payable onlyOwner {
         supportedTokens[_token] = false;
         delete wrappedTokenAddresses[_token];
+    }
+
+    function updateHexalana(address _hexalana) external onlyOwner {
+        hexalana = _hexalana;
     }
 }

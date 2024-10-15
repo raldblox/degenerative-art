@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {WrappedERC20} from "./WrappedERC20.sol";
+import {ERC20} from "./WrappedERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract HexalanaBridge is Ownable(msg.sender) {
@@ -38,21 +38,17 @@ contract HexalanaBridge is Ownable(msg.sender) {
 
     function lockTokens(
         address _token,
+        address _sender,
         uint256 _amount,
         uint256 _chainId
     ) external {
         require(supportedTokens[_token], "Token not supported");
         require(
-            WrappedERC20(_token).transferFrom(
-                msg.sender,
-                address(this),
-                _amount
-            ),
+            ERC20(_token).transferFrom(_sender, address(this), _amount),
             "Token transfer failed"
         );
 
-        WrappedERC20(_token).burn(address(this), _amount);
-        emit TokenLocked(_token, msg.sender, _amount, _chainId);
+        emit TokenLocked(_token, _sender, _amount, _chainId);
     }
 
     function unlockTokens(
@@ -64,15 +60,21 @@ contract HexalanaBridge is Ownable(msg.sender) {
         require(supportedTokens[_token], "Token not supported");
         address wrappedToken = wrappedTokenAddresses[_token];
         require(wrappedToken != address(0), "No corresponding wrapped token");
-
-        WrappedERC20(wrappedToken).mint(_recipient, _amount); // Mint on destination chain
+        require(
+            ERC20(_token).transfer(_recipient, _amount),
+            "Token transfer failed"
+        );
         emit TokenUnlocked(_token, _recipient, _amount, _chainId);
+    }
+
+    function updateHexalana(address _hexalana) external onlyOwner {
+        hexalana = _hexalana;
     }
 
     function addSupportedToken(
         address _token,
         address _wrappedToken
-    ) external payable onlyOwner {
+    ) external onlyOwner {
         supportedTokens[_token] = true;
         wrappedTokenAddresses[_token] = _wrappedToken;
     }

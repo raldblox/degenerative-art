@@ -191,9 +191,8 @@ export const networks = [
     icon: "./chains/etherlink.svg",
     site: "https://etherlink.com",
     contracts: {
-      MOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
-      wrappedMOOD: "0x58bA0e99f706083d2c3F1Be6099A97f71Bf7f6fd",
-      hexalanaBridge: "0xE8560171e6fe13bB803eacb29396b1b7E0a0E634",
+      MOOD: "0xC5f485F6014c45e165BC1845aFE15Cb59045a2b3",
+      hexalanaBridge: "0xE255b5BB71Cf0b1Ef47106F9Bd0Dcf1813c27363",
     },
     marketplaces: [],
   },
@@ -213,8 +212,8 @@ export const networks = [
     icon: "./chains/coredao.svg",
     site: "https://coredao.org",
     contracts: {
-      wrappedMOOD: "0xbba7dDc9502C196f6e2284183E408Bf895044Ca1",
-      hexalanaBridge: "0xd4A045892ACD59423dFD16928e5EBbA7a3f37Ae6",
+      MOOD: "0x9518CE4d5E12DEF7b634bC7aA0Bb113ab566467E",
+      hexalanaBridge: "0xb02eDF7C6AF01bAab0a4075e83393648E415d72e",
     },
     marketplaces: [],
   },
@@ -234,8 +233,8 @@ export const networks = [
     icon: "./chains/polygon.png",
     site: "https://polygon.technology/",
     contracts: {
-      wrappedMOOD: "0x2f949759779288E6cE43bB0618039F2A8345aBa4",
-      hexalanaBridge: "0x67478CBbAc85F9bD3eb1b4fF4f5de5727ABff157",
+      MOOD: "0xca2693de4F77D5c983078100b9c306D9568e63e3",
+      hexalanaBridge: "0xfa9E58d2496eb75fa0838a9A92EB5CC1b8424f01",
     },
     marketplaces: [],
   },

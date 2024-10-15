@@ -19,14 +19,10 @@ import React, { useContext, useEffect, useState } from "react";
 
 export default function Bridge() {
   const {
-    selectedNetwork,
-    setSelectedNetwork,
-    selectedChain,
-    setSelectedChain,
     connectedAccount,
-    connectEthereumWallet,
-    bridgeABI,
+    setConnectedAccount,
     wrappedERC0ABI,
+    bridgeABI,
   } = useContext(Context);
 
   const [sourceNetwork, setSourceNetwork] = useState("128123");
@@ -37,6 +33,10 @@ export default function Bridge() {
 
   const [sourceERC20Instance, setSourceERC20Instance] = useState(null);
   const [destinationERC20Instance, setDestinationERC20Instance] = useState(
+    null
+  );
+  const [sourceBridgeInstance, setSourceBridgeInstance] = useState(null);
+  const [destinationBridgeInstance, setDestinationBridgeInstance] = useState(
     null
   );
 
@@ -100,24 +100,57 @@ export default function Bridge() {
         return;
       }
       if (!connectedAccount) {
-        await connectEthereumWallet();
+        throw new Error("No wallet connected");
       }
       // Check if contract instances are available
       if (!sourceERC20Instance || !destinationERC20Instance) {
         throw new Error("Contract instances not available yet.");
       }
 
-      const sourceBalance = await sourceERC20Instance.balanceOf(
-        connectedAccount
+      // Convert tokenAmount to Wei
+      const amountInWei = ethers.parseEther(tokenAmount.toString());
+
+      // Check and approve allowance
+      const allowance = await sourceERC20Instance.allowance(
+        connectedAccount,
+        sourceChain?.contracts?.hexalanaBridge
       );
 
-      const destinationBalance = await destinationERC20Instance.balanceOf(
-        connectedAccount
-      );
+      if (amountInWei > allowance) {
+        const approvalTx = await sourceERC20Instance.approve(
+          sourceChain?.contracts?.hexalanaBridge,
+          amountInWei
+        );
+        await approvalTx.wait();
+        alert(`Approved`);
+      }
+
+      // send to hexalana
+      const data = {
+        action: "bridge",
+        sourceChain: Number(sourceChain),
+        destinationChain: Number(destinationChain),
+        sender: connectedAccount,
+        reciever: connectedAccount,
+        tokenAmount: Number(tokenAmount),
+      };
+
+      const encryptedData = await aesEncrypt(data);
+      console.log("encryptedData:", encryptedData);
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          encryptedData,
+        }),
+      });
+
+      // lock the mood
+
+      // get allowance
     } catch (error) {
-      console.error("Error getting balances:", error);
-      // Consider displaying an error message to the user (e.g., using an alert or a toast notification)
-      alert(`Error: ${error.message}`);
+      console.error("Error:", error.message);
     }
 
     // get balance of account
@@ -160,14 +193,28 @@ export default function Bridge() {
             signer
           );
 
+          const sourceBridge = new ethers.Contract(
+            source?.contracts?.hexalanaBridge,
+            bridgeABI,
+            signer
+          );
+
           const destinationERC0 = new ethers.Contract(
             destination?.contracts?.wrappedMOOD,
             wrappedERC0ABI,
             destinationProvider
           );
 
+          const destinationBridge = new ethers.Contract(
+            destination?.contracts?.hexalanaBridge,
+            bridgeABI,
+            destinationProvider
+          );
+
           setSourceERC20Instance(sourceERC0);
+          setSourceBridgeInstance(sourceBridge);
           setDestinationERC20Instance(destinationERC0);
+          setDestinationBridgeInstance(destinationBridge);
 
           if (connectedAccount) {
             const sourceBalance = await sourceERC0.balanceOf(connectedAccount);
@@ -188,6 +235,33 @@ export default function Bridge() {
     };
     fetchAll();
   }, [sourceNetwork, destinationNetwork, connectedAccount, wrappedERC0ABI]);
+
+  useEffect(() => {
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        // Disconnected
+        setConnectedAccount(null);
+      } else if (accounts[0] !== connectedAccount) {
+        // Wallet address changed
+        setConnectedAccount(accounts[0]);
+        window.location.reload(); // Reload the page
+      }
+    };
+
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+      }
+    };
+  }, [connectedAccount]);
 
   // bridge plan
   // 1. lock token to etherlink
@@ -381,6 +455,7 @@ export default function Bridge() {
             radius="sm"
             size="lg"
             type="number"
+            max={Number(sourceERC20Balance)}
             value={tokenAmount}
             onChange={(e) => setTokenAmount(e.target.value)}
             // label="Token Supply"
@@ -397,12 +472,14 @@ export default function Bridge() {
               inputWrapper: "!h-[80px] !w-full",
               input: "text-3xl font-semibold",
             }}
+            isInvalid={tokenAmount > Number(sourceERC20Balance)}
+            errorMessage="Insufficient MOOD Balance"
           />
         </div>
         <div className="w-full mt-6">
           <Button
             isLoading={loading}
-            isDisabled={loading}
+            isDisabled={loading || sourceERC20Balance == 0}
             onClick={handleSend}
             fullWidth
             size="lg"

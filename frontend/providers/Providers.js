@@ -145,7 +145,6 @@ export const Providers = (props) => {
         };
 
         const liveNetworkUrls = getLiveNetworks();
-        console.log("liveNetworkUrls", liveNetworkUrls);
         const providers = liveNetworkUrls.map(
           (rpcUrl) => new ethers.JsonRpcProvider(rpcUrl)
         );
