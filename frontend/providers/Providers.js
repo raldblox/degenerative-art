@@ -34,7 +34,7 @@ export const Providers = (props) => {
   const endpoint =
     process.env.NEXT_PUBLIC_NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://api.degeneratives.art";
+      : "https://degeneratives.art";
 
   const hexalanaEndpoint = `${endpoint}/api/hexalana/`;
   const moodEndpoint = `${endpoint}/api/mood/`;
