@@ -14,6 +14,7 @@ export const networks = [
     icon: "./chains/etherlink.svg",
     site: "https://etherlink.com",
     contracts: {
+      MOOD: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
       moodArt: "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
       moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
     },

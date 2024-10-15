@@ -8,7 +8,6 @@ contract HexalanaBridge is Ownable(msg.sender) {
     address public hexalana;
 
     mapping(address => bool) public supportedTokens;
-    mapping(address => address) public wrappedTokenAddresses;
 
     event TokenLocked(
         address indexed token,
@@ -58,8 +57,6 @@ contract HexalanaBridge is Ownable(msg.sender) {
         uint256 _chainId
     ) external onlyHexalana {
         require(supportedTokens[_token], "Token not supported");
-        address wrappedToken = wrappedTokenAddresses[_token];
-        require(wrappedToken != address(0), "No corresponding wrapped token");
         require(
             ERC20(_token).transfer(_recipient, _amount),
             "Token transfer failed"
@@ -71,16 +68,11 @@ contract HexalanaBridge is Ownable(msg.sender) {
         hexalana = _hexalana;
     }
 
-    function addSupportedToken(
-        address _token,
-        address _wrappedToken
-    ) external onlyOwner {
+    function addSupportedToken(address _token) external onlyOwner {
         supportedTokens[_token] = true;
-        wrappedTokenAddresses[_token] = _wrappedToken;
     }
 
     function removeSupportedToken(address _token) external payable onlyOwner {
         supportedTokens[_token] = false;
-        delete wrappedTokenAddresses[_token];
     }
 }

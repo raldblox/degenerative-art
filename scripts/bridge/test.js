@@ -16,10 +16,6 @@ async function main() {
   await LocalMOOD.waitForDeployment();
   console.log("MOOD:", LocalMOOD.target);
 
-  const WMOOD = await hre.ethers.deployContract("WMOOD", [LocalMOOD.target]);
-  await WMOOD.waitForDeployment();
-  console.log("WMOOD:", WMOOD.target);
-
   const LocalBRIDGE = await hre.ethers.deployContract("HexalanaBridge", [
     hexalana.address,
   ]);
@@ -39,16 +35,13 @@ async function main() {
   console.log(`WrappedMOOD deployed to ${network.name}:`, wrappedMOOD.target);
 
   // Add MOOD as a supported token on each bridge
-  await LocalBRIDGE.addSupportedToken(LocalMOOD.target, wrappedMOOD.target);
+  await LocalBRIDGE.addSupportedToken(LocalMOOD.target);
   await RemoteBRIDGE.addSupportedToken(LocalMOOD.target, wrappedMOOD.target);
-  await LocalBRIDGE.addSupportedToken(WMOOD.target, wrappedMOOD.target);
-  await RemoteBRIDGE.addSupportedToken(WMOOD.target, wrappedMOOD.target);
   console.log(`MOOD supported.`);
 
   // // Perform bridge 100 tokens to Core from Etherlink
-  const amount = ethers.parseEther("100");
+  const amount = ethers.parseEther("10000");
   await LocalMOOD.approve(LocalBRIDGE.target, amount);
-  await LocalMOOD.approve(WMOOD.target, amount);
   console.log(
     `Approved allowance:`,
     await LocalMOOD.allowance(deployer.address, LocalBRIDGE.target)

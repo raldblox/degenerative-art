@@ -2,9 +2,12 @@
 
 import { LockIcon } from "@/components/icons/BasicIcons";
 import { networks } from "@/libraries/network";
+import { aesEncrypt } from "@/providers/encryption";
 import { Context } from "@/providers/Providers";
 import {
   Avatar,
+  BreadcrumbItem,
+  Breadcrumbs,
   Button,
   ButtonGroup,
   Dropdown,
@@ -23,6 +26,7 @@ export default function Bridge() {
     setConnectedAccount,
     wrappedERC0ABI,
     bridgeABI,
+    hexalanaEndpoint,
   } = useContext(Context);
 
   const [sourceNetwork, setSourceNetwork] = useState("128123");
@@ -46,6 +50,11 @@ export default function Bridge() {
   const [tokenAmount, setTokenAmount] = useState(0);
 
   const [loading, setLoading] = useState(false);
+  const [bridging, setBridging] = useState(false);
+  const [sourceHash, setSourceHash] = useState("");
+  const [destinationHash, setDestinationHash] = useState("");
+
+  const [currentStage, setCurrentStage] = useState("");
 
   const handleSourceChange = async (e) => {
     const chainId = e ? Number(e.target.value) : Number(sourceNetwork);
@@ -96,7 +105,7 @@ export default function Bridge() {
 
   const handleSend = async (e) => {
     try {
-      if (loading) {
+      if (bridging || loading) {
         return;
       }
       if (!connectedAccount) {
@@ -107,6 +116,8 @@ export default function Bridge() {
         throw new Error("Contract instances not available yet.");
       }
 
+      setBridging(true);
+
       // Convert tokenAmount to Wei
       const amountInWei = ethers.parseEther(tokenAmount.toString());
 
@@ -115,44 +126,75 @@ export default function Bridge() {
         connectedAccount,
         sourceChain?.contracts?.hexalanaBridge
       );
+      console.log(`allowance:${allowance}`);
+      setCurrentStage("approving");
 
       if (amountInWei > allowance) {
         const approvalTx = await sourceERC20Instance.approve(
           sourceChain?.contracts?.hexalanaBridge,
-          amountInWei
+          ethers.parseEther(sourceERC20Balance.toString())
         );
         await approvalTx.wait();
-        alert(`Approved`);
       }
 
-      // send to hexalana
+      try {
+        setCurrentStage("locking");
+        const lockTx = await sourceBridgeInstance.lockTokens(
+          process.env.NEXT_PUBLIC_MOOD,
+          connectedAccount,
+          amountInWei,
+          Number(destinationNetwork)
+        );
+
+        await lockTx.wait();
+        setSourceHash(lockTx.hash);
+      } catch (error) {
+        throw new Error("Locking error");
+      }
+
       const data = {
         action: "bridge",
-        sourceChain: Number(sourceChain),
-        destinationChain: Number(destinationChain),
+        sourceChain: Number(sourceNetwork),
+        destinationChain: Number(destinationNetwork),
         sender: connectedAccount,
-        reciever: connectedAccount,
-        tokenAmount: Number(tokenAmount),
+        receiver: connectedAccount,
+        tokenAddress: process.env.NEXT_PUBLIC_MOOD,
+        tokenAmount: Number(amountInWei),
       };
 
       const encryptedData = await aesEncrypt(data);
       console.log("encryptedData:", encryptedData);
+      setCurrentStage("minting");
+      try {
+        const response = await fetch(hexalanaEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            encryptedData,
+          }),
+        });
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          encryptedData,
-        }),
-      });
-
-      // lock the mood
-
-      // get allowance
+        if (response.ok) {
+          const data = await response.json();
+          if (data.message === "Success") {
+            setDestinationHash(data.unlockTxhash);
+            setCurrentStage("bridged");
+          } else {
+            alert(`Error: ${data.message}`);
+            throw new Error(data.message || "Error on bridge");
+          }
+        } else {
+          throw new Error("Bridge unsuccessful");
+        }
+      } catch (error) {
+        throw new Error("Bridge unsuccessful");
+      }
     } catch (error) {
-      console.error("Error:", error.message);
+      setBridging(false);
+      console.error("ERROR:", error.message);
+    } finally {
+      setBridging(false);
     }
-
     // get balance of account
   };
 
@@ -188,7 +230,7 @@ export default function Bridge() {
 
           // get instances
           const sourceERC0 = new ethers.Contract(
-            source?.contracts?.wrappedMOOD,
+            source?.contracts?.MOOD,
             wrappedERC0ABI,
             signer
           );
@@ -200,7 +242,7 @@ export default function Bridge() {
           );
 
           const destinationERC0 = new ethers.Contract(
-            destination?.contracts?.wrappedMOOD,
+            destination?.contracts?.MOOD,
             wrappedERC0ABI,
             destinationProvider
           );
@@ -234,7 +276,13 @@ export default function Bridge() {
       }
     };
     fetchAll();
-  }, [sourceNetwork, destinationNetwork, connectedAccount, wrappedERC0ABI]);
+  }, [
+    sourceNetwork,
+    destinationNetwork,
+    connectedAccount,
+    wrappedERC0ABI,
+    bridging,
+  ]);
 
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
@@ -478,19 +526,54 @@ export default function Bridge() {
         </div>
         <div className="w-full mt-6">
           <Button
-            isLoading={loading}
-            isDisabled={loading || sourceERC20Balance == 0}
+            isLoading={loading || bridging}
+            isDisabled={loading || bridging}
             onClick={handleSend}
             fullWidth
             size="lg"
             color="primary"
             variant="solid"
-            className=""
-            endContent={<LockIcon />}
+            className="h-[70px] text-xl font-semibold"
+            // endContent={<LockIcon />}
           >
-            SEND
+            {bridging ? "BRIDGING" : "BRIDGE"}
           </Button>
         </div>
+      </div>
+      <div className="py-3">
+        <Breadcrumbs
+          underline="none"
+          size="sm"
+          color=""
+          variant="solid"
+          classNames={{
+            list: "bg-transparent",
+          }}
+          itemClasses={{
+            item: [
+              "px-2 py-0.5 border-small border-default-400 rounded-small",
+              "data-[current=true]:bg-primary data-[current=true]:text-white transition-colors",
+              "data-[disabled=true]:border-default-400 data-[disabled=true]:bg-default-100",
+            ],
+            separator: "",
+          }}
+        >
+          <BreadcrumbItem
+            key="approved"
+            isCurrent={currentStage === "approving"}
+          >
+            Approve
+          </BreadcrumbItem>
+          <BreadcrumbItem key="locked" isCurrent={currentStage === "locking"}>
+            Lock
+          </BreadcrumbItem>
+          <BreadcrumbItem key="minted" isCurrent={currentStage === "minting"}>
+            Mint
+          </BreadcrumbItem>
+          <BreadcrumbItem key="bridged" isCurrent={currentStage === "bridged"}>
+            Done
+          </BreadcrumbItem>
+        </Breadcrumbs>
       </div>
     </div>
   );

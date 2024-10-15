@@ -128,7 +128,7 @@
     ],
     "name": "addSupportedToken",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -149,6 +149,11 @@
       {
         "internalType": "address",
         "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_sender",
         "type": "address"
       },
       {
@@ -256,6 +261,19 @@
       }
     ],
     "name": "unlockTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_hexalana",
+        "type": "address"
+      }
+    ],
+    "name": "updateHexalana",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

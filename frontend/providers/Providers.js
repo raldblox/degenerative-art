@@ -31,6 +31,13 @@ export const Providers = (props) => {
 
   const [fetching, setFetching] = useState(false);
 
+  const endpoint =
+    process.env.NEXT_PUBLIC_NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://api.degeneratives.art";
+
+  const hexalanaEndpoint = `${endpoint}/api/hexalana/`;
+
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
 
@@ -58,7 +65,7 @@ export const Providers = (props) => {
         params: {
           type: "ERC20",
           options: {
-            address: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
+            address: selectedChain?.contracts?.MOOD,
             symbol: "MOOD",
             decimals: "18",
             image: "https://degeneratives.art/icon_wht.png",
@@ -331,6 +338,7 @@ export const Providers = (props) => {
     getFeels,
     bridgeABI,
     wrappedERC0ABI,
+    hexalanaEndpoint,
   };
 
   return (
