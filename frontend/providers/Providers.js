@@ -37,6 +37,7 @@ export const Providers = (props) => {
       : "https://api.degeneratives.art";
 
   const hexalanaEndpoint = `${endpoint}/api/hexalana/`;
+  const moodEndpoint = `${endpoint}/api/mood/`;
 
   const connectEthereumWallet = async () => {
     console.log("Connecting to Ethereum Provider...");
@@ -339,6 +340,7 @@ export const Providers = (props) => {
     bridgeABI,
     wrappedERC0ABI,
     hexalanaEndpoint,
+    moodEndpoint,
   };
 
   return (

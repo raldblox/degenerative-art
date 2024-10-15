@@ -14,6 +14,7 @@ import {
   DropdownItem,
   DropdownMenu,
   Input,
+  Link,
   Select,
   SelectItem,
 } from "@nextui-org/react";
@@ -27,22 +28,11 @@ export default function Bridge() {
     wrappedERC0ABI,
     bridgeABI,
     hexalanaEndpoint,
+    moodEndpoint,
   } = useContext(Context);
 
   const [sourceNetwork, setSourceNetwork] = useState("128123");
   const [destinationNetwork, setDestinationNetwork] = useState("1115");
-
-  const [sourceChain, setSourceChain] = useState(null);
-  const [destinationChain, setDestinationChain] = useState(null);
-
-  const [sourceERC20Instance, setSourceERC20Instance] = useState(null);
-  const [destinationERC20Instance, setDestinationERC20Instance] = useState(
-    null
-  );
-  const [sourceBridgeInstance, setSourceBridgeInstance] = useState(null);
-  const [destinationBridgeInstance, setDestinationBridgeInstance] = useState(
-    null
-  );
 
   const [sourceERC20Balance, setSourceERC20Balance] = useState(0);
   const [destinationERC20Balance, setDestinationERC20Balance] = useState(0);
@@ -111,27 +101,47 @@ export default function Bridge() {
       if (!connectedAccount) {
         throw new Error("No wallet connected");
       }
-      // Check if contract instances are available
-      if (!sourceERC20Instance || !destinationERC20Instance) {
-        throw new Error("Contract instances not available yet.");
-      }
+
+      setSourceHash("");
+      setDestinationHash("");
 
       setBridging(true);
+      await handleSourceChange();
+
+      const source = networks.find((n) => n.chainId === Number(sourceNetwork));
+      console.log(source?.contracts?.MOOD, source?.contracts?.hexalanaBridge);
+
+      // get providers
+      const sourceProvider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await sourceProvider.getSigner();
+      const sourceERC0 = new ethers.Contract(
+        source?.contracts?.MOOD,
+        wrappedERC0ABI,
+        signer
+      );
+
+      const sourceBridge = new ethers.Contract(
+        source?.contracts?.hexalanaBridge,
+        bridgeABI,
+        signer
+      );
+
+      console.log(source?.contracts?.MOOD, source?.contracts?.hexalanaBridge);
 
       // Convert tokenAmount to Wei
       const amountInWei = ethers.parseEther(tokenAmount.toString());
 
       // Check and approve allowance
-      const allowance = await sourceERC20Instance.allowance(
+      const allowance = await sourceERC0.allowance(
         connectedAccount,
-        sourceChain?.contracts?.hexalanaBridge
+        source?.contracts?.hexalanaBridge
       );
       console.log(`allowance:${allowance}`);
       setCurrentStage("approving");
 
       if (amountInWei > allowance) {
-        const approvalTx = await sourceERC20Instance.approve(
-          sourceChain?.contracts?.hexalanaBridge,
+        const approvalTx = await sourceERC0.approve(
+          source?.contracts?.hexalanaBridge,
           ethers.parseEther(sourceERC20Balance.toString())
         );
         await approvalTx.wait();
@@ -139,7 +149,7 @@ export default function Bridge() {
 
       try {
         setCurrentStage("locking");
-        const lockTx = await sourceBridgeInstance.lockTokens(
+        const lockTx = await sourceBridge.lockTokens(
           process.env.NEXT_PUBLIC_MOOD,
           connectedAccount,
           amountInWei,
@@ -161,7 +171,7 @@ export default function Bridge() {
         tokenAddress: process.env.NEXT_PUBLIC_MOOD,
         tokenAmount: Number(amountInWei),
       };
-
+      setCurrentStage("encrypting");
       const encryptedData = await aesEncrypt(data);
       console.log("encryptedData:", encryptedData);
       setCurrentStage("minting");
@@ -198,75 +208,64 @@ export default function Bridge() {
     // get balance of account
   };
 
+  function Receipts() {
+    const source = networks.find((n) => n.chainId === Number(sourceNetwork));
+    const destination = networks.find(
+      (n) => n.chainId === Number(destinationNetwork)
+    );
+    return (
+      <div className="flex flex-wrap items-center justify-center gap-1">
+        {sourceHash && (
+          <Link
+            size="sm"
+            color="foreground"
+            isExternal
+            href={`${source.blockExplorerUrls[0]}/tx/${sourceHash}`}
+          >
+            Source TxReceipt
+          </Link>
+        )}
+        <span>--</span>
+        {destinationHash && (
+          <Link
+            size="sm"
+            color="foreground"
+            isExternal
+            href={`${destination.blockExplorerUrls[0]}/tx/${destinationHash}`}
+          >
+            Destination TxReceipt
+          </Link>
+        )}
+      </div>
+    );
+  }
+
   useEffect(() => {
     const fetchAll = async () => {
-      if (
-        sourceNetwork &&
-        destinationNetwork &&
-        networks &&
-        window.ethereum &&
-        connectedAccount &&
-        wrappedERC0ABI
-      ) {
+      if (sourceNetwork && destinationNetwork && connectedAccount) {
         try {
           setLoading(true);
-          await handleSourceChange();
-          const source = networks.find(
-            (n) => n.chainId === Number(sourceNetwork)
-          );
-          setSourceChain(source);
+          try {
+            const response = await fetch(moodEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                connectedAccount,
+                sourceNetwork,
+                destinationNetwork,
+              }),
+            });
 
-          const destination = networks.find(
-            (n) => n.chainId === Number(destinationNetwork)
-          );
-          setDestinationChain(destination);
-
-          // get providers
-          const sourceProvider = new ethers.BrowserProvider(window.ethereum);
-          const signer = await sourceProvider.getSigner();
-          const destinationProvider = new ethers.JsonRpcProvider(
-            destination?.rpcUrls[0]
-          );
-
-          // get instances
-          const sourceERC0 = new ethers.Contract(
-            source?.contracts?.MOOD,
-            wrappedERC0ABI,
-            signer
-          );
-
-          const sourceBridge = new ethers.Contract(
-            source?.contracts?.hexalanaBridge,
-            bridgeABI,
-            signer
-          );
-
-          const destinationERC0 = new ethers.Contract(
-            destination?.contracts?.MOOD,
-            wrappedERC0ABI,
-            destinationProvider
-          );
-
-          const destinationBridge = new ethers.Contract(
-            destination?.contracts?.hexalanaBridge,
-            bridgeABI,
-            destinationProvider
-          );
-
-          setSourceERC20Instance(sourceERC0);
-          setSourceBridgeInstance(sourceBridge);
-          setDestinationERC20Instance(destinationERC0);
-          setDestinationBridgeInstance(destinationBridge);
-
-          if (connectedAccount) {
-            const sourceBalance = await sourceERC0.balanceOf(connectedAccount);
-
-            const destinationBalance = await destinationERC0.balanceOf(
-              connectedAccount
-            );
-
-            setSourceERC20Balance(ethers.formatEther(sourceBalance));
-            setDestinationERC20Balance(ethers.formatEther(destinationBalance));
+            if (response.ok) {
+              const data = await response.json();
+              console.log(data);
+              setSourceERC20Balance(data.sourceBalance);
+              setDestinationERC20Balance(data.destinationBalance);
+            } else {
+              throw new Error("Fetch unsuccessful");
+            }
+          } catch (error) {
+            throw new Error("Fetch unsuccessful");
           }
         } catch (error) {
           console.warn("Error initializing contracts:", error);
@@ -275,14 +274,9 @@ export default function Bridge() {
         }
       }
     };
+
     fetchAll();
-  }, [
-    sourceNetwork,
-    destinationNetwork,
-    connectedAccount,
-    wrappedERC0ABI,
-    bridging,
-  ]);
+  }, [connectedAccount, bridging, sourceNetwork, destinationNetwork]);
 
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
@@ -311,9 +305,10 @@ export default function Bridge() {
     };
   }, [connectedAccount]);
 
-  // bridge plan
-  // 1. lock token to etherlink
-  // 2. burn it
+  const handleSwitch = () => {
+    setSourceNetwork(destinationNetwork);
+    setDestinationNetwork(sourceNetwork);
+  };
 
   return (
     <div className="flex-grow flex-col min-h-[calc(100vh-130px)] flex justify-center items-center p-3">
@@ -321,14 +316,14 @@ export default function Bridge() {
         <div className="w-full py-3 text-3xl font-semibold text-center lowercase">
           Bridge Your MOOD
         </div>
-        <div className="flex flex-wrap items-start w-full h-full gap-3 mx-auto md:flex-nowrap max-h-lg">
+        <div className="flex flex-wrap items-center w-full h-full gap-3 mx-auto md:flex-nowrap max-h-lg">
           <Select
             radius="sm"
-            selectedKeys={[sourceNetwork]}
+            selectedKeys={sourceNetwork ? [sourceNetwork] : ["128123"]}
             onChange={handleSourceChange}
             description={
               <span className="text-default-500">
-                Balance: {sourceERC20Balance.toString()}
+                Balance: {parseFloat(sourceERC20Balance).toFixed(5).toString()}
               </span>
             }
             disallowEmptySelection
@@ -409,13 +404,32 @@ export default function Bridge() {
               </SelectItem>
             )}
           </Select>
+          <Button
+            onClick={handleSwitch}
+            isDisabled={loading || bridging}
+            variant="light"
+            className=""
+            isIconOnly
+            size="sm"
+            startContent={
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 1024 1024"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M118.656 438.656a32 32 0 0 1 0-45.248L416 96l4.48-3.776A32 32 0 0 1 461.248 96l3.712 4.48a32.064 32.064 0 0 1-3.712 40.832L218.56 384H928a32 32 0 1 1 0 64H141.248a32 32 0 0 1-22.592-9.344M64 608a32 32 0 0 1 32-32h786.752a32 32 0 0 1 22.656 54.592L608 928l-4.48 3.776a32.064 32.064 0 0 1-40.832-49.024L805.632 640H96a32 32 0 0 1-32-32" />
+              </svg>
+            }
+          ></Button>
           <Select
             radius="sm"
             selectedKeys={[destinationNetwork]}
             onChange={handleDestinationChange}
             description={
               <span className="text-default-500">
-                Balance: {destinationERC20Balance.toString()}
+                Balance:{" "}
+                {parseFloat(destinationERC20Balance).toFixed(5).toString()}
               </span>
             }
             disallowEmptySelection
@@ -503,6 +517,7 @@ export default function Bridge() {
             radius="sm"
             size="lg"
             type="number"
+            min={0}
             max={Number(sourceERC20Balance)}
             value={tokenAmount}
             onChange={(e) => setTokenAmount(e.target.value)}
@@ -526,14 +541,14 @@ export default function Bridge() {
         </div>
         <div className="w-full mt-6">
           <Button
-            isLoading={loading || bridging}
-            isDisabled={loading || bridging}
+            isLoading={bridging}
+            isDisabled={bridging}
             onClick={handleSend}
             fullWidth
             size="lg"
             color="primary"
             variant="solid"
-            className="h-[70px] text-xl font-semibold"
+            className="h-[60px] text-xl font-semibold"
             // endContent={<LockIcon />}
           >
             {bridging ? "BRIDGING" : "BRIDGE"}
@@ -547,7 +562,7 @@ export default function Bridge() {
           color=""
           variant="solid"
           classNames={{
-            list: "bg-transparent",
+            list: "bg-transparent gap-y-2 items-center justify-center",
           }}
           itemClasses={{
             item: [
@@ -567,6 +582,12 @@ export default function Bridge() {
           <BreadcrumbItem key="locked" isCurrent={currentStage === "locking"}>
             Lock
           </BreadcrumbItem>
+          <BreadcrumbItem
+            key="encrypted"
+            isCurrent={currentStage === "encrypting"}
+          >
+            Encrypt
+          </BreadcrumbItem>
           <BreadcrumbItem key="minted" isCurrent={currentStage === "minting"}>
             Mint
           </BreadcrumbItem>
@@ -574,6 +595,9 @@ export default function Bridge() {
             Done
           </BreadcrumbItem>
         </Breadcrumbs>
+      </div>
+      <div>
+        <Receipts />
       </div>
     </div>
   );
