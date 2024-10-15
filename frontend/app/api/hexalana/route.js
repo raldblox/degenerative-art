@@ -127,11 +127,6 @@ export async function POST(request) {
       tokenAmount
     );
 
-    // return NextResponse.json(
-    //   { message: "Success", lockTxhash: "hash1", unlockTxhash: "hash2" },
-    //   { status: 201 }
-    // );
-
     if (action === "bridge") {
       const { unlockTxhash } = await bridge(
         sourceChain,
