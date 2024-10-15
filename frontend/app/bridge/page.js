@@ -258,7 +258,6 @@ export default function Bridge() {
 
             if (response.ok) {
               const data = await response.json();
-              console.log(data);
               setSourceERC20Balance(data.sourceBalance);
               setDestinationERC20Balance(data.destinationBalance);
             } else {
