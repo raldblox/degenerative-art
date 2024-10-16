@@ -5,6 +5,9 @@ import { networks } from "@/libraries/network";
 import { aesDecrypt } from "@/providers/encryption";
 import wrappedERC0ABI from "@/libraries/abis/WRAPPEDERC20.json";
 import bridgeABI from "@/libraries/abis/BRIDGE.json";
+import { v4 as uuidv4 } from "uuid";
+
+const usedUUIDs = new Set();
 
 export const runtime = "edge";
 
@@ -107,6 +110,7 @@ export async function POST(request) {
     const { encryptedData } = await request.json();
 
     const {
+      uniqueId,
       action,
       sourceChain,
       destinationChain,
@@ -118,6 +122,7 @@ export async function POST(request) {
 
     console.log(
       "Transacting:",
+      uniqueId,
       action,
       sourceChain,
       destinationChain,
@@ -128,6 +133,12 @@ export async function POST(request) {
     );
 
     if (action === "bridge") {
+      if (usedUUIDs.has(uniqueId)) {
+        return NextResponse.json(
+          { message: "Error", error: "UUID already used" },
+          { status: 400 }
+        );
+      }
       const { unlockTxhash } = await bridge(
         sourceChain,
         destinationChain,
@@ -136,6 +147,9 @@ export async function POST(request) {
         tokenAddress,
         tokenAmount
       );
+
+      usedUUIDs.add(uniqueId);
+
       return NextResponse.json(
         { message: "Success", unlockTxhash },
         { status: 201 }

@@ -22,7 +22,8 @@
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^2.12.7",
-    "swiper": "^11.1.14"
+    "swiper": "^11.1.14",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "^8",

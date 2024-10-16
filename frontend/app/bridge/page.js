@@ -20,6 +20,7 @@ import {
 } from "@nextui-org/react";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Bridge() {
   const {
@@ -162,7 +163,11 @@ export default function Bridge() {
         throw new Error("Locking error");
       }
 
+      // Generate a UUID
+      const uniqueId = uuidv4();
+
       const data = {
+        uniqueId: uniqueId,
         action: "bridge",
         sourceChain: Number(sourceNetwork),
         destinationChain: Number(destinationNetwork),
@@ -173,7 +178,9 @@ export default function Bridge() {
       };
       setCurrentStage("encrypting");
       const encryptedData = await aesEncrypt(data);
-      console.log("encryptedData:", encryptedData);
+      console.log({
+        encryptedData,
+      });
       setCurrentStage("minting");
       try {
         const response = await fetch(hexalanaEndpoint, {
