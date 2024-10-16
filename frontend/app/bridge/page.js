@@ -168,6 +168,7 @@ export default function Bridge() {
 
       const data = {
         uniqueId: uniqueId,
+        timestamp: Date.now(),
         action: "bridge",
         sourceChain: Number(sourceNetwork),
         destinationChain: Number(destinationNetwork),

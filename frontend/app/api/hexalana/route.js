@@ -8,6 +8,7 @@ import bridgeABI from "@/libraries/abis/BRIDGE.json";
 import { v4 as uuidv4 } from "uuid";
 
 const usedUUIDs = new Set();
+const timeWindow = 1 * 10 * 1000; // 1 minute // 10 seconds
 
 export const runtime = "edge";
 
@@ -111,6 +112,7 @@ export async function POST(request) {
 
     const {
       uniqueId,
+      timestamp,
       action,
       sourceChain,
       destinationChain,
@@ -123,6 +125,7 @@ export async function POST(request) {
     console.log(
       "Transacting:",
       uniqueId,
+      timestamp,
       action,
       sourceChain,
       destinationChain,
@@ -136,6 +139,13 @@ export async function POST(request) {
       if (usedUUIDs.has(uniqueId)) {
         return NextResponse.json(
           { message: "Error", error: "UUID already used" },
+          { status: 400 }
+        );
+      }
+      const currentTime = Date.now();
+      if (currentTime - timestamp > timeWindow || timestamp > currentTime) {
+        return NextResponse.json(
+          { message: "Error", error: "Invalid timestamp" },
           { status: 400 }
         );
       }
