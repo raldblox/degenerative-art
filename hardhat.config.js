@@ -81,6 +81,18 @@ module.exports = {
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
+      ],
+      gasPrice: 1000000000,
+    },
+    unichainSepolia: {
+      chainId: 1301,
+      name: "Unichain Sepolia",
+      url: "https://sepolia.unichain.org/",
+      accounts: [
+        process.env.OCVLABS_PRIVATE_KEY,
+        process.env.RELAYER_PRIVATE_KEY,
+        process.env.HEXALANA_PRIVATE_KEY,
       ],
       gasPrice: 1000000000,
     },
@@ -97,6 +109,7 @@ module.exports = {
       etherlink: "abc",
       etherlinkTestnet: "abc",
       base: process.env.BASE_API_KEY,
+      unichainSepolia: "fa49ced8-dc4b-4f1b-b190-83b3747d83bf",
     },
     customChains: [
       {
@@ -138,6 +151,14 @@ module.exports = {
           apiURL:
             "https://www.oklink.com/api/explorer/v1/contract/verify/async/api/polygonAmoy",
           browserURL: "https://www.oklink.com/amoy",
+        },
+      },
+      {
+        network: "unichainSepolia",
+        chainId: 1301,
+        urls: {
+          apiURL: "https://api-sepolia.uniscan.xyz/api",
+          browserURL: "https://sepolia.uniscan.xyz",
         },
       },
     ],

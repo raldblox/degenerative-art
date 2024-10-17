@@ -2,10 +2,17 @@
 pragma solidity ^0.8.24;
 
 import {ERC20} from "./WrappedERC20.sol";
+import {IHexalanaBridge} from "../interfaces/IHexalanaBridge.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract HexalanaBridge is Ownable(msg.sender) {
-    address public hexalana;
+contract HexalanaBridge is
+    Ownable(msg.sender),
+    IHexalanaBridge,
+    ReentrancyGuard
+{
+    address private hexalana;
+    uint256 public bridgeFee;
 
     mapping(address => bool) public supportedTokens;
 
@@ -30,7 +37,7 @@ contract HexalanaBridge is Ownable(msg.sender) {
     modifier onlyHexalana() {
         require(
             msg.sender == hexalana,
-            "Only the hexalana can perform this action"
+            "HexalanaBridge: only hexalana can perform this action"
         );
         _;
     }
@@ -40,13 +47,15 @@ contract HexalanaBridge is Ownable(msg.sender) {
         address _sender,
         uint256 _amount,
         uint256 _chainId
-    ) external {
-        require(supportedTokens[_token], "Token not supported");
+    ) external payable nonReentrant {
+        require(supportedTokens[_token], "HexalanaBridge: token not supported");
+        require(msg.value >= bridgeFee, "HexalanaBridge: insufficient fund");
         require(
             ERC20(_token).transferFrom(_sender, address(this), _amount),
-            "Token transfer failed"
+            "HexalanaBridge: token transfer failed"
         );
-
+        (bool success, ) = payable(hexalana).call{value: msg.value}("");
+        require(success, "HexalanaBridge: payment failed");
         emit TokenLocked(_token, _sender, _amount, _chainId);
     }
 
@@ -55,17 +64,13 @@ contract HexalanaBridge is Ownable(msg.sender) {
         address _recipient,
         uint256 _amount,
         uint256 _chainId
-    ) external onlyHexalana {
-        require(supportedTokens[_token], "Token not supported");
+    ) external onlyHexalana nonReentrant {
+        require(supportedTokens[_token], "HexalanaBridge: token not supported");
         require(
             ERC20(_token).transfer(_recipient, _amount),
-            "Token transfer failed"
+            "HexalanaBridge: token transfer failed"
         );
         emit TokenUnlocked(_token, _recipient, _amount, _chainId);
-    }
-
-    function updateHexalana(address _hexalana) external onlyOwner {
-        hexalana = _hexalana;
     }
 
     function addSupportedToken(address _token) external onlyOwner {
@@ -74,5 +79,13 @@ contract HexalanaBridge is Ownable(msg.sender) {
 
     function removeSupportedToken(address _token) external payable onlyOwner {
         supportedTokens[_token] = false;
+    }
+
+    function updateHexalana(address _hexalana) external onlyOwner {
+        hexalana = _hexalana;
+    }
+
+    function updateBridgeFee(uint256 _fee) external onlyOwner {
+        bridgeFee = _fee;
     }
 }

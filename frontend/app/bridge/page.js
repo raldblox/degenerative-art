@@ -17,6 +17,8 @@ import {
   Link,
   Select,
   SelectItem,
+  Skeleton,
+  Spinner,
 } from "@nextui-org/react";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
@@ -197,6 +199,7 @@ export default function Bridge() {
           if (data.message === "Success") {
             setDestinationHash(data.unlockTxhash);
             setCurrentStage("bridged");
+            setTokenAmount(0);
           } else {
             alert(`Error: ${data.message}`);
             throw new Error(data.message || "Error on bridge");
@@ -222,27 +225,32 @@ export default function Bridge() {
       (n) => n.chainId === Number(destinationNetwork)
     );
     return (
-      <div className="flex flex-wrap items-center justify-center gap-1">
-        {sourceHash && (
+      <div className="grid content-center grid-cols-2 gap-2 mx-auto">
+        {sourceHash ? (
           <Link
             size="sm"
             color="foreground"
             isExternal
             href={`${source.blockExplorerUrls[0]}/tx/${sourceHash}`}
+            className="!p-0 text-xs text-default-600 underline underline-offset-2 !m-0"
           >
             Source TxReceipt
           </Link>
+        ) : (
+          <>{bridging && <Skeleton className="w-24 h-4 rounded-lg" />}</>
         )}
-        <span>--</span>
-        {destinationHash && (
+        {destinationHash ? (
           <Link
             size="sm"
             color="foreground"
             isExternal
             href={`${destination.blockExplorerUrls[0]}/tx/${destinationHash}`}
+            className="!p-0 text-xs text-default-600 underline underline-offset-2 !m-0"
           >
             Destination TxReceipt
           </Link>
+        ) : (
+          <>{bridging && <Skeleton className="w-24 h-4 rounded-lg" />}</>
         )}
       </div>
     );
@@ -549,7 +557,11 @@ export default function Bridge() {
         <div className="w-full mt-6">
           <Button
             isLoading={bridging}
-            isDisabled={bridging}
+            isDisabled={
+              bridging ||
+              sourceNetwork == destinationNetwork ||
+              Number(sourceERC20Balance) < tokenAmount
+            }
             onClick={handleSend}
             fullWidth
             size="lg"

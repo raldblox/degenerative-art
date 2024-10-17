@@ -33,6 +33,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -119,11 +124,6 @@
         "internalType": "address",
         "name": "_token",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_wrappedToken",
-        "type": "address"
       }
     ],
     "name": "addSupportedToken",
@@ -133,12 +133,12 @@
   },
   {
     "inputs": [],
-    "name": "hexalana",
+    "name": "bridgeFee",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -169,7 +169,7 @@
     ],
     "name": "lockTokens",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -268,12 +268,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_hexalana",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_fee",
+        "type": "uint256"
       }
     ],
-    "name": "updateHexalana",
+    "name": "updateBridgeFee",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -282,19 +282,13 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_hexalana",
         "type": "address"
       }
     ],
-    "name": "wrappedTokenAddresses",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "updateHexalana",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

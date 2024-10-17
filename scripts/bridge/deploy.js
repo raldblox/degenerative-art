@@ -19,7 +19,7 @@ async function main() {
 
   console.log(`Local HexalanaBridge: ${network.name}:`, LocalBRIDGE.target);
 
-  await LocalBRIDGE.addSupportedToken(MOOD.target, MOOD.target);
+  await LocalBRIDGE.addSupportedToken(MOOD.target);
   console.log(`MOOD added.`);
 }
 
