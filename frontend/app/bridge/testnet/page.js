@@ -34,8 +34,8 @@ export default function Bridge() {
     moodEndpoint,
   } = useContext(Context);
 
-  const [sourceNetwork, setSourceNetwork] = useState("42793");
-  const [destinationNetwork, setDestinationNetwork] = useState("1116");
+  const [sourceNetwork, setSourceNetwork] = useState("128123");
+  const [destinationNetwork, setDestinationNetwork] = useState("1115");
 
   const [sourceERC20Balance, setSourceERC20Balance] = useState(0);
   const [destinationERC20Balance, setDestinationERC20Balance] = useState(0);
@@ -145,8 +145,7 @@ export default function Bridge() {
       if (amountInWei > allowance) {
         const approvalTx = await sourceERC0.approve(
           source?.contracts?.hexalanaBridge,
-          amountInWei
-          // ethers.parseEther(sourceERC20Balance.toString())
+          ethers.parseEther(sourceERC20Balance.toString())
         );
         await approvalTx.wait();
       }
@@ -154,7 +153,7 @@ export default function Bridge() {
       try {
         setCurrentStage("locking");
         const lockTx = await sourceBridge.lockTokens(
-          "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
+          "0xD417b7a1A53ceA5e7B2Cd7d149aB3cf34c74223E",
           connectedAccount,
           amountInWei,
           Number(destinationNetwork)
@@ -177,14 +176,14 @@ export default function Bridge() {
         destinationChain: Number(destinationNetwork),
         sender: connectedAccount,
         receiver: connectedAccount,
-        tokenAddress: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
-        tokenAmount: amountInWei.toString(),
+        tokenAddress: "0xD417b7a1A53ceA5e7B2Cd7d149aB3cf34c74223E",
+        tokenAmount: Number(amountInWei),
       };
       setCurrentStage("encrypting");
       const encryptedData = await aesEncrypt(data);
-      // console.log({
-      //   encryptedData,
-      // });
+      console.log({
+        encryptedData,
+      });
       setCurrentStage("minting");
       try {
         const response = await fetch(hexalanaEndpoint, {
@@ -232,7 +231,7 @@ export default function Bridge() {
             size="sm"
             color="foreground"
             isExternal
-            href={`${source?.blockExplorerUrls[0]}/tx/${sourceHash}`}
+            href={`${source.blockExplorerUrls[0]}/tx/${sourceHash}`}
             className="!p-0 text-xs text-default-600 underline underline-offset-2 !m-0"
           >
             Source TxReceipt
@@ -245,7 +244,7 @@ export default function Bridge() {
             size="sm"
             color="foreground"
             isExternal
-            href={`${destination?.blockExplorerUrls[0]}/tx/${destinationHash}`}
+            href={`${destination.blockExplorerUrls[0]}/tx/${destinationHash}`}
             className="!p-0 text-xs text-default-600 underline underline-offset-2 !m-0"
           >
             Destination TxReceipt
@@ -397,10 +396,8 @@ export default function Bridge() {
               <SelectItem
                 key={chain.chainId}
                 textValue={chain.chainName}
-                isReadOnly={chain.isTestnet || !chain.hasBridge}
-                endContent={
-                  (chain.isTestnet || !chain.hasBridge) && <LockIcon />
-                }
+                isReadOnly={!chain.hasBridge}
+                endContent={!chain.hasBridge && <LockIcon />}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -505,10 +502,8 @@ export default function Bridge() {
               <SelectItem
                 key={chain.chainId}
                 textValue={chain.chainName}
-                isReadOnly={chain.isTestnet || !chain.hasBridge}
-                endContent={
-                  (chain.isTestnet || !chain.hasBridge) && <LockIcon />
-                }
+                isReadOnly={!chain.hasBridge}
+                endContent={!chain.hasBridge && <LockIcon />}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -562,12 +557,11 @@ export default function Bridge() {
         <div className="w-full mt-6">
           <Button
             isLoading={bridging}
-            // isDisabled={
-            //   bridging ||
-            //   sourceNetwork == destinationNetwork ||
-            //   Number(sourceERC20Balance) < tokenAmount
-            // }
-            isDisabled
+            isDisabled={
+              bridging ||
+              sourceNetwork == destinationNetwork ||
+              Number(sourceERC20Balance) < tokenAmount
+            }
             onClick={handleSend}
             fullWidth
             size="lg"

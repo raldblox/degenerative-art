@@ -8,7 +8,7 @@ async function main() {
   console.log("Relayer", relayer.address);
   console.log("Hexalana", hexalana.address);
 
-  const MOOD = "0xD417b7a1A53ceA5e7B2Cd7d149aB3cf34c74223E"; // etherlinkTestnet
+  const MOOD = "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9"; // etherlink mainnet
 
   const RemoteBRIDGE = await hre.ethers.deployContract("RemoteHexalanaBridge", [
     hexalana.address,

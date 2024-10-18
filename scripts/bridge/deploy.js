@@ -8,9 +8,11 @@ async function main() {
   console.log("Relayer", relayer.address);
   console.log("Hexalana", hexalana.address);
 
-  const MOOD = await hre.ethers.deployContract("MockMOOD");
-  await MOOD.waitForDeployment();
-  console.log("MOOD deployed to:", MOOD.target);
+  // const MOOD = await hre.ethers.deployContract("MockMOOD");
+  // await MOOD.waitForDeployment();
+  // console.log("MOOD deployed to:", MOOD.target);
+
+  const MOOD = "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9"; // mainnet etherlink
 
   const LocalBRIDGE = await hre.ethers.deployContract("HexalanaBridge", [
     hexalana.address,
@@ -19,7 +21,7 @@ async function main() {
 
   console.log(`Local HexalanaBridge: ${network.name}:`, LocalBRIDGE.target);
 
-  await LocalBRIDGE.addSupportedToken(MOOD.target);
+  await LocalBRIDGE.addSupportedToken(MOOD);
   console.log(`MOOD added.`);
 }
 

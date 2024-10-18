@@ -1,7 +1,7 @@
 export const networks = [
   {
     isLive: true,
-    hasBridge: false,
+    hasBridge: true,
     chainId: 42793,
     rpcUrls: ["https://node.mainnet.etherlink.com"],
     chainName: "Etherlink",
@@ -17,6 +17,7 @@ export const networks = [
       MOOD: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
       moodArt: "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
       moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+      hexalanaBridge: "0x043f70E3244F9A4f94C3bF569d8660E82B4A2556",
     },
     marketplaces: [
       {
@@ -28,7 +29,7 @@ export const networks = [
   },
   {
     isLive: true,
-    hasBridge: false,
+    hasBridge: true,
     chainId: 1116,
     chainName: "Core",
     rpcUrls: ["https://rpc.coredao.org"],
@@ -43,6 +44,8 @@ export const networks = [
     contracts: {
       moodArt: "0x91a8c5Ce0bD41488351640564baE4C8d7D8e00BD",
       moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+      MOOD: "0x1A7c367D7289e3dF5f8596cCEcd2989d62399b07",
+      hexalanaBridge: "0x0296fe62D3811c7f7a9eC87D1b3EC26385aA9ba1",
     },
     marketplaces: [
       {
@@ -54,7 +57,7 @@ export const networks = [
   },
   {
     isLive: true,
-    hasBridge: false,
+    hasBridge: true,
     chainId: 137,
     rpcUrls: ["https://polygon.llamarpc.com", "https://polygon-rpc.com/"],
     chainName: "Polygon",
@@ -69,6 +72,8 @@ export const networks = [
     contracts: {
       moodArt: "0x957f319210eCC12B9bBbE38ea6B1e92E2748dB6c",
       moodBank: "0x2aB32741dc8453714136bBaFD2D6A5ec77934E23",
+      MOOD: "0x5ae9108bC677e5269b6E71AE51DD15d19863Da1c",
+      hexalanaBridge: "0x191293BFf35aD8493636E1B48C97E5067322694F",
     },
     marketplaces: [
       {
@@ -85,6 +90,7 @@ export const networks = [
   },
   {
     isLive: true,
+    hasBridge: true,
     chainId: 8453,
     chainName: "Base",
     rpcUrls: ["https://mainnet.base.org", "https://base.llamarpc.com"],
@@ -99,6 +105,8 @@ export const networks = [
     contracts: {
       moodArt: "0xBF28585d32faEAf2F58E9Ab15966989f49C3dFfa",
       moodBank: "0xF8fe97f8a779b08a7af2A9d9B86ac393f87B8c55",
+      MOOD: "0xF9E3B82457DA8E1064397b6AC9f72558d5fD25Ab",
+      hexalanaBridge: "0x3fF1d0F1D5BcF7F78422C56e0bD1cd2b8803daf7",
     },
     marketplaces: [
       {
@@ -118,7 +126,6 @@ export const networks = [
       },
     ],
   },
-
   {
     isLive: false,
     chainId: 42161,

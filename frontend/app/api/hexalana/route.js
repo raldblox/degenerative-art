@@ -26,6 +26,10 @@ async function bridge(
       (n) => n.chainId === Number(destinationChain)
     );
 
+    if (source.isTestnet != destination.isTestnet) {
+      throw new Error(`Invalid testnet-mainnet chain`);
+    }
+
     const providerSource = new ethers.JsonRpcProvider(source.rpcUrls[0]);
     const hexalanaWalletSource = new ethers.Wallet(
       process.env.HEXALANA_PRIVATE_KEY,
