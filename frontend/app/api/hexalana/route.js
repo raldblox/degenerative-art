@@ -149,7 +149,10 @@ export async function POST(request) {
       const currentTime = Date.now();
       if (currentTime - timestamp > timeWindow) {
         return NextResponse.json(
-          { message: "Error", error: "Invalid timestamp" },
+          {
+            message: "Error",
+            error: `Invalid timestamp: now:${currentTime} - stamp:${timestamp}`,
+          },
           { status: 400 }
         );
       }
