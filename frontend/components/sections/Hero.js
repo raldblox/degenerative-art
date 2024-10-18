@@ -86,7 +86,7 @@ export const Hero = () => {
             </p>
           </div>
 
-          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[360px]">
+          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[25vw]">
             <Tabs
               radius="full"
               size=""

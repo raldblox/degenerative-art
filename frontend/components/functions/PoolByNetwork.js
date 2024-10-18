@@ -93,12 +93,15 @@ export const PoolByNetwork = () => {
       {selectedNetwork == "1116" && (
         <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="primary"
+            variant="solid"
             size="md"
             radius="sm"
-            className="border-2 border-black dark "
-            endContent={<LockIcon />}
+            className=""
+            // endContent={<LockIcon />}
+            as={Link}
+            href="https://app.glyph.exchange/pool/v2/create/"
+            isExternal
           >
             <LinkPreview url="https://glyph.exchange/">
               Glyph Exchange

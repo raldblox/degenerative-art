@@ -93,12 +93,15 @@ export const SwapByNetwork = () => {
       {selectedNetwork == "1116" && (
         <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="primary"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
-            endContent={<LockIcon />}
+            // endContent={<LockIcon />}
+            as={Link}
+            href="https://app.glyph.exchange/swap/v2/?outputCurrency=0x1a7c367d7289e3df5f8596ccecd2989d62399b07"
+            isExternal
           >
             <LinkPreview url="https://glyph.exchange/">
               Glyph Exchange

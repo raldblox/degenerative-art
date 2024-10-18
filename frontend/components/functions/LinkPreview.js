@@ -117,7 +117,7 @@ export const LinkPreview = ({
                 }}
               >
                 <div
-                  className="block p-1 bg-white border-2 border-transparent shadow rounded-xl"
+                  className="z-50 block p-1 bg-white border-2 border-transparent shadow rounded-xl"
                   style={{ fontSize: 0 }}
                 >
                   <Image

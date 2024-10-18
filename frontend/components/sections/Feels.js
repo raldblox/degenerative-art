@@ -58,7 +58,7 @@ export default function Feels() {
   return (
     <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-170px)] ">
       <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col md:gap-3 px-3 md:px-6 overflow-hidden">
-        <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-4 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+        <div className=" hidden lg:grid md:max-w-[300px] min-h-[350px] relative content-between p-4 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm {session?.user?.name.split(" ")[0]} 🌤</span>
           </div>
