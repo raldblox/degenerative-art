@@ -8,7 +8,7 @@ import bridgeABI from "@/libraries/abis/BRIDGE.json";
 import { v4 as uuidv4 } from "uuid";
 
 const usedUUIDs = new Set();
-const timeWindow = 1 * 10 * 1000; // 1 minute // 10 seconds
+const timeWindow = 2 * 60 * 1000; // 2 minutes
 
 export const runtime = "edge";
 
