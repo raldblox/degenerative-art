@@ -334,6 +334,7 @@ export default function Bridge() {
         </div>
         <div className="flex flex-wrap items-center w-full h-full gap-3 mx-auto md:flex-nowrap max-h-lg">
           <Select
+            isDisabled={bridging}
             radius="sm"
             selectedKeys={sourceNetwork ? [sourceNetwork] : ["128123"]}
             onChange={handleSourceChange}
@@ -442,6 +443,7 @@ export default function Bridge() {
           ></Button>
           <Select
             radius="sm"
+            isDisabled={bridging}
             selectedKeys={[destinationNetwork]}
             onChange={handleDestinationChange}
             description={
@@ -533,6 +535,7 @@ export default function Bridge() {
         </div>
         <div className="w-full">
           <Input
+            isDisabled={bridging}
             color="default"
             radius="sm"
             size="lg"
