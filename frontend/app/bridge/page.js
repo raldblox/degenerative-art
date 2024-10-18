@@ -565,9 +565,10 @@ export default function Bridge() {
             isDisabled={
               bridging ||
               sourceNetwork == destinationNetwork ||
-              Number(sourceERC20Balance) < tokenAmount ||
-              connectedAccount?.toLowerCase() !=
-                "0x0000704b5427d1be19059ee68badb88935e6079a".toLowerCase()
+              Number(sourceERC20Balance) < tokenAmount
+              // ||
+              // connectedAccount?.toLowerCase() !=
+              // "0x0000704b5427d1be19059ee68badb88935e6079a".toLowerCase()
             }
             onClick={handleSend}
             fullWidth
