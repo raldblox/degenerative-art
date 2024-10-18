@@ -557,11 +557,12 @@ export default function Bridge() {
         <div className="w-full mt-6">
           <Button
             isLoading={bridging}
-            isDisabled={
-              bridging ||
-              sourceNetwork == destinationNetwork ||
-              Number(sourceERC20Balance) < tokenAmount
-            }
+            // isDisabled={
+            //   bridging ||
+            //   sourceNetwork == destinationNetwork ||
+            //   Number(sourceERC20Balance) < tokenAmount
+            // }
+            isDisabled
             onClick={handleSend}
             fullWidth
             size="lg"
