@@ -34,6 +34,8 @@ export const Hero = () => {
     addToken,
     totalSupplies,
     setSelectedNavTab,
+    showMintModal,
+    setShowMintModal,
   } = useContext(Context);
   const { data: session, status } = useSession();
 
@@ -127,7 +129,7 @@ export const Hero = () => {
                 radius="sm"
                 variant="solid"
                 onClick={() => {
-                  setSelectedHomeTab("nft");
+                  setShowMintModal(showMintModal ? false : true);
                 }}
               >
                 Mint
@@ -136,11 +138,10 @@ export const Hero = () => {
                 size="sm"
                 radius="sm"
                 variant="solid"
-                onClick={() => {
-                  setSelectedHomeTab("defi");
-                }}
+                href="/bridge"
+                as={Link}
               >
-                Stake
+                Bridge
               </Button>
               <Button
                 size="sm"

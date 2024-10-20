@@ -21,6 +21,7 @@ export const Providers = (props) => {
   const [totalSupplies, setTotalSupplies] = useState({});
   const [tokenBalances, setTokenBalances] = useState({});
   const [nftBalances, setNFTBalances] = useState([]);
+  const [showMintModal, setShowMintModal] = useState(false);
 
   // instances
   const [providers, setProviders] = useState([]);
@@ -341,6 +342,8 @@ export const Providers = (props) => {
     wrappedERC0ABI,
     hexalanaEndpoint,
     moodEndpoint,
+    showMintModal,
+    setShowMintModal,
   };
 
   return (

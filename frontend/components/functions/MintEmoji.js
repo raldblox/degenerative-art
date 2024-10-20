@@ -28,7 +28,7 @@ import LivePriceChart from "./LivePriceChart";
 import confetti from "canvas-confetti";
 
 export const MintEmoji = ({ showSlider, forceStop }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const {
     countdown,
     selectedNetwork,
@@ -41,6 +41,8 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
     addToken,
     setSelectedNavTab,
     setSelectedNetwork,
+    showMintModal,
+    setShowMintModal,
   } = useContext(Context);
 
   const fieldsRef = useRef(null);
@@ -428,6 +430,14 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
       handleSlider(expansionLevel);
     }
   }, [inputValues]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [showMintModal]);
 
   return (
     <>
