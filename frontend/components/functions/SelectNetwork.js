@@ -145,7 +145,13 @@ export const SelectNetwork = () => {
                 radius="sm"
               />
               <div className="flex flex-col">
-                <span className="font-semibold">{item.data.chainName}</span>
+                <span
+                  className={`font-semibold ${
+                    item.data.isTestnet && "text-default-700"
+                  }`}
+                >
+                  {item.data.chainName}
+                </span>
                 <span className="text-default-700 text-tiny">
                   ({item.data.nativeCurrency.symbol})
                 </span>
@@ -172,7 +178,9 @@ export const SelectNetwork = () => {
                 />
                 <div className="flex flex-col">
                   <LinkPreview
-                    className="font-semibold text-small"
+                    className={`font-semibold text-small ${
+                      chain.isTestnet && "text-default-500"
+                    }`}
                     url={chain?.site}
                   >
                     {chain.chainName}

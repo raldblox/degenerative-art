@@ -101,7 +101,7 @@ export default function Feels() {
             mousewheel={true}
             autoplay={{
               delay: 5000,
-              disableOnInteraction: false,
+              disableOnInteraction: true,
             }}
             direction={"vertical"}
             thumbs={{ swiper: thumbsSwiper }}
