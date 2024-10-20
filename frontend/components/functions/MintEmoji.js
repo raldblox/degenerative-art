@@ -432,7 +432,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
   }, [inputValues]);
 
   useEffect(() => {
-    if (!isOpen) {
+    if (showMintModal) {
       onOpen();
     } else {
       onClose();
