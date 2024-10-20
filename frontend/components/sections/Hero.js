@@ -129,6 +129,7 @@ export const Hero = () => {
                 radius="sm"
                 variant="solid"
                 onClick={() => {
+                  setSelectedHomeTab("nft");
                   setShowMintModal(showMintModal ? false : true);
                 }}
               >
@@ -419,7 +420,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              {/* <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -461,22 +462,7 @@ export const Hero = () => {
                     </div>
                   </div>
                 </section>
-              </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
-                <section className="grid content-between w-full h-full p-6 ">
-                  <div className="flex items-center gap-3 ">
-                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                      🤖
-                    </span>
-                    <h1 className="text-3xl font-bold text-default-800">
-                      analytics
-                    </h1>
-                  </div>
-                  <div className="h-full">
-                    <Statistics data={totalSupplies} />
-                  </div>
-                </section>
-              </SwiperSlide>
+              </SwiperSlide> */}
               <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
@@ -503,6 +489,21 @@ export const Hero = () => {
                         Opening Soon
                       </Button>
                     </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🤖
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      analytics
+                    </h1>
+                  </div>
+                  <div className="h-full">
+                    <Statistics data={totalSupplies} />
                   </div>
                 </section>
               </SwiperSlide>

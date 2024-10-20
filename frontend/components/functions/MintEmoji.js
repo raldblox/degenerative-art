@@ -436,6 +436,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
       onOpen();
     } else {
       onClose();
+      setShowMintModal(false);
     }
   }, [showMintModal]);
 
