@@ -25,6 +25,7 @@ import { Autoplay, Mousewheel, Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import { FlipWords } from "../functions/FlipWords";
 
 export const Hero = () => {
   const {
@@ -79,7 +80,10 @@ export const Hero = () => {
           </div>
           <div className="absolute drop-shadow-lg space-y-3 md:space-y-6 bottom-[160px] left-6 md:bottom-[120px] md:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
-              degeneratives<span className="">.art</span>
+              degeneratives
+              <span className="">
+                <FlipWords words={[".org", ".art", ".id", ".games"]} />
+              </span>
             </h1>
             <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
               A decentralized creative platform utilizing unicode characters for
