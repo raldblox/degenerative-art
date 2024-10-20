@@ -69,7 +69,7 @@ export default function Navigation() {
           className="flex items-center justify-center gap-2"
         >
           <NavbarItem className="">
-            <NavbarBrand className="md:pr-3">
+            <NavbarBrand className="">
               <DegenerativesLogo />
             </NavbarBrand>
           </NavbarItem>
@@ -85,7 +85,7 @@ export default function Navigation() {
             >
               {path == "/" && <Tab key="feels" title="Feels" />}
               {path == "/" && <Tab key="home" title="Home" />}
-              {path == "/bridge" && <Tab key="bridge" title="Bridge" />}
+              {path == "/bridge" && <Tab key="bridge" title="Portal" />}
               {path == "/claim" && <Tab key="reward" title="Reward" />}
 
               {/* <Tab key="games" title="Games" isDisabled/> */}
