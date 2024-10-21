@@ -404,7 +404,11 @@ export const Hero = () => {
                       <span className="font-bold">1000 MOOD</span>rops await!
                     </h1>
                     <div className="flex items-center w-full gap-2">
-                      <MintEmoji showSlider={false} defaultExpansionLevel={2} />
+                      <MintEmoji
+                        showSlider={true}
+                        defaultExpansionLevel={4}
+                        forceStop={false}
+                      />
                       <Button
                         color="primary"
                         variant="bordered"
