@@ -70,7 +70,7 @@ async function main() {
         }
       }
     } finally {
-      setTimeout(autoBuyAndSell, 5000);
+      setTimeout(autoBuyAndSell, 10000);
     }
   }
 
