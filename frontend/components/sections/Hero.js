@@ -57,12 +57,13 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen select-none">
       <div className="grid w-full px-3 md:px-6 lg:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[450px] md:min-h-[400px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
-          <FancyCard text="hover" />
-          <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
+        <div className="min-h-[450px] md:min-h-[420px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 rounded-2xl">
+          <FancyCard />
+          <div className="absolute max-w-[150px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup
               isBordered
-              color="success"
+              size="sm"
+              color="primary"
               max={4}
               radius="lg"
               total={200}
@@ -75,7 +76,7 @@ export const Hero = () => {
               <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
             </AvatarGroup>
             <p className="text-xs">
-              Join our homies putting their emotions to work!
+              Join our homies put their emotions to work!
             </p>
           </div>
           <div className="absolute drop-shadow-lg space-y-[2vw] bottom-[160px] left-6 lg:bottom-[45%] lg:left-[25vw]">
@@ -86,13 +87,14 @@ export const Hero = () => {
               </span>
             </h1>
             <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
-              A decentralized creative platform utilizing unicode characters for
-              generative art, onchain games, and defi apps within an interactive
-              onchain ecosystem.
+              A decentralized creative platform utilizing{" "}
+              <span className="italic ">unicode characters</span> for generative
+              art, onchain games, and defi apps within an interactive onchain
+              ecosystem.
             </p>
           </div>
 
-          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[90px] lg:bottom-[20px] lg:left-[25vw]">
+          <div className="absolute drop-shadow-md bottom-[10px] left-0 md:left-6 md:bottom-[90px] lg:bottom-[20px] lg:left-[25vw]">
             <Tabs
               className="rounded-full"
               radius="full"
@@ -109,13 +111,12 @@ export const Hero = () => {
               <Tab key="tools" title="Tools" />
             </Tabs>
           </div>
-          <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-3 right-3 md:bottom-6 md:right-6">
+          <div className="absolute px-3 py-1 text-xs rounded-full drop-shadow-lg bg-white/50 backdrop-blur-md bottom-[100px] right-0 md:bottom-6 ">
             <LinkPreview url="https://ocvlabs.com">
               Powered by OnChainVision Labs
             </LinkPreview>
           </div>
         </div>
-
         <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
             <span className="lowercase">
@@ -170,7 +171,6 @@ export const Hero = () => {
             play together within a unified, multi-chain ecosystem.
           </p>
         </div>
-
         {selectedHomeTab == "defi" && (
           <Swiper
             slidesPerView={"auto"}
@@ -182,7 +182,7 @@ export const Hero = () => {
               disableOnInteraction: false,
             }}
             modules={[Pagination, Mousewheel, Autoplay]}
-            className="min-h-[450px] !overflow-visible relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+            className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
           >
             <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
               <section className="grid content-between w-full h-full p-6 ">
@@ -291,7 +291,6 @@ export const Hero = () => {
             </SwiperSlide>
           </Swiper>
         )}
-
         {selectedHomeTab == "game" && (
           <>
             <Swiper
@@ -369,7 +368,6 @@ export const Hero = () => {
             </Swiper>
           </>
         )}
-
         {selectedHomeTab == "nft" && (
           <>
             <Swiper
@@ -430,49 +428,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              {/* <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
-                <section className="grid content-between w-full h-full p-6 ">
-                  <div className="flex items-center gap-3 ">
-                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                      🎨
-                    </span>
-                    <h1 className="text-3xl font-bold text-default-800">
-                      craft
-                    </h1>
-                  </div>
-                  <div className="min-h-[300px] grid content-between">
-                    <h1 className="text-lg lowercase text-default-700">
-                      Break free from 3x3 grid! Make one-of-a-kind arts with our
-                      Expandable Canvas.
-                    </h1>
-                    <h1 className="text-xs tracking-wide uppercase">
-                      <span className="font-bold">1000 MOOD</span>rops await!
-                    </h1>
-                    <div className="flex items-center w-full gap-2">
-                      <MintEmoji
-                        showSlider={true}
-                        defaultExpansionLevel={4}
-                        forceStop={false}
-                      />
-                      <Button
-                        color="primary"
-                        variant="bordered"
-                        size="md"
-                        radius="sm"
-                        className=""
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                          setTimeout(() => {
-                            setSelectedNavTab("feels");
-                          }, 500);
-                        }}
-                      >
-                        Explore Feels
-                      </Button>
-                    </div>
-                  </div>
-                </section>
-              </SwiperSlide> */}
+
               <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
@@ -488,6 +444,34 @@ export const Hero = () => {
                       start claiming your moodart minting reward!
                     </h1>
 
+                    <div className="flex items-center w-full gap-2">
+                      <Button
+                        size="md"
+                        radius="sm"
+                        variant="solid"
+                        as={Link}
+                        href="/claim"
+                      >
+                        Opening Soon
+                      </Button>
+                    </div>
+                  </div>
+                </section>
+              </SwiperSlide>
+              <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+                <section className="grid content-between w-full h-full p-6 ">
+                  <div className="flex items-center gap-3 ">
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
+                      🎁
+                    </span>
+                    <h1 className="text-3xl font-bold text-default-800">
+                      marketplace
+                    </h1>
+                  </div>
+                  <div className="min-h-[300px] grid content-between">
+                    <h1 className="text-lg lowercase text-default-700 text-balance">
+                      buy and sell NFTs, skins, visual effect to set your mood
+                    </h1>
                     <div className="flex items-center w-full gap-2">
                       <Button
                         size="md"
@@ -520,7 +504,6 @@ export const Hero = () => {
             </Swiper>
           </>
         )}
-
         {selectedHomeTab == "tools" && (
           <>
             <Swiper

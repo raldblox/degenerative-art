@@ -5,20 +5,19 @@ import { useMotionTemplate, motion } from "framer-motion";
 import { cn } from "@nextui-org/react";
 
 export const FancyCard = ({ text, className }) => {
-  let mouseX = useMotionValue(150);
-  let mouseY = useMotionValue(150);
+  let mouseX = useMotionValue(50);
+  let mouseY = useMotionValue(50);
 
   const [randomString, setRandomString] = useState("");
 
   useEffect(() => {
-    const str = generateRandomString(1000);
+    const str = generateRandomString(4000);
     setRandomString(str);
     const intervalId = setInterval(() => {
-      const str = generateRandomString(1000);
+      const str = generateRandomString(4000);
       setRandomString(str);
-    }, 1000); // Update every 3000 milliseconds (3 seconds)
+    }, 3000); // Update every 4000 milliseconds (3 seconds)
 
-    // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
@@ -27,8 +26,8 @@ export const FancyCard = ({ text, className }) => {
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString(1500);
-    setRandomString(str);
+    // const str = generateRandomString(4000);
+    // setRandomString(str);
   }
 
   return (
@@ -64,10 +63,10 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
         style={style}
       />
       <motion.div
-        className="absolute inset-0 text-center duration-500 rounded-xl opacity-70 group-hover:animate-pulse group-hover/card:opacity-100 "
+        className="absolute inset-0 text-center duration-500 rounded-xl opacity-30 group-hover:animate-pulse group-hover/card:opacity-100 "
         style={style}
       >
-        <p className="absolute inset-x-0 h-full font-mono text-lg font-bold text-white break-words whitespace-pre-wrap transition-all duration-500 saturate-50">
+        <p className="absolute inset-x-0 h-full font-mono text-sm font-bold leading-tight tracking-tight text-black break-words whitespace-pre-wrap transition-all duration-500">
           {randomString}
         </p>
       </motion.div>
@@ -78,15 +77,16 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
 const emojiRanges = [
   [0x1f600, 0x1f64f], // Emoticons
   // [0x1f300, 0x1f5ff], // Symbols & Pictographs
-  // [0x1f680, 0x1f6ff], // Transport & Map Symbols
+  [0x1f680, 0x1f6ff], // Transport & Map Symbols
   //   [0x2600, 0x26ff], // Miscellaneous Symbols
   //  [0x2700, 0x27bf], // Dingbats
-  // [0x1f900, 0x1f9ff], // Supplemental Symbols and Pictographs
-  //[0x1fa70, 0x1faff], // Symbols and Pictographs Extended-A
+  //[0x1f900, 0x1f9ff], // Supplemental Symbols and Pictographs
+  [0x1fa70, 0x1faff], // Symbols and Pictographs Extended-A
 ];
 
 export const generateRandomString = (length) => {
   let result = "";
+
   for (let i = 0; i < length; i++) {
     // Select a random emoji range
     const range = emojiRanges[Math.floor(Math.random() * emojiRanges.length)];
@@ -98,5 +98,6 @@ export const generateRandomString = (length) => {
     // Convert the code point to a string and add it to the result
     result += String.fromCodePoint(codePoint);
   }
+
   return result;
 };
