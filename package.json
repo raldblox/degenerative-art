@@ -7,7 +7,11 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
+    "@uniswap/sdk-core": "^5.8.5",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
-    "dotenv": "^16.4.5"
+    "@uniswap/v3-periphery": "^1.4.4",
+    "@uniswap/v3-sdk": "^3.18.1",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.4"
   }
 }

@@ -75,6 +75,12 @@ module.exports = {
       ],
       gasPrice: "auto",
     },
+    based: {
+      name: "Base",
+      url: "https://mainnet.base.org",
+      accounts: [process.env.BTURB_PRIVATE_KEY],
+      gasPrice: "auto",
+    },
     "base-sepolia": {
       name: "Base Sepolia",
       url: "https://sepolia.base.org",
