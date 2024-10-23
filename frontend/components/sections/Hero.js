@@ -57,7 +57,7 @@ export const Hero = () => {
   return (
     <section className="relative w-full h-full min-h-screen select-none">
       <div className="grid w-full px-3 md:px-6 lg:grid-cols-4 gap-y-3 md:gap-y-6 gap-x-12">
-        <div className="min-h-[450px] md:min-h-[310px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
+        <div className="min-h-[450px] md:min-h-[400px] cursor-crosshair w-full row-start-2 md:row-start-1 relative col-span-1 md:col-span-4 bg-default-50 rounded-2xl">
           <FancyCard text="hover" />
           <div className="absolute max-w-[180px] space-y-3 right-3 top-6 md:right-6">
             <AvatarGroup
@@ -78,7 +78,7 @@ export const Hero = () => {
               Join our homies putting their emotions to work!
             </p>
           </div>
-          <div className="absolute drop-shadow-lg space-y-3 md:space-y-6 bottom-[160px] left-6 md:bottom-[120px] md:left-[25vw]">
+          <div className="absolute drop-shadow-lg space-y-[2vw] bottom-[160px] left-6 lg:bottom-[45%] lg:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
               degeneratives
               <span className="">
@@ -87,13 +87,14 @@ export const Hero = () => {
             </h1>
             <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
               A decentralized creative platform utilizing unicode characters for
-              generative art, onchain gaming, and defi apps within an
-              interactive onchain ecosystem.
+              generative art, onchain games, and defi apps within an interactive
+              onchain ecosystem.
             </p>
           </div>
 
-          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[20px] md:left-[25vw]">
+          <div className="absolute drop-shadow-md bottom-[60px] left-6 md:bottom-[90px] lg:bottom-[20px] lg:left-[25vw]">
             <Tabs
+              className="rounded-full"
               radius="full"
               size=""
               variant="solid"
@@ -115,7 +116,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="min-h-[450px] !md:max-w-[300px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
+        <div className="min-h-[450px] relative grid content-between p-6 w-full md:-translate-y-[100px] md:translate-x-6 col-span-1 bg-gradient-to-t from-[#002fff] to-[#002fff]/60 text-background rounded-2xl backdrop-blur-sm">
           <div>
             <span className="lowercase">
               gm {session?.user.name.split(" ")[0]} 🌤
@@ -181,7 +182,7 @@ export const Hero = () => {
               disableOnInteraction: false,
             }}
             modules={[Pagination, Mousewheel, Autoplay]}
-            className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
+            className="min-h-[450px] !overflow-visible relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
           >
             <SwiperSlide className="!h-full !w-[350px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
               <section className="grid content-between w-full h-full p-6 ">
@@ -368,6 +369,7 @@ export const Hero = () => {
             </Swiper>
           </>
         )}
+
         {selectedHomeTab == "nft" && (
           <>
             <Swiper
@@ -500,7 +502,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full w-[350px] md:!w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -518,6 +520,7 @@ export const Hero = () => {
             </Swiper>
           </>
         )}
+
         {selectedHomeTab == "tools" && (
           <>
             <Swiper

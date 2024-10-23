@@ -99,7 +99,7 @@ export const LinkPreview = ({
           <AnimatePresence>
             {isOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                initial={{ opacity: 0, y: 100, scale: 0 }}
                 animate={{
                   opacity: 1,
                   y: 0,
@@ -110,14 +110,16 @@ export const LinkPreview = ({
                     damping: 20,
                   },
                 }}
-                exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                exit={{ opacity: 0, y: 50, scale: 0 }}
                 className="shadow-xl rounded-xl"
                 style={{
                   x: translateX,
                 }}
               >
-                <div
-                  className="z-50 block p-1 bg-white border-2 border-transparent shadow rounded-xl"
+                <Link
+                  href={url}
+                  isExternal
+                  className="!z-50 block p-1 bg-primary border-2 border-transparent shadow rounded-2xl"
                   style={{ fontSize: 0 }}
                 >
                   <Image
@@ -130,7 +132,7 @@ export const LinkPreview = ({
                     className="rounded-xl"
                     alt="preview image"
                   />
-                </div>
+                </Link>
               </motion.div>
             )}
           </AnimatePresence>

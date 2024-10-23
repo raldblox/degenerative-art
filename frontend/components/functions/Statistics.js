@@ -95,7 +95,7 @@ export const Statistics = ({ data }) => {
       {data.length > 0 && (
         <>
           <div className="flex items-center justify-center w-full bg-transparent !h-[350px] gap-3">
-            <div className="flex items-center justify-center h-fit w-fit">
+            <div className="items-center justify-center hidden h-fit w-fit md:flex">
               <PieChart width={320} height={320}>
                 <Pie
                   className="p-16"

@@ -177,14 +177,7 @@ export const SelectNetwork = () => {
                   radius="sm"
                 />
                 <div className="flex flex-col">
-                  <LinkPreview
-                    className={`font-semibold text-small ${
-                      chain.isTestnet && "text-default-500"
-                    }`}
-                    url={chain?.site}
-                  >
-                    {chain.chainName}
-                  </LinkPreview>
+                  {chain.chainName}
                   <span className="text-tiny text-default-700">
                     {chain.nativeCurrency.symbol}
                   </span>
