@@ -66,7 +66,7 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
         className="absolute inset-0 text-center duration-500 rounded-xl opacity-30 group-hover:animate-pulse group-hover/card:opacity-100 "
         style={style}
       >
-        <p className="absolute inset-x-0 h-full font-mono text-sm font-bold leading-tight tracking-tight text-black break-words whitespace-pre-wrap transition-all duration-500">
+        <p className="absolute inset-x-0 h-full font-mono text-sm font-bold leading-snug break-words whitespace-pre-wrap transition-all duration-500 text-default-500">
           {randomString}
         </p>
       </motion.div>
@@ -77,11 +77,11 @@ export function CardPattern({ mouseX, mouseY, randomString }) {
 const emojiRanges = [
   [0x1f600, 0x1f64f], // Emoticons
   // [0x1f300, 0x1f5ff], // Symbols & Pictographs
-  [0x1f680, 0x1f6ff], // Transport & Map Symbols
+  // [0x1f680, 0x1f6ff], // Transport & Map Symbols
   //   [0x2600, 0x26ff], // Miscellaneous Symbols
   //  [0x2700, 0x27bf], // Dingbats
-  //[0x1f900, 0x1f9ff], // Supplemental Symbols and Pictographs
-  [0x1fa70, 0x1faff], // Symbols and Pictographs Extended-A
+  [0x1f900, 0x1f9ff], // Supplemental Symbols and Pictographs
+  // [0x1fa70, 0x1faff], // Symbols and Pictographs Extended-A
 ];
 
 export const generateRandomString = (length) => {
