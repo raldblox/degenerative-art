@@ -54,6 +54,7 @@ body {
   height: 100%;
   box-sizing: border-box;
   padding: 10px 0;
+  @apply border-2 border-transparent;
 }
 
 .mySwiper .swiper-slide {
@@ -68,7 +69,7 @@ body {
 
 .mySwiper .swiper-slide-thumb-active {
   opacity: 1;
-  @apply rounded-xl border-1 border-primary/50;
+  @apply border-2 rounded-xl border-primary;
 }
 
 .swiper-slide img {
