@@ -11,12 +11,12 @@ export const FancyCard = ({ text, className }) => {
   const [randomString, setRandomString] = useState("");
 
   useEffect(() => {
-    const str = generateRandomString(4000);
+    const str = generateRandomString(3000);
     setRandomString(str);
     const intervalId = setInterval(() => {
-      const str = generateRandomString(4000);
+      const str = generateRandomString(3000);
       setRandomString(str);
-    }, 3000); // Update every 4000 milliseconds (3 seconds)
+    }, 3000); // Update every 3000 milliseconds (3 seconds)
 
     return () => clearInterval(intervalId);
   }, []);
@@ -26,7 +26,7 @@ export const FancyCard = ({ text, className }) => {
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    // const str = generateRandomString(4000);
+    // const str = generateRandomString(3000);
     // setRandomString(str);
   }
 
