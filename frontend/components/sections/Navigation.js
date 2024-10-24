@@ -166,12 +166,12 @@ export function Account() {
         <DropdownTrigger>
           <User
             name={
-              <span className="hidden text-xs font-semibold text-primary md:hidden">
+              <span className="hidden text-sm font-semibold text-primary md:flex">
                 {session?.user ? session?.user.name.split(" ")[0] : "Anonymous"}
               </span>
             }
             description={
-              <div className="items-center hidden gap-2 text-xs font-semibold md:flex group-hover:text-default-600">
+              <div className="items-center hidden gap-2 text-xs font-semibold uppercase md:flex group-hover:text-default-600">
                 Account
               </div>
             }
