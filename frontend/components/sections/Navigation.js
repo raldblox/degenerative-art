@@ -106,7 +106,7 @@ export default function Navigation() {
                 }
               />
             )}
-            {connectedAccount && (
+            {connectedAccount && path == "/" && (
               <Tab
                 className="hidden md:flex"
                 key="assets"
@@ -118,7 +118,7 @@ export default function Navigation() {
                 }
               />
             )}
-            {path == "/bridge" && <Tab key="bridge" title="Portal" />}
+            {path == "/bridge" && <Tab key="bridge" title="Bridge" />}
             {path == "/portal" && <Tab key="reward" title="Reward" />}
 
             {/* <Tab key="games" title="Games" isDisabled/> */}
