@@ -22,8 +22,8 @@ export const networks = [
     marketplaces: [
       {
         name: "Rarible",
-        icon: "",
-        link: "",
+        icon: "./rarible.svg",
+        link: "https://rarible.com/token",
       },
     ],
   },
