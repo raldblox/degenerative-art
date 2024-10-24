@@ -91,6 +91,11 @@ export const FeelnCard = ({ post }) => {
             <p className="font-semibold text-default-700 text-small">
               MOODART #{post?.tokenId.toString()}
             </p>
+            <Marketplace
+              chainName={post?.chainName}
+              tokenId={post?.tokenId}
+              post={post}
+            />
           </div>
         </CardFooter>
       </Card>
@@ -119,13 +124,9 @@ const Header = ({ chainName, post }) => {
           </Link>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <Marketplace
-          chainName={post?.chainName}
-          tokenId={post?.tokenId}
-          post={post}
-        />
-      </div>
+      {/* <div className="flex items-center gap-2">
+        
+      </div> */}
     </>
   );
 };
@@ -135,7 +136,7 @@ const Marketplace = ({ chainName, tokenId }) => {
   const id = tokenId ? tokenId : 0;
 
   return (
-    <div className="flex items-center justify-center w-full gap-3 p-2 rounded-lg shadow-inner bg-default-100 ">
+    <div className="flex items-center gap-3 p-2 rounded-lg w-fit ">
       {network?.marketplaces.map((marketplace, index) => {
         // Construct the marketplace URL based on its schema
         let marketplaceUrl;
@@ -174,7 +175,7 @@ const Marketplace = ({ chainName, tokenId }) => {
               radius="none"
               width={25}
               height={25}
-              className="w-8 h-8 scale-125 drop-shadow-md hover:scale-100"
+              className="w-8 h-8 scale-125 hover:scale-100"
               src={marketplace?.icon}
               alt={marketplace?.name}
             />
@@ -188,9 +189,9 @@ const Marketplace = ({ chainName, tokenId }) => {
       >
         <Image
           radius="none"
-          width={25}
-          height={25}
-          className="w-8 h-8 drop-shadow-md !rounded-none scale-125 hover:scale-100"
+          width={20}
+          height={20}
+          className="w-8 h-8 !rounded-none hover:scale-125 scale-100"
           src={network?.icon}
           alt={network?.chainName}
         />

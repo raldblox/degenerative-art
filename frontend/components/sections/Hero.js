@@ -178,13 +178,13 @@ export const Hero = () => {
             // loop={true}
             mousewheel={true}
             autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
+              delay: 7000,
+              disableOnInteraction: true,
             }}
             onReachEnd={() => {
               setTimeout(() => {
                 setSelectedHomeTab("nft");
-              }, 5000);
+              }, 7000);
             }}
             modules={[Pagination, Mousewheel, Autoplay]}
             className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -304,13 +304,13 @@ export const Hero = () => {
               // loop={true}
               mousewheel={true}
               autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
+                delay: 7000,
+                disableOnInteraction: true,
               }}
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("tools");
-                }, 5000);
+                }, 7000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -386,13 +386,13 @@ export const Hero = () => {
               // loop={true}
               mousewheel={true}
               autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
+                delay: 7000,
+                disableOnInteraction: true,
               }}
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("game");
-                }, 5000);
+                }, 7000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -527,13 +527,13 @@ export const Hero = () => {
               // loop={true}
               mousewheel={true}
               autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
+                delay: 7000,
+                disableOnInteraction: true,
               }}
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("defi");
-                }, 5000);
+                }, 7000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
