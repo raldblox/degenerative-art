@@ -81,9 +81,9 @@ export const Hero = () => {
           </div>
           <div className="absolute drop-shadow-lg space-y-[2vw] bottom-[160px] left-6 lg:bottom-[45%] lg:left-[25vw]">
             <h1 className="text-3xl md:text-[4vw] font-semibold text-foreground">
-              degeneratives
+              degeneratives.
               <span className="">
-                <FlipWords words={[".org", ".art", ".id", ".games"]} />
+                <FlipWords words={["org", "art", "id", "games"]} />
               </span>
             </h1>
             <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
