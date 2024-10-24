@@ -24,7 +24,7 @@ export const FeelnCard = ({ post }) => {
   return (
     <>
       <Card className="w-full h-full border shadow-sm bg-default-100 !rounded-2xl light ">
-        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-4">
+        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-2">
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
 
@@ -71,7 +71,7 @@ export const FeelnCard = ({ post }) => {
               ))}
             </div>
 
-            <div className="absolute left-0 flex items-center gap-2 p-2 px-3 text-xs font-bold tracking-wider text-left uppercase transition-all duration-300 rounded-r-lg md:opacity-25 bg-default-700 text-default-200 bottom-3 md:group-hover:opacity-100">
+            {/* <div className="absolute left-0 flex items-center gap-2 p-2 px-3 text-xs font-bold tracking-wider text-left uppercase transition-all duration-300 rounded-r-lg md:opacity-25 bg-default-700 text-default-200 bottom-3 md:group-hover:opacity-100">
               <div className="grid leading-tight">
                 <p className="">COLLECT</p>
                 <p>THIS ON</p>
@@ -83,7 +83,7 @@ export const FeelnCard = ({ post }) => {
                   tokenId={post?.tokenId}
                 />
               </span>
-            </div>
+            </div> */}
           </div>
         </CardBody>
         <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
@@ -119,32 +119,14 @@ const Header = ({ chainName, post }) => {
           </Link>
         </div>
       </div>
-      <Button
-        isExternal
-        as={Link}
-        href={`${network?.blockExplorerUrls[0]}/nft/${network?.contracts?.moodArt}/${post.tokenId}`}
-        color="default"
-        radius="full"
-        size="sm"
-        variant="flat"
-        startContent={<ChainIcon chainName={post?.chainName} />}
-      >
-        View
-      </Button>
+      <div className="flex items-center gap-2">
+        <Marketplace
+          chainName={post?.chainName}
+          tokenId={post?.tokenId}
+          post={post}
+        />
+      </div>
     </>
-  );
-};
-
-const ChainIcon = ({ chainName }) => {
-  const network = networks.find((chain) => chain.chainName === chainName);
-
-  return (
-    <Image
-      width={20}
-      className="w-16 h-16 !rounded-none"
-      src={network?.icon}
-      alt={network?.chainName}
-    />
   );
 };
 
@@ -153,7 +135,7 @@ const Marketplace = ({ chainName, tokenId }) => {
   const id = tokenId ? tokenId : 0;
 
   return (
-    <div className="flex items-center gap-1 rounded-full w-fit">
+    <div className="flex items-center justify-center w-full gap-3 p-2 rounded-lg shadow-inner bg-default-100 ">
       {network?.marketplaces.map((marketplace, index) => {
         // Construct the marketplace URL based on its schema
         let marketplaceUrl;
@@ -190,14 +172,29 @@ const Marketplace = ({ chainName, tokenId }) => {
           <Link key={index} isExternal href={marketplaceUrl} color="primary">
             <Image
               radius="none"
-              width={22}
-              className="w-6 h-6 hover:scale-125"
+              width={25}
+              height={25}
+              className="w-8 h-8 scale-125 drop-shadow-md hover:scale-100"
               src={marketplace?.icon}
               alt={marketplace?.name}
             />
           </Link>
         );
       })}
+      <Link
+        isExternal
+        href={`${network?.blockExplorerUrls[0]}/nft/${network?.contracts?.moodArt}/${tokenId}`}
+        color="primary"
+      >
+        <Image
+          radius="none"
+          width={25}
+          height={25}
+          className="w-8 h-8 drop-shadow-md !rounded-none scale-125 hover:scale-100"
+          src={network?.icon}
+          alt={network?.chainName}
+        />
+      </Link>
     </div>
   );
 };
