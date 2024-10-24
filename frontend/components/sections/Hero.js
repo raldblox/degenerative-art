@@ -86,11 +86,11 @@ export const Hero = () => {
                 <FlipWords words={[".org", ".art", ".id", ".games"]} />
               </span>
             </h1>
-            <p className="max-w-xl pr-3 text-xs md:text-sm text-balance">
-              A decentralized creative platform utilizing{" "}
-              <span className="italic ">unicode characters</span> for generative
-              art, onchain games, and defi apps within an interactive onchain
-              ecosystem.
+            <p className="max-w-xl pr-3 text-xs md:text-sm text-pretty">
+              A unique creative platform enabling anyone to create, play, and
+              earn in a unified, multichain ecosystem. We use emoji and{" "}
+              <span className="italic ">Unicode characters</span> for making
+              interactive NFTs, onchain games, and defi applications.
             </p>
           </div>
 
