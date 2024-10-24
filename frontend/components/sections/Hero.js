@@ -189,7 +189,7 @@ export const Hero = () => {
             modules={[Pagination, Mousewheel, Autoplay]}
             className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
           >
-            <SwiperSlide className="!h-full !w-[350px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+            <SwiperSlide className="!h-full !w-[350px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
               <section className="grid content-between w-full h-full p-6">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 ">
@@ -213,7 +213,7 @@ export const Hero = () => {
                 </div>
               </section>
             </SwiperSlide>
-            <SwiperSlide className="!h-full !w-[350px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+            <SwiperSlide className="!h-full !w-[350px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
               <section className="grid content-between w-full h-full p-6 ">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 ">
@@ -237,7 +237,7 @@ export const Hero = () => {
                 </div>
               </section>
             </SwiperSlide>
-            <SwiperSlide className="!h-full !w-[330px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+            <SwiperSlide className="!h-full !w-[330px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
               <section className="grid content-between w-full h-full p-6 ">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 ">
@@ -268,7 +268,7 @@ export const Hero = () => {
                 </div>
               </section>
             </SwiperSlide>
-            <SwiperSlide className="!h-full !w-[330px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+            <SwiperSlide className="!h-full !w-[330px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
               <section className="grid content-between w-full h-full p-6 ">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 ">
@@ -315,7 +315,7 @@ export const Hero = () => {
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
             >
-              <SwiperSlide className="!h-full !w-[350px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[350px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -335,7 +335,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[350px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[350px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -355,7 +355,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[330px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[330px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -397,7 +397,7 @@ export const Hero = () => {
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
             >
-              <SwiperSlide className="!h-full !w-[350px]  animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-100 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[350px]   min-h-[450px] bg-white hover:bg-success transition-all duration-100 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 ">
@@ -444,7 +444,7 @@ export const Hero = () => {
                 </section>
               </SwiperSlide>
 
-              <SwiperSlide className="!h-full !w-[350px] !delay-200 animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-200 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[350px] !delay-200  min-h-[450px] bg-white hover:bg-success transition-all duration-200 rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -473,7 +473,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full !w-[350px] delay-300 animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[350px] delay-300  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -501,7 +501,7 @@ export const Hero = () => {
                   </div>
                 </section>
               </SwiperSlide>
-              <SwiperSlide className="!h-full w-[350px] md:!w-[800px] min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full w-[350px] md:!w-[800px] min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
@@ -538,7 +538,7 @@ export const Hero = () => {
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
             >
-              <SwiperSlide className="!h-full !w-[330px] animate-appearance-in min-h-[450px] bg-white hover:bg-success transition-all duration-300 rounded-2xl">
+              <SwiperSlide className="!h-full !w-[330px]  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
                     <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
