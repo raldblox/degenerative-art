@@ -88,7 +88,7 @@ export const Hero = () => {
             </h1>
             <p className="max-w-xl pr-3 text-xs md:text-sm text-pretty">
               A unique creative platform enabling anyone to create, play, and
-              earn in a unified, multichain ecosystem. We use emoji and{" "}
+              earn in a unified, multichain ecosystem. We utilize emoji and{" "}
               <span className="italic ">Unicode characters</span> for making
               interactive NFTs, onchain games, and defi applications.
             </p>
