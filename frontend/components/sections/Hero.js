@@ -181,6 +181,9 @@ export const Hero = () => {
               delay: 5000,
               disableOnInteraction: false,
             }}
+            onReachEnd={() => {
+              setSelectedHomeTab("nft");
+            }}
             modules={[Pagination, Mousewheel, Autoplay]}
             className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
           >
@@ -302,6 +305,9 @@ export const Hero = () => {
                 delay: 5000,
                 disableOnInteraction: false,
               }}
+              onReachEnd={() => {
+                setSelectedHomeTab("tools");
+              }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
             >
@@ -378,6 +384,9 @@ export const Hero = () => {
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
+              }}
+              onReachEnd={() => {
+                setSelectedHomeTab("game");
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -514,6 +523,9 @@ export const Hero = () => {
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
+              }}
+              onReachEnd={() => {
+                setSelectedHomeTab("defi");
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
