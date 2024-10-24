@@ -184,7 +184,7 @@ export const Hero = () => {
             onReachEnd={() => {
               setTimeout(() => {
                 setSelectedHomeTab("nft");
-              }, 3000);
+              }, 5000);
             }}
             modules={[Pagination, Mousewheel, Autoplay]}
             className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -310,7 +310,7 @@ export const Hero = () => {
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("tools");
-                }, 3000);
+                }, 5000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -392,7 +392,7 @@ export const Hero = () => {
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("game");
-                }, 3000);
+                }, 5000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
@@ -533,7 +533,7 @@ export const Hero = () => {
               onReachEnd={() => {
                 setTimeout(() => {
                   setSelectedHomeTab("defi");
-                }, 3000);
+                }, 5000);
               }}
               modules={[Pagination, Mousewheel, Autoplay]}
               className="min-h-[450px] relative w-full md:max-h-[450px] gap-3 md:gap-6 md:col-span-3 rounded-2xl"
