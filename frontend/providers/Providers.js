@@ -15,7 +15,7 @@ export const Providers = (props) => {
   const [walletSigner, setWalletSigner] = useState(null);
   const [connectedAccount, setConnectedAccount] = useState(null);
   const [selectedHomeTab, setSelectedHomeTab] = useState("nft");
-  const [selectedNetwork, setSelectedNetwork] = useState(new Set([]));
+  const [selectedNetwork, setSelectedNetwork] = useState("42793");
   const [selectedChain, setSelectedChain] = useState({});
   const [selectedNavTab, setSelectedNavTab] = useState("home");
   const [totalSupplies, setTotalSupplies] = useState({});

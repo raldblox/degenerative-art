@@ -8,6 +8,7 @@ import { LinkPreview } from "./LinkPreview";
 
 export const SwapByNetwork = () => {
   const { selectedNetwork } = useContext(Context);
+
   return (
     <>
       {selectedNetwork == "42793" && (
