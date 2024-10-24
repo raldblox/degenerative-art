@@ -71,8 +71,8 @@ export const FeelnCard = ({ post }) => {
               ))}
             </div>
 
-            <div className="absolute right-0 flex items-center gap-2 p-2 px-3 text-xs font-bold tracking-wider text-left uppercase transition-all duration-300 rounded-l-lg opacity-25 bg-default-700 text-default-200 top-3 group-hover:opacity-100">
-              <div className="grid leading-none">
+            <div className="absolute left-0 flex items-center gap-2 p-2 px-3 text-xs font-bold tracking-wider text-left uppercase transition-all duration-300 rounded-r-lg md:opacity-25 bg-default-700 text-default-200 bottom-3 md:group-hover:opacity-100">
+              <div className="grid leading-tight">
                 <p className="">COLLECT</p>
                 <p>THIS ON</p>
               </div>

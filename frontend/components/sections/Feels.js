@@ -92,15 +92,13 @@ export default function Feels() {
             breakpoints={{
               "@0.0": {
                 slidesPerView: 1,
+                mousewheel: false,
               },
-              "@0.6": {
+              "@0.70": {
                 slidesPerView: 1,
-              },
-              "@1.00": {
-                slidesPerView: 1,
+                mousewheel: true,
               },
             }}
-            mousewheel={true}
             autoplay={{
               delay: 5000,
               disableOnInteraction: true,
