@@ -15,8 +15,8 @@ export const networks = [
     site: "https://etherlink.com",
     contracts: {
       MOOD: "0xd08B30c1EdA1284cD70E73F29ba27B5315aCc3F9",
-      moodArt: "0x5F440745E21D2F0388F7360586e8d92a9058BccC",
-      moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+      moodArt: "0x92189966FB6c51476e24F19594907E842e8eb58F",
+      moodBank: "0x408a65196303940E4E6058cAb08DD775761Fe425",
       hexalanaBridge: "0x043f70E3244F9A4f94C3bF569d8660E82B4A2556",
     },
     marketplaces: [

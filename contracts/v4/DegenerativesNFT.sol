@@ -131,17 +131,6 @@ contract DegenerativesNFT is Ownable(msg.sender), ERC721Enumerable, Pausable {
         bytes32 oldMoodHash = hash(oldMood);
         require(newMoodHash != oldMoodHash, "same");
 
-        // if (payNative) {
-        //     (bool success, ) = payable(treasury).call{value: msg.value}("");
-        //     require(success, "Native payment failed");
-        // } else {
-        //     require(
-        //         msg.sender == relayer &&
-        //             IERC20(token).transferFrom(owner, treasury, value),
-        //         "Payment failed"
-        //     );
-        // }
-
         uint256 newMoodId = bank.addMood(chainId, owner, characters);
 
         tokenized[oldMoodHash] = false;
