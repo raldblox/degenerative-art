@@ -64,7 +64,7 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 duration-300 group-hover:border-white aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-transparent duration-300 group-hover:border-white aspect-square`}
                 >
                   {emoji}
                 </div>
