@@ -3,9 +3,9 @@ import React from "react";
 
 export const DegenerativesLogo = () => {
   return (
-    <Link href="/" className="md:pr-3">
+    <Link href="/" className="">
       <svg
-        className="h-8 text-foreground"
+        className="h-9 text-foreground"
         viewBox="0 0 35 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

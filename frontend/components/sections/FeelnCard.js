@@ -23,17 +23,17 @@ export const FeelnCard = ({ post }) => {
   };
   return (
     <>
-      <Card className="w-full h-full border shadow-none drop-shadow-none bg-default-100 !rounded-2xl light ">
+      <Card className="w-full h-full border shadow-sm bg-default-100 !rounded-2xl light ">
         <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-4">
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
 
-        <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner group md:text-7xl">
+        <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl bg-white shadow-inner group md:text-7xl">
           <div
             // onClick={() => {
             //   handleView(post?.tokenId);
             // }}
-            className="p-8 text-center cursor-pointer w-fit cell group"
+            className="p-8 text-center w-fit group"
           >
             <span
               className={`absolute invert text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-100`}
@@ -47,7 +47,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid text-xl mx-auto text-center duration-200 md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit`}
+              className={`grid gap-[2px]  border-2 text-xl mx-auto text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit border-transparent duration-300 group-hover:border-white`}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -64,14 +64,25 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-white/20 duration-300 group-hover:border-white aspect-square`}
                 >
                   {emoji}
                 </div>
               ))}
             </div>
-            <div className="absolute bottom-3 right-3">
-              <ChainIcon chainName={post?.chainName} />
+
+            <div className="absolute right-0 flex items-center gap-2 p-2 px-3 text-xs font-bold tracking-wider text-left uppercase transition-all duration-300 rounded-l-lg opacity-25 bg-default-700 text-default-200 top-3 group-hover:opacity-100">
+              <div className="grid leading-none">
+                <p className="">COLLECT</p>
+                <p>THIS ON</p>
+              </div>
+
+              <span className="flex items-center">
+                <Marketplace
+                  chainName={post?.chainName}
+                  tokenId={post?.tokenId}
+                />
+              </span>
             </div>
           </div>
         </CardBody>
@@ -80,7 +91,6 @@ export const FeelnCard = ({ post }) => {
             <p className="font-semibold text-default-700 text-small">
               MOODART #{post?.tokenId.toString()}
             </p>
-            <Marketplace chainName={post?.chainName} tokenId={post?.tokenId} />
           </div>
         </CardFooter>
       </Card>
@@ -113,10 +123,11 @@ const Header = ({ chainName, post }) => {
         isExternal
         as={Link}
         href={`${network?.blockExplorerUrls[0]}/nft/${network?.contracts?.moodArt}/${post.tokenId}`}
-        color="primary"
+        color="default"
         radius="full"
         size="sm"
         variant="flat"
+        startContent={<ChainIcon chainName={post?.chainName} />}
       >
         View
       </Button>
@@ -142,7 +153,7 @@ const Marketplace = ({ chainName, tokenId }) => {
   const id = tokenId ? tokenId : 0;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1 rounded-full w-fit">
       {network?.marketplaces.map((marketplace, index) => {
         // Construct the marketplace URL based on its schema
         let marketplaceUrl;
@@ -176,18 +187,11 @@ const Marketplace = ({ chainName, tokenId }) => {
         }
 
         return (
-          <Link
-            key={index}
-            isExternal
-            href={marketplaceUrl}
-            color="primary"
-            radius="full"
-            size="md"
-            variant="flat"
-          >
+          <Link key={index} isExternal href={marketplaceUrl} color="primary">
             <Image
-              width={20}
-              className="w-7 h-7 !rounded-none"
+              radius="none"
+              width={22}
+              className="w-6 h-6 hover:scale-125"
               src={marketplace?.icon}
               alt={marketplace?.name}
             />

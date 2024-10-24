@@ -25,10 +25,13 @@ import {
   User,
 } from "@nextui-org/react";
 import {
+  ExploreIcon,
+  HomeIcon,
   LockIcon,
   MetamaskIcon,
   SearchIcon,
   TwitterIcon,
+  WalletIcon,
 } from "../icons/BasicIcons";
 import { DegenerativesLogo } from "../icons/DegenerativesLogo";
 import { useContext, useEffect, useState } from "react";
@@ -62,71 +65,73 @@ export default function Navigation() {
       // shouldHideOnScroll
       className="!p-0 border-none h-18"
     >
-      <NavbarContent justify="start !p-0">
-        <NavbarContent
-          as="div"
-          justify="left"
-          className="flex items-center justify-center gap-2"
-        >
-          <NavbarItem className="">
-            <NavbarBrand className="">
-              <DegenerativesLogo />
-            </NavbarBrand>
-          </NavbarItem>
-          <NavbarItem>
-            <Tabs
-              radius="sm"
-              size="sm"
-              variant="light"
-              color="primary"
-              aria-label="Options"
-              selectedKey={selectedNavTab}
-              onSelectionChange={setSelectedNavTab}
-            >
-              {path == "/" && <Tab key="feels" title="Feels" />}
-              {path == "/" && <Tab key="home" title="Home" />}
-              {path == "/bridge" && <Tab key="bridge" title="Portal" />}
-              {path == "/claim" && <Tab key="reward" title="Reward" />}
+      <NavbarBrand className="!p-0 !m-0">
+        <DegenerativesLogo />
+      </NavbarBrand>
 
-              {/* <Tab key="games" title="Games" isDisabled/> */}
-            </Tabs>
-          </NavbarItem>
-        </NavbarContent>
+      <NavbarContent
+        className="!p-0 !m-0 items-center justify-center"
+        justify="center"
+      >
+        <NavbarItem>
+          <Tabs
+            fullWidth
+            radius="sm"
+            size="lg"
+            variant="underlined"
+            color="primary"
+            aria-label="Options"
+            selectedKey={selectedNavTab}
+            onSelectionChange={setSelectedNavTab}
+          >
+            {path == "/" && (
+              <Tab
+                key="feels"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <ExploreIcon />
+                    <span>Feels</span>
+                  </div>
+                }
+              />
+            )}
+            {path == "/" && (
+              <Tab
+                key="home"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <HomeIcon />
+                    <span>Home</span>
+                  </div>
+                }
+              />
+            )}
+            {connectedAccount && (
+              <Tab
+                className="hidden md:flex"
+                key="assets"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <WalletIcon />
+                    <span>My Assets</span>
+                  </div>
+                }
+              />
+            )}
+            {path == "/bridge" && <Tab key="bridge" title="Portal" />}
+            {path == "/portal" && <Tab key="reward" title="Reward" />}
+
+            {/* <Tab key="games" title="Games" isDisabled/> */}
+          </Tabs>
+        </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent as="div" className="items-center" justify="end">
-        {connectedAccount ? (
-          <NavbarItem className="hidden md:block">
-            <Tooltip
-              shadow
-              showArrow
-              placement="bottom-end"
-              content={
-                <div className="px-1 py-2 w-[180px]">
-                  <p className="mb-1 text-tiny text-default-500">Balances</p>
-                  <div className="flex items-center justify-between font-semibold text-tiny">
-                    <span>MOODART NFT</span>
-                    <span>--</span>
-                  </div>
-                  <div className="flex items-center justify-between font-semibold text-tiny">
-                    <span>MOOD TOKEN</span>
-                    <span>--</span>
-                  </div>
-                </div>
-              }
-            >
-              <Button
-                size="sm"
-                variant="solid"
-                color="default"
-                as={Link}
-                href={`/user/${connectedAccount}`}
-              >
-                My Assets
-              </Button>
-            </Tooltip>
-          </NavbarItem>
-        ) : (
+      <NavbarContent
+        as="div"
+        className="flex items-center justify-center"
+        justify="end"
+      >
+        {!connectedAccount && (
           <NavbarItem className="hidden md:block">
             <Button
               size="sm"
@@ -161,12 +166,12 @@ export function Account() {
         <DropdownTrigger>
           <User
             name={
-              <span className="text-xs font-semibold text-primary">
+              <span className="hidden text-xs font-semibold text-primary md:hidden">
                 {session?.user ? session?.user.name.split(" ")[0] : "Anonymous"}
               </span>
             }
             description={
-              <div className="flex items-center gap-2 text-xs font-semibold group-hover:text-default-600">
+              <div className="items-center hidden gap-2 text-xs font-semibold md:flex group-hover:text-default-600">
                 Account
               </div>
             }

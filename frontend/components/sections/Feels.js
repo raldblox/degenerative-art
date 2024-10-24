@@ -185,14 +185,14 @@ export default function Feels() {
           >
             {[...randomFeels?.entries()].map(([key, post]) => (
               <SwiperSlide key={key} className="max-h-[100px]">
-                <div className="flex items-center justify-start h-full gap-3 px-6 bg-white rounded-xl">
-                  <div className="flex items-center justify-center h-full">
-                    <ChainIcon chainName={post?.chainName} />
-                  </div>
+                <div className="flex items-center justify-between h-full gap-3 px-6 bg-white rounded-xl">
                   <div>
                     <h1 className="text-sm text-nowrap">
                       {`#${post?.tokenId.toString()}`}
                     </h1>
+                  </div>
+                  <div className="flex items-center justify-center h-full">
+                    <ChainIcon chainName={post?.chainName} />
                   </div>
                 </div>
               </SwiperSlide>
