@@ -648,8 +648,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                       isLoading={minting}
                       isDisabled={
                         txHash ||
-                        inputValues.length == 1 ||
-                        selectedNetwork == "42793"
+                        inputValues.length == 1 
                       }
                     >
                       <span className="!tracking-wider">
