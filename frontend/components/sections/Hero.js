@@ -7,6 +7,7 @@ import {
   Link,
   Tab,
   Tabs,
+  Tooltip,
 } from "@nextui-org/react";
 import React, { useContext, useState } from "react";
 import { FancyCard } from "./FancyCard";
@@ -26,6 +27,7 @@ import { Autoplay, Mousewheel, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FlipWords } from "../functions/FlipWords";
+import { ExploreIcon, MetamaskIcon } from "../icons/BasicIcons";
 
 export const Hero = () => {
   const {
@@ -131,6 +133,9 @@ export const Hero = () => {
             </h1>
             <div className="flex flex-wrap items-center gap-1">
               <Button
+                startContent={
+                  <span className="text-base tracking-tighter">🍬</span>
+                }
                 size="sm"
                 radius="sm"
                 variant="solid"
@@ -142,6 +147,9 @@ export const Hero = () => {
                 Mint
               </Button>
               <Button
+                startContent={
+                  <span className="text-base tracking-tighter">🌉</span>
+                }
                 size="sm"
                 radius="sm"
                 variant="solid"
@@ -151,6 +159,7 @@ export const Hero = () => {
                 Bridge
               </Button>
               <Button
+                startContent={<ExploreIcon />}
                 size="sm"
                 radius="sm"
                 variant="solid"
@@ -160,16 +169,37 @@ export const Hero = () => {
               >
                 Explore
               </Button>
+              <Tooltip
+                size="sm"
+                showArrow={true}
+                color="warning"
+                placement="bottom-start"
+                content="Add $MOOD to Metamask"
+              >
+                <Button
+                  onClick={() => {
+                    addToken();
+                  }}
+                  size="sm"
+                  radius="sm"
+                  variant="solid"
+                  startContent={<MetamaskIcon />}
+                >
+                  Add MOOD
+                </Button>
+              </Tooltip>
             </div>
           </div>
 
           <div className="flex justify-between">
             <SelectNetwork />
           </div>
-          <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
-            MOOD empowers the degeneratives community to create, express, and
-            play together.
-          </p>
+          <div className="absolute grid -bottom-16">
+            <p className=" items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight ">
+              MOOD empowers the degeneratives community to create, express, and
+              play together.
+            </p>
+          </div>
         </div>
         {selectedHomeTab == "defi" && (
           <Swiper
@@ -257,10 +287,9 @@ export const Hero = () => {
                     <Button
                       size="md"
                       radius="sm"
-                      color="primary"
+                      color="default"
                       variant="solid"
                       as={Link}
-                      href="/bridge"
                     >
                       Open Bridge
                     </Button>
@@ -402,7 +431,7 @@ export const Hero = () => {
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 ">
                       <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full text-background bg-foreground">
-                        🖼
+                        🍬
                       </span>
                       <h1 className="text-3xl font-bold text-default-800">
                         mint
@@ -425,8 +454,8 @@ export const Hero = () => {
                         forceStop={false}
                       />
                       <Button
-                        color="primary"
-                        variant="bordered"
+                        color="default"
+                        variant="solid"
                         size="md"
                         radius="sm"
                         className=""
@@ -476,8 +505,8 @@ export const Hero = () => {
               <SwiperSlide className="!h-full !w-[350px] delay-300  min-h-[450px] bg-white hover:bg-success transition-all  rounded-2xl">
                 <section className="grid content-between w-full h-full p-6 ">
                   <div className="flex items-center gap-3 ">
-                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg rounded-full bg-default-800">
-                      🎁
+                    <span className="flex items-center justify-center w-10 h-10 p-2 text-lg text-white rounded-full bg-default-800">
+                      🛒
                     </span>
                     <h1 className="text-3xl font-bold text-default-800">
                       marketplace
@@ -485,7 +514,8 @@ export const Hero = () => {
                   </div>
                   <div className="min-h-[300px] grid content-between">
                     <h1 className="text-lg lowercase text-default-700 text-balance">
-                      buy and sell NFTs, skins, visual effect to set your mood
+                      Buy and trade NFTs, skins, or special effects that set
+                      your mood.
                     </h1>
                     <div className="flex items-center w-full gap-2">
                       <Button

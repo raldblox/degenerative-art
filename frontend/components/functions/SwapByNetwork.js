@@ -1,7 +1,7 @@
 "use client";
 
 import { Context } from "@/providers/Providers";
-import { Button, Link, ScrollShadow } from "@nextui-org/react";
+import { Button, Link, div } from "@nextui-org/react";
 import React, { useContext } from "react";
 import { LockIcon } from "../icons/BasicIcons";
 import { LinkPreview } from "./LinkPreview";
@@ -12,9 +12,9 @@ export const SwapByNetwork = () => {
   return (
     <>
       {selectedNetwork == "42793" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color="primary"
+            color="default"
             variant="solid"
             size="md"
             radius="sm"
@@ -26,8 +26,8 @@ export const SwapByNetwork = () => {
             <LinkPreview url="https://iguanadex.com/">IguanaDEX</LinkPreview>
           </Button>
           <Button
-            color="primary"
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -37,13 +37,13 @@ export const SwapByNetwork = () => {
           >
             <LinkPreview url="https://tachyswap.org">TachySwap</LinkPreview>
           </Button>
-        </ScrollShadow>
+        </div>
       )}
       {selectedNetwork == "137" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -54,8 +54,8 @@ export const SwapByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color="primary"
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -63,13 +63,13 @@ export const SwapByNetwork = () => {
           >
             <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
           </Button>
-        </ScrollShadow>
+        </div>
       )}
       {selectedNetwork == "8453" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -80,8 +80,8 @@ export const SwapByNetwork = () => {
             </LinkPreview>
           </Button>
           <Button
-            color="primary"
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -89,12 +89,12 @@ export const SwapByNetwork = () => {
           >
             <LinkPreview url="https://uniswap.org/">Uniswap</LinkPreview>
           </Button>
-        </ScrollShadow>
+        </div>
       )}
       {selectedNetwork == "1116" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color="primary"
+            color="default"
             variant="solid"
             size="md"
             radius="sm"
@@ -108,25 +108,25 @@ export const SwapByNetwork = () => {
               Glyph Exchange
             </LinkPreview>
           </Button>
-        </ScrollShadow>
+        </div>
       )}
       {selectedNetwork == "42161" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
             endContent={<LockIcon />}
           ></Button>
-        </ScrollShadow>
+        </div>
       )}
       {selectedNetwork == "56" && (
-        <ScrollShadow className="max-h-[150px] flex items-center flex-wrap !w-full gap-1">
+        <div className="div flex items-center flex-wrap !w-full gap-1">
           <Button
-            color=""
-            variant="bordered"
+            color="default"
+            variant="solid"
             size="md"
             radius="sm"
             className=""
@@ -136,7 +136,7 @@ export const SwapByNetwork = () => {
               Pancakeswap
             </LinkPreview>
           </Button>
-        </ScrollShadow>
+        </div>
       )}
     </>
   );
