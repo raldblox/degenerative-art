@@ -1,8 +1,9 @@
 "use client";
 
+import { WalletIcon } from "@/components/icons/BasicIcons";
 import { networks } from "@/libraries/network";
 import { Context } from "@/providers/Providers";
-import { Button, Image, Link, Spinner } from "@nextui-org/react";
+import { Button, Image, Link, Snippet, Spinner } from "@nextui-org/react";
 import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -109,14 +110,29 @@ export default function Account({ params }) {
 
   return (
     <section className="min-h-[calc(100vh-130px)] p-6 flex flex-col items-center space-y-6">
-      <h1 className="text-lg font-bold">
-        {params.account.slice(0, 8)}...{params.account.slice(-6)}
-      </h1>
-      <div className="grid gap-6 pb-12 lg:grid-cols-3 md:grid-cols-2">
+      <div className="flex items-center justify-center w-full gap-3">
+        <span className="flex items-center justify-start gap-2 text-xs font-bold uppercase w-fit">
+          <WalletIcon />
+          Account{" "}
+        </span>
+        <Snippet
+          hideSymbol
+          size="md"
+          codeString={params.account}
+          color=""
+          variant="flat"
+          classNames={{ base: "px-0 w-fit" }}
+        >
+          <span className="flex">
+            {params.account.slice(0, 8)}...{params.account.slice(-6)}
+          </span>
+        </Snippet>
+      </div>
+      <div className="grid items-start justify-start w-full max-w-5xl gap-3 pb-12 lg:grid-cols-3 md:grid-cols-2">
         {userNFTs?.map((token) => (
           <div
             key={token.tokenId}
-            className="relative grid p-2 duration-200 border-2 shadow-md border-background bg-default-100 hover:shadow rounded-3xl"
+            className="relative grid p-1 duration-200 border-2 shadow-md border-background bg-default-100 hover:shadow rounded-3xl"
           >
             <div className="grid w-full p-6 duration-300 bg-background group-hover:shadow rounded-2xl aspect-square animate-appearance-in">
               <div
@@ -133,13 +149,13 @@ export default function Account({ params }) {
                     style={{
                       width: `${
                         window.innerWidth > 600
-                          ? 250 / Math.sqrt(token?.emojis.length)
+                          ? 240 / Math.sqrt(token?.emojis.length)
                           : 200 / Math.sqrt(token?.emojis.length)
                       }px`,
                       fontSize: `${
                         window.innerWidth > 600
-                          ? 200 / Math.sqrt(token?.emojis.length)
-                          : 100 / Math.sqrt(token?.emojis.length)
+                          ? 180 / Math.sqrt(token?.emojis.length)
+                          : 150 / Math.sqrt(token?.emojis.length)
                       }px`,
                     }}
                     className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-transparent duration-300 group-hover:border-white aspect-square`}

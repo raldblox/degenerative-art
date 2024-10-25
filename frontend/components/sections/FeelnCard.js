@@ -88,8 +88,8 @@ export const FeelnCard = ({ post }) => {
         </CardBody>
         <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
           <div className="grid gap-1 md:gap-2">
-            <p className="font-semibold text-default-700 text-small">
-              MOODART #{post?.tokenId.toString()}
+            <p className="font-semibold text-small">
+              MOODART <br/>#{post?.tokenId.toString()}
             </p>
           </div>
         </CardFooter>
