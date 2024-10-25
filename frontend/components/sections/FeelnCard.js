@@ -24,7 +24,7 @@ export const FeelnCard = ({ post }) => {
   return (
     <>
       <Card className="w-full h-full border shadow-sm bg-default-100 !rounded-2xl light ">
-        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-2">
+        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-3">
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
 
