@@ -155,9 +155,6 @@ export default function Account({ params }) {
                   <p>MOODART #{token.tokenId}</p>
                   <p>{token?.network}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  {token.tokenId < 1039 && <UpdateToken token={token} />}
-                </div>
               </div>
               <Button
                 as={Link}
