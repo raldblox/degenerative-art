@@ -112,6 +112,7 @@ const Header = ({ chainName, post }) => {
             Anonymous
           </h4>
           <Link
+            isExternal
             href={`/user/${post?.owner}`}
             className="tracking-tight text-small text-default-400"
           >

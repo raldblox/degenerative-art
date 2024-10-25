@@ -108,7 +108,10 @@ export default function Account({ params }) {
   }, [params.account]);
 
   return (
-    <section className="min-h-[calc(100vh-130px)] p-6 flex items-center justify-center">
+    <section className="min-h-[calc(100vh-130px)] p-6 flex flex-col items-center space-y-6">
+      <h1 className="text-lg font-bold">
+        {params.account.slice(0, 8)}...{params.account.slice(-6)}
+      </h1>
       <div className="grid gap-6 pb-12 lg:grid-cols-3 md:grid-cols-2">
         {userNFTs?.map((token) => (
           <div
@@ -149,7 +152,7 @@ export default function Account({ params }) {
             <div className="flex items-center justify-between w-full pt-2">
               <div className="flex flex-col items-start justify-between w-full px-2 text-xs text-foreground">
                 <div className="flex items-center justify-between w-full font-semibold">
-                  <p>degeneratives.art #{token.tokenId}</p>
+                  <p>MOODART #{token.tokenId}</p>
                   <p>{token?.network}</p>
                 </div>
                 <div className="flex items-center gap-2">
