@@ -624,7 +624,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                             color="primary"
                             label="Expansion Level"
                             showSteps={true}
-                            maxValue={4}
+                            maxValue={selectedNetwork == "42793" ? 3 : 4}
                             minValue={1}
                             value={expansionLevel}
                             defaultValue={2}
