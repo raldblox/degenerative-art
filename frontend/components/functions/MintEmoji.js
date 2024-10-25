@@ -520,28 +520,28 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                     </div>
                     <div className="flex items-center gap-2">
                       <>
-                        {selectedNetwork == "42793" && (
+                        <Tooltip
+                          size="sm"
+                          showArrow={true}
+                          color="warning"
+                          placement="bottom-start"
+                          content="Add $MOOD to Metamask"
+                        >
+                          <Button
+                            onClick={() => {
+                              addToken();
+                            }}
+                            radius="sm"
+                            variant="flat"
+                            color="default"
+                            size="sm"
+                            startContent={<MetamaskIcon />}
+                          >
+                            Add $MOOD
+                          </Button>
+                        </Tooltip>
+                        {/* {selectedNetwork == "42793" && (
                           <>
-                            <Tooltip
-                              size="sm"
-                              showArrow={true}
-                              color="warning"
-                              placement="bottom-start"
-                              content="Add $MOOD to Metamask"
-                            >
-                              <Button
-                                onClick={() => {
-                                  addToken();
-                                }}
-                                radius="sm"
-                                variant="flat"
-                                color="default"
-                                size="sm"
-                                startContent={<MetamaskIcon />}
-                              >
-                                Add $MOOD
-                              </Button>
-                            </Tooltip>
                             <Tooltip
                               size="sm"
                               showArrow={true}
@@ -553,7 +553,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                               <LivePriceChart totalSupply={100} />
                             </Tooltip>
                           </>
-                        )}
+                        )} */}
                       </>
                     </div>
                     <div className="text-xs">
