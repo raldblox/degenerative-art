@@ -23,11 +23,10 @@ export const FeelnCard = ({ post }) => {
   };
   return (
     <>
-      <Card className="w-full h-full shadow-sm bg-default-100 !rounded-2xl light border-2 border-white">
+      <Card className="w-full h-full shadow-sm bg-default-100 !rounded-2xl light">
         <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none p-3">
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
-
         <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner bg-default-200 group md:text-7xl">
           <div
             // onClick={() => {
@@ -66,12 +65,12 @@ export const FeelnCard = ({ post }) => {
                     width: `${
                       window.innerWidth > 600
                         ? 350 / Math.sqrt(post.emojis.length)
-                        : 250 / Math.sqrt(post.emojis.length)
+                        : 220 / Math.sqrt(post.emojis.length)
                     }px`,
                     fontSize: `${
                       window.innerWidth > 600
                         ? 310 / Math.sqrt(post.emojis.length)
-                        : 220 / Math.sqrt(post.emojis.length)
+                        : 180 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
                   className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300  aspect-square`}

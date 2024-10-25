@@ -58,33 +58,27 @@ export default function Feels() {
   };
 
   return (
-    <div className="relative flex items-start justify-center w-full min-h-[calc(100vh-170px)] ">
-      <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col md:gap-3 py-12 md:px-6 overflow-hidden">
-        <div className=" hidden lg:grid md:max-w-[300px] min-h-[300px] relative content-between p-4 w-full col-span-1 bg-white text-foreground rounded-2xl backdrop-blur-sm">
+    <div className="relative grid w-full min-h-screen md:min-h-[calc(100vh-170px)] ">
+      <div className="h-screen md:h-[calc(100vh-130px)] w-full flex justify-center items-start lg:flex-row flex-col gap-3 py-3 md:px-6">
+        <div className="grid grid-cols-1 md:max-w-[350px] md:min-h-[300px] relative content-between p-4 w-full col-span-1 space-y-3 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div>
             <span>gm {session?.user?.name.split(" ")[0]} 🌤</span>
           </div>
-          <div className="space-y-6">
-            <h1 className="text-2xl md:text-4xl">
+          <div className="space-y-3">
+            <h1 className="text-2xl md:text-4xl text-balance">
               how&apos;s the world treating you today?
             </h1>
-          </div>
-
-          <div className="flex items-center gap-2">
             <MintEmoji
               showSlider={true}
               defaultExpansionLevel={4}
               forceStop={false}
             />
-            {/* <Button color="success" variant="solid" endContent={<LockIcon />}>
-              Express It
-            </Button> */}
           </div>
         </div>
 
         <>
           <Swiper
-            className="mySwiper2 !p-0 rounded-none min-h-[75vh]"
+            className="mySwiper2 !p-0 rounded-xl min-h-[400px] md:min-h-[75vh]"
             // style={{
             //   "--swiper-navigation-color": "#ddd",
             //   "--swiper-pagination-color": "#ddd",
