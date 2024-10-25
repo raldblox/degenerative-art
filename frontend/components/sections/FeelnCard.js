@@ -41,7 +41,7 @@ export const FeelnCard = ({ post }) => {
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
             <span
-              className={`absolute invert text-nowrap tracking-[-18rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-1/4 opacity-10 saturate-100`}
+              className={`absolute invert text-nowrap tracking-[-18rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/4 top-1/2 left-1/4 opacity-10 saturate-100`}
             >
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
