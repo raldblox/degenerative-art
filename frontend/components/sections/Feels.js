@@ -71,7 +71,11 @@ export default function Feels() {
           </div>
 
           <div className="flex items-center gap-2">
-            <MintEmoji />
+            <MintEmoji
+              showSlider={true}
+              defaultExpansionLevel={4}
+              forceStop={false}
+            />
             {/* <Button color="success" variant="solid" endContent={<LockIcon />}>
               Express It
             </Button> */}

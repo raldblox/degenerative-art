@@ -106,18 +106,7 @@ export default function Navigation() {
                 }
               />
             )}
-            {connectedAccount && path == "/" && (
-              <Tab
-                className="hidden md:flex"
-                key="assets"
-                title={
-                  <div className="flex items-center space-x-2">
-                    <WalletIcon />
-                    <span>My Assets</span>
-                  </div>
-                }
-              />
-            )}
+
             {path == "/bridge" && <Tab key="bridge" title="Bridge" />}
             {path == "/portal" && <Tab key="reward" title="Reward" />}
 
@@ -206,7 +195,7 @@ export function Account() {
 
           {connectedAccount && (
             <DropdownItem
-              className="block md:hidden"
+              startContent={<WalletIcon />}
               key="connect"
               color="primary"
               href={`/user/${connectedAccount}`}
