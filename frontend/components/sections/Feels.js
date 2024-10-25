@@ -58,8 +58,8 @@ export default function Feels() {
   };
 
   return (
-    <div className="relative grid w-full min-h-screen md:min-h-[calc(100vh-170px)] ">
-      <div className="h-screen md:h-[calc(100vh-130px)] w-full grid md:flex md:flex-row gap-3 py-3 md:px-6">
+    <div className="relative grid w-full min-h-[calc(100vh-170px)] ">
+      <div className="h-[calc(100vh-170px)] md:h-[calc(100vh-130px)] w-full grid md:flex md:flex-row gap-3 py-3 md:px-6">
         <div className="md:grid hidden grid-cols-1 row-start-2 md:max-w-[350px] md:min-h-[300px] h-full max-h-[350px] content-between p-4 w-full col-span-1 space-y-3 bg-white text-foreground rounded-2xl backdrop-blur-sm">
           <div className="space-y-6">
             <span>gm {session?.user?.name.split(" ")[0]} 🌤</span>
