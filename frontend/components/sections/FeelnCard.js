@@ -36,12 +36,17 @@ export const FeelnCard = ({ post }) => {
             className="p-8 text-center w-fit group"
           >
             <span
-              className={`absolute text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white  -translate-y-3/4 blur-sm top-1/2 left-2/4 opacity-25 saturate-100`}
+              className={`absolute  text-nowrap tracking-[-20rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[30rem] transition-all duration-500 transform  text-white blur-md top-1/2 left-1/4 opacity-25 saturate-100`}
             >
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
             <span
-              className={`absolute invert text-nowrap tracking-[-18rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/4 top-1/2 left-1/4 opacity-10 saturate-100`}
+              className={`absolute  text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white  -translate-y-3/4 blur-sm top-1/3 left-2/4 opacity-10 saturate-100`}
+            >
+              {Object.values(post.emojis).slice().reverse().join(" ")}
+            </span>
+            <span
+              className={`absolute invert text-nowrap tracking-[-20rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/4 top-1/2 left-1/4 opacity-10 saturate-100`}
             >
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
@@ -52,7 +57,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid border-4 text-xl mx-auto backdrop-blur-sm  text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
+              className={`grid p-3 border-4 text-xl mx-auto backdrop-blur-sm  text-center content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -65,8 +70,8 @@ export const FeelnCard = ({ post }) => {
                     }px`,
                     fontSize: `${
                       window.innerWidth > 600
-                        ? 250 / Math.sqrt(post.emojis.length)
-                        : 150 / Math.sqrt(post.emojis.length)
+                        ? 320 / Math.sqrt(post.emojis.length)
+                        : 240 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
                   className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300  aspect-square`}
