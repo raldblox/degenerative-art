@@ -112,7 +112,7 @@ const Header = ({ chainName, post }) => {
             Anonymous
           </h4>
           <Link
-            href={`${network?.blockExplorerUrls[0]}/address/${post?.owner}`}
+            href={`/user/${post?.owner}`}
             className="tracking-tight text-small text-default-400"
           >
             {post?.owner.slice(0, 7)}

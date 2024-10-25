@@ -646,10 +646,7 @@ export const MintEmoji = ({ showSlider, forceStop }) => {
                       onClick={handleMint}
                       // onClick={shootConfetti}
                       isLoading={minting}
-                      isDisabled={
-                        txHash ||
-                        inputValues.length == 1 
-                      }
+                      isDisabled={txHash || inputValues.length == 1}
                     >
                       <span className="!tracking-wider">
                         {txHash ? "SUCCESSFULLY MINTED 🎉" : "MINT"}
