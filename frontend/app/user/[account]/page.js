@@ -135,7 +135,7 @@ export default function Account({ params }) {
                       }px`,
                       fontSize: `${
                         window.innerWidth > 600
-                          ? 150 / Math.sqrt(token?.emojis.length)
+                          ? 200 / Math.sqrt(token?.emojis.length)
                           : 100 / Math.sqrt(token?.emojis.length)
                       }px`,
                     }}
