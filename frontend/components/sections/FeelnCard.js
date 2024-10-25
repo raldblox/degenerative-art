@@ -23,8 +23,8 @@ export const FeelnCard = ({ post }) => {
   };
   return (
     <>
-      <Card className="w-full h-full border shadow-sm bg-default-100 !rounded-2xl light ">
-        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none md:px-6 py-3">
+      <Card className="w-full h-full shadow-sm bg-default-100 !rounded-2xl light border-2 border-white">
+        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none p-3">
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
 
@@ -36,7 +36,12 @@ export const FeelnCard = ({ post }) => {
             className="p-8 text-center w-fit group"
           >
             <span
-              className={`absolute invert text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-2/4 opacity-10 saturate-100`}
+              className={`absolute text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-3/4 blur-sm top-1/2 left-2/4 opacity-10 saturate-100`}
+            >
+              {Object.values(post.emojis).slice().reverse().join(" ")}
+            </span>
+            <span
+              className={`absolute invert text-nowrap tracking-[-18rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[20rem] transition-all duration-500 transform  text-white -translate-y-1/2 top-1/2 left-1/4 opacity-10 saturate-100`}
             >
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
@@ -47,7 +52,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid gap-[2px]  border-2 text-xl mx-auto text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit border-transparent duration-300 group-hover:border-white`}
+              className={`grid gap-[2px]  border-2 text-xl mx-auto text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -64,7 +69,7 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 border-transparent duration-300 group-hover:border-white aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 duration-300 bg-white/50 border-white aspect-square`}
                 >
                   {emoji}
                 </div>
@@ -173,9 +178,7 @@ const Marketplace = ({ chainName, tokenId }) => {
           <Link key={index} isExternal href={marketplaceUrl} color="primary">
             <Image
               radius="none"
-              width={20}
-              height={20}
-              className="scale-100 w-7 h-7 hover:scale-90"
+              className="!h-7 scale-100 hover:scale-90"
               src={marketplace?.icon}
               alt={marketplace?.name}
             />
@@ -189,9 +192,7 @@ const Marketplace = ({ chainName, tokenId }) => {
       >
         <Image
           radius="none"
-          width={20}
-          height={20}
-          className="w-7 h-7 !rounded-none hover:scale-90 scale-100"
+          className="!h-7 !rounded-none hover:scale-90 scale-100 object-cover object-center"
           src={network?.icon}
           alt={network?.chainName}
         />
