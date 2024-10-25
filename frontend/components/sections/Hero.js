@@ -168,7 +168,7 @@ export const Hero = () => {
           </div>
           <p className="absolute items-start hidden px-0 text-xs text-default-700 md:flex h-[50px] leading-tight -bottom-16">
             MOOD empowers the degeneratives community to create, express, and
-            play together within a unified, multi-chain ecosystem.
+            play together.
           </p>
         </div>
         {selectedHomeTab == "defi" && (
