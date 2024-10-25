@@ -52,7 +52,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid gap-[2px]  border-2 text-xl mx-auto text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
+              className={`grid border-4 text-xl mx-auto text-center md:text-[2.3rem] content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -69,7 +69,7 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300 bg-white/50 backdrop-blur-sm  aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300 backdrop-blur-sm  aspect-square`}
                 >
                   {emoji}
                 </div>
