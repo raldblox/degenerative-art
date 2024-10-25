@@ -90,7 +90,7 @@ export const Hero = () => {
               A unique creative platform enabling anyone to create, play, and
               earn in a unified, multichain ecosystem. We utilize emoji and{" "}
               <span className="italic ">Unicode characters</span> for making
-              interactive NFTs, onchain games, and defi applications.
+              generative arts, onchain games, and defi applications.
             </p>
           </div>
 

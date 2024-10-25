@@ -5,8 +5,8 @@ import { useMotionTemplate, motion } from "framer-motion";
 import { cn } from "@nextui-org/react";
 
 export const FancyCard = ({ text, className }) => {
-  let mouseX = useMotionValue(50);
-  let mouseY = useMotionValue(50);
+  let mouseX = useMotionValue(250);
+  let mouseY = useMotionValue(250);
 
   const [randomString, setRandomString] = useState("");
 
