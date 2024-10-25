@@ -89,7 +89,7 @@ export const FeelnCard = ({ post }) => {
         <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
           <div className="grid gap-1 md:gap-2">
             <p className="font-semibold text-small">
-              MOODART <br/>#{post?.tokenId.toString()}
+              MOODART <br />#{post?.tokenId.toString()}
             </p>
           </div>
         </CardFooter>
@@ -136,7 +136,7 @@ const Marketplace = ({ chainName, tokenId }) => {
   const id = tokenId ? tokenId : 0;
 
   return (
-    <div className="flex items-center gap-2 rounded-lg w-fit ">
+    <div className="flex items-center gap-2 rounded-lg min-w-[150px] justify-end">
       {network?.marketplaces.map((marketplace, index) => {
         // Construct the marketplace URL based on its schema
         let marketplaceUrl;
