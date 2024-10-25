@@ -36,7 +36,7 @@ export const FeelnCard = ({ post }) => {
             className="p-8 text-center w-fit group"
           >
             <span
-              className={`absolute text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-3/4 blur-sm top-1/2 left-2/4 opacity-10 saturate-100`}
+              className={`absolute text-nowrap tracking-[-14rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[25rem] transition-all duration-500 transform  text-white -translate-y-3/4 blur-sm top-1/2 left-2/4 opacity-25 saturate-100`}
             >
               {Object.values(post.emojis).slice().reverse().join(" ")}
             </span>
@@ -69,7 +69,7 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300 bg-white/50  aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300 bg-white/50 backdrop-blur-sm  aspect-square`}
                 >
                   {emoji}
                 </div>
