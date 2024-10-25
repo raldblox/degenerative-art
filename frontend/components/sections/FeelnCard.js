@@ -28,7 +28,7 @@ export const FeelnCard = ({ post }) => {
           <Header chainName={post?.chainName} post={post} />
         </CardHeader>
 
-        <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl bg-white shadow-inner group md:text-7xl">
+        <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner bg-default-100 group md:text-7xl">
           <div
             // onClick={() => {
             //   handleView(post?.tokenId);
@@ -69,7 +69,7 @@ export const FeelnCard = ({ post }) => {
                         : 150 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter border-1 duration-300 bg-white/50 border-white aspect-square`}
+                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300 bg-white/50  aspect-square`}
                 >
                   {emoji}
                 </div>
