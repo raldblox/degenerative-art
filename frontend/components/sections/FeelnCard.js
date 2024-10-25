@@ -71,7 +71,7 @@ export const FeelnCard = ({ post }) => {
                     fontSize: `${
                       window.innerWidth > 600
                         ? 310 / Math.sqrt(post.emojis.length)
-                        : 230 / Math.sqrt(post.emojis.length)
+                        : 220 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
                   className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300  aspect-square`}
