@@ -86,18 +86,22 @@ export default function Token({ params }) {
   }, [tokenNetwork, tokenId, moodArtABI]); // Include moodArtABI in the dependency array
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-[calc(100vh-130px)]">
-      {loading ? (
-        <div>
-          <Spinner />
-        </div> // Show loading indicator
-      ) : tokenData ? (
-        <div className="w-full max-w-2xl">
-          <FeelnCard post={tokenData} />
+    <>
+      {mounted && (
+        <div className="flex items-center justify-center p-6 min-h-[calc(100vh-130px)]">
+          {loading ? (
+            <div>
+              <Spinner />
+            </div> // Show loading indicator
+          ) : tokenData ? (
+            <div className="w-full max-w-2xl">
+              <FeelnCard post={tokenData} />
+            </div>
+          ) : (
+            <div>Token not found.</div> // Show message if tokenData is null
+          )}
         </div>
-      ) : (
-        <div>Token not found.</div> // Show message if tokenData is null
       )}
-    </div>
+    </>
   );
 }

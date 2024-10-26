@@ -23,16 +23,26 @@ export const FeelnCard = ({ post }) => {
   };
   return (
     <>
-      <Card className="w-full h-full shadow-sm bg-default-100 !rounded-2xl light">
-        <CardHeader className="relative flex items-center justify-between bg-white border-none shadow-none !rounded-none drop-shadow-none p-3">
-          <Header chainName={post?.chainName} post={post} />
+      <Card className="w-full h-full shadow-sm bg-default-100 !rounded-2xl light border-white border-2 min-h-[70vh]">
+        <CardHeader className=" z-10 absolute top-0 flex-col md:flex-row !items-start flex justify-between border-none shadow-none !rounded-none drop-shadow-none px-3 w-full">
+          <div className="grid gap-1 md:gap-2">
+            <Link
+              showAnchorIcon
+              color="foreground"
+              isExternal
+              href={`/id/${post?.tokenId.toString()}/?network=${post.chainName.toLowerCase()}`}
+              className="font-semibold text-small text-default-700"
+            >
+              MOODART #{post?.tokenId.toString()}
+            </Link>
+          </div>
         </CardHeader>
-        <CardBody className="relative flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner bg-default-200 group md:text-7xl">
+        <CardBody className="top-0 flex items-center justify-center w-full h-full overflow-hidden text-4xl shadow-inner bg-default-100 group md:text-7xl">
           <div
             // onClick={() => {
             //   handleView(post?.tokenId);
             // }}
-            className="p-8 text-center w-fit group"
+            className="pb-6 text-center w-fit group"
           >
             <span
               className={`absolute  hidden md:flex text-nowrap tracking-[-20rem] -translate-x-2/4 scale-150 leading-none text-center z-0 text-[30rem] transition-all duration-500 transform  text-black blur-md top-1/2 left-1/4 opacity-25 saturate-100`}
@@ -56,7 +66,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid p-3 border-1 text-xl mx-auto backdrop-blur-md text-center content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 bg-default-200/10 border-white`}
+              className={`grid p-3 text-xl mx-auto text-center content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 bg-white/50 `}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -95,17 +105,8 @@ export const FeelnCard = ({ post }) => {
             </div> */}
           </div>
         </CardBody>
-        <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-3">
-          <div className="grid gap-1 md:gap-2">
-            <Link
-              color="foreground"
-              isExternal
-              href={`/id/${post?.tokenId.toString()}/?network=${post.chainName.toLowerCase()}`}
-              className="font-semibold text-small"
-            >
-              MOODART <br />#{post?.tokenId.toString()}
-            </Link>
-          </div>
+        <CardFooter className="absolute bottom-0 z-10 items-center justify-between w-full gap-3 p-3 bg-white/50 border-t-1 border-zinc-100/50 md:p-3 backdrop-blur-sm">
+          <Header chainName={post?.chainName} post={post} />
         </CardFooter>
       </Card>
     </>
