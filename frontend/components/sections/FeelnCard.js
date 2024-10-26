@@ -120,20 +120,20 @@ const Header = ({ chainName, post }) => {
 
   return (
     <>
-      <div className="flex items-center w-full gap-5">
+      <div className="flex items-center w-full gap-3">
         <Avatar isBordered radius="full" size="sm" src="" />
-        <div className="flex flex-col items-start justify-center gap-1">
+        <Link
+          isExternal
+          href={`/user/${post?.owner}`}
+          className="flex flex-col items-start justify-center gap-1"
+        >
           <h4 className="font-semibold leading-none text-small text-default-600">
             Anonymous
           </h4>
-          <Link
-            isExternal
-            href={`/user/${post?.owner}`}
-            className="tracking-tight text-small text-default-400"
-          >
+          <p className="tracking-tight text-small text-default-400">
             {post?.owner.slice(0, 7)}
-          </Link>
-        </div>
+          </p>
+        </Link>
       </div>
       <div className="flex items-center gap-2">
         <Marketplace
