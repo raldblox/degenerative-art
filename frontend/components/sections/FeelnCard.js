@@ -56,7 +56,7 @@ export const FeelnCard = ({ post }) => {
                   post.emojis.length
                 )}, 1fr)`,
               }}
-              className={`grid p-3 border-4 text-xl mx-auto backdrop-blur-sm  text-center content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 group-hover:border-white`}
+              className={`grid p-3 border-1 text-xl mx-auto backdrop-blur-md text-center content-center items-center justify-center rounded-xl w-fit  border-transparent duration-300 bg-default-200/10 border-white`}
             >
               {Object.values(post.emojis).map((emoji, index) => (
                 <div
@@ -64,16 +64,16 @@ export const FeelnCard = ({ post }) => {
                   style={{
                     width: `${
                       window.innerWidth > 600
-                        ? 350 / Math.sqrt(post.emojis.length)
+                        ? 320 / Math.sqrt(post.emojis.length)
                         : 250 / Math.sqrt(post.emojis.length)
                     }px`,
                     fontSize: `${
                       window.innerWidth > 600
-                        ? 310 / Math.sqrt(post.emojis.length)
+                        ? 280 / Math.sqrt(post.emojis.length)
                         : 200 / Math.sqrt(post.emojis.length)
                     }px`,
                   }}
-                  className={`flex items-center justify-center w-8 leading-none tracking-tighter duration-300  aspect-square`}
+                  className={`flex items-center text-center justify-center w-8 leading-none tracking-[0] duration-300  aspect-square`}
                 >
                   {emoji}
                 </div>
@@ -95,11 +95,16 @@ export const FeelnCard = ({ post }) => {
             </div> */}
           </div>
         </CardBody>
-        <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-6">
+        <CardFooter className="items-center !rounded-none justify-between w-full gap-3 p-3 bg-white md:p-3">
           <div className="grid gap-1 md:gap-2">
-            <p className="font-semibold text-small">
+            <Link
+              color="foreground"
+              isExternal
+              href={`/id/${post?.tokenId.toString()}/?network=${post.chainName.toLowerCase()}`}
+              className="font-semibold text-small"
+            >
               MOODART <br />#{post?.tokenId.toString()}
-            </p>
+            </Link>
           </div>
         </CardFooter>
       </Card>
