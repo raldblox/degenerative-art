@@ -7,6 +7,7 @@ import { createContext, useEffect, useState } from "react";
 import moodArtABI from "@/libraries/abis/MOODART.json";
 import wrappedERC0ABI from "@/libraries/abis/WRAPPEDERC20.json";
 import bridgeABI from "@/libraries/abis/BRIDGE.json";
+import dropsABI from "@/libraries/abis/MOODROPS.json";
 import { networks } from "@/libraries/network";
 
 export const Context = createContext();
@@ -344,6 +345,7 @@ export const Providers = (props) => {
     moodEndpoint,
     showMintModal,
     setShowMintModal,
+    dropsABI,
   };
 
   return (

@@ -8,7 +8,7 @@ module.exports = {
   networks: {
     polygon: {
       name: "Polygon Mainnet",
-      url: process.env.POLYGON_RPC,
+      url: "https://polygon-rpc.com/",
       accounts: [
         process.env.OCVLABS_PRIVATE_KEY,
         process.env.RELAYER_PRIVATE_KEY,

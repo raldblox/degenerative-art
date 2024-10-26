@@ -44,6 +44,7 @@ export const networks = [
     contracts: {
       moodArt: "0x91a8c5Ce0bD41488351640564baE4C8d7D8e00BD",
       moodBank: "0xD37D8659153aC1b43704031abBE0266C8F04E8Ed",
+      moodDrops: "0x8DeeA2cda07089291048f1f585045B736DceFa24",
       MOOD: "0x1A7c367D7289e3dF5f8596cCEcd2989d62399b07",
       hexalanaBridge: "0x0296fe62D3811c7f7a9eC87D1b3EC26385aA9ba1",
     },
@@ -72,6 +73,7 @@ export const networks = [
     contracts: {
       moodArt: "0x957f319210eCC12B9bBbE38ea6B1e92E2748dB6c",
       moodBank: "0x2aB32741dc8453714136bBaFD2D6A5ec77934E23",
+      moodDrops: "0x749cc8541c06BBC9De0CD0373fCEF70B6373c6Ee",
       MOOD: "0x5ae9108bC677e5269b6E71AE51DD15d19863Da1c",
       hexalanaBridge: "0x191293BFf35aD8493636E1B48C97E5067322694F",
     },
@@ -105,6 +107,7 @@ export const networks = [
     contracts: {
       moodArt: "0xBF28585d32faEAf2F58E9Ab15966989f49C3dFfa",
       moodBank: "0xF8fe97f8a779b08a7af2A9d9B86ac393f87B8c55",
+      moodDrops: "0x8a378D515304992E219190680018AA716525EF06",
       MOOD: "0xF9E3B82457DA8E1064397b6AC9f72558d5fD25Ab",
       hexalanaBridge: "0x3fF1d0F1D5BcF7F78422C56e0bD1cd2b8803daf7",
     },
