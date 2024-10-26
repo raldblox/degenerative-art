@@ -86,7 +86,7 @@ export default function Token({ params }) {
   }, [tokenNetwork, tokenId, moodArtABI]); // Include moodArtABI in the dependency array
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-[calc(100vh-170px)]">
+    <div className="flex items-center justify-center p-6 min-h-[calc(100vh-130px)]">
       {loading ? (
         <div>
           <Spinner />
