@@ -290,6 +290,7 @@ export const Hero = () => {
                       color="default"
                       variant="solid"
                       as={Link}
+                      href="/bridge"
                     >
                       Open Bridge
                     </Button>
